@@ -66,14 +66,6 @@ swing.edt {
 			iconImage: new ImageIcon(getClass().getResource('icon.gif')).getImage()
 			) {
 				tabbedPane() {
-					splitPane(
-							name: 'Suchen',
-							resizeWeight: 0.8d,
-							leftComponent: backupDirectoryChooser(),
-							rightComponent:	scrollPane(
-							border: swing.titledBorder(title: 'Enthaltene Backups'),
-							preferredSize: new Dimension(width:150, height:-1)
-							) { list(model: incrementsListModel) })
 					hbox(name: 'Suchen') {
 						backupDirectoryChooser()
 						scrollPane(
