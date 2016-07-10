@@ -2,6 +2,8 @@ package org.fst.backup.rdiff;
 
 import static org.junit.Assert.*;
 
+import org.fst.backup.rdiff.test.RDiffBackupHelper;
+
 class RDiffSystemTest extends GroovyTestCase {
 
 	def String TMP_FOLDER = 'RDiffSystemTest-tmp/'

@@ -14,15 +14,19 @@ import org.fst.backup.service.IncrementDateExtractorService
 import org.fst.backup.service.ListIncrementsService
 
 
-def incrementsListModel = new DefaultListModel<String>();
+def incrementsListModel1 = new DefaultListModel<String>();
+def incrementsListModel2 = new DefaultListModel<String>();
+def folderPairsListModel = new DefaultListModel<String>();
+folderPairsListModel.addElement('C:\\Users\\Frank\\Documents\\SOURCE -> C:\\Users\\Frank\\Documents\\TARGET')
+folderPairsListModel.addElement('C:\\Users\\Frank\\desktop\\source -> C:\\Users\\Frank\\desktop\\target')
 
 def updateIncrementsList = { File directory ->
-	incrementsListModel.removeAllElements()
+	incrementsListModel1.removeAllElements()
 	if (directory != null) {
 		List increments = new ListIncrementsService().listIncrements(directory)
 		increments = increments.reverse()
 		def incrementDateExtractorService = new IncrementDateExtractorService()
-		increments.each { incrementsListModel.addElement(incrementDateExtractorService.extractDate(it)) }
+		increments.each { incrementsListModel1.addElement(incrementDateExtractorService.extractDate(it)) }
 	}
 }
 
@@ -54,12 +58,13 @@ def borderedFileChooser = { text ->
 }
 
 def width = 1100
+def height = 400
 
 swing.edt {
 	lookAndFeel('nimbus')
 	f = frame(
 			title: 'RDiff Backup Explorer',
-			size: [width, 300],
+			size: [width, height],
 			locationRelativeTo: null,
 			show: true,
 			defaultCloseOperation: WindowConstants.EXIT_ON_CLOSE,
@@ -69,39 +74,33 @@ swing.edt {
 					hbox(name: 'Suchen') {
 						backupDirectoryChooser()
 						scrollPane(
-							border: swing.titledBorder(title: 'Enthaltene Backups'),
-							preferredSize: new Dimension(width:250, height:-1),
-							minimumSize: new Dimension(width:250, height:-1)
-							) { list(model: incrementsListModel) }
+								border: swing.titledBorder(title: 'Enthaltene Backups'),
+								preferredSize: new Dimension(width:250, height:-1),
+								minimumSize: new Dimension(width:250, height:-1)
+								) { list(model: incrementsListModel1) }
+					}
+					vbox (name: 'Erstellen') {
+						hbox() {
+							borderedFileChooser('Quellverzeichnis')
+							borderedFileChooser('Backupverzeichnis')
 						}
-					hbox(name: 'Erstellen') {
-								borderedFileChooser('Quellverzeichnis')
-								borderedFileChooser('Backupverzeichnis')
+						hbox() { button(
+							text: 'Backup ausführen',
+							actionPerformed: {}
+							)
+							panel() }
+					}
+					hbox (name: 'Ausführen') {
+						scrollPane() { list(model: folderPairsListModel)
+						}
+						vbox() {
+							button('Click')
+							scrollPane() { list(model: folderPairsListModel)
 							}
+						}
+					}
 				}
 			}
 }
-
-//swing.edt {
-//	lookAndFeel('nimbus')
-//	f = frame(
-//			title: 'RDiff Backup Explorer',
-//			size: [740, 300],
-//			locationRelativeTo: null,
-//			show: true,
-//			defaultCloseOperation: WindowConstants.EXIT_ON_CLOSE,
-//			iconImage: new ImageIcon(getClass().getResource('icon.gif')).getImage()
-//			) {
-//				splitPane(
-//						leftComponent: fileSelector(),
-//						rightComponent: list(model: incrementsListModel)
-//						)
-//			}
-//}
-
-
-
-
-
 
 

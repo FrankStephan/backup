@@ -1,4 +1,7 @@
-package org.fst.backup.rdiff
+package org.fst.backup.rdiff.test
+
+import org.fst.backup.rdiff.RDiffCommand;
+import org.fst.backup.rdiff.RDiffCommandBuilder;
 
 
 class RDiffBackupHelper {
