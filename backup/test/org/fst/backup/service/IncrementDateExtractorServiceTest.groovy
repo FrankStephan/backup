@@ -26,7 +26,7 @@ class IncrementDateExtractorServiceTest extends GroovyTestCase {
 		Date actualDate = service.extractDate('1467750198 directory')
 		Date expectedDate = new Date()
 		expectedDate.clearTime()
-		expectedDate.set(year:2016, month:6, day: 5, hourOfDay:22, minute:23, second:18)
+		expectedDate.set(year:2016, month:6, dayOfMonth: 5, hourOfDay:22, minute:23, second:18)
 		assert actualDate.equals(expectedDate)
 	}
 	
