@@ -16,6 +16,10 @@ class CreateBackupServiceTest extends GroovyTestCase {
 	static final String TARGET_DIR = 'CreateBackupServiceTest-tmp/target/'
 	
 	def service = new CreateBackupService();
+	
+//	void testNotExisitingDirectoriesAreDenied() {
+//		fail()
+//	}
 
 	void testNonDirectoryFilesAreDenied() {
 		def fileHelper = new FileHelper();
