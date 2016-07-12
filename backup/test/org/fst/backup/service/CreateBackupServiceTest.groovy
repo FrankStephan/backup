@@ -21,6 +21,10 @@ class CreateBackupServiceTest extends GroovyTestCase {
 //		fail()
 //	}
 
+//	void testCallbackGetsInvokedPerLineFromCmd() {
+//		// idea: use a concrete callback closure instead of a generic one
+//	}
+
 	void testNonDirectoryFilesAreDenied() {
 		def fileHelper = new FileHelper();
 		File file1 = fileHelper.createFile(SOURCE_DIR, 'File1.txt');
