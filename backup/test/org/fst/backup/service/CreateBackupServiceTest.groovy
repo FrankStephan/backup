@@ -1,13 +1,10 @@
 package org.fst.backup.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.*
+import groovy.mock.interceptor.MockFor
 
-import org.fst.backup.rdiff.test.FileHelper;
-import org.fst.backup.rdiff.test.RDiffBackupHelper;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import groovy.util.GroovyTestCase;
+import org.fst.backup.rdiff.test.FileHelper
+import org.fst.backup.rdiff.test.RDiffBackupHelper
 
 class CreateBackupServiceTest extends GroovyTestCase {
 
@@ -15,31 +12,33 @@ class CreateBackupServiceTest extends GroovyTestCase {
 	static final String SOURCE_DIR = 'CreateBackupServiceTest-tmp/source/'
 	static final String TARGET_DIR = 'CreateBackupServiceTest-tmp/target/'
 	
+	def backupHelper = new RDiffBackupHelper()
+	
 	def service = new CreateBackupService();
 	
-//	void testNotExisitingDirectoriesAreDenied() {
-//		fail()
-//	}
-
-//	void testCallbackGetsInvokedPerLineFromCmd() {
-//		// idea: use a concrete callback closure instead of a generic one
-//	}
+	void testNotExisitingDirectoriesAreDenied() {
+		File sourceDir = new File(SOURCE_DIR)
+		File targetDir = new File(TARGET_DIR)
+		Closure callback = {};
+		shouldFail(DirectoryNotExistsException) { service.createBackup(sourceDir, targetDir, {}) }
+	}
 
 	void testNonDirectoryFilesAreDenied() {
 		def fileHelper = new FileHelper();
 		File file1 = fileHelper.createFile(SOURCE_DIR, 'File1.txt');
 		File file2 = fileHelper.createFile(SOURCE_DIR, 'File2.txt');
-		Closure callback = {};
+		File sourceDir = new File(SOURCE_DIR)
+		File targetDir = new File(TARGET_DIR)
+		sourceDir.mkdirs()
+		targetDir.mkdirs()
 		
+		Closure callback = {};
 		shouldFail(FileIsNotADirectoryException) { service.createBackup(file1, file2, callback) }
-		shouldFail(FileIsNotADirectoryException) { service.createBackup(new File(SOURCE_DIR), file2, callback) }
-		shouldFail(FileIsNotADirectoryException) { service.createBackup(file1, new File(TARGET_DIR), callback) }
-	
-		new File(TMP_DIR).deleteDir();
+		shouldFail(FileIsNotADirectoryException) { service.createBackup(sourceDir, file2, callback) }
+		shouldFail(FileIsNotADirectoryException) { service.createBackup(file1, targetDir, callback) }
 	}
 	
 	void testBackupCommandIsExecuted() {
-		def backupHelper = new RDiffBackupHelper()
 		backupHelper.createTwoIncrements(SOURCE_DIR, TARGET_DIR);
 		def sb = new StringBuilder()
 		Closure callback = { sb.append(it) }
@@ -49,7 +48,21 @@ class CreateBackupServiceTest extends GroovyTestCase {
 		println sb.toString()
 		
 		assert sb.contains(expectedLineInCmd)		
-		backupHelper.cleanUp(TMP_DIR);
+	}
+	
+	void testCallbackGetsInvokedPerLineFromCmd() {
+		backupHelper.createTwoIncrements(SOURCE_DIR, TARGET_DIR);
+		int numberOfInvocations = 0
+		Closure callback = { numberOfInvocations++ }
+		service.createBackup(new File(SOURCE_DIR), new File(TARGET_DIR), callback)
+		String expectedLineInCmd ='Starting increment operation ' + new File(SOURCE_DIR).absolutePath + ' to ' + new File(TARGET_DIR).absolutePath
+		println numberOfInvocations
+		
+		assert numberOfInvocations > 1
+	}
+	
+	void tearDown() {
+		backupHelper.cleanUp(TMP_DIR)
 	}
 
 }

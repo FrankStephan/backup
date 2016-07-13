@@ -2,10 +2,8 @@ package org.fst.backup.service;
 
 import static org.junit.Assert.*
 
-import org.fst.backup.rdiff.test.RDiffBackupHelper;
-import org.junit.AfterClass
-import org.junit.BeforeClass
-import org.junit.Test
+import org.fst.backup.rdiff.test.RDiffBackupHelper
+import org.junit.After
 
 class ListIncrementsServiceTest extends GroovyTestCase {
 
@@ -15,6 +13,11 @@ class ListIncrementsServiceTest extends GroovyTestCase {
 	
 	def service = new ListIncrementsService()
 	
+	void testListIncrementsWithNotExistingDirectory() {
+		File targetDir = new File(TARGET_DIR)
+		shouldFail(DirectoryNotExistsException, { service.listIncrements(targetDir) })
+	}
+	
 	void testListIncrementsWithNonDirectoryFile() {
 		File tmpDir = new File(TMP_DIR)
 		tmpDir.mkdirs()
@@ -22,8 +25,6 @@ class ListIncrementsServiceTest extends GroovyTestCase {
 		file.createNewFile()
 		
 		shouldFail(FileIsNotADirectoryException, { service.listIncrements(file) })
-		
-		tmpDir.deleteDir()
 	}
 	
 	void testListIncrementsWithoutIncrements() {
@@ -33,8 +34,6 @@ class ListIncrementsServiceTest extends GroovyTestCase {
 		file.createNewFile()
 		
 		assert service.listIncrements(targetDir).isEmpty()
-		
-		targetDir.deleteDir()
 	}
 	
 	void testListIncrementsWithTwoIncrements() {
@@ -42,8 +41,10 @@ class ListIncrementsServiceTest extends GroovyTestCase {
 		helper.createTwoIncrements(SOURCE_DIR, TARGET_DIR)
 		
 		assert 2 == service.listIncrements(new File(TARGET_DIR)).size()
-		
-		helper.cleanUp(TMP_DIR)
+	}
+	
+	void tearDown() {
+		new RDiffBackupHelper().cleanUp(TMP_DIR)
 	}
 	
 
