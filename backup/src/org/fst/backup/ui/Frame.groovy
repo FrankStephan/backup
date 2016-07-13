@@ -61,7 +61,7 @@ def width = 1100
 def height = 400
 
 swing.edt {
-	lookAndFeel('nimbus')
+	lookAndFeel('system')
 	f = frame(
 			title: 'RDiff Backup Explorer',
 			size: [width, height],
@@ -84,10 +84,12 @@ swing.edt {
 							borderedFileChooser('Quellverzeichnis')
 							borderedFileChooser('Backupverzeichnis')
 						}
-						hbox() { button(
-							text: 'Backup ausführen',
+						hbox() { 
+							button(
+							text: 'Ordnerpaar erstellen',
 							actionPerformed: {}
 							)
+							checkBox(text:'Backup ausführen')
 							panel() }
 					}
 					hbox (name: 'Ausführen') {
