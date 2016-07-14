@@ -13,7 +13,7 @@ class RDiffSystemTest extends GroovyTestCase {
     void testRDiffIsAvailableAndHasCorrectVersion() {
         def command = new RDiffCommandBuilder().build(RDiffCommand.RDIFF_COMMAND, RDiffCommand.VERSION_ARG)
         def process = command.execute()
-        assertEquals('rdiff-backup 1.2.8', process.text.trim())      
+        assertEquals('rdiff-backup 1.2.8', process.text.trim())
     }
     
     void testRDiffListsIncrementsAfterBackups() {
