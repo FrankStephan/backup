@@ -23,5 +23,9 @@ class FileDeletionTest extends GroovyTestCase {
 	public void testRemoteFile() {
 		fail("Not yet implemented");
 	}
+	
+	public void testConsoleShowsOutputAndErrors() {
+		fail()
+	}
 
 }
