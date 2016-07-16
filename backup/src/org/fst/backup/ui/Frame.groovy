@@ -10,6 +10,7 @@ import javax.swing.ImageIcon
 import javax.swing.JFileChooser
 import javax.swing.WindowConstants
 
+import org.fst.backup.service.CreateBackupService
 import org.fst.backup.service.IncrementDateExtractorService
 import org.fst.backup.service.ListIncrementsService
 
@@ -49,13 +50,26 @@ def backupDirectoryChooser = {
 	return fc
 }
 
-def borderedFileChooser = { text ->
-	swing.fileChooser(
+File sourceDir
+File targetDir
+
+def borderedFileChooser = { String text, Closure setDir ->
+	def fc = swing.fileChooser(
 			fileSelectionMode: JFileChooser.DIRECTORIES_ONLY,
 			controlButtonsAreShown: false,
 			border: swing.titledBorder(title: text)
 			)
+	fc.addPropertyChangeListener(new PropertyChangeListener() {
+		void propertyChange(PropertyChangeEvent pce) {
+			if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(pce.getPropertyName())) {
+				setDir(((JFileChooser) pce.source).selectedFile)
+			}
+		}
+	})
+	return fc
 }
+
+
 
 def width = 1100
 def height = 400
@@ -81,24 +95,25 @@ swing.edt {
 					}
 					vbox (name: 'Erstellen') {
 						hbox() {
-							borderedFileChooser('Quellverzeichnis')
-							borderedFileChooser('Backupverzeichnis')
+							borderedFileChooser('Quellverzeichnis', { sourceDir = it } )
+							borderedFileChooser('Backupverzeichnis', { targetDir = it } )
 						}
-						hbox() { 
+						hbox() {
 							button(
-							text: 'Ordnerpaar erstellen',
-							actionPerformed: {}
-							)
-							checkBox(text:'Backup ausführen')
-							panel() }
-					}
-					hbox (name: 'Ausführen') {
-						scrollPane() { list(model: folderPairsListModel)
+									text: 'Backup ausführen',
+									actionPerformed: {
+										new CreateBackupService().createBackup(sourceDir, targetDir, {println it}  )  }
+									)
+							panel()
 						}
+					}
+					hbox (name: 'Console') {
+						
+
+						scrollPane() { list(model: folderPairsListModel) }
 						vbox() {
 							button('Click')
-							scrollPane() { list(model: folderPairsListModel)
-							}
+							scrollPane() { list(model: folderPairsListModel) }
 						}
 					}
 				}
