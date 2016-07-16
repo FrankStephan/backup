@@ -2,10 +2,10 @@ package org.fst.backup.service;
 
 import static org.junit.Assert.*
 
-import org.fst.backup.rdiff.test.AbstractRDiffTest
+import org.fst.backup.rdiff.test.AbstractFileSystemTest
 import org.fst.backup.rdiff.test.RDiffBackupHelper
 
-class ListIncrementsServiceTest extends AbstractRDiffTest {
+class ListIncrementsServiceTest extends AbstractFileSystemTest {
 
 	def service = new ListIncrementsService()
 	

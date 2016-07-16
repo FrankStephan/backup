@@ -3,11 +3,11 @@ package org.fst.backup.service;
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 
-import org.fst.backup.rdiff.test.AbstractRDiffTest;
+import org.fst.backup.rdiff.test.AbstractFileSystemTest;
 import org.fst.backup.rdiff.test.FileHelper
 import org.fst.backup.rdiff.test.RDiffBackupHelper
 
-class CreateBackupServiceTest extends AbstractRDiffTest {
+class CreateBackupServiceTest extends AbstractFileSystemTest {
 
 	private static final int NUMBER_OF_LINES_IN_CMD_FOR_BACKUP = 81
 

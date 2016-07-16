@@ -2,7 +2,7 @@ package org.fst.backup.rdiff.test
 
 import groovy.util.GroovyTestCase
 
-abstract class AbstractRDiffTest extends GroovyTestCase {
+abstract class AbstractFileSystemTest extends GroovyTestCase {
 	
 	String tmpPath
 	String sourePath
