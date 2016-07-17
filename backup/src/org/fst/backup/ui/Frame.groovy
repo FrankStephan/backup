@@ -1,6 +1,7 @@
 package org.fst.backup.ui
 import groovy.swing.SwingBuilder
 
+import java.awt.Color;
 import java.awt.Dimension
 import java.awt.Font
 import java.beans.PropertyChangeEvent
@@ -9,8 +10,10 @@ import java.beans.PropertyChangeListener
 import javax.swing.DefaultListModel
 import javax.swing.ImageIcon
 import javax.swing.JFileChooser
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane
 import javax.swing.WindowConstants
+import javax.swing.border.TitledBorder;
 import javax.swing.text.PlainDocument
 
 import org.fst.backup.service.CreateBackupService
@@ -19,7 +22,7 @@ import org.fst.backup.service.CreateBackupService
 
 def incrementsListModel = new DefaultListModel<String>();
 def consoleDocument = new PlainDocument();
-
+JScrollPane consoleScrollPane
 def swing = new SwingBuilder()
 
 
@@ -74,22 +77,27 @@ swing.edt {
 						hbox() {
 							button(
 									text: 'Backup ausführen',
-									actionPerformed: {
+									actionPerformed: { it1 ->
 										tabs.selectedIndex = 2
-										new CreateBackupService().createBackup(sourceDir, targetDir, {
-											consoleDocument.insertString(consoleDocument.length, it + System.lineSeparator(), null)
-											println it
-										} )
+										((TitledBorder) consoleScrollPane.getBorder()).setTitle('Status: Running')
+										((TitledBorder) consoleScrollPane.getBorder()).setTitleColor(Color.RED)
+										swing.doLater { it2 -> new CreateBackupService().createBackup(sourceDir, targetDir, { it3 ->
+												consoleDocument.insertString(consoleDocument.length, it3 + System.lineSeparator(), null)
+											} )
+											((TitledBorder) consoleScrollPane.getBorder()).setTitle('Status: Done')
+											((TitledBorder) consoleScrollPane.getBorder()).setTitleColor(Color.GREEN)
+											consoleScrollPane.repaint()
+										}
 									}
 									)
 							panel()
 						}
 					}
 					hbox (name: 'Console') {
-						scrollPane() {
+						consoleScrollPane = scrollPane(border: swing.titledBorder(title: 'Status')) {
 							def console = textArea()
-							Font f = Font.decode('Monospaced');
 							console.document = consoleDocument
+							Font f = Font.decode('Monospaced');
 							console.setFont(f)
 							console.editable = false;
 						}
