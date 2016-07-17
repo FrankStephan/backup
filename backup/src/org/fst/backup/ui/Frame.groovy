@@ -2,6 +2,7 @@ package org.fst.backup.ui
 import groovy.swing.SwingBuilder
 
 import java.awt.Dimension
+import java.awt.Font
 import java.beans.PropertyChangeEvent
 import java.beans.PropertyChangeListener
 
@@ -9,15 +10,15 @@ import javax.swing.DefaultListModel
 import javax.swing.ImageIcon
 import javax.swing.JFileChooser
 import javax.swing.JTabbedPane
-import javax.swing.JTextArea
 import javax.swing.WindowConstants
+import javax.swing.text.PlainDocument
 
 import org.fst.backup.service.CreateBackupService
 
 
 
 def incrementsListModel = new DefaultListModel<String>();
-
+def consoleDocument = new PlainDocument();
 
 def swing = new SwingBuilder()
 
@@ -42,13 +43,12 @@ def borderedFileChooser = { String text, Closure setDir ->
 }
 
 JTabbedPane tabs
-JTextArea console
 
 def width = 1100
 def height = 400
 
 swing.edt {
-	lookAndFeel('system')
+	lookAndFeel('nimbus')
 	f = frame(
 			title: 'RDiff Backup Explorer',
 			size: [width, height],
@@ -76,14 +76,23 @@ swing.edt {
 									text: 'Backup ausführen',
 									actionPerformed: {
 										tabs.selectedIndex = 2
-										new CreateBackupService().createBackup(sourceDir, targetDir, {println it} )
+										new CreateBackupService().createBackup(sourceDir, targetDir, {
+											consoleDocument.insertString(consoleDocument.length, it + System.lineSeparator(), null)
+											println it
+										} )
 									}
 									)
 							panel()
 						}
 					}
 					hbox (name: 'Console') {
-						 textArea()
+						scrollPane() {
+							def console = textArea()
+							Font f = Font.decode('Monospaced');
+							console.document = consoleDocument
+							console.setFont(f)
+							console.editable = false;
+						}
 					}
 				}
 			}
