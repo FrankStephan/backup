@@ -1,14 +1,15 @@
 package org.fst.backup.ui
 import groovy.swing.SwingBuilder
 
-import java.awt.Color
 import java.awt.Dimension
 import java.awt.Font
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent
 import java.beans.PropertyChangeListener
 
 import javax.swing.DefaultListModel
 import javax.swing.ImageIcon
+import javax.swing.JButton
 import javax.swing.JFileChooser
 import javax.swing.JScrollPane
 import javax.swing.JTabbedPane
@@ -17,18 +18,20 @@ import javax.swing.border.TitledBorder
 import javax.swing.text.DefaultCaret
 import javax.swing.text.PlainDocument
 
-import org.fst.backup.service.CreateBackupService
-
 
 
 def incrementsListModel = new DefaultListModel<String>();
-def consoleDocument = new PlainDocument();
+
+CreateBackupModel createBackupModel = new CreateBackupModel()
+createBackupModel.consoleDocument = new PlainDocument();
+createBackupModel.consoleStatus = 'Status'
+createBackupModel.tabIndex = 0
+
+JTabbedPane tabs
 JScrollPane consoleScrollPane
+TitledBorder consoleScrollPaneBorder
 def swing = new SwingBuilder()
 
-
-File sourceDir
-File targetDir
 
 def borderedFileChooser = { String text, Closure setDir ->
 	def fc = swing.fileChooser(
@@ -46,7 +49,8 @@ def borderedFileChooser = { String text, Closure setDir ->
 	return fc
 }
 
-JTabbedPane tabs
+
+
 
 def width = 1100
 def height = 400
@@ -72,36 +76,20 @@ swing.edt {
 					}
 					vbox (name: 'Erstellen') {
 						hbox() {
-							borderedFileChooser('Quellverzeichnis', { sourceDir = it } )
-							borderedFileChooser('Backupverzeichnis', { targetDir = it } )
+							borderedFileChooser('Quellverzeichnis', { createBackupModel.sourceDir = it } )
+							borderedFileChooser('Backupverzeichnis', { createBackupModel.targetDir = it } )
 						}
 						hbox() {
-							button(
-									text: 'Backup ausführen',
-									actionPerformed: {
-										tabs.selectedIndex = 2
-										((TitledBorder) consoleScrollPane.getBorder()).setTitle('Status: Laufend')
-										((TitledBorder) consoleScrollPane.getBorder()).setTitleColor(Color.RED)
-										consoleDocument.remove(0, consoleDocument.length)
-										swing.doOutside {
-											new CreateBackupService().createBackup(sourceDir, targetDir, { 
-												consoleDocument.insertString(consoleDocument.length, it + System.lineSeparator(), null)
-											} )
-											((TitledBorder) consoleScrollPane.getBorder()).setTitle('Status: Abgeschlossen')
-											((TitledBorder) consoleScrollPane.getBorder()).setTitleColor(Color.GREEN)
-											consoleScrollPane.repaint()
-										}
-									}
-									)
+							JButton createBackupButton = new CreateBackupButton(createBackupModel).createBackupButton(swing, { consoleScrollPane.repaint() })
 							panel()
 						}
 					}
 					hbox (name: 'Konsole') {
-						consoleScrollPane = scrollPane(border: swing.titledBorder(title: 'Status')) {
+						consoleScrollPane = scrollPane(border: consoleScrollPaneBorder = swing.titledBorder()) {
 							def console = textArea()
+							console.document = createBackupModel.consoleDocument
 							DefaultCaret caret = (DefaultCaret)console.getCaret();
 							caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-							console.document = consoleDocument
 							Font f = Font.decode('Monospaced');
 							console.setFont(f)
 							console.editable = false;
@@ -111,4 +99,8 @@ swing.edt {
 			}
 }
 
+
+swing.bind(source: createBackupModel, sourceProperty: 'tabIndex', target: tabs, targetProperty: 'selectedIndex')
+swing.bind(source: createBackupModel, sourceProperty: 'consoleStatus', target: consoleScrollPaneBorder, targetProperty: 'title')
+swing.bind(source: createBackupModel, sourceProperty: 'consoleStatusColor', target: consoleScrollPaneBorder, targetProperty: 'titleColor')
 
