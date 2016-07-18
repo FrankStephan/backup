@@ -6,14 +6,17 @@ import org.fst.backup.rdiff.RDiffCommandBuilder;
 
 class RDiffBackupHelper {
 	
+	File file1
+	File file2
+	
 	void createTwoIncrements(String sourceDir, String targetDir) {
 		new File(sourceDir).mkdirs()
 
-		File file1 = new File(sourceDir, "File1.txt") << 'I am file 1.'
+		file1 = new File(sourceDir, "File1.txt") << 'I am file 1.'
 		backup(sourceDir, targetDir)
 		waitSinceRDiffCanOnlyDoOneBackupPerSecond()
 
-		File file2 = new File(sourceDir, "File2.txt") << 'I am file 2.'
+		file2 = new File(sourceDir, "File2.txt") << 'I am file 2.'
 		backup(sourceDir, targetDir)
 		waitSinceRDiffCanOnlyDoOneBackupPerSecond()
 	}
