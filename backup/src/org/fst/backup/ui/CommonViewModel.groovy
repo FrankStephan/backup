@@ -4,9 +4,10 @@ import groovy.beans.Bindable
 
 import java.awt.Color
 
+import javax.swing.SingleSelectionModel;
 import javax.swing.text.PlainDocument
 
-class CreateBackupModel {
+class CommonViewModel {
 
 	@Bindable
 	File sourceDir
@@ -19,7 +20,7 @@ class CreateBackupModel {
 	@Bindable
 	Color consoleStatusColor
 	@Bindable
-	int tabIndex
+	SingleSelectionModel tabsModel
 	
 	
 	

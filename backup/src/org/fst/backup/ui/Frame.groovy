@@ -3,11 +3,11 @@ import groovy.swing.SwingBuilder
 
 import java.awt.Dimension
 import java.awt.Font
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent
 import java.beans.PropertyChangeListener
 
 import javax.swing.DefaultListModel
+import javax.swing.DefaultSingleSelectionModel
 import javax.swing.ImageIcon
 import javax.swing.JButton
 import javax.swing.JFileChooser
@@ -22,10 +22,10 @@ import javax.swing.text.PlainDocument
 
 def incrementsListModel = new DefaultListModel<String>();
 
-CreateBackupModel createBackupModel = new CreateBackupModel()
-createBackupModel.consoleDocument = new PlainDocument();
-createBackupModel.consoleStatus = 'Status'
-createBackupModel.tabIndex = 0
+CommonViewModel commonViewModel = new CommonViewModel()
+commonViewModel.consoleDocument = new PlainDocument();
+commonViewModel.consoleStatus = 'Status'
+commonViewModel.tabsModel = new DefaultSingleSelectionModel()
 
 JTabbedPane tabs
 JScrollPane consoleScrollPane
@@ -65,7 +65,7 @@ swing.edt {
 			defaultCloseOperation: WindowConstants.EXIT_ON_CLOSE,
 			iconImage: new ImageIcon(getClass().getResource('icon.gif')).getImage()
 			) {
-				tabs = tabbedPane() {
+				tabs = tabbedPane(model: commonViewModel.tabsModel) {
 					hbox(name: 'Suchen') {
 						new BackupDirectoryChooser(incrementsListModel).backupDirectoryChooser(swing)
 						scrollPane(
@@ -76,18 +76,18 @@ swing.edt {
 					}
 					vbox (name: 'Erstellen') {
 						hbox() {
-							borderedFileChooser('Quellverzeichnis', { createBackupModel.sourceDir = it } )
-							borderedFileChooser('Backupverzeichnis', { createBackupModel.targetDir = it } )
+							borderedFileChooser('Quellverzeichnis', { commonViewModel.sourceDir = it } )
+							borderedFileChooser('Backupverzeichnis', { commonViewModel.targetDir = it } )
 						}
 						hbox() {
-							JButton createBackupButton = new CreateBackupButton(createBackupModel).createBackupButton(swing, { consoleScrollPane.repaint() })
+							JButton createBackupButton = new CreateBackupButton(commonViewModel).createBackupButton(swing, { consoleScrollPane.repaint() })
 							panel()
 						}
 					}
 					hbox (name: 'Konsole') {
 						consoleScrollPane = scrollPane(border: consoleScrollPaneBorder = swing.titledBorder()) {
 							def console = textArea()
-							console.document = createBackupModel.consoleDocument
+							console.document = commonViewModel.consoleDocument
 							DefaultCaret caret = (DefaultCaret)console.getCaret();
 							caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 							Font f = Font.decode('Monospaced');
@@ -96,11 +96,10 @@ swing.edt {
 						}
 					}
 				}
+				
 			}
 }
 
-
-swing.bind(source: createBackupModel, sourceProperty: 'tabIndex', target: tabs, targetProperty: 'selectedIndex')
-swing.bind(source: createBackupModel, sourceProperty: 'consoleStatus', target: consoleScrollPaneBorder, targetProperty: 'title')
-swing.bind(source: createBackupModel, sourceProperty: 'consoleStatusColor', target: consoleScrollPaneBorder, targetProperty: 'titleColor')
+swing.bind(source: commonViewModel, sourceProperty: 'consoleStatus', target: consoleScrollPaneBorder, targetProperty: 'title')
+swing.bind(source: commonViewModel, sourceProperty: 'consoleStatusColor', target: consoleScrollPaneBorder, targetProperty: 'titleColor')
 
