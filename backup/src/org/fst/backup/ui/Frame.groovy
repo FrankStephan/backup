@@ -20,10 +20,10 @@ import javax.swing.text.PlainDocument
 
 
 
-def incrementsListModel = new DefaultListModel<String>();
+def incrementsListModel = new DefaultListModel<String>()
 
 CommonViewModel commonViewModel = new CommonViewModel()
-commonViewModel.consoleDocument = new PlainDocument();
+commonViewModel.consoleDocument = new PlainDocument()
 commonViewModel.consoleStatus = 'Status'
 commonViewModel.tabsModel = new DefaultSingleSelectionModel()
 
@@ -58,7 +58,7 @@ def height = 400
 swing.edt {
 	lookAndFeel('nimbus')
 	f = frame(
-			title: 'RDiff Backup Explorer',
+			title: 'rdigg',
 			size: [width, height],
 			locationRelativeTo: null,
 			show: true,
@@ -88,15 +88,14 @@ swing.edt {
 						consoleScrollPane = scrollPane(border: consoleScrollPaneBorder = swing.titledBorder()) {
 							def console = textArea()
 							console.document = commonViewModel.consoleDocument
-							DefaultCaret caret = (DefaultCaret)console.getCaret();
-							caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-							Font f = Font.decode('Monospaced');
+							DefaultCaret caret = (DefaultCaret)console.getCaret()
+							caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE)
+							Font f = Font.decode('Monospaced')
 							console.setFont(f)
-							console.editable = false;
+							console.editable = false
 						}
 					}
 				}
-				
 			}
 }
 
