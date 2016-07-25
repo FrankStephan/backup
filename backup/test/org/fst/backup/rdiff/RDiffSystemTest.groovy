@@ -32,7 +32,6 @@ class RDiffSystemTest extends GroovyTestCase {
 	}
 
 	void testRDiffReturnsFilesByDate() {
-		helper = new RDiffBackupHelper()
 		helper.createTwoIncrements(SOURCE_FOLDER, TARGET_FOLDER)
 		def increments = listIncrements().readLines()
 		assert increments.size() == 2
@@ -67,6 +66,23 @@ class RDiffSystemTest extends GroovyTestCase {
 		String increments = process.text
 		return increments
 	}
+
+	void testListFilesFromEmptyBackup() {
+		helper.createEmptyBackup(SOURCE_FOLDER, TARGET_FOLDER)
+		def increments = listIncrements().readLines()
+		assert increments.size() == 1
+		String secondsOfEpoch = increments[0].split()[0]
+
+		RDiffCommandBuilder commandBuilder = new RDiffCommandBuilder()
+		String command = commandBuilder.build(RDiffCommand.RDIFF_COMMAND, RDiffCommand.LIST_AT_TIME_ARG)
+		command = command + ' ' + secondsOfEpoch + ' ' + TARGET_FOLDER
+		Process process = command.execute()
+
+		String text =  process.text
+		println text
+		assert text.trim() == '.'
+	}
+
 
 	void tearDown() {
 		helper.cleanUp(TMP_FOLDER)
