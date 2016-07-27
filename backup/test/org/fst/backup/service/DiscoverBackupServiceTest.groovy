@@ -5,9 +5,9 @@ import static org.junit.Assert.*
 import org.fst.backup.rdiff.test.AbstractFileSystemTest
 import org.junit.Test
 
-class InspectBackupServiceTest extends AbstractFileSystemTest {
+class DiscoverBackupServiceTest extends AbstractFileSystemTest {
 
-	InspectBackupService service = new InspectBackupService()
+	DiscoverBackupService service = new DiscoverBackupService()
 
 	File root = new File(tmpPath + 'root')
 

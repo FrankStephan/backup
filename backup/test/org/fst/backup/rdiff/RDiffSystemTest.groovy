@@ -6,9 +6,9 @@ import org.fst.backup.rdiff.test.RDiffBackupHelper
 
 class RDiffSystemTest extends GroovyTestCase {
 
-	def String TMP_FOLDER = 'RDiffSystemTest-tmp/'
-	def String SOURCE_FOLDER = 'RDiffSystemTest-tmp/source/'
-	def String TARGET_FOLDER = 'RDiffSystemTest-tmp/target/'
+	static String TMP_DIR = 'RDiffSystemTest-tmp/'
+	static String SOURCE_DIR = 'RDiffSystemTest-tmp/source/'
+	static String TARGET_DIR = 'RDiffSystemTest-tmp/target/'
 
 	RDiffBackupHelper helper = new RDiffBackupHelper()
 
@@ -21,7 +21,7 @@ class RDiffSystemTest extends GroovyTestCase {
 	void testRDiffListsIncrementsAfterBackups() {
 
 
-		helper.createTwoIncrements(SOURCE_FOLDER, TARGET_FOLDER)
+		helper.createTwoIncrements(SOURCE_DIR, TARGET_DIR)
 
 		String increments = listIncrements()
 		println increments
@@ -32,7 +32,7 @@ class RDiffSystemTest extends GroovyTestCase {
 	}
 
 	void testRDiffReturnsFilesByDate() {
-		helper.createTwoIncrements(SOURCE_FOLDER, TARGET_FOLDER)
+		helper.createTwoIncrements(SOURCE_DIR, TARGET_DIR)
 		def increments = listIncrements().readLines()
 		assert increments.size() == 2
 		String secondsEpochIncrement = increments[0].split()[0]
@@ -40,7 +40,7 @@ class RDiffSystemTest extends GroovyTestCase {
 
 		RDiffCommandBuilder commandBuilder = new RDiffCommandBuilder()
 		String command = commandBuilder.build(RDiffCommand.RDIFF_COMMAND, RDiffCommand.LIST_AT_TIME_ARG)
-		command = command + ' ' + secondsEpochIncrement + ' ' + TARGET_FOLDER
+		command = command + ' ' + secondsEpochIncrement + ' ' + TARGET_DIR
 		Process process = command.execute()
 
 		String text =  process.text
@@ -49,7 +49,7 @@ class RDiffSystemTest extends GroovyTestCase {
 		assert !text.contains('File2.txt')
 
 		command = commandBuilder.build(RDiffCommand.RDIFF_COMMAND, RDiffCommand.LIST_AT_TIME_ARG)
-		command = command + ' ' + secondsEpochMirror + ' ' + TARGET_FOLDER
+		command = command + ' ' + secondsEpochMirror + ' ' + TARGET_DIR
 		process = command.execute()
 		text =  process.text
 		println text
@@ -60,7 +60,7 @@ class RDiffSystemTest extends GroovyTestCase {
 	private String listIncrements() {
 		RDiffCommandBuilder commandBuilder = new RDiffCommandBuilder()
 		String command = commandBuilder.build(RDiffCommand.RDIFF_COMMAND, RDiffCommand.LIST_INCREMENTS_ARG, RDiffCommand.PARSABLE_OUTPUT_ARG)
-		command = command + ' ' + TARGET_FOLDER
+		command = command + ' ' + TARGET_DIR
 		Process process = command.execute()
 
 		String increments = process.text
@@ -68,23 +68,41 @@ class RDiffSystemTest extends GroovyTestCase {
 	}
 
 	void testListFilesFromEmptyBackup() {
-		helper.createEmptyBackup(SOURCE_FOLDER, TARGET_FOLDER)
+		helper.createEmptyBackup(SOURCE_DIR, TARGET_DIR)
 		def increments = listIncrements().readLines()
 		assert increments.size() == 1
 		String secondsOfEpoch = increments[0].split()[0]
 
 		RDiffCommandBuilder commandBuilder = new RDiffCommandBuilder()
 		String command = commandBuilder.build(RDiffCommand.RDIFF_COMMAND, RDiffCommand.LIST_AT_TIME_ARG)
-		command = command + ' ' + secondsOfEpoch + ' ' + TARGET_FOLDER
+		command = command + ' ' + secondsOfEpoch + ' ' + TARGET_DIR
 		Process process = command.execute()
 
 		String text =  process.text
 		println text
 		assert text.trim() == '.'
 	}
+	
+	void testListFilesFromNonBackupDirectory() {
+		File targetDir = new File(TARGET_DIR)
+		targetDir.mkdirs()
+		RDiffCommandBuilder commandBuilder = new RDiffCommandBuilder()
+		String command = commandBuilder.build(RDiffCommand.RDIFF_COMMAND, RDiffCommand.LIST_AT_TIME_ARG)
+		command = command + ' now ' + TARGET_DIR
+		Process process = command.execute()
+		
+		StringBuilder sb = new StringBuilder()
+		process.errorStream.eachLine { sb.append(it)}
+		String error = sb.toString()
+		
+		assert process.text.isEmpty()
+		assert process.exitValue() == 1
+		assert error.startsWith('Fatal Error:')
+		assert error.endsWith('It doesn\'t appear to be an rdiff-backup destination dir')
+	}
 
 
 	void tearDown() {
-		helper.cleanUp(TMP_FOLDER)
+		helper.cleanUp(TMP_DIR)
 	}
 }

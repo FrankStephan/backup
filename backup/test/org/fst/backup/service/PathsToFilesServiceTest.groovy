@@ -16,12 +16,28 @@ class PathsToFilesServiceTest extends GroovyTestCase {
 	void tearDown() {
 		root.deleteDir()
 	}
+	
+	void testRootHasNoFilesWhenPathsAreEmpty() {
+		def paths = [] as String[]
+		service.createFileStructureUnderRoot(paths, root)
+		assert 0 == root.list().length
+	}
 
 	void testRootHasNoFilesWhenBackupIsEmpty() {
 		def paths = ['.'] as String[]
 		service.createFileStructureUnderRoot(paths, root)
 		assert 0 == root.list().length
 	}
+	
+	void testEmptyPathsAreSkipped() {
+		def paths = ['a0/a1/a2.suf', '  ', 'b0/b1/b2.suf', ''] as String[]
+		service.createFileStructureUnderRoot(paths, root)
+		assert 2 == root.list().length
+		assert root.list()[0].endsWith('a2.suf')
+		assert root.list()[1].endsWith('b2.suf')
+	}
+	
+	
 
 
 	/*

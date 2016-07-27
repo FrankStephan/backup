@@ -1,6 +1,6 @@
 package org.fst.backup.service
 
-class InspectBackupService {
+class DiscoverBackupService {
 
 	void createFileStructureFromBackup(File targetDir, File root) {
 		

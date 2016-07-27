@@ -10,67 +10,66 @@ class PathsToFilesService {
 		this.rdiffPathSeparator = rdiffPathSeparator as char
 	}
 
-	void createFileStructureUnderRoot(String[] paths, File rootDir) {
-
-		List<? extends List<String>> pathsSegements = new ArrayList<? extends List<String>>()
-		paths.each { it -> pathsSegements.add(it.split('/') as List) }
-
-
-
-		for (path in paths) {
-			File f = new File (rootDir, path)
-			if (isFile(path)) {
-				f.parentFile.mkdirs()
-				f.createNewFile()
-			} else {
-				f.mkdirs()
+	void createFileStructureUnderRoot(String[] pathsArray, File rootDir) {
+		List<? extends List<String>> paths = new ArrayList<? extends List<String>>()
+		pathsArray.each { it ->
+			if (paths != null) {
+				paths.add(it.split('/') as List)
 			}
 		}
+
+		createFileStructureRecuresively(paths, rootDir);
 		//		Files.probeContentType(null)
 	}
 
-	private void group(List<? extends List<String>> pathsSegements, File parent) {
-		Map<String, ? extends List<String>> pathSegmentsGroupedByFirsSegment = pathsSegements.groupBy({ it.getAt(0) })
-		
-		pathSegmentsGroupedByFirsSegment.each { 
-			File file = new File(parent, it.value.getAt(0))
-			// file.mkdir or file.create ??
-			List<String> subPathSegments = it.value.subList(1, it.value.size()) 
-			group(subPathSegments, file)
-			// or break if null or only one value
+	private void createFileStructureRecuresively(List<? extends List<String>> paths, File parent) {
+
+		List<? extends List<String>> pathsNotYetCreated = removeCompletelyCreatedPaths(paths)
+
+		if (containsSubpaths(pathsNotYetCreated)) {
+			createDir(parent)
+			
+			Map<String, List<? extends List<String>>> pathsGroupedByFirstSegment = groupByFirstSegment(pathsNotYetCreated)
+
+			pathsGroupedByFirstSegment.each {
+				String firstSegment = it.key
+				File firstSegmentFile = new File(parent, firstSegment)
+				List<? extends List<String>> pathsInGroup = it.value
+				List<? extends List<String>> subPathsInGroup = removeFirstSegmentFromEachPath(pathsInGroup)
+				createFileStructureRecuresively(subPathsInGroup, firstSegmentFile)
+			}
+		} else {
+			createFileOrDir(parent)
 		}
 	}
 
-	//	private boolean isFile(String path) {
-	//
-	//		String[] segments = path.split('/')
-	//		String lastSegement = segments[segments.length - 1]
-	//
-	//		int numberOfDots = lastSegement.count('.')
-	//		switch(numberOfDots) {
-	//			case 0:
-	//			return false
-	//			case 1: lastSegement.indexOf('.') >
-	//			return
-	//			default:
-	//			break
-	//		}
-	//	}
-
-	private boolean isLevel0(int lastPathSeparatorIndex) {
-		return lastPathSeparatorIndex == -1
+	private boolean containsSubpaths(List<? extends List<String>> pathsNotYetCreated) {
+		return !pathsNotYetCreated.isEmpty()
 	}
 
-	private containsDots(String lastSegment) {
+	private void createDir(File parent) {
+		parent.mkdir()
 	}
 
-	private boolean startsWithDot(int lastPathSeparatorIndex, int lastDotIndex) {
-		return !(lastPathSeparatorIndex > -1 && lastDotIndex == lastPathSeparatorIndex + 1)
+	private Map<String, List<? extends List<String>>> groupByFirstSegment(List<? extends List<String>> paths) {
+		return paths.groupBy({ firstSegment(it) })
+	}
+	
+	private String firstSegment(List<String> pathSegments) {
+		return pathSegments.get(0)
 	}
 
-
-
-	private String[] extractSegements(String path) {
-		return path.split(rdiffPathSeparator)
+	private List<? extends List<String>> removeFirstSegmentFromEachPath(List<? extends List<String>> pathsGroup) {
+		pathsGroup*.remove(0)
+		return pathsGroup
 	}
+
+	private List<? extends List<String>> removeCompletelyCreatedPaths(List<? extends List<String>> paths) {
+		return paths.findAll { !it.isEmpty() }
+	}
+
+	private createFileOrDir(File parent) {
+		parent.createNewFile()
+	}
+
 }
