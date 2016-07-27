@@ -18,7 +18,7 @@ class PathsToFilesService {
 			}
 		}
 
-		createFileStructureRecuresively(paths, rootDir);
+		createFileStructureRecuresively(paths, rootDir)
 		//		Files.probeContentType(null)
 	}
 
@@ -28,7 +28,7 @@ class PathsToFilesService {
 
 		if (containsSubpaths(pathsNotYetCreated)) {
 			createDir(parent)
-			
+
 			Map<String, List<? extends List<String>>> pathsGroupedByFirstSegment = groupByFirstSegment(pathsNotYetCreated)
 
 			pathsGroupedByFirstSegment.each {
@@ -54,7 +54,7 @@ class PathsToFilesService {
 	private Map<String, List<? extends List<String>>> groupByFirstSegment(List<? extends List<String>> paths) {
 		return paths.groupBy({ firstSegment(it) })
 	}
-	
+
 	private String firstSegment(List<String> pathSegments) {
 		return pathSegments.get(0)
 	}
@@ -71,5 +71,4 @@ class PathsToFilesService {
 	private createFileOrDir(File parent) {
 		parent.createNewFile()
 	}
-
 }
