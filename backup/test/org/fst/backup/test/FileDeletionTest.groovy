@@ -1,4 +1,4 @@
-package org.fst.backup.rdiff.test
+package org.fst.backup.test
 
 import static org.junit.Assert.*
 

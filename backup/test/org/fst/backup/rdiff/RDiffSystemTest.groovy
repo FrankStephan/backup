@@ -2,7 +2,7 @@ package org.fst.backup.rdiff
 
 import static org.junit.Assert.*
 
-import org.fst.backup.rdiff.test.RDiffBackupHelper
+import org.fst.backup.test.RDiffBackupHelper;
 
 class RDiffSystemTest extends GroovyTestCase {
 

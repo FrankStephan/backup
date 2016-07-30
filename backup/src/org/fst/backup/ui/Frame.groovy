@@ -49,6 +49,16 @@ def borderedFileChooser = { String text, Closure setDir ->
 	return fc
 }
 
+def insepctBackupFileChooser = {
+	File root = new File('C:\\dev\\repository\\backup\\backup\\root')
+	BackupFileSystemView fsv = new BackupFileSystemView(root)
+	println root.exists()
+	JFileChooser fc2 = new JFileChooser(fsv)
+	fc2.controlButtonsAreShown = false
+	println fc2.fileSystemView
+	return fc2
+}
+
 
 
 
@@ -95,10 +105,10 @@ swing.edt {
 							console.editable = false
 						}
 					}
+					vbox (name: 'Durchsuchen').add(insepctBackupFileChooser())
 				}
 			}
 }
 
 swing.bind(source: commonViewModel, sourceProperty: 'consoleStatus', target: consoleScrollPaneBorder, targetProperty: 'title')
 swing.bind(source: commonViewModel, sourceProperty: 'consoleStatusColor', target: consoleScrollPaneBorder, targetProperty: 'titleColor')
-

@@ -1,4 +1,4 @@
-package org.fst.backup.rdiff.test
+package org.fst.backup.test
 
 import org.fst.backup.rdiff.RDiffCommand
 import org.fst.backup.rdiff.RDiffCommandBuilder

@@ -2,8 +2,8 @@ package org.fst.backup.service;
 
 import static org.junit.Assert.*
 
-import org.fst.backup.rdiff.test.AbstractFileSystemTest
-import org.fst.backup.rdiff.test.RDiffBackupHelper
+import org.fst.backup.test.AbstractFileSystemTest;
+import org.fst.backup.test.RDiffBackupHelper;
 
 class ListIncrementsServiceTest extends AbstractFileSystemTest {
 
