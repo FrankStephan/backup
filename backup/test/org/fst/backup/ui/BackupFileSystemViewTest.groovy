@@ -6,7 +6,7 @@ import org.fst.backup.test.AbstractFileSystemTest
 
 class BackupFileSystemViewTest extends AbstractFileSystemTest {
 
-	BackupFileSystemView fsv
+	InspectBackupFileSystemView fsv
 
 	File root
 
@@ -14,7 +14,7 @@ class BackupFileSystemViewTest extends AbstractFileSystemTest {
 		super.setUp()
 		root = new File(tmpPath)
 		createTestFileStructure()
-		fsv = new BackupFileSystemView(root)
+		fsv = new InspectBackupFileSystemView(root)
 	}
 
 	private createTestFileStructure() {

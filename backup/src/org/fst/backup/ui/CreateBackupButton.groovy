@@ -10,21 +10,14 @@ import org.fst.backup.service.CreateBackupService
 
 class CreateBackupButton {
 
-
-	final CommonViewModel commonViewModel
-
-	CreateBackupButton(CommonViewModel model) {
-		this.commonViewModel = model
-	}
-
-	JButton createBackupButton(SwingBuilder swing, Closure onFinish ) {
+	JButton createComponent(CommonViewModel commonViewModel, SwingBuilder swing, Closure onFinish) {
 		swing.button(
 				text: 'Backup ausführen',
 				actionPerformed: {
-					commonViewModel.tabsModel.selectedIndex = 2
+					commonViewModel.tabsModel.selectedIndex = Tab.CONSOLE.ordinal
 					commonViewModel.consoleStatusColor = Color.RED
 					commonViewModel.consoleStatus = 'Status: Laufend'
-					commonViewModel.consoleDocument.remove(0, commonViewModel.consoleDocument.length)
+					clearConsole(commonViewModel)
 					swing.doOutside {
 						new CreateBackupService().createBackup(commonViewModel.sourceDir, commonViewModel.targetDir, {
 							commonViewModel.consoleDocument.insertString(commonViewModel.consoleDocument.length, it + System.lineSeparator(), null)
@@ -35,5 +28,9 @@ class CreateBackupButton {
 					}
 				}
 				)
+	}
+
+	private clearConsole(CommonViewModel commonViewModel) {
+		commonViewModel.consoleDocument.remove(0, commonViewModel.consoleDocument.length)
 	}
 }

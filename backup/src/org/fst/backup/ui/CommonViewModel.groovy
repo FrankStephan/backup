@@ -4,7 +4,8 @@ import groovy.beans.Bindable
 
 import java.awt.Color
 
-import javax.swing.SingleSelectionModel;
+import javax.swing.DefaultListModel
+import javax.swing.SingleSelectionModel
 import javax.swing.text.PlainDocument
 
 class CommonViewModel {
@@ -21,11 +22,6 @@ class CommonViewModel {
 	Color consoleStatusColor
 	@Bindable
 	SingleSelectionModel tabsModel
-	
-	
-	
-	
-	
-	
-	
+	@Bindable
+	DefaultListModel<String> incrementsListModel
 }

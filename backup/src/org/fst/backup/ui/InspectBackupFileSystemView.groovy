@@ -3,11 +3,11 @@ package org.fst.backup.ui
 import javax.swing.Icon
 import javax.swing.filechooser.FileSystemView
 
-class BackupFileSystemView extends FileSystemView {
+class InspectBackupFileSystemView extends FileSystemView {
 
 	File root
 
-	BackupFileSystemView(File root) {
+	InspectBackupFileSystemView(File root) {
 		this.root = root
 	}
 
