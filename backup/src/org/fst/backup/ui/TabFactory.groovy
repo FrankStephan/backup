@@ -38,12 +38,21 @@ class TabFactory {
 	def chooseTab = {
 		swing.hbox(name: 'Suchen') {
 			new BackupDirectoryChooser().createComponent(commonViewModel.incrementsListModel, swing)
-			scrollPane(
-					border: swing.titledBorder(title: 'Enthaltene Backups'),
-					preferredSize: new Dimension(width:250, height:-1),
-					minimumSize: new Dimension(width:250, height:-1)
-					) { list(model: commonViewModel.incrementsListModel) }
+			vbox() {
+				scrollPane(
+						border: swing.titledBorder(title: 'Enthaltene Backups'),
+						preferredSize: new Dimension(width:250, height:-1),
+						minimumSize: new Dimension(width:250, height:-1)
+						) { list(model: commonViewModel.incrementsListModel) }
+				button(text: 'Durchsuchen', actionPerformed: {
+					commonViewModel.tabsModel.selectedIndex = Tab.INSPECT.ordinal
+				})
+			}
 		}
+	}
+
+	def inspectTab = {
+		swing.vbox (name: 'Durchsuchen').add(new InspectBackupFileChooser().createComponent())
 	}
 
 	def createTab = {
@@ -67,17 +76,12 @@ class TabFactory {
 				console.document = commonViewModel.consoleDocument
 				DefaultCaret caret = (DefaultCaret)console.getCaret()
 				caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE)
-				Font f = Font.decode('Monospaced')
-				console.setFont(f)
+				console.setFont(Font.decode('Monospaced'))
 				console.editable = false
 			}
 		}
 		swing.bind(source: commonViewModel, sourceProperty: 'consoleStatus', target: consoleScrollPaneBorder, targetProperty: 'title')
 		swing.bind(source: commonViewModel, sourceProperty: 'consoleStatusColor', target: consoleScrollPaneBorder, targetProperty: 'titleColor')
 		return box
-	}
-
-	def inspectTab = {
-		swing.vbox (name: 'Durchsuchen').add(new InspectBackupFileChooser().createComponent())
 	}
 }

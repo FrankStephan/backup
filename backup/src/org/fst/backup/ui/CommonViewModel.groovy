@@ -10,18 +10,16 @@ import javax.swing.text.PlainDocument
 
 class CommonViewModel {
 
-	@Bindable
+	SingleSelectionModel tabsModel
+
 	File sourceDir
-	@Bindable
 	File targetDir
-	@Bindable
+	Date targetDate
+	DefaultListModel<String> incrementsListModel
+
 	PlainDocument consoleDocument
 	@Bindable
 	String consoleStatus
 	@Bindable
 	Color consoleStatusColor
-	@Bindable
-	SingleSelectionModel tabsModel
-	@Bindable
-	DefaultListModel<String> incrementsListModel
 }

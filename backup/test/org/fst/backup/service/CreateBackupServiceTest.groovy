@@ -3,6 +3,8 @@ package org.fst.backup.service;
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 
+import org.fst.backup.service.exception.DirectoryNotExistsException;
+import org.fst.backup.service.exception.FileIsNotADirectoryException;
 import org.fst.backup.test.AbstractFileSystemTest;
 import org.fst.backup.test.FileHelper;
 import org.fst.backup.test.RDiffBackupHelper;

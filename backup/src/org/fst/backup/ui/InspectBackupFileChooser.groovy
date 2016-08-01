@@ -4,7 +4,12 @@ import javax.swing.JFileChooser
 
 class InspectBackupFileChooser {
 
-	JFileChooser createComponent() {
+
+
+
+	JFileChooser createComponent(CommonViewModel commonViewModel) {
+
+
 		File root = new File('C:\\dev\\repository\\backup\\backup\\root')
 		InspectBackupFileSystemView fsv = new InspectBackupFileSystemView(root)
 		println root.exists()
@@ -14,3 +19,4 @@ class InspectBackupFileChooser {
 		return fc2
 	}
 }
+

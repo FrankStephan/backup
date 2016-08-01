@@ -4,8 +4,12 @@ import static org.junit.Assert.*
 
 class FileDeletionTest extends GroovyTestCase {
 
-	public void test() {
+	public void testWhatHappensinUIIfAnyExceptionIsRaised() {
 		fail("Not yet implemented")
+	}
+
+	void testBackupIsVerified() {
+		fail()
 	}
 
 	public void testUserDir() {

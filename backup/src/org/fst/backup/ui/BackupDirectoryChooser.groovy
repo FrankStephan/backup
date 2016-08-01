@@ -8,7 +8,7 @@ import java.beans.PropertyChangeListener
 import javax.swing.DefaultListModel
 import javax.swing.JFileChooser
 
-import org.fst.backup.service.IncrementDateExtractorService
+import org.fst.backup.service.IncrementDateService
 import org.fst.backup.service.ListIncrementsService
 
 class BackupDirectoryChooser {
@@ -35,7 +35,7 @@ class BackupDirectoryChooser {
 		if (directory != null) {
 			List increments = new ListIncrementsService().listIncrements(directory)
 			increments = increments.reverse()
-			def incrementDateExtractorService = new IncrementDateExtractorService()
+			def incrementDateExtractorService = new IncrementDateService()
 			increments.each { String it -> incrementsListModel.addElement(incrementDateExtractorService.extractDate(it)) }
 		}
 	}

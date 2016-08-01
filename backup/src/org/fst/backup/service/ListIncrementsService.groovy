@@ -2,6 +2,8 @@ package org.fst.backup.service
 
 import org.fst.backup.rdiff.RDiffCommand
 import org.fst.backup.rdiff.RDiffCommandBuilder
+import org.fst.backup.service.exception.DirectoryNotExistsException;
+import org.fst.backup.service.exception.FileIsNotADirectoryException;
 
 
 class ListIncrementsService {
