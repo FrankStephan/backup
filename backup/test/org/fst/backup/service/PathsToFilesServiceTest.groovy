@@ -2,11 +2,6 @@ package org.fst.backup.service
 
 import static org.junit.Assert.*
 
-import java.nio.file.Files
-import java.nio.file.Path
-import java.security.AccessController
-import java.security.PrivilegedAction
-
 class PathsToFilesServiceTest extends GroovyTestCase {
 
 	PathsToFilesService service = new PathsToFilesService('\\' as char)
@@ -93,40 +88,5 @@ class PathsToFilesServiceTest extends GroovyTestCase {
 		def paths = ['a 0/a 1/a 2.suf']
 		createFileStructureUnderRoot(paths, root)
 		assertPathsCreated(paths)
-	}
-
-	//	void testFileTypeIsConsidered() {
-	//		def paths = ['.a0.cpr']
-	//		createFileStructureUnderRoot(paths, root)
-	//		def a0 = new File(root, '.a0.cpr')
-	//		assert a0.exists()
-	//		println Files.probeContentType(a0.toPath())
-	//		FileTypeDetectors d
-	//		ServiceLoader<FileTypeDetector> loader = ServiceLoader.loadInstalled(FileTypeDetector.class)
-	//		loader.each { println it }
-	//	}
-
-
-	void testSymbolicLinks() {
-		Path target = root.toPath().resolve('targetpath/target.file')
-		Path link = root.toPath().resolve('links/link_to_target')
-
-		AccessController.doPrivileged (new PrivilegedAction<Object>() {
-					public Object run() {
-						Files.createSymbolicLink(link, target)
-					}
-				}
-				)
-		createFileStructureUnderRoot(['links/link_to_target'], root)
-		assertPathsCreated(['links/link_to_target'])
-
-		//		AccessController.doPrivileged(new PrivilegedAction() {
-		//
-		//		}
-
-
-		// https://docs.oracle.com/javase/tutorial/security/tour2/step4.html
-		// http://docs.oracle.com/javase/7/docs/technotes/guides/security/PolicyFiles.html
-		// Test this for rdiff-backup too
 	}
 }
