@@ -45,7 +45,7 @@ class TabFactory {
 						minimumSize: new Dimension(width:250, height:-1)
 						) { list(model: commonViewModel.incrementsListModel) }
 				button(text: 'Durchsuchen', actionPerformed: {
-					commonViewModel.tabsModel.selectedIndex = Tab.INSPECT.ordinal
+					commonViewModel.tabsModel.selectedIndex = Tab.INSPECT.ordinal()
 				})
 			}
 		}

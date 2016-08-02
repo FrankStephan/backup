@@ -12,7 +12,6 @@ def swing = new SwingBuilder()
 CommonViewModel commonViewModel = new CommonViewModel()
 commonViewModel.consoleDocument = new PlainDocument()
 commonViewModel.tabsModel = new DefaultSingleSelectionModel()
-commonViewModel.tabsModel.selectedIndex = Tab.CHOOSE.ordinal
 commonViewModel.incrementsListModel = new DefaultListModel<String>()
 commonViewModel.consoleStatus = 'Status'
 
