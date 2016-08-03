@@ -4,6 +4,9 @@ import static org.junit.Assert.*
 
 class FileDeletionTest extends GroovyTestCase {
 
+	void checkRDiffSystem() {
+	}
+
 	public void testWhatHappensinUIIfAnyExceptionIsRaised() {
 		fail("Not yet implemented")
 	}
