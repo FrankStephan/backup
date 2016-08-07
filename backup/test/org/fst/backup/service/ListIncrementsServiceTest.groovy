@@ -1,15 +1,27 @@
 package org.fst.backup.service
 
 import static org.junit.Assert.*
+import groovy.mock.interceptor.MockFor
 
-import org.fst.backup.service.exception.DirectoryNotExistsException;
-import org.fst.backup.service.exception.FileIsNotADirectoryException;
+import org.fst.backup.rdiff.RDiffCommands
+import org.fst.backup.service.exception.DirectoryNotExistsException
+import org.fst.backup.service.exception.FileIsNotADirectoryException
+import org.fst.backup.service.exception.NoBackupDirectoryException
 import org.fst.backup.test.AbstractFileSystemTest
-import org.fst.backup.test.RDiffBackupHelper
 
 class ListIncrementsServiceTest extends AbstractFileSystemTest {
 
+	File targetDir
+	MockFor rdiffCommands
+
 	ListIncrementsService service = new ListIncrementsService()
+
+	void setUp() {
+		super.setUp()
+		targetDir = new File(targetPath)
+		targetDir.mkdirs()
+		rdiffCommands = mockRDiffCommands(0, '')
+	}
 
 	void testListIncrementsWithNotExistingDirectory() {
 		File notExistingDir = new File(tmpPath + 'NotExisting/')
@@ -23,16 +35,34 @@ class ListIncrementsServiceTest extends AbstractFileSystemTest {
 	}
 
 	void testListIncrementsWithoutIncrements() {
-		File file = new File(targetPath, 'NotAnIncrementFile.txt')
-		file.createNewFile()
-
-		assert service.listIncrements(new File(targetPath)).isEmpty()
+		rdiffCommands = mockRDiffCommands(1, '')
+		rdiffCommands.use {
+			ListIncrementsService service = new ListIncrementsService()
+			shouldFail(NoBackupDirectoryException, { service.listIncrements(targetDir) })
+		}
 	}
 
 	void testListIncrementsWithTwoIncrements() {
-		RDiffBackupHelper helper = new RDiffBackupHelper()
-		helper.createTwoIncrements(sourePath, targetPath)
+		rdiffCommands = mockRDiffCommands(0, '1467750198 directory' + System.lineSeparator() + '1467750199 directory')
+		rdiffCommands.use {
+			ListIncrementsService service = new ListIncrementsService()
+			assert [1467750198, 1467750199]== service.listIncrements(targetDir)*.secondsSinceTheEpoch
+		}
+	}
 
-		assert 2 == service.listIncrements(new File(targetPath)).size()
+	private MockFor mockRDiffCommands(int exitValue, String cmdLineContent) {
+		MockFor rdiffCommands = new MockFor(RDiffCommands.class)
+		MockFor process = new MockFor(Process.class)
+		process.demand.exitValue(1) { return exitValue }
+
+		if (0 == exitValue) {
+			process.demand.getText(1) { return cmdLineContent }
+		}
+
+		rdiffCommands.demand.listIncrements(1) {String targetDir ->
+			assert this.targetDir.absolutePath == targetDir
+			return process.proxyInstance()
+		}
+		return rdiffCommands
 	}
 }

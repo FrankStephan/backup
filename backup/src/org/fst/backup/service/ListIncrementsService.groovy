@@ -1,22 +1,29 @@
 package org.fst.backup.service
 
-import org.fst.backup.rdiff.RDiffCommandElement
-import org.fst.backup.rdiff.RDiffCommandBuilder
-import org.fst.backup.service.exception.DirectoryNotExistsException;
-import org.fst.backup.service.exception.FileIsNotADirectoryException;
+import org.fst.backup.model.Increment
+import org.fst.backup.rdiff.RDiffCommands
+import org.fst.backup.service.exception.DirectoryNotExistsException
+import org.fst.backup.service.exception.FileIsNotADirectoryException
+import org.fst.backup.service.exception.NoBackupDirectoryException
 
 
 class ListIncrementsService {
-	
-	List<String> listIncrements(File directory) throws FileIsNotADirectoryException {
-		if (directory.exists()) {
-			if (directory.directory) {
-				String commandString = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.LIST_INCREMENTS_ARG, RDiffCommandElement.PARSABLE_OUTPUT_ARG)
-				commandString = commandString + ' ' + directory.absolutePath
-				Process process = commandString.execute()
-				return process.text.readLines()
+
+	private RDiffCommands rdiffCommands = new RDiffCommands()
+
+	List<Increment> listIncrements(File targetDir) throws FileIsNotADirectoryException, DirectoryNotExistsException {
+		if (targetDir.exists()) {
+			if (targetDir.directory) {
+				Process process = rdiffCommands.listIncrements(targetDir.absolutePath)
+				if (0 == process.exitValue()) {
+					List<String> lines = process.text.readLines()
+					List<Increment> increments = lines.collect {new Increment().setSecondsSinceTheEpoch(it.split()[0] as long) }
+					return increments
+				} else {
+					throw new NoBackupDirectoryException()
+				}
 			} else {
-			throw new FileIsNotADirectoryException()
+				throw new FileIsNotADirectoryException()
 			}
 		} else {
 			throw new DirectoryNotExistsException()

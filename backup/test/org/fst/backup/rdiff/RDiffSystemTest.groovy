@@ -30,6 +30,12 @@ class RDiffSystemTest extends GroovyTestCase {
 		assert 0 == exitValue
 	}
 
+	void testListIncrementsNoBackupDir() {
+		new File(TARGET_DIR).mkdirs()
+		listIncrements()
+		assert 1 == exitValue
+	}
+
 	void testListIncrementsAfterBackups() {
 		createTwoIncrements()
 		assert 2 == listIncrements().size()
@@ -45,7 +51,6 @@ class RDiffSystemTest extends GroovyTestCase {
 			return increment[0].isNumber() && 'directory' == increment[1]
 		}
 	}
-
 
 	void testListIncrementsChronologicallyAscending() {
 		createTwoIncrements()
@@ -140,6 +145,7 @@ class RDiffSystemTest extends GroovyTestCase {
 	private List<String> listIncrements() {
 		def process = rdiffCommands.listIncrements(TARGET_DIR)
 		String increments = process.text
+		exitValue = process.exitValue()
 		return increments.readLines()
 	}
 
