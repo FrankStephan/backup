@@ -1,6 +1,6 @@
 package org.fst.backup.rdiff
 
-enum RDiffCommand {
+enum RDiffCommandElement {
 	RDIFF_COMMAND('rdiff-backup'),
 	VERSION_ARG('--version'),
 	LIST_INCREMENTS_ARG('-l'),
@@ -8,9 +8,9 @@ enum RDiffCommand {
 	LIST_AT_TIME_ARG('--list-at-time'),
 	HIGHEST_VERBOSITY('-v9')
 
-	String commandString
+	String string
 
-	RDiffCommand(String command) {
-		this.commandString = command
+	RDiffCommandElement(String string) {
+		this.string = string
 	}
 }

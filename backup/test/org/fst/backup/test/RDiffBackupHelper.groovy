@@ -1,6 +1,6 @@
 package org.fst.backup.test
 
-import org.fst.backup.rdiff.RDiffCommand
+import org.fst.backup.rdiff.RDiffCommandElement
 import org.fst.backup.rdiff.RDiffCommandBuilder
 
 
@@ -32,7 +32,7 @@ class RDiffBackupHelper {
 
 	private void backup(String sourceFolder, String targetFolder) {
 		RDiffCommandBuilder commandBuilder = new RDiffCommandBuilder()
-		String command = commandBuilder.build(RDiffCommand.RDIFF_COMMAND)
+		String command = commandBuilder.build(RDiffCommandElement.RDIFF_COMMAND)
 		command = command + ' ' + sourceFolder + ' ' + targetFolder
 		Process p = command.execute()
 		p.waitForProcessOutput()

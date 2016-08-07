@@ -16,10 +16,10 @@ class RDiffSystemTest extends GroovyTestCase {
 	String cmdLineOutput
 	int exitValue
 
-	RDiffProcessExecutor executor = new RDiffProcessExecutor()
+	RDiffCommands rdiffCommands = new RDiffCommands()
 
 	void testRDiffIsAvailableAndHasCorrectVersion() {
-		def process = executor.version()
+		def process = rdiffCommands.version()
 		assertEquals('rdiff-backup 1.2.8', process.text.trim())
 	}
 
@@ -49,7 +49,7 @@ class RDiffSystemTest extends GroovyTestCase {
 		File targetDir = new File(TARGET_DIR)
 		targetDir.mkdirs()
 		RDiffCommandBuilder commandBuilder = new RDiffCommandBuilder()
-		String command = commandBuilder.build(RDiffCommand.RDIFF_COMMAND, RDiffCommand.LIST_AT_TIME_ARG)
+		String command = commandBuilder.build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.LIST_AT_TIME_ARG)
 		command = command + ' now ' + TARGET_DIR
 		Process process = command.execute()
 
@@ -116,7 +116,7 @@ class RDiffSystemTest extends GroovyTestCase {
 	}
 
 	private void backup() {
-		Process p = executor.backup(new File(SOURCE_DIR), new File(TARGET_DIR))
+		Process p = rdiffCommands.backup(new File(SOURCE_DIR), new File(TARGET_DIR))
 		cmdLineOutput = p.text
 		exitValue = p.exitValue()
 	}
@@ -126,13 +126,13 @@ class RDiffSystemTest extends GroovyTestCase {
 	}
 
 	private List<String> listIncrements() {
-		def process = executor.listIncrements(TARGET_DIR)
+		def process = rdiffCommands.listIncrements(TARGET_DIR)
 		String increments = process.text
 		return increments.readLines()
 	}
 
 	private List<String> listFiles(def when) {
-		def process = executor.listFiles(TARGET_DIR, when)
+		def process = rdiffCommands.listFiles(TARGET_DIR, when)
 		String text = process.text
 		return text.readLines()
 	}
