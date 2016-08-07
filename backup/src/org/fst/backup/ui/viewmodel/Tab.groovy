@@ -1,4 +1,4 @@
-package org.fst.backup.ui
+package org.fst.backup.ui.viewmodel
 
 enum Tab {
 

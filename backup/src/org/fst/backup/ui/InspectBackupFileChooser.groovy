@@ -2,6 +2,8 @@ package org.fst.backup.ui
 
 import javax.swing.JFileChooser
 
+import org.fst.backup.ui.viewmodel.CommonViewModel;
+
 class InspectBackupFileChooser {
 
 

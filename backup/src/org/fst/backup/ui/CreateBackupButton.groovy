@@ -7,6 +7,8 @@ import java.awt.Color
 import javax.swing.JButton
 
 import org.fst.backup.service.CreateBackupService
+import org.fst.backup.ui.viewmodel.CommonViewModel
+import org.fst.backup.ui.viewmodel.Tab
 
 class CreateBackupButton {
 
@@ -14,7 +16,7 @@ class CreateBackupButton {
 		swing.button(
 				text: 'Backup ausführen',
 				actionPerformed: {
-					commonViewModel.tabsModel.selectedIndex = Tab.CONSOLE.ordinal
+					commonViewModel.tabsModel.selectedIndex = Tab.CONSOLE.ordinal()
 					commonViewModel.consoleStatusColor = Color.RED
 					commonViewModel.consoleStatus = 'Status: Laufend'
 					clearConsole(commonViewModel)

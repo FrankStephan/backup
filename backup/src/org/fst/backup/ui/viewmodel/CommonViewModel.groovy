@@ -1,10 +1,11 @@
-package org.fst.backup.ui
+package org.fst.backup.ui.viewmodel
 
 import groovy.beans.Bindable
 
 import java.awt.Color
 
 import javax.swing.DefaultListModel
+import javax.swing.DefaultListSelectionModel
 import javax.swing.SingleSelectionModel
 import javax.swing.text.PlainDocument
 
@@ -14,8 +15,9 @@ class CommonViewModel {
 
 	File sourceDir
 	File targetDir
-	Date targetDate
-	DefaultListModel<String> incrementsListModel
+
+	DefaultListModel<IncrementListEntry> incrementsListModel
+	DefaultListSelectionModel incrementsListSelectionModel
 
 	PlainDocument consoleDocument
 	@Bindable

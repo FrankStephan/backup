@@ -5,10 +5,17 @@ import groovy.swing.SwingBuilder
 import java.awt.Dimension
 import java.awt.Font
 
+import javafx.stage.FileChooser
+
 import javax.swing.JButton
 import javax.swing.JScrollPane
 import javax.swing.border.TitledBorder
 import javax.swing.text.DefaultCaret
+
+import org.fst.backup.service.IncrementDateService
+import org.fst.backup.ui.viewmodel.CommonViewModel
+import org.fst.backup.ui.viewmodel.IncrementListEntry
+import org.fst.backup.ui.viewmodel.Tab
 
 
 class TabFactory {
@@ -37,14 +44,20 @@ class TabFactory {
 
 	def chooseTab = {
 		swing.hbox(name: 'Suchen') {
-			new BackupDirectoryChooser().createComponent(commonViewModel.incrementsListModel, swing)
+			new BackupDirectoryChooser().createComponent(commonViewModel, swing)
 			vbox() {
 				scrollPane(
 						border: swing.titledBorder(title: 'Enthaltene Backups'),
 						preferredSize: new Dimension(width:250, height:-1),
 						minimumSize: new Dimension(width:250, height:-1)
-						) { list(model: commonViewModel.incrementsListModel) }
+						) { new IncrementsList().createComponent(commonViewModel, swing) }
 				button(text: 'Durchsuchen', actionPerformed: {
+					IncrementListEntry entry = commonViewModel.incrementsListModel.get(commonViewModel.incrementsListSelectionModel.leadIndex)
+					long secondsSinceTheEpoch = new IncrementDateService().secondsSinceTheEpoch(entry.secondsSinceTheEpoch)
+
+
+					loadPaths and build FileChooser
+
 					commonViewModel.tabsModel.selectedIndex = Tab.INSPECT.ordinal()
 				})
 			}
