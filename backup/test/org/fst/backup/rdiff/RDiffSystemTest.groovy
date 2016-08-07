@@ -35,6 +35,18 @@ class RDiffSystemTest extends GroovyTestCase {
 		assert 2 == listIncrements().size()
 	}
 
+	void testListIncrementsFormat() {
+		createTwoIncrements()
+		List<String> increments = listIncrements()
+		assert 2 == increments.size()
+
+		assert increments.every {
+			String[] increment = it.split()
+			return increment[0].isNumber() && 'directory' == increment[1]
+		}
+	}
+
+
 	void testListIncrementsChronologicallyAscending() {
 		createTwoIncrements()
 		List<String> increments = listIncrements()
