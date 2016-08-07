@@ -7,7 +7,8 @@ import java.beans.PropertyChangeListener
 
 import javax.swing.JFileChooser
 
-import org.fst.backup.service.IncrementDateService
+import org.codehaus.groovy.runtime.DateGroovyMethods
+import org.fst.backup.model.Increment
 import org.fst.backup.service.ListIncrementsService
 import org.fst.backup.ui.viewmodel.CommonViewModel
 import org.fst.backup.ui.viewmodel.IncrementListEntry
@@ -36,11 +37,10 @@ class BackupDirectoryChooser {
 		if (directory != null) {
 			List increments = new ListIncrementsService().listIncrements(directory)
 			increments = increments.reverse()
-			def incrementDateExtractorService = new IncrementDateService()
+			increments.each { Increment it ->
+				Date date = new Date(it.secondsSinceTheEpoch * 1000)
 
-			increments.each { String it ->
-				Date secondsSinceTheEpoch = incrementDateExtractorService.extractDate(it)
-				IncrementListEntry entry = new IncrementListEntry(secondsSinceTheEpoch.toString(), secondsSinceTheEpoch)
+				IncrementListEntry entry = new IncrementListEntry(DateGroovyMethods.getDateTimeString(date), it)
 				commonViewModel.incrementsListModel.addElement(entry)
 			}
 		}

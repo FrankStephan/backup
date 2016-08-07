@@ -1,13 +1,15 @@
 package org.fst.backup.ui.viewmodel
 
+import org.fst.backup.model.Increment
+
 class IncrementListEntry {
 
 	String text
-	Date secondsSinceTheEpoch
+	Increment increment
 
-	public IncrementListEntry(String text, Date secondsSinceTheEpoch) {
+	public IncrementListEntry(String text, Increment increment) {
 		this.text = text
-		this.secondsSinceTheEpoch = secondsSinceTheEpoch
+		this.increment = increment
 	}
 
 	@Override

@@ -15,8 +15,8 @@ class ListIncrementsService {
 		if (targetDir.exists()) {
 			if (targetDir.directory) {
 				Process process = rdiffCommands.listIncrements(targetDir.absolutePath)
+				List<String> lines = process.text.readLines()
 				if (0 == process.exitValue()) {
-					List<String> lines = process.text.readLines()
 					List<Increment> increments = lines.collect {new Increment().setSecondsSinceTheEpoch(it.split()[0] as long) }
 					return increments
 				} else {
