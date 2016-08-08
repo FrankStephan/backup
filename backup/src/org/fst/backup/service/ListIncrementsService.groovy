@@ -15,9 +15,13 @@ class ListIncrementsService {
 		if (targetDir.exists()) {
 			if (targetDir.directory) {
 				Process process = rdiffCommands.listIncrements(targetDir.absolutePath)
-				List<String> lines = process.text.readLines()
+				List<String> lines = process.getText().readLines()
 				if (0 == process.exitValue()) {
-					List<Increment> increments = lines.collect {new Increment().setSecondsSinceTheEpoch(it.split()[0] as long) }
+					List<Increment> increments = lines.collect {
+						new Increment()
+								.setSecondsSinceTheEpoch(it.split()[0] as long)
+								.setTargetPath(targetDir.absolutePath)
+					}
 					return increments
 				} else {
 					throw new NoBackupDirectoryException()

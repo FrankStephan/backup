@@ -32,14 +32,13 @@ class BackupDirectoryChooser {
 		return fc
 	}
 
-	private void updateIncrementsList(CommonViewModel commonViewModel, File directory) {
+	private void updateIncrementsList(CommonViewModel commonViewModel, File targetDir) {
 		commonViewModel.incrementsListModel.removeAllElements()
-		if (directory != null) {
-			List increments = new ListIncrementsService().listIncrements(directory)
+		if (targetDir != null) {
+			List increments = new ListIncrementsService().listIncrements(targetDir)
 			increments = increments.reverse()
 			increments.each { Increment it ->
 				Date date = new Date(it.secondsSinceTheEpoch * 1000)
-
 				IncrementListEntry entry = new IncrementListEntry(DateGroovyMethods.getDateTimeString(date), it)
 				commonViewModel.incrementsListModel.addElement(entry)
 			}

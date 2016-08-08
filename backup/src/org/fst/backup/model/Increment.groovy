@@ -7,4 +7,5 @@ import groovy.transform.builder.SimpleStrategy
 class Increment {
 
 	long secondsSinceTheEpoch
+	String targetPath
 }

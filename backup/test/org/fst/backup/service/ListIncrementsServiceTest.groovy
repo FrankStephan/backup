@@ -46,23 +46,23 @@ class ListIncrementsServiceTest extends AbstractFileSystemTest {
 		rdiffCommands = mockRDiffCommands(0, '1467750198 directory' + System.lineSeparator() + '1467750199 directory')
 		rdiffCommands.use {
 			ListIncrementsService service = new ListIncrementsService()
-			assert [1467750198, 1467750199]== service.listIncrements(targetDir)*.secondsSinceTheEpoch
+			def increments = service.listIncrements(targetDir)
+			assert [1467750198, 1467750199]== increments*.secondsSinceTheEpoch
+			assert increments.every { targetDir.absolutePath == it.targetPath }
 		}
 	}
 
 	private MockFor mockRDiffCommands(int exitValue, String cmdLineContent) {
 		MockFor rdiffCommands = new MockFor(RDiffCommands.class)
 		MockFor process = new MockFor(Process.class)
+
+		process.demand.getText(1) { return cmdLineContent }
 		process.demand.exitValue(1) { return exitValue }
-
-		if (0 == exitValue) {
-			process.demand.getText(1) { return cmdLineContent }
-		}
-
 		rdiffCommands.demand.listIncrements(1) {String targetDir ->
 			assert this.targetDir.absolutePath == targetDir
 			return process.proxyInstance()
 		}
+
 		return rdiffCommands
 	}
 }
