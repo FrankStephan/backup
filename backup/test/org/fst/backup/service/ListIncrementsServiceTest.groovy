@@ -6,31 +6,28 @@ import groovy.mock.interceptor.MockFor
 import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
-import org.fst.backup.service.exception.NoBackupDirectoryException
+import org.fst.backup.service.exception.NotABackupDirectoryException
 import org.fst.backup.test.AbstractFileSystemTest
 
 class ListIncrementsServiceTest extends AbstractFileSystemTest {
 
-	File targetDir
 	MockFor rdiffCommands
-
-	ListIncrementsService service = new ListIncrementsService()
 
 	void setUp() {
 		super.setUp()
-		targetDir = new File(targetPath)
-		targetDir.mkdirs()
 		rdiffCommands = mockRDiffCommands(0, '')
 	}
 
 	void testListIncrementsWithNotExistingDirectory() {
 		File notExistingDir = new File(tmpPath + 'NotExisting/')
+		ListIncrementsService service = new ListIncrementsService()
 		shouldFail(DirectoryNotExistsException, { service.listIncrements(notExistingDir) })
 	}
 
 	void testListIncrementsWithNonDirectoryFile() {
 		File file = new File(tmpPath, 'File.txt')
 		file.createNewFile()
+		ListIncrementsService service = new ListIncrementsService()
 		shouldFail(FileIsNotADirectoryException, { service.listIncrements(file) })
 	}
 
@@ -38,7 +35,7 @@ class ListIncrementsServiceTest extends AbstractFileSystemTest {
 		rdiffCommands = mockRDiffCommands(1, '')
 		rdiffCommands.use {
 			ListIncrementsService service = new ListIncrementsService()
-			shouldFail(NoBackupDirectoryException, { service.listIncrements(targetDir) })
+			shouldFail(NotABackupDirectoryException, { service.listIncrements(targetDir) })
 		}
 	}
 

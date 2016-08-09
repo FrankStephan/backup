@@ -14,15 +14,15 @@ class RDiffCommands {
 		return commandString.execute()
 	}
 
-	Process listIncrements(String targetDir) {
+	Process listIncrements(String targetPath) {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.LIST_INCREMENTS_ARG, RDiffCommandElement.PARSABLE_OUTPUT_ARG)
-		command = command + ' ' + targetDir
+		command = command + ' ' + targetPath
 		return command.execute()
 	}
 
-	Process listFiles(String targetDir, def when) {
+	Process listFiles(String targetPath, def when) {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.LIST_AT_TIME_ARG)
-		command = command + ' ' + when + ' ' + targetDir
+		command = command + ' ' + when + ' ' + targetPath
 		return command.execute()
 	}
 }

@@ -4,7 +4,7 @@ import static org.junit.Assert.*
 
 class PathsToFilesServiceTest extends GroovyTestCase {
 
-	PathsToFilesService service = new PathsToFilesService('\\' as char)
+	PathsToFilesService service = new PathsToFilesService()
 
 	File root
 

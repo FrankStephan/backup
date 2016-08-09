@@ -4,12 +4,6 @@ package org.fst.backup.service
 
 class PathsToFilesService {
 
-	int rdiffPathSeparator
-
-	PathsToFilesService(char rdiffPathSeparator) {
-		this.rdiffPathSeparator = rdiffPathSeparator as char
-	}
-
 	void createFileStructureUnderRoot(String[] pathsArray, File rootDir) {
 		List<? extends List<String>> paths = new ArrayList<? extends List<String>>()
 		pathsArray.each { it ->

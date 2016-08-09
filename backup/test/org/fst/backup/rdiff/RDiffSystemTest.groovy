@@ -65,11 +65,7 @@ class RDiffSystemTest extends GroovyTestCase {
 	void testListFilesFromNonBackupDirectory() {
 		File targetDir = new File(TARGET_DIR)
 		targetDir.mkdirs()
-		RDiffCommandBuilder commandBuilder = new RDiffCommandBuilder()
-		String command = commandBuilder.build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.LIST_AT_TIME_ARG)
-		command = command + ' now ' + TARGET_DIR
-		Process process = command.execute()
-
+		def process = rdiffCommands.listFiles(TARGET_DIR, 'now')
 		StringBuilder sb = new StringBuilder()
 		process.errorStream.eachLine { sb.append(it)}
 		String error = sb.toString()
@@ -108,6 +104,13 @@ class RDiffSystemTest extends GroovyTestCase {
 		assert 2 == paths.size()
 		assert '.' == paths[0]
 		assert file1.getName() == paths[1]
+	}
+
+	void testListFilesReturnsRelativePaths() {
+		createTwoIncrements()
+		def paths = listFiles('now')
+		assert 3 == paths.size()
+		assert paths.every { !it.contains(TARGET_DIR) }
 	}
 
 	void tearDown() {

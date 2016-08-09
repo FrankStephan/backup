@@ -1,73 +1,66 @@
 package org.fst.backup.service
 
 import static org.junit.Assert.*
+import groovy.mock.interceptor.MockFor
 
-import org.fst.backup.service.exception.NoBackupDirectoryException;
+import org.fst.backup.model.Increment
+import org.fst.backup.rdiff.RDiffCommands
+import org.fst.backup.service.exception.DirectoryNotExistsException
+import org.fst.backup.service.exception.FileIsNotADirectoryException
+import org.fst.backup.service.exception.NotABackupDirectoryException
 import org.fst.backup.test.AbstractFileSystemTest
 import org.fst.backup.test.RDiffBackupHelper
 
 class ListPathsFromBackupServiceTest extends AbstractFileSystemTest {
 
 	RDiffBackupHelper helper =  new RDiffBackupHelper()
+	Increment increment
 
-	ListPathsFromBackupService service = new ListPathsFromBackupService()
-
-	void testNotExisitingBackupDir() {
-		shouldFail (NoBackupDirectoryException) {service.retrieveAllPathsFromBackupDir(new File(targetPath), nowAsSecondsSinceTheEpoch())}
+	void testNotExistingTargetDir() {
+		targetPath = tmpPath + 'NotExisting/'
+		createIncrement()
+		ListPathsFromBackupService service = new ListPathsFromBackupService()
+		shouldFail (DirectoryNotExistsException) {service.retrieveAllPathsFromBackupDir(increment)}
 	}
 
-	void testFirstPathIsCurrentDir1() {
-		String[] paths = createBackupAndRetrievePaths()
-		assert 3 == paths.length
-		assert '.' == paths[0]
+	void testTargetIsNotADirectory() {
+		File file = new File(tmpPath, 'File.txt')
+		file.createNewFile()
+		targetPath = file.absolutePath
+		createIncrement()
+		ListPathsFromBackupService service = new ListPathsFromBackupService()
+		shouldFail (FileIsNotADirectoryException) {service.retrieveAllPathsFromBackupDir(increment)}
 	}
 
-	void testFirstPathIsCurrentDir2() {
-		helper.createEmptyBackup(sourePath, targetPath)
-
-		Calendar c = Calendar.getInstance()
-		c.set(Calendar.MILLISECOND, 0)
-
-		String[] paths = service.retrieveAllPathsFromBackupDir(new File(targetPath), nowAsSecondsSinceTheEpoch())
-		assert '.' == paths[0]
+	void testTargetIsNoBackupDir() {
+		createIncrement()
+		ListPathsFromBackupService service = new ListPathsFromBackupService()
+		shouldFail (NotABackupDirectoryException) {service.retrieveAllPathsFromBackupDir(increment)}
 	}
 
-	void testAllPathsAreRetrieved() {
-		String[] paths = createBackupAndRetrievePaths()
+	void testListFiles() {
+		createIncrement()
+		def rdiffCommands = new MockFor(RDiffCommands.class)
+		MockFor process = new MockFor(Process.class)
+		process.demand.getText(1) { return '.' + System.lineSeparator() + 'a0/a1/a2.suf' }
+		process.demand.exitValue(1) { return 0 }
 
-		assert helper.file1.getName() == paths[1]
-		assert helper.file2.getName() == paths[2]
+		rdiffCommands.demand.listFiles(1) { String targetPath, def when ->
+			assert increment.targetPath == targetPath
+			assert increment.secondsSinceTheEpoch == when
+			return process.proxyInstance()
+		}
+
+		rdiffCommands.use {
+			ListPathsFromBackupService service = new ListPathsFromBackupService()
+			assert ['.', 'a0/a1/a2.suf']== service.retrieveAllPathsFromBackupDir(increment)
+		}
 	}
 
-	void testPathsAreAlwaysRelative() {
-		String[] paths = createBackupAndRetrievePaths()
-		assert paths.every { !it.contains(targetPath) }
-	}
-
-	void testPathsAreRetrievedByIncrementDate() {
-		helper.createTwoIncrements(sourePath, targetPath)
-		ListIncrementsService listIncrementsService = new ListIncrementsService()
-		List<String> increments = listIncrementsService.listIncrements(new File(targetPath))
-		IncrementDateService incrementDateService = new IncrementDateService()
-		long timeOfFirstBackup = incrementDateService.secondsSinceTheEpoch(incrementDateService.extractDate(increments.getAt(0)))
-
-		String[] paths = service.retrieveAllPathsFromBackupDir(new File(targetPath), timeOfFirstBackup)
-		assert 2 == paths.length
-		assert '.' == paths[0]
-		assert helper.file1.getName() == paths[1]
-
-		long timeOfSecondBackup = incrementDateService.secondsSinceTheEpoch(incrementDateService.extractDate(increments.getAt(1)))
-		paths = service.retrieveAllPathsFromBackupDir(new File(targetPath), timeOfSecondBackup)
-		assert 3 == paths.length
-		assert '.' == paths[0]
-		assert helper.file1.getName() == paths[1]
-		assert helper.file2.getName() == paths[2]
-	}
-
-	private String[] createBackupAndRetrievePaths() {
-		helper.createTwoIncrements(sourePath, targetPath)
-		String[] paths = service.retrieveAllPathsFromBackupDir(new File(targetPath), nowAsSecondsSinceTheEpoch())
-		return paths
+	private void createIncrement() {
+		increment = new Increment()
+				.setSecondsSinceTheEpoch(nowAsSecondsSinceTheEpoch())
+				.setTargetPath(targetPath)
 	}
 
 	private long nowAsSecondsSinceTheEpoch() {

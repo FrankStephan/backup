@@ -4,7 +4,7 @@ import org.fst.backup.model.Increment
 import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
-import org.fst.backup.service.exception.NoBackupDirectoryException
+import org.fst.backup.service.exception.NotABackupDirectoryException
 
 
 class ListIncrementsService {
@@ -24,7 +24,7 @@ class ListIncrementsService {
 					}
 					return increments
 				} else {
-					throw new NoBackupDirectoryException()
+					throw new NotABackupDirectoryException()
 				}
 			} else {
 				throw new FileIsNotADirectoryException()

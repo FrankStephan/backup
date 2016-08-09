@@ -12,16 +12,10 @@ import org.fst.backup.test.FileHelper
 class CreateBackupServiceTest extends AbstractFileSystemTest {
 
 	CreateBackupService service = new CreateBackupService()
-	File sourceDir
-	File targetDir
 	MockFor rdiffCommands
 
 	void setUp() {
 		super.setUp()
-		sourceDir = new File(sourePath)
-		targetDir = new File(targetPath)
-		sourceDir.mkdirs()
-		targetDir.mkdir()
 		rdiffCommands = mockRDiffCommands()
 	}
 
