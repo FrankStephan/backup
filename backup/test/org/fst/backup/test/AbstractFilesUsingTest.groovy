@@ -2,7 +2,7 @@ package org.fst.backup.test
 
 
 
-abstract class AbstractFileSystemTest extends GroovyTestCase {
+abstract class AbstractFilesUsingTest extends GroovyTestCase {
 
 	String tmpPath
 	String sourePath

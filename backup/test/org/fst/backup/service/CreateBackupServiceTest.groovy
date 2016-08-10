@@ -6,9 +6,9 @@ import groovy.mock.interceptor.MockFor
 import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
-import org.fst.backup.test.AbstractFileSystemTest
+import org.fst.backup.test.AbstractFilesUsingTest
 
-class CreateBackupServiceTest extends AbstractFileSystemTest {
+class CreateBackupServiceTest extends AbstractFilesUsingTest {
 
 	CreateBackupService service = new CreateBackupService()
 	MockFor rdiffCommands

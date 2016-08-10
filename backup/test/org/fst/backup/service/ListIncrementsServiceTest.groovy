@@ -7,9 +7,9 @@ import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
 import org.fst.backup.service.exception.NotABackupDirectoryException
-import org.fst.backup.test.AbstractFileSystemTest
+import org.fst.backup.test.AbstractFilesUsingTest
 
-class ListIncrementsServiceTest extends AbstractFileSystemTest {
+class ListIncrementsServiceTest extends AbstractFilesUsingTest {
 
 	MockFor rdiffCommands
 
