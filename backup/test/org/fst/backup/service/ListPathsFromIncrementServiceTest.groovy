@@ -9,11 +9,9 @@ import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
 import org.fst.backup.service.exception.NotABackupDirectoryException
 import org.fst.backup.test.AbstractFileSystemTest
-import org.fst.backup.test.RDiffBackupHelper
 
 class ListPathsFromIncrementServiceTest extends AbstractFileSystemTest {
 
-	RDiffBackupHelper helper =  new RDiffBackupHelper()
 	Increment increment
 
 	void testNotExistingTargetDir() {

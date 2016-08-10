@@ -7,7 +7,6 @@ import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
 import org.fst.backup.test.AbstractFileSystemTest
-import org.fst.backup.test.FileHelper
 
 class CreateBackupServiceTest extends AbstractFileSystemTest {
 
@@ -28,9 +27,8 @@ class CreateBackupServiceTest extends AbstractFileSystemTest {
 	}
 
 	void testNonDirectoryFilesAreDenied() {
-		def fileHelper = new FileHelper()
-		File file1 = fileHelper.createFile(tmpPath, 'File1.txt')
-		File file2 = fileHelper.createFile(tmpPath, 'File2.txt')
+		File file1 = new File (tmpPath, 'File1.txt') << 'Content'
+		File file2 = new File (tmpPath, 'File2.txt') << 'Content'
 
 		shouldFail(FileIsNotADirectoryException) {
 			service.createBackup(file1, file2, {})
