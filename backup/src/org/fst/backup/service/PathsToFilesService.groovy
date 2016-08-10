@@ -4,7 +4,7 @@ package org.fst.backup.service
 
 class PathsToFilesService {
 
-	void createFileStructureUnderRoot(String[] pathsArray, File rootDir) {
+	void createFileStructureUnderRoot(List<String> pathsArray, File rootDir) {
 		List<? extends List<String>> paths = new ArrayList<? extends List<String>>()
 		pathsArray.each { it ->
 			if (paths != null) {

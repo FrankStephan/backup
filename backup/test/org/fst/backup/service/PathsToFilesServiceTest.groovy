@@ -18,7 +18,7 @@ class PathsToFilesServiceTest extends GroovyTestCase {
 	}
 
 	private void createFileStructureUnderRoot(List<String> paths, root) {
-		service.createFileStructureUnderRoot(paths as String[], root)
+		service.createFileStructureUnderRoot(paths, root)
 	}
 
 	void testRootHasNoFilesWhenPathsAreEmpty() {
