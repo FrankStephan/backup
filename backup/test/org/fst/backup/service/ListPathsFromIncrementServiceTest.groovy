@@ -11,7 +11,7 @@ import org.fst.backup.service.exception.NotABackupDirectoryException
 import org.fst.backup.test.AbstractFileSystemTest
 import org.fst.backup.test.RDiffBackupHelper
 
-class ListPathsFromBackupServiceTest extends AbstractFileSystemTest {
+class ListPathsFromIncrementServiceTest extends AbstractFileSystemTest {
 
 	RDiffBackupHelper helper =  new RDiffBackupHelper()
 	Increment increment
@@ -19,8 +19,8 @@ class ListPathsFromBackupServiceTest extends AbstractFileSystemTest {
 	void testNotExistingTargetDir() {
 		targetPath = tmpPath + 'NotExisting/'
 		createIncrement()
-		ListPathsFromBackupService service = new ListPathsFromBackupService()
-		shouldFail (DirectoryNotExistsException) {service.retrieveAllPathsFromBackupDir(increment)}
+		ListPathsFromIncrementService service = new ListPathsFromIncrementService()
+		shouldFail (DirectoryNotExistsException) {service.listPathsFromIncrement(increment)}
 	}
 
 	void testTargetIsNotADirectory() {
@@ -28,14 +28,14 @@ class ListPathsFromBackupServiceTest extends AbstractFileSystemTest {
 		file.createNewFile()
 		targetPath = file.absolutePath
 		createIncrement()
-		ListPathsFromBackupService service = new ListPathsFromBackupService()
-		shouldFail (FileIsNotADirectoryException) {service.retrieveAllPathsFromBackupDir(increment)}
+		ListPathsFromIncrementService service = new ListPathsFromIncrementService()
+		shouldFail (FileIsNotADirectoryException) {service.listPathsFromIncrement(increment)}
 	}
 
 	void testTargetIsNoBackupDir() {
 		createIncrement()
-		ListPathsFromBackupService service = new ListPathsFromBackupService()
-		shouldFail (NotABackupDirectoryException) {service.retrieveAllPathsFromBackupDir(increment)}
+		ListPathsFromIncrementService service = new ListPathsFromIncrementService()
+		shouldFail (NotABackupDirectoryException) {service.listPathsFromIncrement(increment)}
 	}
 
 	void testListFiles() {
@@ -52,8 +52,8 @@ class ListPathsFromBackupServiceTest extends AbstractFileSystemTest {
 		}
 
 		rdiffCommands.use {
-			ListPathsFromBackupService service = new ListPathsFromBackupService()
-			assert ['.', 'a0/a1/a2.suf']== service.retrieveAllPathsFromBackupDir(increment)
+			ListPathsFromIncrementService service = new ListPathsFromIncrementService()
+			assert ['.', 'a0/a1/a2.suf']== service.listPathsFromIncrement(increment)
 		}
 	}
 

@@ -7,19 +7,18 @@ import org.fst.backup.service.exception.FileIsNotADirectoryException
 import org.fst.backup.service.exception.NotABackupDirectoryException
 
 
-class ListPathsFromBackupService {
+class ListPathsFromIncrementService {
 
 	RDiffCommands rdiffCommands = new RDiffCommands()
 
-	String[] retrieveAllPathsFromBackupDir(Increment increment) {
-
+	List<String> listPathsFromIncrement(Increment increment) {
 		File targetDir = new File(increment.targetPath)
 		if (targetDir.exists()) {
 			if (targetDir.isDirectory()) {
 				Process process = rdiffCommands.listFiles(increment.targetPath, increment.secondsSinceTheEpoch)
-				String cmdLineContent = process.text
+				List<String> paths = process.text.readLines()
 				if (0 == process.exitValue()) {
-					return cmdLineContent.readLines() as String[]
+					return paths
 				} else {
 					throw new NotABackupDirectoryException()
 				}
