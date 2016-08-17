@@ -51,7 +51,6 @@ class TabFactory {
 				button(text: 'Durchsuchen', actionPerformed: {
 					IncrementListEntry entry = commonViewModel.incrementsListModel.get(commonViewModel.incrementsListSelectionModel.leadIndex)
 
-
 					commonViewModel.tabsModel.selectedIndex = Tab.INSPECT.ordinal()
 				})
 			}

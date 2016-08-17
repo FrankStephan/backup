@@ -2,13 +2,18 @@ package org.fst.backup.service
 
 import static org.junit.Assert.*
 
-class PathsToFilesServiceTest extends GroovyTestCase {
+import org.fst.backup.service.exception.DirectoryNotExistsException
+import org.fst.backup.service.exception.FileIsNotADirectoryException
+import org.fst.backup.test.AbstractFilesUsingTest
+
+class PathsToFilesServiceTest extends AbstractFilesUsingTest {
 
 	PathsToFilesService service = new PathsToFilesService()
 
 	File root
 
 	void setUp() {
+		super.setUp()
 		root = new File(this.getClass().getSimpleName() + '-root/')
 		root.mkdir()
 	}
@@ -17,19 +22,30 @@ class PathsToFilesServiceTest extends GroovyTestCase {
 		root.deleteDir()
 	}
 
-	private void createFileStructureUnderRoot(List<String> paths, root) {
-		service.createFileStructureUnderRoot(paths, root)
+	private void createFileStructureFromPaths(List<String> paths, root) {
+		service.createFileStructureFromPaths(paths, root)
+	}
+
+	void testWithNotExistingRoot() {
+		File notExistingRoot = new File(tmpPath + 'NotExisting/')
+		shouldFail (DirectoryNotExistsException) { service.createFileStructureFromPaths([], notExistingRoot) }
+	}
+
+	void testWithNonDirectoryRoot() {
+		File file = new File(tmpPath, 'File.txt')
+		file.createNewFile()
+		shouldFail (FileIsNotADirectoryException) { service.createFileStructureFromPaths([], file) }
 	}
 
 	void testRootHasNoFilesWhenPathsAreEmpty() {
 		def paths = []
-		createFileStructureUnderRoot(paths, root)
+		createFileStructureFromPaths(paths, root)
 		assert 0 == root.list().length
 	}
 
 	void testRootHasNoFilesWhenBackupIsEmpty() {
 		def paths = ['.']
-		createFileStructureUnderRoot(paths, root)
+		createFileStructureFromPaths(paths, root)
 		assert 0 == root.list().length
 	}
 
@@ -49,44 +65,44 @@ class PathsToFilesServiceTest extends GroovyTestCase {
 
 	void testSingleFileIsCreated() {
 		def paths = ['a0.suf']
-		createFileStructureUnderRoot(paths, root)
+		createFileStructureFromPaths(paths, root)
 		assertPathsCreated(paths)
 	}
 
 	void testManyFilesAreCreated() {
 		def paths = ['a0.suf', 'b0.suf', 'c0.suf']
-		createFileStructureUnderRoot(paths, root)
+		createFileStructureFromPaths(paths, root)
 		assertPathsCreated(paths)
 	}
 
 	void testSimplePathIsCreated() {
 		def paths = ['a0/a1/a2.suf']
-		createFileStructureUnderRoot(paths, root)
+		createFileStructureFromPaths(paths, root)
 		assertPathsCreated(paths)
 	}
 
 	void testForkedPathsAreCreated() {
 		def paths = ['a0/a1/a2.suf', 'a0/b1/b2.suf']
-		createFileStructureUnderRoot(paths, root)
+		createFileStructureFromPaths(paths, root)
 		assertPathsCreated(paths)
 	}
 
 	void testEmptyPathsAreSkipped() {
 		def paths = ['', 'a0/a1/a2.suf', '  ', 'b0/b1/b2.suf', '']
-		createFileStructureUnderRoot(paths, root)
+		createFileStructureFromPaths(paths, root)
 		assert 2 == root.list().length
 		assertPathsCreated(['a0/a1/a2.suf', 'b0/b1/b2.suf'])
 	}
 
 	void testFilesAndPathsAreCreated() {
 		def paths = ['a0.suf', 'a0/a1/a2.suf', 'b0.suf', 'a0/b1/b2.suf', 'c0.suf']
-		createFileStructureUnderRoot(paths, root)
+		createFileStructureFromPaths(paths, root)
 		assertPathsCreated(paths)
 	}
 
 	void testWhiteSpaceInPathSegments() {
 		def paths = ['a 0/a 1/a 2.suf']
-		createFileStructureUnderRoot(paths, root)
+		createFileStructureFromPaths(paths, root)
 		assertPathsCreated(paths)
 	}
 }

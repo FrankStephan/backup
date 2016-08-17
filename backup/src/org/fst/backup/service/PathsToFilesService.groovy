@@ -1,22 +1,31 @@
 package org.fst.backup.service
 
+import org.fst.backup.service.exception.DirectoryNotExistsException
+import org.fst.backup.service.exception.FileIsNotADirectoryException
+
 
 
 class PathsToFilesService {
 
-	void createFileStructureUnderRoot(List<String> pathsArray, File rootDir) {
-		List<? extends List<String>> paths = new ArrayList<? extends List<String>>()
-		pathsArray.each { it ->
-			if (paths != null) {
-				paths.add(it.split('/') as List)
-			}
-		}
+	void createFileStructureFromPaths(List<String> pathsList, File rootDir) {
+		if (rootDir.exists()) {
+			if (rootDir.isDirectory()) {
+				List<? extends List<String>> paths = new ArrayList<? extends List<String>>()
+				pathsList.each { it ->
+					paths.add(it.split('/') as List)
+				}
 
-		createFileStructureRecuresively(paths, rootDir)
-		//		Files.probeContentType(null)
+				createFileStructureRecursively(paths, rootDir)
+				//		Files.probeContentType(null)
+			} else {
+				throw new FileIsNotADirectoryException()
+			}
+		} else {
+			throw new DirectoryNotExistsException()
+		}
 	}
 
-	private void createFileStructureRecuresively(List<? extends List<String>> paths, File parent) {
+	private void createFileStructureRecursively(List<? extends List<String>> paths, File parent) {
 
 		List<? extends List<String>> pathsNotYetCreated = removeCompletelyCreatedPaths(paths)
 
@@ -30,7 +39,7 @@ class PathsToFilesService {
 				File firstSegmentFile = new File(parent, firstSegment)
 				List<? extends List<String>> pathsInGroup = it.value
 				List<? extends List<String>> subPathsInGroup = removeFirstSegmentFromEachPath(pathsInGroup)
-				createFileStructureRecuresively(subPathsInGroup, firstSegmentFile)
+				createFileStructureRecursively(subPathsInGroup, firstSegmentFile)
 			}
 		} else {
 			createFileOrDir(parent)

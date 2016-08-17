@@ -30,7 +30,6 @@ class BackupFileSystemViewTest extends AbstractFilesUsingTest {
 		}
 	}
 
-
 	void testHasOnlyOneRoot() {
 		fsv.roots == [root]
 	}

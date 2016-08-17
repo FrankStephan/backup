@@ -38,10 +38,20 @@ class BackupDirectoryChooser {
 			List increments = new ListIncrementsService().listIncrements(targetDir)
 			increments = increments.reverse()
 			increments.each { Increment it ->
-				Date date = new Date(it.secondsSinceTheEpoch * 1000)
-				IncrementListEntry entry = new IncrementListEntry(DateGroovyMethods.getDateTimeString(date), it)
+				long millisSinceTheEpoch = secondsToMillis(it.secondsSinceTheEpoch)
+				Date date = new Date(millisSinceTheEpoch)
+				def dateString = formatDate(date)
+				IncrementListEntry entry = new IncrementListEntry(dateString, it)
 				commonViewModel.incrementsListModel.addElement(entry)
 			}
 		}
+	}
+
+	private long secondsToMillis(long seconds) {
+		seconds * 1000
+	}
+
+	private String formatDate(Date date) {
+		DateGroovyMethods.getDateTimeString(date)
 	}
 }
