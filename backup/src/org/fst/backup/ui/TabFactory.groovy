@@ -11,7 +11,6 @@ import javax.swing.border.TitledBorder
 import javax.swing.text.DefaultCaret
 
 import org.fst.backup.ui.viewmodel.CommonViewModel
-import org.fst.backup.ui.viewmodel.IncrementListEntry
 import org.fst.backup.ui.viewmodel.Tab
 
 
@@ -49,8 +48,7 @@ class TabFactory {
 						minimumSize: new Dimension(width:250, height:-1)
 						) { new IncrementsList().createComponent(commonViewModel, swing) }
 				button(text: 'Durchsuchen', actionPerformed: {
-					IncrementListEntry entry = commonViewModel.incrementsListModel.get(commonViewModel.incrementsListSelectionModel.leadIndex)
-
+					commonViewModel.selectedIncrement = commonViewModel.incrementsListModel.get(commonViewModel.incrementsListSelectionModel.leadIndex)
 					commonViewModel.tabsModel.selectedIndex = Tab.INSPECT.ordinal()
 				})
 			}
@@ -58,7 +56,7 @@ class TabFactory {
 	}
 
 	def inspectTab = {
-		swing.vbox (name: 'Durchsuchen').add(new InspectBackupFileChooser().createComponent())
+		swing.vbox (name: 'Durchsuchen').add(new InspectBackupFileChooser().createComponent(commonViewModel))
 	}
 
 	def createTab = {

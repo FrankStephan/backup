@@ -19,6 +19,9 @@ class CommonViewModel {
 	DefaultListModel<IncrementListEntry> incrementsListModel
 	DefaultListSelectionModel incrementsListSelectionModel
 
+	@Bindable
+	IncrementListEntry selectedIncrement
+
 	PlainDocument consoleDocument
 	@Bindable
 	String consoleStatus

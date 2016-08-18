@@ -6,8 +6,8 @@ import org.fst.backup.service.exception.FileIsNotADirectoryException
 
 class IncrementFileStructureService {
 
-	ListPathsFromIncrementService listPathsFromIncrementService = new ListPathsFromIncrementService()
-	PathsToFilesService pathsToFilesService = new PathsToFilesService()
+	private ListPathsFromIncrementService listPathsFromIncrementService = new ListPathsFromIncrementService()
+	private PathsToFilesService pathsToFilesService = new PathsToFilesService()
 
 	void createIncrementFileStructure(Increment increment, File root) {
 
