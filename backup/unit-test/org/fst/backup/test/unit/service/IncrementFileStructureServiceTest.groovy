@@ -1,12 +1,15 @@
-package org.fst.backup.service
+package org.fst.backup.test.unit.service
 
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 
 import org.fst.backup.model.Increment
+import org.fst.backup.service.IncrementFileStructureService
+import org.fst.backup.service.ListPathsFromIncrementService
+import org.fst.backup.service.PathsToFilesService
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
-import org.fst.backup.test.AbstractFilesUsingTest
+import org.fst.backup.test.unit.AbstractFilesUsingTest;
 
 class IncrementFileStructureServiceTest extends AbstractFilesUsingTest {
 	private File root

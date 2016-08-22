@@ -1,10 +1,11 @@
-package org.fst.backup.service
+package org.fst.backup.test.unit.service
 
 import static org.junit.Assert.*
 
+import org.fst.backup.service.PathsToFilesService
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
-import org.fst.backup.test.AbstractFilesUsingTest
+import org.fst.backup.test.unit.AbstractFilesUsingTest;
 
 class PathsToFilesServiceTest extends AbstractFilesUsingTest {
 

@@ -15,7 +15,7 @@ class ListPathsFromIncrementService {
 		File targetDir = new File(increment.targetPath)
 		if (targetDir.exists()) {
 			if (targetDir.isDirectory()) {
-				Process process = rdiffCommands.listFiles(increment.targetPath, increment.secondsSinceTheEpoch)
+				Process process = rdiffCommands.listFiles(targetDir, increment.secondsSinceTheEpoch)
 				List<String> paths = process.text.readLines()
 				if (0 == process.exitValue()) {
 					return paths

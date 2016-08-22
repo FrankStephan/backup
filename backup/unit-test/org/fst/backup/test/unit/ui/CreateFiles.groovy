@@ -1,4 +1,4 @@
-package org.fst.backup.ui
+package org.fst.backup.test.unit.ui
 
 
 File root = new File('root')

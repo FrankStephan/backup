@@ -14,8 +14,8 @@ class ListIncrementsService {
 	List<Increment> listIncrements(File targetDir) throws FileIsNotADirectoryException, DirectoryNotExistsException {
 		if (targetDir.exists()) {
 			if (targetDir.directory) {
-				Process process = rdiffCommands.listIncrements(targetDir.absolutePath)
-				List<String> lines = process.getText().readLines()
+				Process process = rdiffCommands.listIncrements(targetDir)
+				List<String> lines = process.text.readLines()
 				if (0 == process.exitValue()) {
 					List<Increment> increments = lines.collect {
 						new Increment()

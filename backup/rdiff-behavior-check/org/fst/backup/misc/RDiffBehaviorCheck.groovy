@@ -1,8 +1,10 @@
-package org.fst.backup.rdiff
+package org.fst.backup.misc
 
 import static org.junit.Assert.*
 
-class RDiffCommandsTest extends GroovyTestCase {
+import org.fst.backup.rdiff.RDiffCommands
+
+class RDiffBehaviorCheck extends GroovyTestCase {
 
 	static final String TMP_DIR = 'RDiffSystemTest-tmp/'
 	static final String SOURCE_DIR = 'RDiffSystemTest-tmp/source/'
@@ -65,7 +67,7 @@ class RDiffCommandsTest extends GroovyTestCase {
 	void testListFilesFromNonBackupDirectory() {
 		File targetDir = new File(TARGET_DIR)
 		targetDir.mkdirs()
-		def process = rdiffCommands.listFiles(TARGET_DIR, 'now')
+		def process = rdiffCommands.listFiles(new File(TARGET_DIR), 'now')
 		StringBuilder sb = new StringBuilder()
 		process.errorStream.eachLine { sb.append(it)}
 		String error = sb.toString()
@@ -141,24 +143,24 @@ class RDiffCommandsTest extends GroovyTestCase {
 		exitValue = p.exitValue()
 	}
 
-	private void waitSinceRDiffCanOnlyDoOneBackupPerSecond() {
-		Thread.sleep(1020L)
-	}
-
 	private List<String> listIncrements() {
-		def process = rdiffCommands.listIncrements(TARGET_DIR)
+		def process = rdiffCommands.listIncrements(new File(TARGET_DIR))
 		String increments = process.text
 		exitValue = process.exitValue()
 		return increments.readLines()
 	}
 
 	private List<String> listFiles(def when) {
-		def process = rdiffCommands.listFiles(TARGET_DIR, when)
+		def process = rdiffCommands.listFiles(new File(TARGET_DIR), when)
 		String text = process.text
 		return text.readLines()
 	}
 
 	private List<String> extractSecondsSinceTheEpochPerIncrement(List<String> increments) {
 		return increments.collect { it.split() [0] }
+	}
+
+	private void waitSinceRDiffCanOnlyDoOneBackupPerSecond() {
+		Thread.sleep(1020L)
 	}
 }

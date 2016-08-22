@@ -3,26 +3,28 @@ package org.fst.backup.rdiff
 
 class RDiffCommands {
 
+	RDiffCommandExecutor executor = new RDiffCommandExecutor()
+
 	Process version() {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.VERSION_ARG)
-		return command.execute()
+		executor.execute(command)
 	}
 
 	Process backup(File sourceDir, File targetDir) {
-		def commandString = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.HIGHEST_VERBOSITY)
-		commandString = commandString + ' ' + sourceDir.absolutePath + ' ' + targetDir.absolutePath
-		return commandString.execute()
+		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.HIGHEST_VERBOSITY)
+		command = command + ' ' + sourceDir.absolutePath + ' ' + targetDir.absolutePath
+		executor.execute(command)
 	}
 
-	Process listIncrements(String targetPath) {
+	Process listIncrements(File targetDir) {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.LIST_INCREMENTS_ARG, RDiffCommandElement.PARSABLE_OUTPUT_ARG)
-		command = command + ' ' + targetPath
-		return command.execute()
+		command = command + ' ' + targetDir.absolutePath
+		executor.execute(command)
 	}
 
-	Process listFiles(String targetPath, def when) {
+	Process listFiles(File targetDir, def when) {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.LIST_AT_TIME_ARG)
-		command = command + ' ' + when + ' ' + targetPath
-		return command.execute()
+		command = command + ' ' + when + ' ' + targetDir.absolutePath
+		executor.execute(command)
 	}
 }

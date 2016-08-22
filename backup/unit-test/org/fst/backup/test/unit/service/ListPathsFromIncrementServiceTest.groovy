@@ -1,14 +1,15 @@
-package org.fst.backup.service
+package org.fst.backup.test.unit.service
 
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 
 import org.fst.backup.model.Increment
 import org.fst.backup.rdiff.RDiffCommands
+import org.fst.backup.service.ListPathsFromIncrementService
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
 import org.fst.backup.service.exception.NotABackupDirectoryException
-import org.fst.backup.test.AbstractFilesUsingTest
+import org.fst.backup.test.unit.AbstractFilesUsingTest
 
 class ListPathsFromIncrementServiceTest extends AbstractFilesUsingTest {
 
@@ -43,8 +44,8 @@ class ListPathsFromIncrementServiceTest extends AbstractFilesUsingTest {
 		process.demand.getText(1) { return '.' + System.lineSeparator() + 'a0/a1/a2.suf' }
 		process.demand.exitValue(1) { return 0 }
 
-		rdiffCommands.demand.listFiles(1) { String targetPath, def when ->
-			assert increment.targetPath == targetPath
+		rdiffCommands.demand.listFiles(1) { File targetDir, def when ->
+			assert new File(increment.targetPath) == targetDir
 			assert increment.secondsSinceTheEpoch == when
 			return process.proxyInstance()
 		}
