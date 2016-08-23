@@ -1,7 +1,5 @@
 package org.fst.backup.test
 
-
-
 abstract class AbstractTest extends GroovyTestCase {
 
 	String tmpPath

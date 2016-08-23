@@ -69,7 +69,7 @@ enum TestStep {
 	}
 
 
-	abstract execute(Object params)
+	abstract execute(Object params = null)
 
 	public void verify(Object params = null, Closure verifier) {
 		verifier(execute(params))

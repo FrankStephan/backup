@@ -12,8 +12,11 @@ import org.fst.backup.ui.viewmodel.Tab
 
 class CreateBackupButton {
 
+	public static final String NAME = 'CreateBackupButton'
+
 	JButton createComponent(CommonViewModel commonViewModel, SwingBuilder swing, Closure onFinish) {
 		swing.button(
+				name: NAME,
 				text: 'Backup ausführen',
 				actionPerformed: {
 					commonViewModel.tabsModel.selectedIndex = Tab.CONSOLE.ordinal()
