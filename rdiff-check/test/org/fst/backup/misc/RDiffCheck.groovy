@@ -4,7 +4,7 @@ import static org.junit.Assert.*
 
 import org.fst.backup.rdiff.RDiffCommands
 
-class RDiffBehaviorCheck extends GroovyTestCase {
+class RDiffCheck extends GroovyTestCase {
 
 	static final String TMP_DIR = 'RDiffSystemTest-tmp/'
 	static final String SOURCE_DIR = 'RDiffSystemTest-tmp/source/'
