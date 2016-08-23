@@ -7,9 +7,9 @@ import org.fst.backup.rdiff.RDiffCommandBuilder
 import org.fst.backup.rdiff.RDiffCommandElement
 import org.fst.backup.rdiff.RDiffCommandExecutor
 import org.fst.backup.rdiff.RDiffCommands
-import org.fst.backup.test.unit.AbstractFilesUsingTest
+import org.fst.backup.test.AbstractTest;
 
-class RDiffCommandsTest extends AbstractFilesUsingTest  {
+class RDiffCommandsTest extends AbstractTest  {
 	private static final String TEST_COMMAND = 'answer 42'
 
 	private String expectedCommand

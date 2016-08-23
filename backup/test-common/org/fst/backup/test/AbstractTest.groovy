@@ -1,11 +1,11 @@
-package org.fst.backup.test.unit
+package org.fst.backup.test
 
 
 
-abstract class AbstractFilesUsingTest extends GroovyTestCase {
+abstract class AbstractTest extends GroovyTestCase {
 
 	String tmpPath
-	String sourePath
+	String sourcePath
 	String targetPath
 	File sourceDir
 	File targetDir
@@ -13,10 +13,10 @@ abstract class AbstractFilesUsingTest extends GroovyTestCase {
 	void setUp() {
 		super.setUp()
 		tmpPath = getClass().getSimpleName() + '-tmp/'
-		sourePath = tmpPath + 'source/'
+		sourcePath = tmpPath + 'source/'
 		targetPath = tmpPath + 'target/'
 		new File(tmpPath).mkdir()
-		sourceDir = new File(sourePath)
+		sourceDir = new File(sourcePath)
 		sourceDir.mkdir()
 		targetDir = new File(targetPath)
 		targetDir.mkdir()

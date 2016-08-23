@@ -2,10 +2,10 @@ package org.fst.backup.test.unit.ui
 
 import static org.junit.Assert.*
 
-import org.fst.backup.test.unit.AbstractFilesUsingTest;
+import org.fst.backup.test.AbstractTest;
 import org.fst.backup.ui.InspectBackupFileSystemView
 
-class BackupFileSystemViewTest extends AbstractFilesUsingTest {
+class BackupFileSystemViewTest extends AbstractTest {
 
 	InspectBackupFileSystemView fsv
 

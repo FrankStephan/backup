@@ -5,9 +5,9 @@ import static org.junit.Assert.*
 import org.fst.backup.service.PathsToFilesService
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
-import org.fst.backup.test.unit.AbstractFilesUsingTest;
+import org.fst.backup.test.AbstractTest
 
-class PathsToFilesServiceTest extends AbstractFilesUsingTest {
+class PathsToFilesServiceTest extends AbstractTest {
 
 	PathsToFilesService service = new PathsToFilesService()
 
@@ -15,12 +15,8 @@ class PathsToFilesServiceTest extends AbstractFilesUsingTest {
 
 	void setUp() {
 		super.setUp()
-		root = new File(this.getClass().getSimpleName() + '-root/')
+		root = new File(tmpPath + 'root/')
 		root.mkdir()
-	}
-
-	void tearDown() {
-		root.deleteDir()
 	}
 
 	private void createFileStructureFromPaths(List<String> paths, root) {

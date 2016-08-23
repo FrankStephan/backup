@@ -9,9 +9,9 @@ import org.fst.backup.service.ListPathsFromIncrementService
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
 import org.fst.backup.service.exception.NotABackupDirectoryException
-import org.fst.backup.test.unit.AbstractFilesUsingTest
+import org.fst.backup.test.AbstractTest;
 
-class ListPathsFromIncrementServiceTest extends AbstractFilesUsingTest {
+class ListPathsFromIncrementServiceTest extends AbstractTest {
 
 	Increment increment
 
