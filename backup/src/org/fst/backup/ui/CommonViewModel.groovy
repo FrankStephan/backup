@@ -1,4 +1,4 @@
-package org.fst.backup.ui.viewmodel
+package org.fst.backup.ui
 
 import groovy.beans.Bindable
 
@@ -15,6 +15,7 @@ class CommonViewModel {
 
 	File sourceDir
 	File targetDir
+	File restoreDir
 
 	DefaultListModel<IncrementListEntry> incrementsListModel
 	DefaultListSelectionModel incrementsListSelectionModel

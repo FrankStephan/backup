@@ -1,4 +1,4 @@
-package org.fst.backup.ui
+package org.fst.backup.ui.frame.choose
 
 import groovy.swing.SwingBuilder
 
@@ -11,8 +11,8 @@ import org.codehaus.groovy.runtime.DateGroovyMethods
 import org.fst.backup.model.Increment
 import org.fst.backup.service.ListIncrementsService
 import org.fst.backup.service.exception.NotABackupDirectoryException
-import org.fst.backup.ui.viewmodel.CommonViewModel
-import org.fst.backup.ui.viewmodel.IncrementListEntry
+import org.fst.backup.ui.CommonViewModel;
+import org.fst.backup.ui.IncrementListEntry;
 
 class BackupDirectoryChooser {
 

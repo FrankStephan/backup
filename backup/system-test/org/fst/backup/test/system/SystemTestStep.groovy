@@ -5,7 +5,7 @@ import org.fst.backup.service.CreateBackupService
 import org.fst.backup.service.IncrementFileStructureService
 import org.fst.backup.service.ListIncrementsService
 
-enum TestStep {
+enum SystemTestStep {
 
 	CREATE_SOME_SOURCE_FILES {
 		@Override
@@ -72,7 +72,8 @@ enum TestStep {
 	abstract execute(Object params = null)
 
 	public void verify(Object params = null, Closure verifier) {
-		verifier(execute(params))
+		def executionResult = execute(params)
+		verifier(executionResult)
 	}
 
 	static File sourceDir

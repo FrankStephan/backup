@@ -1,4 +1,4 @@
-package org.fst.backup.ui
+package org.fst.backup.ui.frame
 
 import groovy.swing.SwingBuilder
 
@@ -10,16 +10,13 @@ import javax.swing.JFrame
 import javax.swing.WindowConstants
 import javax.swing.text.PlainDocument
 
-import org.fst.backup.ui.viewmodel.CommonViewModel
-import org.fst.backup.ui.viewmodel.Tab
+import org.fst.backup.ui.CommonViewModel
 
 class Frame {
 
 	def swing = new SwingBuilder()
 
 	CommonViewModel commonViewModel = new CommonViewModel()
-
-	TabFactory tabFactory = new TabFactory(commonViewModel, swing)
 
 	def width = 1100
 	def height = 400
@@ -43,14 +40,9 @@ class Frame {
 					locationRelativeTo: null,
 					show: true,
 					defaultCloseOperation: WindowConstants.EXIT_ON_CLOSE,
-					iconImage: new ImageIcon(getClass().getResource('icon.gif')).getImage()
+					iconImage: new ImageIcon(getClass().getResource('../icon.gif')).getImage()
 					) {
-						tabbedPane(name: 'Tabs', model: commonViewModel.tabsModel) {
-							tabFactory.create(Tab.CHOOSE)
-							tabFactory.create(Tab.INSPECT)
-							tabFactory.create(Tab.CREATE)
-							tabFactory.create(Tab.CONSOLE)
-						}
+						new TabsPane().createComponent(commonViewModel, swing)
 					}
 		}
 	}

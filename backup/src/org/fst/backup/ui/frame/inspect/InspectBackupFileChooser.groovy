@@ -1,4 +1,4 @@
-package org.fst.backup.ui
+package org.fst.backup.ui.frame.inspect
 
 import java.beans.PropertyChangeEvent
 import java.beans.PropertyChangeListener
@@ -8,8 +8,8 @@ import javax.swing.JFileChooser
 
 import org.fst.backup.model.Increment
 import org.fst.backup.service.IncrementFileStructureService
-import org.fst.backup.ui.viewmodel.CommonViewModel
-import org.fst.backup.ui.viewmodel.IncrementListEntry
+import org.fst.backup.ui.CommonViewModel;
+import org.fst.backup.ui.IncrementListEntry;
 
 
 class InspectBackupFileChooser {

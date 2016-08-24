@@ -1,10 +1,10 @@
-package org.fst.backup.ui
+package org.fst.backup.ui.frame.choose
 
 import groovy.swing.SwingBuilder
 
 import javax.swing.JList
 
-import org.fst.backup.ui.viewmodel.CommonViewModel
+import org.fst.backup.ui.CommonViewModel;
 
 
 class IncrementsList {

@@ -3,7 +3,7 @@ package org.fst.backup.test.unit.ui
 import static org.junit.Assert.*
 
 import org.fst.backup.test.AbstractTest;
-import org.fst.backup.ui.InspectBackupFileSystemView
+import org.fst.backup.ui.frame.inspect.InspectBackupFileSystemView;
 
 class BackupFileSystemViewTest extends AbstractTest {
 

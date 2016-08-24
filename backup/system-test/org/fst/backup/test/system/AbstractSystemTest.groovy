@@ -6,6 +6,6 @@ abstract class AbstractSystemTest extends AbstractTest {
 
 	void setUp() {
 		super.setUp()
-		TestStep.init(sourceDir, targetDir)
+		SystemTestStep.init(sourceDir, targetDir)
 	}
 }

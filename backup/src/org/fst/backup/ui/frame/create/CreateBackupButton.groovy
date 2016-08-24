@@ -1,4 +1,4 @@
-package org.fst.backup.ui
+package org.fst.backup.ui.frame.create
 
 import groovy.swing.SwingBuilder
 
@@ -7,8 +7,8 @@ import java.awt.Color
 import javax.swing.JButton
 
 import org.fst.backup.service.CreateBackupService
-import org.fst.backup.ui.viewmodel.CommonViewModel
-import org.fst.backup.ui.viewmodel.Tab
+import org.fst.backup.ui.CommonViewModel;
+import org.fst.backup.ui.Tab;
 
 class CreateBackupButton {
 

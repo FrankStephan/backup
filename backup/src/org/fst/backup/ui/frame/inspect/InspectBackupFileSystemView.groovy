@@ -1,4 +1,4 @@
-package org.fst.backup.ui
+package org.fst.backup.ui.frame.inspect
 
 import javax.swing.Icon
 import javax.swing.filechooser.FileSystemView

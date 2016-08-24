@@ -1,4 +1,4 @@
-package org.fst.backup.ui.viewmodel
+package org.fst.backup.ui
 
 import org.fst.backup.model.Increment
 

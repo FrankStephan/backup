@@ -2,7 +2,10 @@ package org.fst.backup.test
 
 import static org.junit.Assert.*
 
-class FileDeletionTest extends GroovyTestCase {
+class NewRequirements extends GroovyTestCase {
+
+	void abortRDiffCommands() {
+	}
 
 	void checkRDiffSystem() {
 	}
