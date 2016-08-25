@@ -115,6 +115,24 @@ class RDiffCheck extends GroovyTestCase {
 		assert paths.every { !it.contains(TARGET_DIR) }
 	}
 
+	void testRestoreWithNonEmptyRestoreDir() {
+		fail()
+	}
+
+	void testRestoreFromNonBackupDir() {
+		fail()
+	}
+
+	void testRestoreFromBackupDirectoryNow() {
+		fail()
+	}
+
+	void testRestoreFromBackupDirectoryOlder() {
+		fail()
+	}
+
+
+
 	void tearDown() {
 		new File(TMP_DIR).deleteDir()
 	}

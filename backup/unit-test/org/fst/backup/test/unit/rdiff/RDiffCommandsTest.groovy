@@ -7,7 +7,7 @@ import org.fst.backup.rdiff.RDiffCommandBuilder
 import org.fst.backup.rdiff.RDiffCommandElement
 import org.fst.backup.rdiff.RDiffCommandExecutor
 import org.fst.backup.rdiff.RDiffCommands
-import org.fst.backup.test.AbstractTest;
+import org.fst.backup.test.AbstractTest
 
 class RDiffCommandsTest extends AbstractTest  {
 	private static final String TEST_COMMAND = 'answer 42'
@@ -67,6 +67,10 @@ class RDiffCommandsTest extends AbstractTest  {
 		callMethodUnderTestAndVerifyProcess( {
 			new RDiffCommands().listFiles(targetDir, '1467750198')
 		} )
+	}
+
+	void testRestore() {
+		fail()
 	}
 
 	private void callMethodUnderTestAndVerifyProcess(Closure<Process> methodUnderTest) {

@@ -9,7 +9,7 @@ import org.fst.backup.service.ListPathsFromIncrementService
 import org.fst.backup.service.PathsToFilesService
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
-import org.fst.backup.test.AbstractTest;
+import org.fst.backup.test.AbstractTest
 
 class IncrementFileStructureServiceTest extends AbstractTest {
 	private File root
@@ -75,12 +75,6 @@ class IncrementFileStructureServiceTest extends AbstractTest {
 				service.createIncrementFileStructure(createIncrement(), root)
 			}
 		}
-	}
-
-	private Increment createIncrement() {
-		new Increment()
-				.setSecondsSinceTheEpoch((System.currentTimeMillis() / 1000) as long)
-				.setTargetPath(targetPath)
 	}
 
 	private List<String> createPaths() {

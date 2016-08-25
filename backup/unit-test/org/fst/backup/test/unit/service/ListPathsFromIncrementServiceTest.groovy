@@ -9,11 +9,9 @@ import org.fst.backup.service.ListPathsFromIncrementService
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
 import org.fst.backup.service.exception.NotABackupDirectoryException
-import org.fst.backup.test.AbstractTest;
+import org.fst.backup.test.AbstractTest
 
 class ListPathsFromIncrementServiceTest extends AbstractTest {
-
-	Increment increment
 
 	void testNotExistingTargetDir() {
 		targetPath = tmpPath + 'NotExisting/'
@@ -54,12 +52,6 @@ class ListPathsFromIncrementServiceTest extends AbstractTest {
 			ListPathsFromIncrementService service = new ListPathsFromIncrementService()
 			assert ['.', 'a0/a1/a2.suf']== service.listPathsFromIncrement(increment)
 		}
-	}
-
-	private void createIncrement() {
-		increment = new Increment()
-				.setSecondsSinceTheEpoch(nowAsSecondsSinceTheEpoch())
-				.setTargetPath(targetPath)
 	}
 
 	private long nowAsSecondsSinceTheEpoch() {

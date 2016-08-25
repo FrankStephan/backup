@@ -1,5 +1,7 @@
 package org.fst.backup.test
 
+import org.fst.backup.model.Increment
+
 abstract class AbstractTest extends GroovyTestCase {
 
 	String tmpPath
@@ -7,6 +9,7 @@ abstract class AbstractTest extends GroovyTestCase {
 	String targetPath
 	File sourceDir
 	File targetDir
+	Increment increment
 
 	void setUp() {
 		super.setUp()
@@ -23,5 +26,11 @@ abstract class AbstractTest extends GroovyTestCase {
 	void tearDown() {
 		super.tearDown()
 		new File(tmpPath).deleteDir()
+	}
+
+	protected Increment createIncrement() {
+		increment = new Increment()
+				.setSecondsSinceTheEpoch((System.currentTimeMillis() / 1000) as long)
+				.setTargetPath(targetPath)
 	}
 }

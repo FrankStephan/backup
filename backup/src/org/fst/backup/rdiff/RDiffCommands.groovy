@@ -27,4 +27,7 @@ class RDiffCommands {
 		command = command + ' ' + when + ' ' + targetDir.absolutePath
 		executor.execute(command)
 	}
+
+	Process restore(File targetDir, File restoreDir, def when) {
+	}
 }
