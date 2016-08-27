@@ -6,9 +6,10 @@ import org.fst.backup.rdiff.RDiffCommands
 
 class RDiffCheck extends GroovyTestCase {
 
-	static final String TMP_DIR = 'RDiffSystemTest-tmp/'
-	static final String SOURCE_DIR = 'RDiffSystemTest-tmp/source/'
-	static final String TARGET_DIR = 'RDiffSystemTest-tmp/target/'
+	static final String TMP_DIR = RDiffCheck.class.getSimpleName()
+	static final String SOURCE_DIR = TMP_DIR + '/source/'
+	static final String TARGET_DIR = TMP_DIR + '/target/'
+	static final String RESTORE_DIR = TMP_DIR + '/restore/'
 	static final String FILE1_NAME = 'File1.txt'
 	static final String FILE2_NAME = 'File2.txt'
 
@@ -102,7 +103,6 @@ class RDiffCheck extends GroovyTestCase {
 		def increments = listIncrements()
 		def secondsSinceTheEpochPerIncrement = extractSecondsSinceTheEpochPerIncrement(increments)
 		def paths = listFiles(secondsSinceTheEpochPerIncrement[0])
-		println paths
 		assert 2 == paths.size()
 		assert '.' == paths[0]
 		assert file1.getName() == paths[1]
@@ -116,22 +116,44 @@ class RDiffCheck extends GroovyTestCase {
 	}
 
 	void testRestoreWithNonEmptyRestoreDir() {
-		fail()
+		createTwoIncrements()
+		File restoreDir = new File(SOURCE_DIR)
+		restoreDir.mkdir()
+		def process = rdiffCommands.restore(new File(TARGET_DIR), restoreDir, 'now')
+		process.errorStream.eachLine { println it }
+		assert 1 == process.exitValue()
 	}
 
 	void testRestoreFromNonBackupDir() {
-		fail()
+		createTwoIncrements()
+		File restoreDir = new File(RESTORE_DIR)
+		restoreDir.mkdir()
+		def process = rdiffCommands.restore(new File(TMP_DIR), restoreDir, 'now')
+		process.errorStream.eachLine { println it }
+		assert 1 == process.exitValue()
 	}
 
-	void testRestoreFromBackupDirectoryNow() {
-		fail()
+	void testRestoreFromBackupDirectoryMirror() {
+		createTwoIncrements()
+		File restoreDir = new File(RESTORE_DIR)
+		restoreDir.mkdir()
+		def increments = listIncrements()
+		def secondsSinceTheEpochPerIncrement = extractSecondsSinceTheEpochPerIncrement(increments)
+		def secondsSinceTheEpochMirror = secondsSinceTheEpochPerIncrement[1]
+		restore(secondsSinceTheEpochMirror)
+		assert [FILE1_NAME, FILE2_NAME]== restoreDir.list()
 	}
 
 	void testRestoreFromBackupDirectoryOlder() {
-		fail()
+		createTwoIncrements()
+		File restoreDir = new File(RESTORE_DIR)
+		restoreDir.mkdir()
+		def increments = listIncrements()
+		def secondsSinceTheEpochPerIncrement = extractSecondsSinceTheEpochPerIncrement(increments)
+		def secondsSinceTheEpochOlder = secondsSinceTheEpochPerIncrement[0]
+		restore(secondsSinceTheEpochOlder)
+		assert [FILE1_NAME]== restoreDir.list()
 	}
-
-
 
 	void tearDown() {
 		new File(TMP_DIR).deleteDir()
@@ -171,7 +193,14 @@ class RDiffCheck extends GroovyTestCase {
 	private List<String> listFiles(def when) {
 		def process = rdiffCommands.listFiles(new File(TARGET_DIR), when)
 		String text = process.text
+		exitValue = process.exitValue()
 		return text.readLines()
+	}
+
+	private void restore(def when) {
+		def process = rdiffCommands.restore(new File(TARGET_DIR), new File(RESTORE_DIR), when)
+		String text = process.text
+		exitValue = process.exitValue()
 	}
 
 	private List<String> extractSecondsSinceTheEpochPerIncrement(List<String> increments) {

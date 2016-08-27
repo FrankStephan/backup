@@ -73,6 +73,10 @@ class RDiffCommandsTest extends AbstractTest  {
 		fail()
 	}
 
+	void testRestoreWithNonEmptyRestoreDir() {
+		fail()
+	}
+
 	private void callMethodUnderTestAndVerifyProcess(Closure<Process> methodUnderTest) {
 		commandBuilder.use {
 			executor.use {
