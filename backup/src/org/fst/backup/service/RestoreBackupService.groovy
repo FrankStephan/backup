@@ -9,10 +9,12 @@ class RestoreBackupService {
 
 	RDiffCommands rdiffCommands = new RDiffCommands()
 
-	void restore(Increment increment, File restoreDir, Closure commandLineCallBack) throws DirectoryNotExistsException, FileIsNotADirectoryException {
+	void restore(Increment increment, File restoreDir, Closure commandLineCallback) throws DirectoryNotExistsException, FileIsNotADirectoryException {
 		File targetDir = new File(increment.targetPath)
 		if (targetDir.exists() && restoreDir.exists()) {
 			if (targetDir.isDirectory() && restoreDir.isDirectory()) {
+				Process process = rdiffCommands.restore(targetDir, restoreDir, increment.secondsSinceTheEpoch)
+				process.getInputStream().eachLine { commandLineCallback(it) }
 			} else {
 				throw new FileIsNotADirectoryException()
 			}

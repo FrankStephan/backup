@@ -10,7 +10,6 @@ import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.test.AbstractTest
 
 class RDiffCommandsTest extends AbstractTest  {
-	private static final String TEST_COMMAND = 'answer 42'
 
 	private String expectedCommand
 	private Process process
@@ -70,11 +69,14 @@ class RDiffCommandsTest extends AbstractTest  {
 	}
 
 	void testRestore() {
-		fail()
-	}
-
-	void testRestoreWithNonEmptyRestoreDir() {
-		fail()
+		expectedCommand = 'cmd /c rdiff-backup -r 1467750198 ' + targetDir.absolutePath + ' ' + sourceDir.absolutePath
+		defineExpectedCommandBuilderInvocation('cmd /c rdiff-backup -r',
+				RDiffCommandElement.RDIFF_COMMAND,
+				RDiffCommandElement.RESTORE,
+				)
+		callMethodUnderTestAndVerifyProcess( {
+			new RDiffCommands().restore(targetDir, sourceDir, '1467750198')
+		} )
 	}
 
 	private void callMethodUnderTestAndVerifyProcess(Closure<Process> methodUnderTest) {

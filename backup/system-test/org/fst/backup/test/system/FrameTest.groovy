@@ -2,7 +2,7 @@ package org.fst.backup.test.system
 
 import static org.junit.Assert.*
 
-import org.fst.backup.ui.Tab;
+import org.fst.backup.ui.Tab
 
 class FrameTest extends AbstractSystemTest {
 
@@ -19,5 +19,9 @@ class FrameTest extends AbstractSystemTest {
 		//		JList incrementsList = componentsMap[IncrementsList.NAME]
 		//		incrementsList.ensureIndexIsVisible(0)
 		//		assert null != incrementsList.indexToLocation(0)
+	}
+
+	void testRemoveFilesLoadedFromLastIncrement () {
+		fail()
 	}
 }

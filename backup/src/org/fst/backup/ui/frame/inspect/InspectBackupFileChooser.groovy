@@ -8,8 +8,8 @@ import javax.swing.JFileChooser
 
 import org.fst.backup.model.Increment
 import org.fst.backup.service.IncrementFileStructureService
-import org.fst.backup.ui.CommonViewModel;
-import org.fst.backup.ui.IncrementListEntry;
+import org.fst.backup.ui.CommonViewModel
+import org.fst.backup.ui.IncrementListEntry
 
 
 class InspectBackupFileChooser {

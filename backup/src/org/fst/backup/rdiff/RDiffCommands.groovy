@@ -30,7 +30,7 @@ class RDiffCommands {
 
 	Process restore(File targetDir, File restoreDir, def when) {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.RESTORE)
-		command = command + ' ' + when + ' ' + targetDir + ' ' +  restoreDir
+		command = command + ' ' + when + ' ' + targetDir.absolutePath + ' ' +  restoreDir.absolutePath
 		executor.execute(command)
 	}
 }
