@@ -1,6 +1,5 @@
 package org.fst.backup.ui.frame.inspect
 
-import javax.swing.Icon
 import javax.swing.filechooser.FileSystemView
 
 class InspectBackupFileSystemView extends FileSystemView {
@@ -8,39 +7,35 @@ class InspectBackupFileSystemView extends FileSystemView {
 	File root
 
 	InspectBackupFileSystemView(File root) {
-		this.root = root
-	}
-
-	public Boolean isTraversable(File f) {
-		return Boolean.valueOf(isFileSystemRoot(f) || f.isDirectory())
-	}
-
-	public boolean isDrive(File dir) {
-		return isFileSystemRoot(dir)
+		this.root = root.absoluteFile
 	}
 
 	@Override
-	public File[] getRoots() {
+	File[] getRoots() {
 		return [root] as File[]
 	}
 
 	@Override
-	public boolean isFileSystemRoot(File dir) {
-		return dir == root
-	}
-
-	@Override
-	public File getDefaultDirectory() {
+	File getDefaultDirectory() {
 		return root
 	}
 
 	@Override
-	public File getHomeDirectory() {
+	File getHomeDirectory() {
 		return root
 	}
 
 	@Override
-	public File createNewFolder(File containingDir) throws IOException {
+	File getParentDirectory(File dir) {
+		if (root == dir) {
+			return null
+		} else {
+			return super.getParentDirectory(dir)
+		}
+	}
+
+	@Override
+	File createNewFolder(File containingDir) throws IOException {
 		return null
 	}
 }
