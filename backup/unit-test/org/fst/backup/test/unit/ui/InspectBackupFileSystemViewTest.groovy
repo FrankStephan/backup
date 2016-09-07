@@ -14,21 +14,7 @@ class InspectBackupFileSystemViewTest extends AbstractTest {
 	void setUp() {
 		super.setUp()
 		root = new File(tmpPath).absoluteFile
-		createTestFileStructure()
 		fsv = new InspectBackupFileSystemView(new File(tmpPath))
-	}
-
-	private createTestFileStructure() {
-		FileTreeBuilder ftb = new FileTreeBuilder(root)
-		ftb {
-			'a0.suf'('')
-			a0 {
-				a1 { 'a2.suf'('') }
-				b1 { 'b2.suf'('') }
-			}
-			'b0.suf'('')
-			'c0.suf'('')
-		}
 	}
 
 	void testRootParamIsParsedToAbsoluteFile() {

@@ -4,8 +4,7 @@ import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 
 import javax.swing.DefaultListSelectionModel
-import javax.swing.JFileChooser;
-import javax.swing.plaf.FileChooserUI;
+import javax.swing.JFileChooser
 
 import org.fst.backup.model.Increment
 import org.fst.backup.service.IncrementFileStructureService
@@ -88,19 +87,5 @@ class InspectBackupFileChooserTest extends AbstractTest {
 			assert (fc.getFileSystemView() as InspectBackupFileSystemView).root == root
 		} )
 		changeSelectedIncrement(increment)
-	}
-
-	void testFileNamesAreNotEditable() {
-		fail()
-	}
-
-	void testInitalRootGetsDeletedOnShutdown() {
-		verifyIncrementFileStructureServiceInvocation()
-		// Mock root ? -> COnfig Service needed
-		fail()
-	}
-
-	void testRootFromPreviouslySelectedIncrementGetsDeletedInstantly() {
-		fail()
 	}
 }

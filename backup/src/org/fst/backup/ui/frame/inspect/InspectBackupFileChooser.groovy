@@ -25,28 +25,28 @@ class InspectBackupFileChooser {
 
 	private File createRoot() {
 		File root = Files.createTempDirectory('rdigg').toFile()
-		root.deleteOnExit()
+		addShutdownHook { root.deleteDir() }
 		return root
 	}
-	
+
 	private updateFileChooserContents(JFileChooser fc) {
 		fc.rescanCurrentDirectory()
 	}
-	
+
 	private JFileChooser createReadOnlyFileChooser() {
-		Boolean old = UIManager.put('FileChooser.readOnly', Boolean.TRUE);  
+		Boolean old = UIManager.put('FileChooser.readOnly', Boolean.TRUE)
 		JFileChooser fc = createFileChooserFromRoot()
-		UIManager.put('FileChooser.readOnly', old);
+		UIManager.put('FileChooser.readOnly', old)
 		return fc
 	}
-	
+
 	private InspectBackupFileSystemView createEmptyFileSystemView() {
 		def root = createRoot()
 		InspectBackupFileSystemView fsv = new InspectBackupFileSystemView(root)
 		ensureFirstRootIsDeletedOnExit(root)
 		return fsv
 	}
-	
+
 	private JFileChooser createFileChooserFromRoot() {
 		InspectBackupFileSystemView fsv = new InspectBackupFileSystemView(createRoot())
 		JFileChooser fc2 = new JFileChooser(fsv)
@@ -75,15 +75,13 @@ class InspectBackupFileChooser {
 		incrementFileStructureService.createIncrementFileStructure(increment, newRoot)
 		deletePreviousRoot(previousRoot)
 	}
-	
+
 	private void ensureFirstRootIsDeletedOnExit(File root) {
 		root.deleteOnExit()
 	}
-	
+
 	private deletePreviousRoot(File previousRoot) {
 		previousRoot.deleteDir()
 	}
-	
-	
 }
 
