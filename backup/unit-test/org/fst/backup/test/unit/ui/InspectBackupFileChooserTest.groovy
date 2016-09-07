@@ -4,6 +4,8 @@ import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 
 import javax.swing.DefaultListSelectionModel
+import javax.swing.JFileChooser;
+import javax.swing.plaf.FileChooserUI;
 
 import org.fst.backup.model.Increment
 import org.fst.backup.service.IncrementFileStructureService
@@ -17,55 +19,88 @@ class InspectBackupFileChooserTest extends AbstractTest {
 
 	InspectBackupFileChooser componentBuilder = new InspectBackupFileChooser()
 	CommonViewModel commonViewModel = new CommonViewModel()
+	MockFor incrementFileStructureService = new MockFor(IncrementFileStructureService.class)
+	JFileChooser fc
 
 	void setUp() {
 		super.setUp()
+		createIncrement()
 		commonViewModel.incrementsListSelectionModel = new DefaultListSelectionModel()
+		fc = componentBuilder.createComponent(commonViewModel)
 	}
 
-	void testFileChooserIsInitiallyEmpty() {
-		def fc = componentBuilder.createComponent(commonViewModel)
-		assert 0 == fc.currentDirectory.list().length
-	}
-
-	void testFileChooserUsesInspectBackupFileSystemView() {
-		def fc = componentBuilder.createComponent(commonViewModel)
-		assert InspectBackupFileSystemView.class == fc.getFileSystemView().getClass()
-	}
-
-	void testFileChooserRetrievesFileStructureFromCorrectIncrement() {
-		def fc = componentBuilder.createComponent(commonViewModel)
-		Increment increment = new Increment()
-
-		def listIncrementsService = new MockFor(IncrementFileStructureService.class)
-		listIncrementsService.demand.createIncrementFileStructure(1) { Increment _increment, File root ->
-			assert increment == _increment
-			InspectBackupFileSystemView fsv = fc.getFileSystemView()
-			assert fsv.root == root
-		}
-		listIncrementsService.use {
+	private changeSelectedIncrement(Increment increment) {
+		incrementFileStructureService.use {
 			commonViewModel.selectedIncrement =  new IncrementListEntry('', increment)
 		}
 	}
 
-	void testFileChooserContentsChangeIfANewIncrementIsSelected() {
-		def fc = componentBuilder.createComponent(commonViewModel)
-		Increment increment1 = new Increment()
-		Increment increment2 = new Increment()
-		def listIncrementsService = new MockFor(IncrementFileStructureService.class)
-		File root1
-		listIncrementsService.demand.createIncrementFileStructure(2) { Increment _increment, File root ->
-			if (null == root1) {
-				root1 = root
-			} else {
-				assert root != root1
-			}
-		}
-		listIncrementsService.use {
-			commonViewModel.selectedIncrement =  new IncrementListEntry('', increment1)
-		}
-		listIncrementsService.use {
-			commonViewModel.selectedIncrement =  new IncrementListEntry('', increment2)
-		}
+	private void verifyIncrementFileStructureServiceInvocation(Closure assertion) {
+		incrementFileStructureService.demand.createIncrementFileStructure(1) { Increment increment, File root -> assertion?.call(increment, root) }
+	}
+
+	void testFileChooserUsesInspectBackupFileSystemView() {
+		assert InspectBackupFileSystemView.class == fc.getFileSystemView().getClass()
+	}
+
+	void testFileChooserCreatesBackupFileSystemViewWithEmptyRoot() {
+		assert []== (fc.getFileSystemView() as InspectBackupFileSystemView).root.list()
+	}
+
+	void testFileChooserRetrievesFileStructureFromCorrectIncrement() {
+		verifyIncrementFileStructureServiceInvocation( {Increment _increment, File root ->
+			assert increment == _increment
+			InspectBackupFileSystemView fsv = fc.getFileSystemView()
+			assert fsv.root == root
+		} )
+		changeSelectedIncrement(increment)
+	}
+
+	void testFileStructureIsCalculatedOnlyOnceIfSelectedIncrementDidNotChange() {
+		verifyIncrementFileStructureServiceInvocation( {Increment _increment, File root ->
+			changeSelectedIncrement(increment)
+			changeSelectedIncrement(increment)
+		} )
+	}
+
+	void testFileStructureIsCalculatedAgainIfSelectedIncrementDidChanged() {
+		verifyIncrementFileStructureServiceInvocation()
+		changeSelectedIncrement(increment)
+		verifyIncrementFileStructureServiceInvocation()
+		changeSelectedIncrement(createIncrement())
+	}
+
+	void testFileStructureIsAlwaysAddedToAnEmptyRoot() {
+		verifyIncrementFileStructureServiceInvocation ( { Increment _increment, File root ->
+			assert []== root.list()
+			File child = new File(root, 'Child.txt') << 'Child'
+			assert [child.name]== root.list()
+		} )
+		changeSelectedIncrement(increment)
+		verifyIncrementFileStructureServiceInvocation ( { Increment _increment, File root ->
+			assert []== root.list()
+		} )
+		changeSelectedIncrement(createIncrement())
+	}
+
+	void testFileSystemViewRootIsUsedAsParentOfCalculatedFileStructure() {
+		verifyIncrementFileStructureServiceInvocation ( { Increment _increment, File root ->
+			assert (fc.getFileSystemView() as InspectBackupFileSystemView).root == root
+		} )
+		changeSelectedIncrement(increment)
+	}
+
+	void testFileNamesAreNotEditable() {
+		fail()
+	}
+
+	void testInitalRootGetsDeletedOnShutdown() {
+		verifyIncrementFileStructureServiceInvocation()
+		// Mock root ? -> COnfig Service needed
+		fail()
+	}
+
+	void testRootFromPreviouslySelectedIncrementGetsDeletedInstantly() {
+		fail()
 	}
 }

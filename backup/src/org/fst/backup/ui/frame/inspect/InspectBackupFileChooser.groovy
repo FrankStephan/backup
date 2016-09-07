@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener
 import java.nio.file.Files
 
 import javax.swing.JFileChooser
+import javax.swing.UIManager
 
 import org.fst.backup.model.Increment
 import org.fst.backup.service.IncrementFileStructureService
@@ -15,35 +16,11 @@ import org.fst.backup.ui.IncrementListEntry
 class InspectBackupFileChooser {
 
 	JFileChooser createComponent(CommonViewModel commonViewModel) {
-		File root = createRoot()
-		Increment selectedIncrement = selectedIncrement(commonViewModel)
-		if (selectedIncrement != null) {
-			loadFileStructure(selectedIncrement, root)
-		}
-		JFileChooser fc = createFileChooserFromRoot(root)
-		watchSelectedIncrement(commonViewModel, root, fc)
+		JFileChooser fc = createReadOnlyFileChooser()
+		fc.fileSystemView = createEmptyFileSystemView()
+		updateFileChooserContents(fc)
+		observeSelectedIncrement(commonViewModel, fc)
 		return fc
-	}
-
-	private void watchSelectedIncrement(CommonViewModel commonViewModel, File root, JFileChooser fc) {
-		commonViewModel.addPropertyChangeListener('selectedIncrement', new PropertyChangeListener() {
-					void propertyChange(PropertyChangeEvent pce) {
-						IncrementListEntry selectedIncrement = pce.newValue
-						if (pce.oldValue != selectedIncrement) {
-							// TODO: Remove files loaded from last increment
-
-							loadFileStructure(selectedIncrement.increment, root)
-							fc.updateUI()
-						}
-					}
-				})
-	}
-
-	private JFileChooser createFileChooserFromRoot(File root) {
-		InspectBackupFileSystemView fsv = new InspectBackupFileSystemView(root)
-		JFileChooser fc2 = new JFileChooser(fsv)
-		fc2.controlButtonsAreShown = false
-		return fc2
 	}
 
 	private File createRoot() {
@@ -51,17 +28,62 @@ class InspectBackupFileChooser {
 		root.deleteOnExit()
 		return root
 	}
-
-	private Increment selectedIncrement(CommonViewModel commonViewModel) {
-		int selectionIndex = commonViewModel.incrementsListSelectionModel.leadSelectionIndex
-		if (selectionIndex != -1) {
-			return commonViewModel.incrementsListModel.get().getIncrement()
-		}
-		return null
+	
+	private updateFileChooserContents(JFileChooser fc) {
+		fc.rescanCurrentDirectory()
+	}
+	
+	private JFileChooser createReadOnlyFileChooser() {
+		Boolean old = UIManager.put('FileChooser.readOnly', Boolean.TRUE);  
+		JFileChooser fc = createFileChooserFromRoot()
+		UIManager.put('FileChooser.readOnly', old);
+		return fc
+	}
+	
+	private InspectBackupFileSystemView createEmptyFileSystemView() {
+		def root = createRoot()
+		InspectBackupFileSystemView fsv = new InspectBackupFileSystemView(root)
+		ensureFirstRootIsDeletedOnExit(root)
+		return fsv
+	}
+	
+	private JFileChooser createFileChooserFromRoot() {
+		InspectBackupFileSystemView fsv = new InspectBackupFileSystemView(createRoot())
+		JFileChooser fc2 = new JFileChooser(fsv)
+		fc2.controlButtonsAreShown = false
+		return fc2
 	}
 
-	private void loadFileStructure(Increment increment, File root) {
-		new IncrementFileStructureService().createIncrementFileStructure(increment, root)
+	private void observeSelectedIncrement(CommonViewModel commonViewModel, JFileChooser fc) {
+		commonViewModel.addPropertyChangeListener('selectedIncrement', new PropertyChangeListener() {
+					void propertyChange(PropertyChangeEvent pce) {
+						Increment newSelectedIncrement = (pce.newValue as IncrementListEntry).increment
+						Increment oldSelectedIncrement = (pce.oldValue as IncrementListEntry)?.increment
+						if (oldSelectedIncrement != newSelectedIncrement) {
+							loadFileStructureFromIncrement(fc, newSelectedIncrement)
+							updateFileChooserContents(fc)
+						}
+					}
+				})
 	}
+
+	private void loadFileStructureFromIncrement(JFileChooser fc, Increment increment) {
+		def previousRoot = (fc.getFileSystemView() as InspectBackupFileSystemView).root
+		def newRoot = createRoot()
+		def incrementFileStructureService = new IncrementFileStructureService()
+		(fc.getFileSystemView() as InspectBackupFileSystemView).root = newRoot
+		incrementFileStructureService.createIncrementFileStructure(increment, newRoot)
+		deletePreviousRoot(previousRoot)
+	}
+	
+	private void ensureFirstRootIsDeletedOnExit(File root) {
+		root.deleteOnExit()
+	}
+	
+	private deletePreviousRoot(File previousRoot) {
+		previousRoot.deleteDir()
+	}
+	
+	
 }
 
