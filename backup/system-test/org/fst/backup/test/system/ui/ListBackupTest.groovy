@@ -6,6 +6,7 @@ import groovy.swing.SwingBuilder
 import javax.swing.DefaultListModel
 import javax.swing.DefaultListSelectionModel
 import javax.swing.DefaultSingleSelectionModel
+import javax.swing.JList
 import javax.swing.text.PlainDocument
 
 import org.fst.backup.test.AbstractTest
@@ -18,7 +19,7 @@ import org.fst.backup.ui.frame.create.TargetFileChooser
 
 class ListBackupTest extends AbstractTest {
 
-	void test() {
+	void testIncrementsListShowsOneIncrementAfterBackup() {
 
 		def ftb = new FileTreeBuilder(sourceDir)
 		ftb {
@@ -42,13 +43,16 @@ class ListBackupTest extends AbstractTest {
 		def button = new CreateBackupButton().createComponent(commonViewModel, swing, {})
 		def chooser = new BackupDirectoryChooser().createComponent(commonViewModel, swing)
 
-		sfc.setCurrentDirectory(sourceDir)
-		tfc.setCurrentDirectory(targetDir)
+		JList list = new IncrementsList().createComponent(commonViewModel, swing)
+		assert 0 == list.getModel().size
+
+		// Create backup
+		sfc.selectedFile = sourceDir
+		tfc.selectedFile = targetDir
 		button.doClick()
 
 		chooser.selectedFile = targetDir
 
-		def list = new IncrementsList().createComponent(commonViewModel, swing)
-		println list.getModel()*.increment
+		assert 1 == list.getModel().size
 	}
 }
