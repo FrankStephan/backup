@@ -34,7 +34,7 @@ class CreateBackupButtonTest extends AbstractTest {
 		commonViewModel.tabsModel = new DefaultSingleSelectionModel()
 		commonViewModel.consoleDocument = new PlainDocument()
 		MockFor swingMock = new MockFor(SwingBuilder.class)
-		swingMock.demand.button(1..2) { return new SwingBuilder().button(it) }
+		swingMock.demand.button(1) { return new SwingBuilder().button(it) }
 		swingMock.demand.doOutside(1..2) { Closure it -> it() }
 		swing = swingMock.proxyInstance()
 		button = new CreateBackupButton().createComponent(commonViewModel, swing, onFinish)

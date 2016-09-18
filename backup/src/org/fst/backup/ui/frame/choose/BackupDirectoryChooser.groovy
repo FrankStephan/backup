@@ -11,16 +11,13 @@ import org.codehaus.groovy.runtime.DateGroovyMethods
 import org.fst.backup.model.Increment
 import org.fst.backup.service.ListIncrementsService
 import org.fst.backup.service.exception.NotABackupDirectoryException
-import org.fst.backup.ui.CommonViewModel;
-import org.fst.backup.ui.IncrementListEntry;
+import org.fst.backup.ui.CommonViewModel
+import org.fst.backup.ui.IncrementListEntry
 
 class BackupDirectoryChooser {
 
-	public static final String NAME = 'BackupDirectoryChooser'
-
 	JFileChooser createComponent(CommonViewModel commonViewModel, SwingBuilder swing) {
 		def fc = swing.fileChooser(
-				name: NAME,
 				fileSelectionMode: JFileChooser.DIRECTORIES_ONLY,
 				controlButtonsAreShown: false,
 				multiSelectionEnabled: false,
@@ -29,7 +26,7 @@ class BackupDirectoryChooser {
 		fc.addPropertyChangeListener(new PropertyChangeListener() {
 					void propertyChange(PropertyChangeEvent pce) {
 						if (JFileChooser.SELECTED_FILE_CHANGED_PROPERTY.equals(pce.getPropertyName())) {
-							BackupDirectoryChooser.this.updateIncrementsList(commonViewModel, ((JFileChooser) pce.source).selectedFile)
+							BackupDirectoryChooser.this.updateIncrementsList(commonViewModel, pce.newValue)
 						}
 					}
 				})
@@ -45,8 +42,8 @@ class BackupDirectoryChooser {
 			} catch(NotABackupDirectoryException e) {
 				return
 			}
-			increments = increments.reverse()
-			increments.each { Increment it ->
+			List sortedIncrements = increments.sort { -it.secondsSinceTheEpoch }
+			sortedIncrements.each { Increment it ->
 				long millisSinceTheEpoch = secondsToMillis(it.secondsSinceTheEpoch)
 				Date date = new Date(millisSinceTheEpoch)
 				def dateString = formatDate(date)
