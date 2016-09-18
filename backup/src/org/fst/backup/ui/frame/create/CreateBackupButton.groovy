@@ -7,16 +7,13 @@ import java.awt.Color
 import javax.swing.JButton
 
 import org.fst.backup.service.CreateBackupService
-import org.fst.backup.ui.CommonViewModel;
-import org.fst.backup.ui.Tab;
+import org.fst.backup.ui.CommonViewModel
+import org.fst.backup.ui.Tab
 
 class CreateBackupButton {
 
-	public static final String NAME = 'CreateBackupButton'
-
 	JButton createComponent(CommonViewModel commonViewModel, SwingBuilder swing, Closure onFinish) {
 		swing.button(
-				name: NAME,
 				text: 'Backup ausführen',
 				actionPerformed: {
 					commonViewModel.tabsModel.selectedIndex = Tab.CONSOLE.ordinal()

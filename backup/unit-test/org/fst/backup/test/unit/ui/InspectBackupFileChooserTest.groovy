@@ -34,8 +34,8 @@ class InspectBackupFileChooserTest extends AbstractTest {
 		}
 	}
 
-	private void verifyIncrementFileStructureServiceInvocation(Closure assertion) {
-		incrementFileStructureService.demand.createIncrementFileStructure(1) { Increment increment, File root -> assertion?.call(increment, root) }
+	private void verifyIncrementFileStructureServiceInvocation(Closure assertParams) {
+		incrementFileStructureService.demand.createIncrementFileStructure(1) { Increment increment, File root -> assertParams?.call(increment, root) }
 	}
 
 	void testFileChooserUsesInspectBackupFileSystemView() {
@@ -62,7 +62,7 @@ class InspectBackupFileChooserTest extends AbstractTest {
 		} )
 	}
 
-	void testFileStructureIsCalculatedAgainIfSelectedIncrementDidChanged() {
+	void testFileStructureIsCalculatedAgainIfSelectedIncrementDidChange() {
 		verifyIncrementFileStructureServiceInvocation()
 		changeSelectedIncrement(increment)
 		verifyIncrementFileStructureServiceInvocation()
