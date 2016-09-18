@@ -1,4 +1,4 @@
-package org.fst.backup.test.system
+package org.fst.backup.test.system.service
 
 import static org.junit.Assert.*
 

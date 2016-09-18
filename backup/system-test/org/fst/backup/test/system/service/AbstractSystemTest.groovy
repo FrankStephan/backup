@@ -1,4 +1,4 @@
-package org.fst.backup.test.system
+package org.fst.backup.test.system.service
 
 import org.fst.backup.test.AbstractTest
 
@@ -6,6 +6,6 @@ abstract class AbstractSystemTest extends AbstractTest {
 
 	void setUp() {
 		super.setUp()
-		SystemTestStep.init(sourceDir, targetDir)
+		SystemServiceTestStep.init(sourceDir, targetDir)
 	}
 }

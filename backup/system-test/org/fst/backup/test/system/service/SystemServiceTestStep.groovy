@@ -1,11 +1,11 @@
 
-package org.fst.backup.test.system
+package org.fst.backup.test.system.service
 
 import org.fst.backup.service.CreateBackupService
 import org.fst.backup.service.IncrementFileStructureService
 import org.fst.backup.service.ListIncrementsService
 
-enum SystemTestStep {
+enum SystemServiceTestStep {
 
 	CREATE_SOME_SOURCE_FILES {
 		@Override
