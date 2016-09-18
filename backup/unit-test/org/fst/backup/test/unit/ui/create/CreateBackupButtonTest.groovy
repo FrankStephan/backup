@@ -1,4 +1,4 @@
-package org.fst.backup.test.unit.ui
+package org.fst.backup.test.unit.ui.create
 
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor

@@ -16,6 +16,8 @@ import org.fst.backup.ui.Tab
 import org.fst.backup.ui.frame.choose.BackupDirectoryChooser
 import org.fst.backup.ui.frame.choose.IncrementsList
 import org.fst.backup.ui.frame.create.CreateBackupButton
+import org.fst.backup.ui.frame.create.SourceFileChooser
+import org.fst.backup.ui.frame.create.TargetFileChooser
 import org.fst.backup.ui.frame.inspect.InspectBackupFileChooser
 
 
@@ -87,8 +89,8 @@ class TabFactory {
 	def createTab = {
 		swing.vbox (name: 'Erstellen') {
 			hbox() {
-				new BorderedFileChooser().createComponent('Quellverzeichnis', swing, { commonViewModel.sourceDir = it } )
-				new BorderedFileChooser().createComponent('Backupverzeichnis', swing, { commonViewModel.targetDir = it } )
+				new SourceFileChooser().createComponent(commonViewModel, swing)
+				new TargetFileChooser().createComponent(commonViewModel, swing)
 			}
 			hbox() {
 				panel()
