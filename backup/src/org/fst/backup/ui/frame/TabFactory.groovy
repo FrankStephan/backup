@@ -18,7 +18,7 @@ import org.fst.backup.ui.frame.choose.IncrementsList
 import org.fst.backup.ui.frame.create.CreateBackupButton
 import org.fst.backup.ui.frame.create.SourceFileChooser
 import org.fst.backup.ui.frame.create.TargetFileChooser
-import org.fst.backup.ui.frame.inspect.InspectBackupFileChooser
+import org.fst.backup.ui.frame.inspect.InspectIncrementFileChooser
 
 
 class TabFactory {
@@ -69,7 +69,7 @@ class TabFactory {
 	}
 
 	def inspectTab = {
-		swing.vbox (name: 'Durchsuchen').add(new InspectBackupFileChooser().createComponent(commonViewModel))
+		swing.vbox (name: 'Durchsuchen').add(new InspectIncrementFileChooser().createComponent(commonViewModel))
 	}
 
 	def restoreTab = {

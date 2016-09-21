@@ -11,12 +11,12 @@ import org.fst.backup.service.IncrementFileStructureService
 import org.fst.backup.test.AbstractTest
 import org.fst.backup.ui.CommonViewModel
 import org.fst.backup.ui.IncrementListEntry
-import org.fst.backup.ui.frame.inspect.InspectBackupFileChooser
-import org.fst.backup.ui.frame.inspect.InspectBackupFileSystemView
+import org.fst.backup.ui.frame.inspect.InspectIncrementFileChooser
+import org.fst.backup.ui.frame.inspect.InspectIncrementFileSystemView
 
-class InspectBackupFileChooserTest extends AbstractTest {
+class InspectIncrementFileChooserTest extends AbstractTest {
 
-	InspectBackupFileChooser componentBuilder = new InspectBackupFileChooser()
+	InspectIncrementFileChooser componentBuilder = new InspectIncrementFileChooser()
 	CommonViewModel commonViewModel = new CommonViewModel()
 	MockFor incrementFileStructureService = new MockFor(IncrementFileStructureService.class)
 	JFileChooser fc
@@ -39,17 +39,17 @@ class InspectBackupFileChooserTest extends AbstractTest {
 	}
 
 	void testFileChooserUsesInspectBackupFileSystemView() {
-		assert InspectBackupFileSystemView.class == fc.getFileSystemView().getClass()
+		assert InspectIncrementFileSystemView.class == fc.getFileSystemView().getClass()
 	}
 
 	void testFileChooserCreatesBackupFileSystemViewWithEmptyRoot() {
-		assert []== (fc.getFileSystemView() as InspectBackupFileSystemView).root.list()
+		assert []== (fc.getFileSystemView() as InspectIncrementFileSystemView).root.list()
 	}
 
 	void testFileChooserRetrievesFileStructureFromCorrectIncrement() {
 		verifyIncrementFileStructureServiceInvocation( {Increment _increment, File root ->
 			assert increment == _increment
-			InspectBackupFileSystemView fsv = fc.getFileSystemView()
+			InspectIncrementFileSystemView fsv = fc.getFileSystemView()
 			assert fsv.root == root
 		} )
 		changeSelectedIncrement(increment)
@@ -84,7 +84,7 @@ class InspectBackupFileChooserTest extends AbstractTest {
 
 	void testFileSystemViewRootIsUsedAsParentOfCalculatedFileStructure() {
 		verifyIncrementFileStructureServiceInvocation ( { Increment _increment, File root ->
-			assert (fc.getFileSystemView() as InspectBackupFileSystemView).root == root
+			assert (fc.getFileSystemView() as InspectIncrementFileSystemView).root == root
 		} )
 		changeSelectedIncrement(increment)
 	}

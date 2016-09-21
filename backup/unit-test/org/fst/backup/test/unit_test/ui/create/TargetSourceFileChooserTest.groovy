@@ -18,9 +18,7 @@ class TargetSourceFileChooserTest extends AbstractTest {
 			setDir()
 			assert targetDir == commonViewModel.targetDir
 		}
-		def swingMock = new MockFor(SwingBuilder.class)
-		swingMock.ignore(~'.*')
-		def fc = new TargetFileChooser().createComponent(commonViewModel, swingMock.proxyInstance())
+		def fc = new TargetFileChooser().createComponent(commonViewModel, new SwingBuilder())
 		fc.selectedFile = targetDir
 	}
 }

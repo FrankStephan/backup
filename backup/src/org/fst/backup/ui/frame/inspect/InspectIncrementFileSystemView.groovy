@@ -2,11 +2,11 @@ package org.fst.backup.ui.frame.inspect
 
 import javax.swing.filechooser.FileSystemView
 
-class InspectBackupFileSystemView extends FileSystemView {
+class InspectIncrementFileSystemView extends FileSystemView {
 
 	File root
 
-	InspectBackupFileSystemView(File root) {
+	InspectIncrementFileSystemView(File root) {
 		this.root = root.absoluteFile
 	}
 

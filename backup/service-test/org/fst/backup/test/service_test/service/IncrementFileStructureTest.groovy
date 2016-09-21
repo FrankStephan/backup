@@ -1,6 +1,6 @@
 package org.fst.backup.test.service_test.service
 
-import static org.fst.backup.test.service_test.service.SystemServiceTestStep.*
+import static org.fst.backup.test.service_test.service.ServiceTestStep.*
 import static org.junit.Assert.*
 
 import org.fst.backup.model.Increment
@@ -8,12 +8,13 @@ import org.fst.backup.model.Increment
 class IncrementFileStructureTest extends AbstractServiceTest {
 
 	void test() {
-		CREATE_SOME_SOURCE_FILES.execute()
-		DO_BACKUP.execute()
-		List<Increment> increments = LIST_INCREMENTS.execute()
-
+		List<Increment> increments
 		File root = new File(tmpPath + 'root/')
 		root.mkdir()
+
+		CREATE_SOME_SOURCE_FILES.execute()
+		DO_BACKUP.execute()
+		LIST_INCREMENTS.execute(null, {it -> increments = it })
 		GET_INCREMENT_FILE_STRUCTURE.verify([increments[0], root]) {
 			assert subPaths(root) == subPaths(sourceDir)
 		}

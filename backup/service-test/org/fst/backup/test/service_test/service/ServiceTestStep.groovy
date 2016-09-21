@@ -5,11 +5,11 @@ import org.fst.backup.service.CreateBackupService
 import org.fst.backup.service.IncrementFileStructureService
 import org.fst.backup.service.ListIncrementsService
 
-enum SystemServiceTestStep {
+enum ServiceTestStep {
 
 	CREATE_SOME_SOURCE_FILES {
 		@Override
-		Object execute(Object params) {
+		void execute(def params, Closure setResult) {
 			FileTreeBuilder ftb = new FileTreeBuilder(sourceDir)
 			ftb {
 				'a0.suf'('')
@@ -24,7 +24,7 @@ enum SystemServiceTestStep {
 
 	ADD_ANOTHER_SOURCE_FILE {
 		@Override
-		Object execute(Object params) {
+		void execute(def params, Closure setResult) {
 			FileTreeBuilder ftb = new FileTreeBuilder(sourceDir)
 			ftb {
 				a0 {
@@ -36,44 +36,47 @@ enum SystemServiceTestStep {
 
 	DO_BACKUP {
 		@Override
-		Object execute(Object params) {
+		void execute(def params, Closure setResult) {
 			StringBuilder sb = new StringBuilder()
 			new CreateBackupService().createBackup(sourceDir, targetDir, {
 				sb.append(it).append(System.lineSeparator())
 			})
-			return sb.toString().trim()
+			setResult?.call(sb.toString().trim())
 		}
 	},
 
 	WAIT_BECAUSE_RDIFF_CAN_DO_ONLY_ONE_BACKUP_PER_SECOND {
 		@Override
-		Object execute(Object params) {
+		void execute(def params, Closure setResult) {
 			Thread.sleep(1020L)
 		}
 	},
 
 	LIST_INCREMENTS {
 		@Override
-		Object execute(Object params) {
-			return new ListIncrementsService().listIncrements(targetDir)
+		void execute(def params, Closure setResult) {
+			def listIncrements = new ListIncrementsService().listIncrements(targetDir)
+			setResult(listIncrements)
 		}
 	},
 
 	GET_INCREMENT_FILE_STRUCTURE {
 
 		@Override
-		Object execute(Object params) {
+		void execute(def params, Closure setResult) {
 			IncrementFileStructureService incrementFileStructureService = new IncrementFileStructureService()
 			incrementFileStructureService.createIncrementFileStructure(params[0], params[1])
 		}
 	}
 
 
-	abstract execute(Object params = null)
+	abstract void execute(def params = null, Closure setResult = null)
 
 	public void verify(Object params = null, Closure verifier) {
-		def executionResult = execute(params)
-		verifier(executionResult)
+		def result
+		Closure setResult = {it -> result = it}
+		def executionResult = execute(params, setResult)
+		verifier(result)
 	}
 
 	static File sourceDir

@@ -13,7 +13,7 @@ import org.fst.backup.ui.CommonViewModel
 import org.fst.backup.ui.IncrementListEntry
 
 
-class InspectBackupFileChooser {
+class InspectIncrementFileChooser {
 
 	JFileChooser createComponent(CommonViewModel commonViewModel) {
 		JFileChooser fc = createReadOnlyFileChooser()
@@ -40,15 +40,15 @@ class InspectBackupFileChooser {
 		return fc
 	}
 
-	private InspectBackupFileSystemView createEmptyFileSystemView() {
+	private InspectIncrementFileSystemView createEmptyFileSystemView() {
 		def root = createRoot()
-		InspectBackupFileSystemView fsv = new InspectBackupFileSystemView(root)
+		InspectIncrementFileSystemView fsv = new InspectIncrementFileSystemView(root)
 		ensureFirstRootIsDeletedOnExit(root)
 		return fsv
 	}
 
 	private JFileChooser createFileChooserFromRoot() {
-		InspectBackupFileSystemView fsv = new InspectBackupFileSystemView(createRoot())
+		InspectIncrementFileSystemView fsv = new InspectIncrementFileSystemView(createRoot())
 		JFileChooser fc2 = new JFileChooser(fsv)
 		fc2.controlButtonsAreShown = false
 		return fc2
@@ -68,10 +68,10 @@ class InspectBackupFileChooser {
 	}
 
 	private void loadFileStructureFromIncrement(JFileChooser fc, Increment increment) {
-		def previousRoot = (fc.getFileSystemView() as InspectBackupFileSystemView).root
+		def previousRoot = (fc.getFileSystemView() as InspectIncrementFileSystemView).root
 		def newRoot = createRoot()
 		def incrementFileStructureService = new IncrementFileStructureService()
-		(fc.getFileSystemView() as InspectBackupFileSystemView).root = newRoot
+		(fc.getFileSystemView() as InspectIncrementFileSystemView).root = newRoot
 		incrementFileStructureService.createIncrementFileStructure(increment, newRoot)
 		deletePreviousRoot(previousRoot)
 	}

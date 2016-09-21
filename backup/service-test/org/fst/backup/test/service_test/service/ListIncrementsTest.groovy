@@ -1,6 +1,6 @@
 package org.fst.backup.test.service_test.service
 
-import static org.fst.backup.test.service_test.service.SystemServiceTestStep.*
+import static org.fst.backup.test.service_test.service.ServiceTestStep.*
 import static org.junit.Assert.*
 
 import org.fst.backup.model.Increment

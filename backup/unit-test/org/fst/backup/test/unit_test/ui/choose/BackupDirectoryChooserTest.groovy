@@ -29,9 +29,7 @@ class BackupDirectoryChooserTest extends AbstractTest {
 		super.setUp()
 		commonViewModel.incrementsListModel = new DefaultListModel<>()
 		createIncrement()
-		def swingMock = new MockFor(SwingBuilder.class)
-		swingMock.ignore(~'.*')
-		swing = swingMock.proxyInstance()
+		swing = new SwingBuilder()
 	}
 
 	void testIncrementListGetsUpdatedWhenFileSelectionChanges() {

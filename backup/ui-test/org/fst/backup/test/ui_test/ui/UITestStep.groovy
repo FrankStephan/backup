@@ -1,48 +1,96 @@
 package org.fst.backup.test.ui_test.ui
 
-import java.awt.Component
-import java.awt.Container
+import groovy.swing.SwingBuilder
 
-import javax.swing.Box
-import javax.swing.JTabbedPane
+import javax.swing.DefaultListModel
+import javax.swing.DefaultListSelectionModel
+import javax.swing.DefaultSingleSelectionModel
+import javax.swing.JButton
+import javax.swing.JList
+import javax.swing.text.PlainDocument
 
-import org.fst.backup.ui.Tab;
-import org.fst.backup.ui.frame.Frame;
-import org.fst.backup.ui.frame.TabsPane;
+import org.fst.backup.ui.CommonViewModel
+import org.fst.backup.ui.frame.choose.BackupDirectoryChooser
+import org.fst.backup.ui.frame.choose.IncrementsList
+import org.fst.backup.ui.frame.choose.InspectIncrementButton
+import org.fst.backup.ui.frame.create.CreateBackupButton
+import org.fst.backup.ui.frame.create.SourceFileChooser
+import org.fst.backup.ui.frame.create.TargetFileChooser
+import org.fst.backup.ui.frame.inspect.InspectIncrementFileChooser
 
 enum UITestStep {
 
-
-	NAVIGATE_TO_TAB {
-		@Override
+	CREATE_SOME_SOURCE_FILES {
 		Object execute(Object params) {
-			JTabbedPane tabsPane = componentsMap[TabsPane.NAME]
-			tabsPane.setSelectedIndex((params as Tab).ordinal())
-			Box createTab = tabsPane.getSelectedComponent()
-
-			// No need to show the frame?
-
-			println createTab
+			FileTreeBuilder ftb = new FileTreeBuilder(sourceDir)
+			ftb {
+				'a0.suf'('')
+				a0 {
+					a1 { 'a2.suf'('') }
+				}
+				'b0.suf'('')
+				'c0.suf'('')
+			}
 		}
 	},
 
+	CREATE_BACKUP {
+		Object execute(Object params) {
+			def sfc = new SourceFileChooser().createComponent(commonViewModel, swing)
+			def tfc = new TargetFileChooser().createComponent(commonViewModel, swing)
+			def button = new CreateBackupButton().createComponent(commonViewModel, swing, {})
+			sfc.selectedFile = sourceDir
+			tfc.selectedFile = targetDir
+			button.doClick()
+		}
+	},
 
-	abstract execute(Object params)
+	CHOOSE_TARGET_DIR {
+		Object execute(Object params) {
+			def chooser = new BackupDirectoryChooser().createComponent(commonViewModel, swing)
+			chooser.selectedFile = targetDir
+		}
+	},
 
-	public static Map componentsMap
-	static void init() {
-		Frame frame = new Frame()
-		frame.show()
+	LIST_INCREMENTS {
+		Object execute(Object params) {
+			return new IncrementsList().createComponent(commonViewModel, swing)
+		}
+	},
 
-		componentsMap = [:]
-		putByNameRecursively(componentsMap, frame.window)
+	INSPECT_INCREMENT {
+		Object execute(Object params) {
+			int selectionIndex = params[0]
+			JList l
+			l.processMouseEvent(null) // Continue
+			JButton button = new InspectIncrementButton().createComponent(commonViewModel, swing)
+			button.doClick()
+			new InspectIncrementFileChooser().createComponent(commonViewModel)
+		}
 	}
 
-	static void putByNameRecursively(Map componentsList, Component component) {
-		String key = component.getName()?:''
-		componentsList.put(key, component)
-		if (component instanceof Container) {
-			(((Container) component).components).each { putByNameRecursively(componentsList, it) }
-		}
+
+
+
+	abstract execute(Object params = null)
+
+	public void verify(Object params = null, Closure verifier) {
+		def executionResult = execute(params)
+		verifier(executionResult)
+	}
+
+	static File sourceDir
+	static File targetDir
+	static CommonViewModel commonViewModel = new CommonViewModel()
+	static SwingBuilder swing = new SwingBuilder()
+
+	static void init(File _sourceDir, File _targetDir) {
+		sourceDir = _sourceDir
+		targetDir = _targetDir
+
+		commonViewModel.tabsModel = new DefaultSingleSelectionModel()
+		commonViewModel.incrementsListModel = new DefaultListModel<>()
+		commonViewModel.incrementsListSelectionModel = new DefaultListSelectionModel()
+		commonViewModel.consoleDocument = new PlainDocument()
 	}
 }

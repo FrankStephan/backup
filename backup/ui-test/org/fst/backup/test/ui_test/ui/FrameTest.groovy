@@ -1,16 +1,15 @@
-package org.fst.backup.test.service_test.service
+package org.fst.backup.test.ui_test.ui
 
 import static org.junit.Assert.*
 
-import org.fst.backup.test.ui.UITestStep;
-import org.fst.backup.ui.Tab
+import org.fst.backup.test.service_test.service.AbstractServiceTest
 
 class FrameTest extends AbstractServiceTest {
 
 	public void test() {
 
-		UITestStep.init()
-		UITestStep.NAVIGATE_TO_TAB.execute(Tab.CREATE)
+		//		GUITestStep.init()
+		//		GUITestStep.NAVIGATE_TO_TAB.execute(Tab.CREATE)
 
 		//		componentsMap.each { println it }
 		//

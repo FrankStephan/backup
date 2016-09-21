@@ -6,6 +6,6 @@ abstract class AbstractServiceTest extends AbstractTest {
 
 	void setUp() {
 		super.setUp()
-		SystemServiceTestStep.init(sourceDir, targetDir)
+		ServiceTestStep.init(sourceDir, targetDir)
 	}
 }

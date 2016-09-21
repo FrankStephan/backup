@@ -33,10 +33,7 @@ class CreateBackupButtonTest extends AbstractTest {
 		commonViewModel = new CommonViewModel()
 		commonViewModel.tabsModel = new DefaultSingleSelectionModel()
 		commonViewModel.consoleDocument = new PlainDocument()
-		MockFor swingMock = new MockFor(SwingBuilder.class)
-		swingMock.demand.button(1) { return new SwingBuilder().button(it) }
-		swingMock.demand.doOutside(1..2) { Closure it -> it() }
-		swing = swingMock.proxyInstance()
+		swing = new SwingBuilder()
 		button = new CreateBackupButton().createComponent(commonViewModel, swing, onFinish)
 	}
 
@@ -135,7 +132,7 @@ class CreateBackupButtonTest extends AbstractTest {
 		}
 
 		def swingMock = new MockFor(SwingBuilder.class)
-		swingMock.demand.button(1) { return new SwingBuilder().button(it) }
+		swingMock.ignore(~'button.*')
 		swingMock.demand.doOutside(1) { Closure it ->
 			assert 0 == commonViewModel.consoleDocument.length
 			assert 'Status: Laufend' == commonViewModel.consoleStatus

@@ -3,22 +3,22 @@ package org.fst.backup.test.unit_test.ui.inspect
 import static org.junit.Assert.*
 
 import org.fst.backup.test.AbstractTest
-import org.fst.backup.ui.frame.inspect.InspectBackupFileSystemView
+import org.fst.backup.ui.frame.inspect.InspectIncrementFileSystemView
 
-class InspectBackupFileSystemViewTest extends AbstractTest {
+class InspectIncrementFileSystemViewTest extends AbstractTest {
 
-	InspectBackupFileSystemView fsv
+	InspectIncrementFileSystemView fsv
 
 	File root
 
 	void setUp() {
 		super.setUp()
 		root = new File(tmpPath).absoluteFile
-		fsv = new InspectBackupFileSystemView(new File(tmpPath))
+		fsv = new InspectIncrementFileSystemView(new File(tmpPath))
 	}
 
 	void testRootParamIsParsedToAbsoluteFile() {
-		fsv = new InspectBackupFileSystemView(new File(tmpPath))
+		fsv = new InspectIncrementFileSystemView(new File(tmpPath))
 		fsv.getRoot() == new File(tmpPath).absoluteFile
 	}
 
@@ -29,6 +29,11 @@ class InspectBackupFileSystemViewTest extends AbstractTest {
 	void testRootIsRoot() {
 		assert fsv.getRoots() == [root]
 		assert fsv.isRoot(root)
+	}
+
+	void testParentIsReturned() {
+		File child = new File(root, 'Child.txt') << 'Child'
+		assert root == fsv.getParentDirectory(child)
 	}
 
 	void testCannotGoUpToParentOfRoot() {
