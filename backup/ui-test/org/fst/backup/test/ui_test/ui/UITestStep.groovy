@@ -6,6 +6,7 @@ import javax.swing.DefaultListModel
 import javax.swing.DefaultListSelectionModel
 import javax.swing.DefaultSingleSelectionModel
 import javax.swing.JButton
+import javax.swing.JFileChooser
 import javax.swing.JList
 import javax.swing.text.PlainDocument
 
@@ -21,7 +22,7 @@ import org.fst.backup.ui.frame.inspect.InspectIncrementFileChooser
 enum UITestStep {
 
 	CREATE_SOME_SOURCE_FILES {
-		Object execute(Object params) {
+		Object execute(def params) {
 			FileTreeBuilder ftb = new FileTreeBuilder(sourceDir)
 			ftb {
 				'a0.suf'('')
@@ -35,7 +36,7 @@ enum UITestStep {
 	},
 
 	CREATE_BACKUP {
-		Object execute(Object params) {
+		Object execute(def params) {
 			def sfc = new SourceFileChooser().createComponent(commonViewModel, swing)
 			def tfc = new TargetFileChooser().createComponent(commonViewModel, swing)
 			def button = new CreateBackupButton().createComponent(commonViewModel, swing, {})
@@ -46,35 +47,37 @@ enum UITestStep {
 	},
 
 	CHOOSE_TARGET_DIR {
-		Object execute(Object params) {
+		Object execute(def params) {
 			def chooser = new BackupDirectoryChooser().createComponent(commonViewModel, swing)
 			chooser.selectedFile = targetDir
 		}
 	},
 
 	LIST_INCREMENTS {
-		Object execute(Object params) {
+		Object execute(def params) {
 			return new IncrementsList().createComponent(commonViewModel, swing)
 		}
 	},
 
 	INSPECT_INCREMENT {
-		Object execute(Object params) {
-			int selectionIndex = params[0]
-			JList l
-			l.processMouseEvent(null) // Continue
+		Object execute(def params) {
+			JList incrementsList = params['incrementsList']
+			int selectionIndex = params['selectionIndex']
+			incrementsList.setSelectedIndex(selectionIndex)
+
 			JButton button = new InspectIncrementButton().createComponent(commonViewModel, swing)
+			JFileChooser fc = new InspectIncrementFileChooser().createComponent(commonViewModel)
 			button.doClick()
-			new InspectIncrementFileChooser().createComponent(commonViewModel)
+			return fc
 		}
 	}
 
 
 
 
-	abstract execute(Object params = null)
+	abstract execute(def params = [:])
 
-	public void verify(Object params = null, Closure verifier) {
+	public void verify(def params = [:], Closure verifier) {
 		def executionResult = execute(params)
 		verifier(executionResult)
 	}

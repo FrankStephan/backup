@@ -30,6 +30,7 @@ class InspectIncrementFileChooser {
 	}
 
 	private updateFileChooserContents(JFileChooser fc) {
+		fc.setCurrentDirectory((fc.getFileSystemView() as InspectIncrementFileSystemView).root)
 		fc.rescanCurrentDirectory()
 	}
 
