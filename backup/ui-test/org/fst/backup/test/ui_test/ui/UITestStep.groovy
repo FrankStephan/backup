@@ -66,7 +66,7 @@ enum UITestStep {
 			incrementsList.setSelectedIndex(selectionIndex)
 
 			JButton button = new InspectIncrementButton().createComponent(commonViewModel, swing)
-			JFileChooser fc = new InspectIncrementFileChooser().createComponent(commonViewModel)
+			JFileChooser fc = new InspectIncrementFileChooser().createComponent(commonViewModel, swing)
 			button.doClick()
 			return fc
 		}

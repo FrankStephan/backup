@@ -2,9 +2,11 @@ package org.fst.backup.test.unit_test.ui.inspect
 
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
+import groovy.swing.SwingBuilder
 
 import javax.swing.DefaultListSelectionModel
 import javax.swing.JFileChooser
+import javax.swing.border.TitledBorder
 
 import org.fst.backup.model.Increment
 import org.fst.backup.service.IncrementFileStructureService
@@ -25,7 +27,7 @@ class InspectIncrementFileChooserTest extends AbstractTest {
 		super.setUp()
 		createIncrement()
 		commonViewModel.incrementsListSelectionModel = new DefaultListSelectionModel()
-		fc = componentBuilder.createComponent(commonViewModel)
+		fc = componentBuilder.createComponent(commonViewModel, new SwingBuilder())
 	}
 
 	private changeSelectedIncrement(Increment increment) {
@@ -35,7 +37,9 @@ class InspectIncrementFileChooserTest extends AbstractTest {
 	}
 
 	private void verifyIncrementFileStructureServiceInvocation(Closure assertParams) {
-		incrementFileStructureService.demand.createIncrementFileStructure(1) { Increment increment, File root -> assertParams?.call(increment, root) }
+		incrementFileStructureService.demand.createIncrementFileStructure(1) { Increment increment, File root ->
+			assertParams?.call(increment, root)
+		}
 	}
 
 	void testFileChooserUsesInspectBackupFileSystemView() {
@@ -47,7 +51,7 @@ class InspectIncrementFileChooserTest extends AbstractTest {
 	}
 
 	void testFileChooserRetrievesFileStructureFromCorrectIncrement() {
-		verifyIncrementFileStructureServiceInvocation( {Increment _increment, File root ->
+		verifyIncrementFileStructureServiceInvocation( { Increment _increment, File root ->
 			assert increment == _increment
 			InspectIncrementFileSystemView fsv = fc.getFileSystemView()
 			assert fsv.root == root
@@ -56,7 +60,7 @@ class InspectIncrementFileChooserTest extends AbstractTest {
 	}
 
 	void testFileStructureIsCalculatedOnlyOnceIfSelectedIncrementDidNotChange() {
-		verifyIncrementFileStructureServiceInvocation( {Increment _increment, File root ->
+		verifyIncrementFileStructureServiceInvocation( { Increment _increment, File root ->
 			changeSelectedIncrement(increment)
 			changeSelectedIncrement(increment)
 		} )
@@ -87,5 +91,16 @@ class InspectIncrementFileChooserTest extends AbstractTest {
 			assert (fc.getFileSystemView() as InspectIncrementFileSystemView).root == root
 		} )
 		changeSelectedIncrement(increment)
+	}
+
+	void testTitledBorderTextIsBlankInitially() {
+		verifyIncrementFileStructureServiceInvocation()
+		assert ' ' == ((fc.getBorder() as TitledBorder).getTitle())
+	}
+
+	void testTitledBorderTextEqualsTargetDir() {
+		verifyIncrementFileStructureServiceInvocation()
+		changeSelectedIncrement(increment)
+		assert targetDir.absolutePath == ((fc.getBorder() as TitledBorder).getTitle())
 	}
 }

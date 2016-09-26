@@ -6,10 +6,6 @@ import org.fst.backup.test.service_test.service.AbstractServiceTest
 
 class UISystemTest extends AbstractServiceTest {
 
-	void testAllRootsFromInspectionGetDeletedOnShutdown() {
-		fail()
-	}
-
 	void testFileNamesAreNotEditable() {
 		fail()
 	}

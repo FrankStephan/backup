@@ -69,7 +69,7 @@ class TabFactory {
 	}
 
 	def inspectTab = {
-		swing.vbox (name: 'Durchsuchen').add(new InspectIncrementFileChooser().createComponent(commonViewModel))
+		swing.vbox (name: 'Durchsuchen').add(new InspectIncrementFileChooser().createComponent(commonViewModel, swing))
 	}
 
 	def restoreTab = {

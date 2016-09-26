@@ -1,11 +1,15 @@
 package org.fst.backup.ui.frame.inspect
 
+import groovy.swing.SwingBuilder
+
 import java.beans.PropertyChangeEvent
 import java.beans.PropertyChangeListener
 import java.nio.file.Files
+import java.nio.file.Paths
 
 import javax.swing.JFileChooser
 import javax.swing.UIManager
+import javax.swing.border.TitledBorder
 
 import org.fst.backup.model.Increment
 import org.fst.backup.service.IncrementFileStructureService
@@ -13,13 +17,15 @@ import org.fst.backup.ui.CommonViewModel
 import org.fst.backup.ui.IncrementListEntry
 
 
+
 class InspectIncrementFileChooser {
 
-	JFileChooser createComponent(CommonViewModel commonViewModel) {
+	JFileChooser createComponent(CommonViewModel commonViewModel, SwingBuilder swing) {
 		JFileChooser fc = createReadOnlyFileChooser()
 		fc.fileSystemView = createEmptyFileSystemView()
 		updateFileChooserContents(fc)
 		observeSelectedIncrement(commonViewModel, fc)
+		bindBorderTitle(commonViewModel, fc, swing)
 		return fc
 	}
 
@@ -51,9 +57,25 @@ class InspectIncrementFileChooser {
 	private JFileChooser createFileChooserFromRoot() {
 		InspectIncrementFileSystemView fsv = new InspectIncrementFileSystemView(createRoot())
 		JFileChooser fc2 = new JFileChooser(fsv)
+		TitledBorder titledBorder = new TitledBorder('')
+		fc2.setBorder(titledBorder)
 		fc2.controlButtonsAreShown = false
 		return fc2
 	}
+
+	private void bindBorderTitle(CommonViewModel commonViewModel, JFileChooser fc, SwingBuilder swing) {
+		TitledBorder titledBorder = fc.getBorder()
+		swing.bind(source: commonViewModel, sourceProperty: 'selectedIncrement', target: titledBorder, targetProperty: 'title', converter: absoluteTargetPathFromSelectedIncrement)
+	}
+
+	Closure<String> absoluteTargetPathFromSelectedIncrement = { IncrementListEntry selectedIncrement ->
+		String targetPath = selectedIncrement?.increment?.targetPath
+		if (targetPath != null) {
+			return Paths.get(targetPath).toAbsolutePath().toString()
+		}
+		return ' '
+	}
+
 
 	private void observeSelectedIncrement(CommonViewModel commonViewModel, JFileChooser fc) {
 		commonViewModel.addPropertyChangeListener('selectedIncrement', new PropertyChangeListener() {
@@ -85,4 +107,3 @@ class InspectIncrementFileChooser {
 		previousRoot.deleteDir()
 	}
 }
-
