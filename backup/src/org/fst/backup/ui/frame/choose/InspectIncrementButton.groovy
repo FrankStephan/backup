@@ -7,6 +7,7 @@ import javax.swing.JButton
 import org.fst.backup.ui.CommonViewModel
 import org.fst.backup.ui.Tab
 
+
 class InspectIncrementButton {
 
 	JButton createComponent(CommonViewModel commonViewModel, SwingBuilder swing) {

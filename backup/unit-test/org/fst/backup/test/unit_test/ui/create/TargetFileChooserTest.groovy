@@ -9,16 +9,18 @@ import org.fst.backup.ui.BorderedFileChooser
 import org.fst.backup.ui.CommonViewModel
 import org.fst.backup.ui.frame.create.TargetFileChooser
 
-class TargetSourceFileChooserTest extends AbstractTest {
+class TargetFileChooserTest extends AbstractTest {
 
 	void testTargetDirChangesOnFileSelection() {
 		def commonViewModel = new CommonViewModel()
 		def borderedFileChooser = new MockFor(BorderedFileChooser.class)
 		borderedFileChooser.demand.createComponent(1) { String text, SwingBuilder swing, Closure setDir ->
-			setDir()
+			setDir(targetDir)
 			assert targetDir == commonViewModel.targetDir
 		}
-		def fc = new TargetFileChooser().createComponent(commonViewModel, new SwingBuilder())
-		fc.selectedFile = targetDir
+
+		borderedFileChooser.use {
+			def fc = new TargetFileChooser().createComponent(commonViewModel, new SwingBuilder())
+		}
 	}
 }

@@ -29,28 +29,26 @@ class RestoreBackupServiceTest extends AbstractTest {
 	void testTargetIsNotADirectory() {
 		targetDir = new File(tmpPath, 'File.txt') << 'I am a real file'
 		increment.targetPath = targetDir.absolutePath
-		def restoreDir = new File(tmpPath + 'restoreDir/')
-		restoreDir.mkdir()
 		RestoreBackupService service = new RestoreBackupService()
 		shouldFail (FileIsNotADirectoryException) {new RestoreBackupService().restore(increment, restoreDir, {})}
 	}
 
 	void testNotExisitingRestoreDir() {
 		RestoreBackupService service = new RestoreBackupService()
-		def restoreDir = new File(tmpPath + 'restoreDir/')
+		restoreDir = new File(tmpPath + 'NotExisting/')
 		shouldFail (DirectoryNotExistsException) {new RestoreBackupService().restore(increment, restoreDir, {})}
 	}
 
 	void testRestoreDirIsNotADirectory() {
 		RestoreBackupService service = new RestoreBackupService()
-		def restoreDir = new File(tmpPath + 'restoreDir/')
+		restoreDir = new File(tmpPath + 'aFile.txt/')
 		restoreDir.createNewFile()
 		shouldFail (FileIsNotADirectoryException) {new RestoreBackupService().restore(increment, restoreDir, {})}
 	}
 
 	void testRestoreCommandIsExecutedWithCorrectParams1() {
 		rdiffCommands.use {
-			new RestoreBackupService().restore(increment, sourceDir, {})
+			new RestoreBackupService().restore(increment, restoreDir, {})
 		}
 	}
 
@@ -59,7 +57,7 @@ class RestoreBackupServiceTest extends AbstractTest {
 		int numberOfInvocations = 0
 		Closure callback = { numberOfInvocations++ }
 		rdiffCommands.use {
-			new RestoreBackupService().restore(increment, sourceDir, callback)
+			new RestoreBackupService().restore(increment, restoreDir, callback)
 			assert numberOfInvocations == 1
 		}
 	}
@@ -69,7 +67,7 @@ class RestoreBackupServiceTest extends AbstractTest {
 		int numberOfInvocations = 0
 		Closure callback = { numberOfInvocations++ }
 		rdiffCommands.use {
-			new RestoreBackupService().restore(increment, sourceDir, callback)
+			new RestoreBackupService().restore(increment, restoreDir, callback)
 			assert numberOfInvocations == 2
 		}
 	}
@@ -80,7 +78,7 @@ class RestoreBackupServiceTest extends AbstractTest {
 		ByteArrayInputStream is = new ByteArrayInputStream((cmdLineContent ?: '').getBytes())
 		process.demand.getInputStream(1) { return is }
 		rdiffCommands.demand.restore(1) {File f1, File f2, def when ->
-			assert sourceDir == f2
+			assert restoreDir == f2
 			assert targetDir == f1
 			assert increment.secondsSinceTheEpoch == when
 			return process.proxyInstance()

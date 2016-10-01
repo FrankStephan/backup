@@ -14,10 +14,12 @@ class CommonViewModel {
 	SingleSelectionModel tabsModel
 
 	File sourceDir
+
 	File targetDir
 	File restoreDir
 
 	DefaultListModel<IncrementListEntry> incrementsListModel
+
 	DefaultListSelectionModel incrementsListSelectionModel
 
 	@Bindable

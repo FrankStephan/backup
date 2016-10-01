@@ -1,4 +1,4 @@
-package org.fst.backup.test.unit_test.ui.create
+package org.fst.backup.test.unit_test.ui.restore
 
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
@@ -12,16 +12,16 @@ import javax.swing.JButton
 import javax.swing.text.PlainDocument
 
 import org.fst.backup.model.Increment
-import org.fst.backup.service.CreateBackupService
+import org.fst.backup.service.RestoreBackupService
 import org.fst.backup.test.AbstractTest
 import org.fst.backup.ui.CommonViewModel
 import org.fst.backup.ui.IncrementListEntry
 import org.fst.backup.ui.Tab
-import org.fst.backup.ui.frame.create.CreateBackupButton
+import org.fst.backup.ui.frame.restore.RestoreBackupButton
 
-class CreateBackupButtonTest extends AbstractTest {
+class RestoreBackupButtonTest extends AbstractTest {
 
-	MockFor createBackupService = new MockFor(CreateBackupService.class)
+	MockFor restoreBackupService = new MockFor(RestoreBackupService.class)
 	CommonViewModel commonViewModel
 	SwingBuilder swing
 	JButton button
@@ -34,8 +34,6 @@ class CreateBackupButtonTest extends AbstractTest {
 	void setUp() {
 		super.setUp()
 		commonViewModel = new CommonViewModel()
-		commonViewModel.sourceDir = sourceDir
-		commonViewModel.targetDir = targetDir
 		commonViewModel.tabsModel = new DefaultSingleSelectionModel()
 		commonViewModel.consoleDocument = new PlainDocument()
 		createIncrement()
@@ -46,18 +44,18 @@ class CreateBackupButtonTest extends AbstractTest {
 		}
 		swingStub.demand.doOutside (1..2) {Closure it -> it()}
 		swing = swingStub.proxyInstance()
-		button = new CreateBackupButton().createComponent(commonViewModel, swing, onFinish)
+		button = new RestoreBackupButton().createComponent(commonViewModel, swing, onFinish)
 	}
 
-	private void verifyCreateBackupServiceInvocation(Closure assertParams) {
-		createBackupService.demand.createBackup(1) {File sourceDir, File targetDir, Closure commandLineCallback ->
-			assertParams?.call(sourceDir, targetDir, commandLineCallback)
+	private void verifyRestoreBackupServiceInvocation(Closure assertParams) {
+		restoreBackupService.demand.restore(1) {Increment increment, File restoreDir, Closure commandLineCallback ->
+			assertParams?.call(increment, restoreDir, commandLineCallback)
 			commandLines?.each { it -> commandLineCallback(it) }
 		}
 	}
 
 	private void clickButton() {
-		createBackupService.use { button.doClick() }
+		restoreBackupService.use { button.doClick() }
 	}
 
 	private void assertConsoleEqualsCommandLines() {
@@ -66,28 +64,28 @@ class CreateBackupButtonTest extends AbstractTest {
 		assert expected == actual
 	}
 
-	void testButtonCallsCreateBackupService() {
-		verifyCreateBackupServiceInvocation()
+	void testButtonCallsRestoreBackupService() {
+		verifyRestoreBackupServiceInvocation()
 		clickButton()
 	}
 
-	void testCreateBackupServiceReceivesCorrectParams() {
-		verifyCreateBackupServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
-			assert commonViewModel.sourceDir == sourceDir
-			assert commonViewModel.targetDir == targetDir
+	void testRestoreBackupServiceReceivesCorrectParams() {
+		verifyRestoreBackupServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
+			assert commonViewModel.selectedIncrement.increment == increment
+			assert commonViewModel.restoreDir == restoreDir
 		}
 		clickButton()
 	}
 
 	void testConsoleTabIsOpened() {
-		verifyCreateBackupServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
+		verifyRestoreBackupServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
 			assert Tab.CONSOLE.ordinal() == commonViewModel.tabsModel.selectedIndex
 		}
 		clickButton()
 	}
 
 	void testConsoleStatusIsRedAtTheBeginning() {
-		verifyCreateBackupServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
+		verifyRestoreBackupServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
 		}
@@ -95,16 +93,16 @@ class CreateBackupButtonTest extends AbstractTest {
 	}
 
 	void testConsoleStatusChangesFromRedToGreenOnFinish() {
-		verifyCreateBackupServiceInvocation()
+		verifyRestoreBackupServiceInvocation()
 		clickButton()
 		assert Color.GREEN == commonViewModel.consoleStatusColor
 		assert 'Status: Abgeschlossen' == commonViewModel.consoleStatus
 	}
 
 	void testConsoleStatusIsRedAgainAtTheBeginning() {
-		verifyCreateBackupServiceInvocation()
+		verifyRestoreBackupServiceInvocation()
 		clickButton()
-		verifyCreateBackupServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
+		verifyRestoreBackupServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
 		}
@@ -113,24 +111,24 @@ class CreateBackupButtonTest extends AbstractTest {
 
 	void testComandLinesGetWrittenToConsoleDocument() {
 		commandLines = ['Line1', 'Line2', 'Line3']
-		verifyCreateBackupServiceInvocation()
+		verifyRestoreBackupServiceInvocation()
 		clickButton()
 		assertConsoleEqualsCommandLines()
 	}
 
 	void testConsoleGetsClearedBeforeEachBackup() {
 		commandLines = ['I have been', 'invoked the', 'first time']
-		verifyCreateBackupServiceInvocation()
+		verifyRestoreBackupServiceInvocation()
 		clickButton()
 
 		commandLines = ['I have been', 'invoked the', 'second time']
-		verifyCreateBackupServiceInvocation()
+		verifyRestoreBackupServiceInvocation()
 		clickButton()
 		assertConsoleEqualsCommandLines()
 	}
 
 	void testOnFinishClosureIsInvoked() {
-		verifyCreateBackupServiceInvocation()
+		verifyRestoreBackupServiceInvocation()
 		clickButton()
 		assert true == isOnFinishClosureInvoked
 	}
@@ -138,10 +136,10 @@ class CreateBackupButtonTest extends AbstractTest {
 	void testCmdLinesAreWrittenToConsoleAsync() {
 		commandLines = ['Line1', 'Line2', 'Line3']
 
-		boolean isCreateBackupServiceInvoked = false
+		boolean isRestoreBackupServiceInvoked = false
 		boolean isInvokedOutsideUIThread = false
-		verifyCreateBackupServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
-			isCreateBackupServiceInvoked = true
+		verifyRestoreBackupServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
+			isRestoreBackupServiceInvoked = true
 		}
 
 		final swingStub = new StubFor(SwingBuilder.class)
@@ -154,7 +152,7 @@ class CreateBackupButtonTest extends AbstractTest {
 			assert 0 == commonViewModel.consoleDocument.length
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
-			assert false == isCreateBackupServiceInvoked
+			assert false == isRestoreBackupServiceInvoked
 
 			it()
 
@@ -162,10 +160,10 @@ class CreateBackupButtonTest extends AbstractTest {
 			assert Color.GREEN == commonViewModel.consoleStatusColor
 			assert 'Status: Abgeschlossen' == commonViewModel.consoleStatus
 			assert true == isOnFinishClosureInvoked
-			assert true == isCreateBackupServiceInvoked
+			assert true == isRestoreBackupServiceInvoked
 		}
 
-		button = new CreateBackupButton().createComponent(commonViewModel, swingStub.proxyInstance(), onFinish)
+		button = new RestoreBackupButton().createComponent(commonViewModel, swingStub.proxyInstance(), onFinish)
 
 		clickButton()
 		assert true == isInvokedOutsideUIThread

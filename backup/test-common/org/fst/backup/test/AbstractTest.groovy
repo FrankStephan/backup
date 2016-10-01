@@ -7,8 +7,10 @@ abstract class AbstractTest extends GroovyTestCase {
 	String tmpPath
 	String sourcePath
 	String targetPath
+	String restorePath
 	File sourceDir
 	File targetDir
+	File restoreDir
 	Increment increment
 
 	void setUp() {
@@ -16,11 +18,15 @@ abstract class AbstractTest extends GroovyTestCase {
 		tmpPath = getClass().getSimpleName() + '-tmp/'
 		sourcePath = tmpPath + 'source/'
 		targetPath = tmpPath + 'target/'
+		restorePath = tmpPath + 'restoreDir/'
+
 		new File(tmpPath).mkdir()
 		sourceDir = new File(sourcePath)
 		sourceDir.mkdir()
 		targetDir = new File(targetPath)
 		targetDir.mkdir()
+		restoreDir = new File(restorePath)
+		restoreDir.mkdir()
 	}
 
 	void tearDown() {

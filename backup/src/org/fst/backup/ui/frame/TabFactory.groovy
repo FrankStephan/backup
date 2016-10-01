@@ -10,15 +10,18 @@ import javax.swing.JScrollPane
 import javax.swing.border.TitledBorder
 import javax.swing.text.DefaultCaret
 
-import org.fst.backup.ui.BorderedFileChooser
 import org.fst.backup.ui.CommonViewModel
 import org.fst.backup.ui.Tab
 import org.fst.backup.ui.frame.choose.BackupDirectoryChooser
 import org.fst.backup.ui.frame.choose.IncrementsList
+import org.fst.backup.ui.frame.choose.InspectIncrementButton
 import org.fst.backup.ui.frame.create.CreateBackupButton
 import org.fst.backup.ui.frame.create.SourceFileChooser
 import org.fst.backup.ui.frame.create.TargetFileChooser
 import org.fst.backup.ui.frame.inspect.InspectIncrementFileChooser
+import org.fst.backup.ui.frame.restore.RestoreBackupButton
+import org.fst.backup.ui.frame.restore.RestoreButton
+import org.fst.backup.ui.frame.restore.RestoreDirectoryChooser
 
 
 class TabFactory {
@@ -56,32 +59,26 @@ class TabFactory {
 						preferredSize: new Dimension(width:250, height:-1),
 						minimumSize: new Dimension(width:250, height:-1)
 						) { new IncrementsList().createComponent(commonViewModel, swing) }
-				button(text: 'Durchsuchen ->', actionPerformed: {
-					commonViewModel.selectedIncrement = commonViewModel.incrementsListModel.get(commonViewModel.incrementsListSelectionModel.leadIndex)
-					commonViewModel.tabsModel.selectedIndex = Tab.INSPECT.ordinal()
-				})
-
-				button(text: 'Wiederherstellen ->', actionPerformed: {
-					commonViewModel.tabsModel.selectedIndex = Tab.RESTORE.ordinal()
-				})
+				new InspectIncrementButton().createComponent(commonViewModel, swing)
+				new RestoreButton().createComponent(commonViewModel, swing)
 			}
 		}
 	}
 
 	def inspectTab = {
-		swing.vbox (name: 'Durchsuchen').add(new InspectIncrementFileChooser().createComponent(commonViewModel, swing))
+		swing.vbox (name: 'Durchsuchen') {
+			new InspectIncrementFileChooser().createComponent(commonViewModel, swing)
+		}
 	}
 
 	def restoreTab = {
 		swing.vbox (name: 'Wiederherstellen') {
 			hbox() {
-				new BorderedFileChooser().createComponent('Wiederherstellungsverzeichnis', swing, { commonViewModel.restoreDir = it })
+				new RestoreDirectoryChooser().createComponent(commonViewModel, swing)
 			}
 			hbox() {
 				panel()
-				button(text: 'Wiederherstellen', actionPerformed: {
-					commonViewModel.tabsModel.selectedIndex = Tab.CONSOLE.ordinal()
-				})
+				new RestoreBackupButton().createComponent(commonViewModel, swing, { consoleScrollPane.repaint() })
 			}
 		}
 	}
