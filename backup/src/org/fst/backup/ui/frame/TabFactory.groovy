@@ -15,12 +15,12 @@ import org.fst.backup.ui.Tab
 import org.fst.backup.ui.frame.choose.BackupDirectoryChooser
 import org.fst.backup.ui.frame.choose.IncrementsList
 import org.fst.backup.ui.frame.choose.InspectIncrementButton
+import org.fst.backup.ui.frame.choose.RestoreButton;
 import org.fst.backup.ui.frame.create.CreateBackupButton
 import org.fst.backup.ui.frame.create.SourceFileChooser
 import org.fst.backup.ui.frame.create.TargetFileChooser
 import org.fst.backup.ui.frame.inspect.InspectIncrementFileChooser
 import org.fst.backup.ui.frame.restore.RestoreBackupButton
-import org.fst.backup.ui.frame.restore.RestoreButton
 import org.fst.backup.ui.frame.restore.RestoreDirectoryChooser
 
 

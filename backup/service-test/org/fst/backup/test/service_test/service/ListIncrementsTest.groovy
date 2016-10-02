@@ -15,7 +15,7 @@ class ListIncrementsTest extends AbstractServiceTest {
 		DO_BACKUP.execute()
 		WAIT_BECAUSE_RDIFF_CAN_DO_ONLY_ONE_BACKUP_PER_SECOND.execute()
 
-		LIST_INCREMENTS.verify { List<Increment> increments ->
+		LIST_INCREMENTS.execute(null) { List<Increment> increments ->
 			assert 2 == increments.size()
 		}
 	}

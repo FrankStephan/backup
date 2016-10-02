@@ -7,7 +7,7 @@ import javax.swing.JButton
 
 import org.fst.backup.test.AbstractTest
 import org.fst.backup.ui.CommonViewModel
-import org.fst.backup.ui.frame.restore.RestoreButton
+import org.fst.backup.ui.frame.choose.RestoreButton;
 
 class RestoreButtonTest extends AbstractTest {
 

@@ -1,9 +1,12 @@
 
 package org.fst.backup.test.service_test.service
 
+
+import org.fst.backup.model.Increment
 import org.fst.backup.service.CreateBackupService
 import org.fst.backup.service.IncrementFileStructureService
 import org.fst.backup.service.ListIncrementsService
+import org.fst.backup.service.RestoreBackupService
 
 enum ServiceTestStep {
 
@@ -61,29 +64,33 @@ enum ServiceTestStep {
 	},
 
 	GET_INCREMENT_FILE_STRUCTURE {
-
 		@Override
 		void execute(def params, Closure setResult) {
 			IncrementFileStructureService incrementFileStructureService = new IncrementFileStructureService()
 			incrementFileStructureService.createIncrementFileStructure(params[0], params[1])
+			setResult()
+		}
+	},
+
+	RESTORE_INCREMENT {
+		@Override
+		void execute(def params, Closure setResult) {
+			RestoreBackupService restoreBackupService = new RestoreBackupService()
+			Increment increment = params[0]
+			restoreBackupService.restore(increment, ServiceTestStep.restoreDir, {})
+			setResult()
 		}
 	}
 
-
 	abstract void execute(def params = null, Closure setResult = null)
-
-	public void verify(Object params = null, Closure verifier) {
-		def result
-		Closure setResult = {it -> result = it}
-		def executionResult = execute(params, setResult)
-		verifier(result)
-	}
 
 	static File sourceDir
 	static File targetDir
+	static File restoreDir
 
-	static void init(File _sourceDir, File _targetDir) {
+	static void init(File _sourceDir, File _targetDir, File _restoreDir) {
 		sourceDir = _sourceDir
 		targetDir = _targetDir
+		restoreDir = _restoreDir
 	}
 }

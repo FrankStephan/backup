@@ -14,19 +14,9 @@ class IncrementFileStructureTest extends AbstractServiceTest {
 
 		CREATE_SOME_SOURCE_FILES.execute()
 		DO_BACKUP.execute()
-		LIST_INCREMENTS.execute(null, {it -> increments = it })
-		GET_INCREMENT_FILE_STRUCTURE.verify([increments[0], root]) {
+		LIST_INCREMENTS.execute(null)  { increments = it }
+		GET_INCREMENT_FILE_STRUCTURE.execute([increments[0], root]) {
 			assert subPaths(root) == subPaths(sourceDir)
 		}
-	}
-
-	private List<String> subPaths(File parent) {
-		List<String> subPaths = []
-		parent.eachFileRecurse {File file ->
-			String path = file.toPath().toString()
-			String subPath = path.replace(parent.toString(), '')
-			subPaths.add(subPath)
-		}
-		return subPaths
 	}
 }
