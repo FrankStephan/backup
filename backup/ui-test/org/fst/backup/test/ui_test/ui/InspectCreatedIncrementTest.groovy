@@ -10,15 +10,27 @@ import org.fst.backup.ui.Tab
 
 class InspectCreatedIncrementTest extends AbstractUITest {
 
-	void testIncrementContentsAreDisplayedOnInspectTab() {
+	void test() {
 		CREATE_SOME_SOURCE_FILES.execute()
-		CREATE_BACKUP.execute()
+
+		JFileChooser sfc
+		CREATE_BACKUP.execute(null) { sfc = it }
 		CHOOSE_TARGET_DIR.execute()
 
-		JList incrementsList = LIST_INCREMENTS.execute()
-		INSPECT_INCREMENT.verify([incrementsList: incrementsList, selectionIndex: 0]) {JFileChooser fc ->
-			assert Tab.INSPECT.ordinal() == commonViewModel.tabsModel.selectedIndex
-			assert ['a0', 'a0.suf', 'b0.suf', 'c0.suf']== fc.getCurrentDirectory().list()
-		}
+		JList incrementsList
+		LIST_INCREMENTS.execute(null) { incrementsList = it }
+		JFileChooser rfc
+		INSPECT_INCREMENT.execute([incrementsList: incrementsList, selectionIndex: 0]) { rfc = it }
+
+		assertInspectTabIsOpened()
+		assertIncrementContainsFilesFromSource(sfc, rfc)
+	}
+
+	private assertInspectTabIsOpened() {
+		assert Tab.INSPECT.ordinal() == commonViewModel.tabsModel.selectedIndex
+	}
+
+	private assertIncrementContainsFilesFromSource(JFileChooser sfc, JFileChooser rfc) {
+		assert subPaths(sfc.selectedFile) == subPaths (rfc.getCurrentDirectory())
 	}
 }

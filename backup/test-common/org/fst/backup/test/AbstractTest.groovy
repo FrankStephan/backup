@@ -39,4 +39,14 @@ abstract class AbstractTest extends GroovyTestCase {
 				.setSecondsSinceTheEpoch((System.currentTimeMillis() / 1000) as long)
 				.setTargetPath(targetPath)
 	}
+
+	static List<String> subPaths(File parent) {
+		List<String> subPaths = []
+		parent.eachFileRecurse {File file ->
+			String path = file.toPath().toString()
+			String subPath = path.replace(parent.toString(), '')
+			subPaths.add(subPath)
+		}
+		return subPaths
+	}
 }

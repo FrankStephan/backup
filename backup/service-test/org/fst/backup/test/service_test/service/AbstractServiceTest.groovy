@@ -8,14 +8,4 @@ abstract class AbstractServiceTest extends AbstractTest {
 		super.setUp()
 		ServiceTestStep.init(sourceDir, targetDir, restoreDir)
 	}
-
-	static List<String> subPaths(File parent) {
-		List<String> subPaths = []
-		parent.eachFileRecurse {File file ->
-			String path = file.toPath().toString()
-			String subPath = path.replace(parent.toString(), '')
-			subPaths.add(subPath)
-		}
-		return subPaths
-	}
 }

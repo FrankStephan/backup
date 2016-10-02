@@ -4,6 +4,10 @@ import static org.junit.Assert.*
 
 class NewRequirements extends GroovyTestCase {
 
+	void testFileNamesAreNotEditable() {
+		fail()
+	}
+
 	void abortRDiffCommands() {
 	}
 

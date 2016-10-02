@@ -1,4 +1,4 @@
-package org.fst.backup.test.ui_test.ui
+package org.fst.backup.misc
 
 import java.awt.Component
 import java.awt.Container

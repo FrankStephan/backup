@@ -14,9 +14,8 @@ class IncrementFileStructureTest extends AbstractServiceTest {
 
 		CREATE_SOME_SOURCE_FILES.execute()
 		DO_BACKUP.execute()
-		LIST_INCREMENTS.execute(null)  { increments = it }
-		GET_INCREMENT_FILE_STRUCTURE.execute([increments[0], root]) {
-			assert subPaths(root) == subPaths(sourceDir)
-		}
+		LIST_INCREMENTS.execute(null) { increments = it }
+		GET_INCREMENT_FILE_STRUCTURE.execute([increments[0], root]) {}
+		assert subPaths(root) == subPaths(sourceDir)
 	}
 }

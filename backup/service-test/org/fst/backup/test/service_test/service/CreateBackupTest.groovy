@@ -8,8 +8,8 @@ class CreateBackupTest extends AbstractServiceTest {
 	void test() {
 		CREATE_SOME_SOURCE_FILES.execute()
 
-		DO_BACKUP.execute(null) { String cmdLineContent ->
-			assert cmdLineContent.contains('Using rdiff-backup version 1.2.8')
-		}
+		String cmdLineContent
+		DO_BACKUP.execute(null) { cmdLineContent = it }
+		assert cmdLineContent.contains('Using rdiff-backup version 1.2.8')
 	}
 }

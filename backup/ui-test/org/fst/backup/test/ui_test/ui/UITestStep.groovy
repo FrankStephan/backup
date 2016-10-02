@@ -22,7 +22,7 @@ import org.fst.backup.ui.frame.inspect.InspectIncrementFileChooser
 enum UITestStep {
 
 	CREATE_SOME_SOURCE_FILES {
-		Object execute(def params) {
+		void execute(def params, Closure setResult) {
 			FileTreeBuilder ftb = new FileTreeBuilder(sourceDir)
 			ftb {
 				'a0.suf'('')
@@ -36,31 +36,33 @@ enum UITestStep {
 	},
 
 	CREATE_BACKUP {
-		Object execute(def params) {
+		void execute(def params, Closure setResult) {
 			def sfc = new SourceFileChooser().createComponent(commonViewModel, swing)
 			def tfc = new TargetFileChooser().createComponent(commonViewModel, swing)
 			def button = new CreateBackupButton().createComponent(commonViewModel, swing, {})
 			sfc.selectedFile = sourceDir
 			tfc.selectedFile = targetDir
 			button.doClick()
+			setResult?.call(sfc)
 		}
 	},
 
 	CHOOSE_TARGET_DIR {
-		Object execute(def params) {
+		void execute(def params, Closure setResult) {
 			def chooser = new BackupDirectoryChooser().createComponent(commonViewModel, swing)
 			chooser.selectedFile = targetDir
 		}
 	},
 
 	LIST_INCREMENTS {
-		Object execute(def params) {
-			return new IncrementsList().createComponent(commonViewModel, swing)
+		void execute(def params, Closure setResult) {
+			def incrementsList = new IncrementsList().createComponent(commonViewModel, swing)
+			setResult?.call(incrementsList)
 		}
 	},
 
 	INSPECT_INCREMENT {
-		Object execute(def params) {
+		void execute(def params, Closure setResult) {
 			JList incrementsList = params['incrementsList']
 			int selectionIndex = params['selectionIndex']
 			incrementsList.setSelectedIndex(selectionIndex)
@@ -68,19 +70,19 @@ enum UITestStep {
 			JButton button = new InspectIncrementButton().createComponent(commonViewModel, swing)
 			JFileChooser fc = new InspectIncrementFileChooser().createComponent(commonViewModel, swing)
 			button.doClick()
-			return fc
+			setResult(fc)
+		}
+	},
+
+	RESTORE_INCREMENT {
+		void execute(def params, Closure setResult) {
+
+			//			new RestoreButton().createComponent(UITestStep.commonViewModel, UITestStep.swing)
+
 		}
 	}
 
-
-
-
-	abstract execute(def params = [:])
-
-	public void verify(def params = [:], Closure verifier) {
-		def executionResult = execute(params)
-		verifier(executionResult)
-	}
+	abstract void execute(def params = [:], Closure setResult = null)
 
 	static File sourceDir
 	static File targetDir
