@@ -6,8 +6,6 @@ import static org.junit.Assert.*
 import javax.swing.JFileChooser
 import javax.swing.JList
 
-import org.fst.backup.ui.Tab
-
 class InspectCreatedIncrementTest extends AbstractUITest {
 
 	void test() {
@@ -19,18 +17,13 @@ class InspectCreatedIncrementTest extends AbstractUITest {
 
 		JList incrementsList
 		LIST_INCREMENTS.execute(null) { incrementsList = it }
-		JFileChooser rfc
-		INSPECT_INCREMENT.execute([incrementsList: incrementsList, selectionIndex: 0]) { rfc = it }
+		JFileChooser ifc
+		INSPECT_INCREMENT.execute([incrementsList: incrementsList, selectionIndex: 0]) { ifc = it }
 
-		assertInspectTabIsOpened()
-		assertIncrementContainsFilesFromSource(sfc, rfc)
+		assertIncrementContainsFilesFromSource(sfc, ifc)
 	}
 
-	private assertInspectTabIsOpened() {
-		assert Tab.INSPECT.ordinal() == commonViewModel.tabsModel.selectedIndex
-	}
-
-	private assertIncrementContainsFilesFromSource(JFileChooser sfc, JFileChooser rfc) {
-		assert subPaths(sfc.selectedFile) == subPaths (rfc.getCurrentDirectory())
+	private assertIncrementContainsFilesFromSource(JFileChooser sfc, JFileChooser ifc) {
+		assert subPaths(sfc.selectedFile) == subPaths(ifc.getCurrentDirectory())
 	}
 }

@@ -21,7 +21,7 @@ import org.fst.backup.ui.IncrementListEntry
 class InspectIncrementFileChooser {
 
 	JFileChooser createComponent(CommonViewModel commonViewModel, SwingBuilder swing) {
-		JFileChooser fc = createReadOnlyFileChooser()
+		JFileChooser fc = createReadOnlyFileChooser(swing)
 		fc.fileSystemView = createEmptyFileSystemView()
 		updateFileChooserContents(fc)
 		observeSelectedIncrement(commonViewModel, fc)
@@ -40,9 +40,9 @@ class InspectIncrementFileChooser {
 		fc.rescanCurrentDirectory()
 	}
 
-	private JFileChooser createReadOnlyFileChooser() {
+	private JFileChooser createReadOnlyFileChooser(SwingBuilder swing) {
 		Boolean old = UIManager.put('FileChooser.readOnly', Boolean.TRUE)
-		JFileChooser fc = createFileChooserFromRoot()
+		JFileChooser fc = createFileChooserFromRoot(swing)
 		UIManager.put('FileChooser.readOnly', old)
 		return fc
 	}
@@ -54,10 +54,11 @@ class InspectIncrementFileChooser {
 		return fsv
 	}
 
-	private JFileChooser createFileChooserFromRoot() {
+	private JFileChooser createFileChooserFromRoot(SwingBuilder swing) {
 		InspectIncrementFileSystemView fsv = new InspectIncrementFileSystemView(createRoot())
-		JFileChooser fc2 = new JFileChooser(fsv)
-		TitledBorder titledBorder = new TitledBorder('')
+		JFileChooser fc2 = swing.fileChooser()
+		fc2.setFileSystemView(fsv)
+		TitledBorder titledBorder = swing.titledBorder()
 		fc2.setBorder(titledBorder)
 		fc2.controlButtonsAreShown = false
 		return fc2

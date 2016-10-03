@@ -15,19 +15,21 @@ class RestoreBackupButton {
 
 	JButton createComponent(CommonViewModel commonViewModel, SwingBuilder swing, Closure onFinish) {
 		return swing.button(text: 'Wiederherstellen', actionPerformed: {
-			commonViewModel.tabsModel.selectedIndex = Tab.CONSOLE.ordinal()
-			commonViewModel.consoleStatusColor = Color.RED
-			commonViewModel.consoleStatus = 'Status: Laufend'
-			clearConsole(commonViewModel)
+			if (commonViewModel.selectedIncrement != null) {
+				commonViewModel.tabsModel.selectedIndex = Tab.CONSOLE.ordinal()
+				commonViewModel.consoleStatusColor = Color.RED
+				commonViewModel.consoleStatus = 'Status: Laufend'
+				clearConsole(commonViewModel)
 
-			def restoreBackupService = new RestoreBackupService()
-			swing.doOutside {
-				restoreBackupService.restore(commonViewModel.selectedIncrement.increment, commonViewModel.restoreDir, {
-					commonViewModel.consoleDocument.insertString(commonViewModel.consoleDocument.length, it + System.lineSeparator(), null)
-				})
-				commonViewModel.consoleStatus = 'Status: Abgeschlossen'
-				commonViewModel.consoleStatusColor = Color.GREEN
-				onFinish.call()
+				def restoreBackupService = new RestoreBackupService()
+				swing.doOutside {
+					restoreBackupService.restore(commonViewModel.selectedIncrement.increment, commonViewModel.restoreDir, {
+						commonViewModel.consoleDocument.insertString(commonViewModel.consoleDocument.length, it + System.lineSeparator(), null)
+					})
+					commonViewModel.consoleStatus = 'Status: Abgeschlossen'
+					commonViewModel.consoleStatusColor = Color.GREEN
+					onFinish.call()
+				}
 			}
 		})
 	}

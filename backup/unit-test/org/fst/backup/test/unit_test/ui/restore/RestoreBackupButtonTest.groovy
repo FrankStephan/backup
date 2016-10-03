@@ -64,6 +64,12 @@ class RestoreBackupButtonTest extends AbstractTest {
 		assert expected == actual
 	}
 
+	void testNothingHappensIfNoIncrementIsSelected() {
+		commonViewModel.selectedIncrement = null
+		restoreBackupService.demand.restore(0) {Increment increment, File restoreDir, Closure commandLineCallback ->}
+		clickButton()
+	}
+
 	void testButtonCallsRestoreBackupService() {
 		verifyRestoreBackupServiceInvocation()
 		clickButton()

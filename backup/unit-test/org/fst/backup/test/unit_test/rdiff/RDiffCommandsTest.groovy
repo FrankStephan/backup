@@ -73,6 +73,7 @@ class RDiffCommandsTest extends AbstractTest  {
 		defineExpectedCommandBuilderInvocation('cmd /c rdiff-backup -r',
 				RDiffCommandElement.RDIFF_COMMAND,
 				RDiffCommandElement.RESTORE,
+				RDiffCommandElement.HIGHEST_VERBOSITY
 				)
 		callMethodUnderTestAndVerifyProcess( {
 			new RDiffCommands().restore(targetDir, sourceDir, '1467750198')

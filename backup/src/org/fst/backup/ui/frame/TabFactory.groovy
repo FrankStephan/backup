@@ -5,7 +5,6 @@ import groovy.swing.SwingBuilder
 import java.awt.Dimension
 import java.awt.Font
 
-import javax.swing.JButton
 import javax.swing.JScrollPane
 import javax.swing.border.TitledBorder
 import javax.swing.text.DefaultCaret
@@ -15,7 +14,7 @@ import org.fst.backup.ui.Tab
 import org.fst.backup.ui.frame.choose.BackupDirectoryChooser
 import org.fst.backup.ui.frame.choose.IncrementsList
 import org.fst.backup.ui.frame.choose.InspectIncrementButton
-import org.fst.backup.ui.frame.choose.RestoreButton;
+import org.fst.backup.ui.frame.choose.RestoreButton
 import org.fst.backup.ui.frame.create.CreateBackupButton
 import org.fst.backup.ui.frame.create.SourceFileChooser
 import org.fst.backup.ui.frame.create.TargetFileChooser
@@ -91,7 +90,7 @@ class TabFactory {
 			}
 			hbox() {
 				panel()
-				JButton createBackupButton = new CreateBackupButton().createComponent(commonViewModel, swing, { consoleScrollPane.repaint() })
+				new CreateBackupButton().createComponent(commonViewModel, swing, { consoleScrollPane.repaint() })
 			}
 		}
 	}

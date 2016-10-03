@@ -6,6 +6,6 @@ abstract class AbstractUITest extends AbstractTest {
 
 	void setUp() {
 		super.setUp()
-		UITestStep.init(sourceDir, targetDir)
+		UITestStep.init(sourceDir, targetDir, restoreDir)
 	}
 }

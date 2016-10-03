@@ -18,10 +18,11 @@ import org.fst.backup.ui.frame.choose.InspectIncrementButton
 class InspectIncrementButtonTest extends AbstractTest {
 
 	JButton button
-	CommonViewModel commonViewModel = new CommonViewModel()
+	CommonViewModel commonViewModel
 
 	void setUp() {
 		super.setUp()
+		commonViewModel = new CommonViewModel()
 		commonViewModel.incrementsListModel = new DefaultListModel<>()
 		commonViewModel.incrementsListModel.add(0, new IncrementListEntry('18.09.16 16:08:04', createIncrement()))
 		commonViewModel.incrementsListModel.add(1, new IncrementListEntry('18.09.16 16:08:05', createIncrement()))
