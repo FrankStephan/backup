@@ -17,11 +17,16 @@ class RestoreIncrementTest extends AbstractServiceTest {
 		LIST_INCREMENTS.execute(null) { increments = it }
 
 		RESTORE_INCREMENT.execute([increments[0]]) {}
-		assert subPaths(sourceDir) == subPaths(restoreDir)
+
+		println sourceDir
+		println restoreDir
+		println subPaths(sourceDir)
+		println subPaths(restoreDir)
+
+		assertRestoreDirContainsFilesFromSource()
 	}
 
-	private void clearRestoreDir() {
-		restoreDir.listFiles()*.delete()
-		restoreDir.listFiles()*.deleteDir()
+	private assertRestoreDirContainsFilesFromSource() {
+		assert subPaths(sourceDir) == subPaths(restoreDir)
 	}
 }

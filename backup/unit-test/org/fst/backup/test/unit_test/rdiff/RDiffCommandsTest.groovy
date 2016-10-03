@@ -33,7 +33,9 @@ class RDiffCommandsTest extends AbstractTest  {
 				RDiffCommandElement.RDIFF_COMMAND,
 				RDiffCommandElement.VERSION_ARG
 				)
-		callMethodUnderTestAndVerifyProcess( {new RDiffCommands().version()} )
+		callMethodUnderTestAndVerifyProcess( {
+			new RDiffCommands().version()
+		} )
 	}
 
 	void testBackup() {
@@ -42,7 +44,9 @@ class RDiffCommandsTest extends AbstractTest  {
 				RDiffCommandElement.RDIFF_COMMAND,
 				RDiffCommandElement.HIGHEST_VERBOSITY
 				)
-		callMethodUnderTestAndVerifyProcess( {new RDiffCommands().backup(sourceDir, targetDir)} )
+		callMethodUnderTestAndVerifyProcess( {
+			new RDiffCommands().backup(sourceDir, targetDir)
+		} )
 	}
 
 	void testListIncrements() {
@@ -72,8 +76,8 @@ class RDiffCommandsTest extends AbstractTest  {
 		expectedCommand = 'cmd /c rdiff-backup -r 1467750198 ' + targetDir.absolutePath + ' ' + sourceDir.absolutePath
 		defineExpectedCommandBuilderInvocation('cmd /c rdiff-backup -r',
 				RDiffCommandElement.RDIFF_COMMAND,
-				RDiffCommandElement.RESTORE,
-				RDiffCommandElement.HIGHEST_VERBOSITY
+				RDiffCommandElement.HIGHEST_VERBOSITY,
+				RDiffCommandElement.RESTORE
 				)
 		callMethodUnderTestAndVerifyProcess( {
 			new RDiffCommands().restore(targetDir, sourceDir, '1467750198')

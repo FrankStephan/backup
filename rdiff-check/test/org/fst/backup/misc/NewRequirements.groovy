@@ -4,6 +4,12 @@ import static org.junit.Assert.*
 
 class NewRequirements extends GroovyTestCase {
 
+	void testCmdIsLogged() {
+	}
+
+	void testConsoleHasLimitedSize() {
+	}
+
 	void testFileNamesAreNotEditable() {
 		fail()
 	}

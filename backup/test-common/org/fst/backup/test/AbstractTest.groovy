@@ -18,7 +18,7 @@ abstract class AbstractTest extends GroovyTestCase {
 		tmpPath = getClass().getSimpleName() + '-tmp/'
 		sourcePath = tmpPath + 'source/'
 		targetPath = tmpPath + 'target/'
-		restorePath = tmpPath + 'restoreDir/'
+		restorePath = tmpPath + 'restore/'
 
 		new File(tmpPath).mkdir()
 		sourceDir = new File(sourcePath)

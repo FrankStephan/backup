@@ -200,6 +200,7 @@ class RDiffCheck extends GroovyTestCase {
 	private void restore(def when) {
 		def process = rdiffCommands.restore(new File(TARGET_DIR), new File(RESTORE_DIR), when)
 		String text = process.text
+		println text
 		exitValue = process.exitValue()
 	}
 

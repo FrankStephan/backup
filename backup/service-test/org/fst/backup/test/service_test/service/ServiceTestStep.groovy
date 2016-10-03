@@ -77,7 +77,7 @@ enum ServiceTestStep {
 		void execute(def params, Closure setResult) {
 			RestoreBackupService restoreBackupService = new RestoreBackupService()
 			Increment increment = params[0]
-			restoreBackupService.restore(increment, ServiceTestStep.restoreDir, {})
+			restoreBackupService.restore(increment, restoreDir, {})
 			setResult()
 		}
 	}
