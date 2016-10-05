@@ -32,6 +32,27 @@ class RDiffCheck extends GroovyTestCase {
 		assert cmdLineOutput.contains('Using rdiff-backup version 1.2.8')
 		assert 0 == exitValue
 	}
+	
+	void testVerifyConsistentBackupDir() {
+		createTwoIncrements()
+		def secondsSinceTheEpochPerIncrement = extractSecondsSinceTheEpochPerIncrement(listIncrements())
+		Process p = rdiffCommands.verify(new File(TARGET_DIR), secondsSinceTheEpochPerIncrement[0])
+		cmdLineOutput = p.text.trim()
+		exitValue = p.exitValue()
+		assert 'Every file verified successfully.' == cmdLineOutput
+		assert exitValue == 0
+	}
+	
+	void testVerifyCorruptedBackupDir() {
+		createTwoIncrements()
+		fail()
+		def secondsSinceTheEpochPerIncrement = extractSecondsSinceTheEpochPerIncrement(listIncrements())
+		Process p = rdiffCommands.verify(new File(TARGET_DIR), secondsSinceTheEpochPerIncrement[0])
+		cmdLineOutput = p.text.trim()
+		exitValue = p.exitValue()
+		assert 'Every file verified successfully.' == cmdLineOutput
+		assert exitValue == 0
+	}
 
 	void testListIncrementsNoBackupDir() {
 		new File(TARGET_DIR).mkdirs()
@@ -154,7 +175,7 @@ class RDiffCheck extends GroovyTestCase {
 		restore(secondsSinceTheEpochOlder)
 		assert [FILE1_NAME]== restoreDir.list()
 	}
-
+	
 	void tearDown() {
 		new File(TMP_DIR).deleteDir()
 	}

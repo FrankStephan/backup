@@ -44,8 +44,4 @@ class NewRequirements extends GroovyTestCase {
 		fail()
 	}
 
-	public void testIncrementsAreNotCompressed() {
-		// --no-compression
-		fail()
-	}
 }

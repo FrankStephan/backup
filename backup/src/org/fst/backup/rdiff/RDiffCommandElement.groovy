@@ -7,7 +7,8 @@ enum RDiffCommandElement {
 	LIST_INCREMENTS_ARG('-l'),
 	PARSABLE_OUTPUT_ARG('--parsable-output'),
 	LIST_AT_TIME_ARG('--list-at-time'),
-	RESTORE('-r')
+	RESTORE('-r'),
+	VERIFY('--verify-at-time')
 
 	String string
 
