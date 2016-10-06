@@ -13,11 +13,17 @@ class RDiffCheck extends GroovyTestCase {
 	static final String FILE1_NAME = 'File1.txt'
 	static final String FILE2_NAME = 'File2.txt'
 
+	private static final boolean DEBUG = false
+
 	File file1
 	File file2
 
+
 	String cmdLineOutput
+	boolean errorsExpected = false
+	String error
 	int exitValue
+
 
 	RDiffCommands rdiffCommands = new RDiffCommands()
 
@@ -32,29 +38,47 @@ class RDiffCheck extends GroovyTestCase {
 		assert cmdLineOutput.contains('Using rdiff-backup version 1.2.8')
 		assert 0 == exitValue
 	}
-	
+
 	void testVerifyConsistentBackupDir() {
 		createTwoIncrements()
-		def secondsSinceTheEpochPerIncrement = extractSecondsSinceTheEpochPerIncrement(listIncrements())
-		Process p = rdiffCommands.verify(new File(TARGET_DIR), secondsSinceTheEpochPerIncrement[0])
-		cmdLineOutput = p.text.trim()
-		exitValue = p.exitValue()
+		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
+		verify(secondsSinceTheEpochPerIncrement[0])
 		assert 'Every file verified successfully.' == cmdLineOutput
-		assert exitValue == 0
+		assert 0 == exitValue
 	}
-	
-	void testVerifyCorruptedBackupDir() {
+
+	void testVerifyCorruptedBackupDir1() {
 		createTwoIncrements()
-		fail()
-		def secondsSinceTheEpochPerIncrement = extractSecondsSinceTheEpochPerIncrement(listIncrements())
-		Process p = rdiffCommands.verify(new File(TARGET_DIR), secondsSinceTheEpochPerIncrement[0])
-		cmdLineOutput = p.text.trim()
-		exitValue = p.exitValue()
-		assert 'Every file verified successfully.' == cmdLineOutput
-		assert exitValue == 0
+		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
+
+		deleteFile1()
+		errorsExpected = true
+		verify(secondsSinceTheEpochPerIncrement[0])
+		assert error.contains('Could not restore file File1.txt')
+		assert 1 == exitValue
+	}
+
+	void testVerifyCorruptedBackupDir2() {
+		createTwoIncrements()
+		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
+
+		deleteFile2()
+		errorsExpected = true
+		verify(secondsSinceTheEpochPerIncrement[1])
+		assert error.contains('Could not restore file File2.txt')
+		assert 1 == exitValue
+	}
+
+	private void deleteFile1() {
+		new File(TARGET_DIR, FILE1_NAME).delete()
+	}
+
+	private void deleteFile2() {
+		new File(TARGET_DIR, FILE2_NAME).delete()
 	}
 
 	void testListIncrementsNoBackupDir() {
+		errorsExpected = true
 		new File(TARGET_DIR).mkdirs()
 		listIncrements()
 		assert 1 == exitValue
@@ -87,15 +111,10 @@ class RDiffCheck extends GroovyTestCase {
 	}
 
 	void testListFilesFromNonBackupDirectory() {
-		File targetDir = new File(TARGET_DIR)
-		targetDir.mkdirs()
-		def process = rdiffCommands.listFiles(new File(TARGET_DIR), 'now')
-		StringBuilder sb = new StringBuilder()
-		process.errorStream.eachLine { sb.append(it)}
-		String error = sb.toString()
-
-		assert process.text.isEmpty()
-		assert process.exitValue() == 1
+		errorsExpected = true
+		listFiles('now')
+		assert cmdLineOutput.isEmpty()
+		assert 1 == exitValue
 		assert error.startsWith('Fatal Error:')
 		assert error.endsWith('It doesn\'t appear to be an rdiff-backup destination dir')
 	}
@@ -103,6 +122,7 @@ class RDiffCheck extends GroovyTestCase {
 	void testListFilesFromEmptyBackup() {
 		new File(SOURCE_DIR).mkdirs()
 		backup()
+		errorsExpected = true
 		def paths = listFiles('now')
 
 		assert 1 == paths.size()
@@ -121,8 +141,7 @@ class RDiffCheck extends GroovyTestCase {
 
 	void testListFilesFromBackupDirectoryOlder() {
 		createTwoIncrements()
-		def increments = listIncrements()
-		def secondsSinceTheEpochPerIncrement = extractSecondsSinceTheEpochPerIncrement(increments)
+		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
 		def paths = listFiles(secondsSinceTheEpochPerIncrement[0])
 		assert 2 == paths.size()
 		assert '.' == paths[0]
@@ -133,49 +152,41 @@ class RDiffCheck extends GroovyTestCase {
 		createTwoIncrements()
 		def paths = listFiles('now')
 		assert 3 == paths.size()
-		assert paths.every { !it.contains(TARGET_DIR) }
+		assert paths.every {
+			!it.contains(TARGET_DIR)
+		}
 	}
 
 	void testRestoreWithNonEmptyRestoreDir() {
 		createTwoIncrements()
-		File restoreDir = new File(SOURCE_DIR)
-		restoreDir.mkdir()
-		def process = rdiffCommands.restore(new File(TARGET_DIR), restoreDir, 'now')
-		process.errorStream.eachLine { println it }
-		assert 1 == process.exitValue()
+		errorsExpected = true
+		restore('now', new File(SOURCE_DIR))
+		assert 1 == exitValue
 	}
 
 	void testRestoreFromNonBackupDir() {
 		createTwoIncrements()
-		File restoreDir = new File(RESTORE_DIR)
-		restoreDir.mkdir()
-		def process = rdiffCommands.restore(new File(TMP_DIR), restoreDir, 'now')
-		process.errorStream.eachLine { println it }
-		assert 1 == process.exitValue()
+		errorsExpected = true
+		restore('now', new File(SOURCE_DIR), new File(TMP_DIR))
+		assert 1 == exitValue
 	}
 
 	void testRestoreFromBackupDirectoryMirror() {
 		createTwoIncrements()
-		File restoreDir = new File(RESTORE_DIR)
-		restoreDir.mkdir()
-		def increments = listIncrements()
-		def secondsSinceTheEpochPerIncrement = extractSecondsSinceTheEpochPerIncrement(increments)
+		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
 		def secondsSinceTheEpochMirror = secondsSinceTheEpochPerIncrement[1]
 		restore(secondsSinceTheEpochMirror)
-		assert [FILE1_NAME, FILE2_NAME]== restoreDir.list()
+		assert [FILE1_NAME, FILE2_NAME]== new File(RESTORE_DIR).list()
 	}
 
 	void testRestoreFromBackupDirectoryOlder() {
 		createTwoIncrements()
-		File restoreDir = new File(RESTORE_DIR)
-		restoreDir.mkdir()
-		def increments = listIncrements()
-		def secondsSinceTheEpochPerIncrement = extractSecondsSinceTheEpochPerIncrement(increments)
+		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
 		def secondsSinceTheEpochOlder = secondsSinceTheEpochPerIncrement[0]
 		restore(secondsSinceTheEpochOlder)
-		assert [FILE1_NAME]== restoreDir.list()
+		assert [FILE1_NAME]== new File(RESTORE_DIR).list()
 	}
-	
+
 	void tearDown() {
 		new File(TMP_DIR).deleteDir()
 	}
@@ -199,34 +210,62 @@ class RDiffCheck extends GroovyTestCase {
 	}
 
 	private void backup() {
-		Process p = rdiffCommands.backup(new File(SOURCE_DIR), new File(TARGET_DIR))
-		cmdLineOutput = p.text
-		exitValue = p.exitValue()
+		Process process = rdiffCommands.backup(new File(SOURCE_DIR), new File(TARGET_DIR))
+		generateProcessResult(process)
+	}
+
+	private void verify(def when) {
+		Process process = rdiffCommands.verify(new File(TARGET_DIR), when)
+		generateProcessResult(process)
 	}
 
 	private List<String> listIncrements() {
 		def process = rdiffCommands.listIncrements(new File(TARGET_DIR))
-		String increments = process.text
-		exitValue = process.exitValue()
-		return increments.readLines()
+		generateProcessResult(process)
+		return cmdLineOutput.readLines()
 	}
 
 	private List<String> listFiles(def when) {
 		def process = rdiffCommands.listFiles(new File(TARGET_DIR), when)
-		String text = process.text
-		exitValue = process.exitValue()
-		return text.readLines()
+		generateProcessResult(process)
+		return cmdLineOutput.readLines()
 	}
 
-	private void restore(def when) {
-		def process = rdiffCommands.restore(new File(TARGET_DIR), new File(RESTORE_DIR), when)
-		String text = process.text
-		println text
+	private void restore(def when, File restoreDir = new File(RESTORE_DIR), File targetDir = new File(TARGET_DIR)) {
+		def process = rdiffCommands.restore(targetDir, restoreDir, when)
+		generateProcessResult(process)
+	}
+
+	private void generateProcessResult(Process process) {
+		if (errorsExpected) {
+			StringBuilder sb = new StringBuilder()
+			process.errorStream.eachLine { sb.append(it) }
+			error = sb.toString()
+		}
+		cmdLineOutput = process.text.trim()
+
 		exitValue = process.exitValue()
+		if (DEBUG) {
+			println '----------------------------------------------------------------'
+			println ('exitValue:' + System.lineSeparator() + exitValue)
+			println '----------------------------------------------------------------'
+			println ('cmdLineOutput:' + System.lineSeparator() + cmdLineOutput)
+			println '----------------------------------------------------------------'
+			println ('error:' + System.lineSeparator() + error)
+			println '----------------------------------------------------------------'
+		}
 	}
 
 	private List<String> extractSecondsSinceTheEpochPerIncrement(List<String> increments) {
-		return increments.collect { it.split() [0] }
+		return increments.collect {
+			it.split() [0]
+		}
+	}
+
+	private List listSecondsSinceTheEpochPerIncrement() {
+		def increments = listIncrements()
+		def secondsSinceTheEpochPerIncrement = extractSecondsSinceTheEpochPerIncrement(increments)
+		return secondsSinceTheEpochPerIncrement
 	}
 
 	private void waitSinceRDiffCanOnlyDoOneBackupPerSecond() {

@@ -49,6 +49,17 @@ class RDiffCommandsTest extends AbstractTest  {
 		} )
 	}
 
+	void testVerify() {
+		expectedCommand = 'cmd /c rdiff-backup --verify-at-time now ' + targetDir.absolutePath
+		defineExpectedCommandBuilderInvocation('cmd /c rdiff-backup --verify-at-time',
+				RDiffCommandElement.RDIFF_COMMAND,
+				RDiffCommandElement.VERIFY
+				)
+		callMethodUnderTestAndVerifyProcess( {
+			new RDiffCommands().verify(targetDir, 'now')
+		} )
+	}
+
 	void testListIncrements() {
 		expectedCommand = 'cmd /c rdiff-backup -l --parsable-output ' + targetDir.absolutePath
 		defineExpectedCommandBuilderInvocation('cmd /c rdiff-backup -l --parsable-output',
