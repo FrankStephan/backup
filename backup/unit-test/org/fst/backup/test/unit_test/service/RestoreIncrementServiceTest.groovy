@@ -5,12 +5,12 @@ import groovy.mock.interceptor.MockFor
 
 import org.fst.backup.model.Increment
 import org.fst.backup.rdiff.RDiffCommands
-import org.fst.backup.service.RestoreBackupService
+import org.fst.backup.service.RestoreIncrementService
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
 import org.fst.backup.test.AbstractTest
 
-class RestoreBackupServiceTest extends AbstractTest {
+class RestoreIncrementServiceTest extends AbstractTest {
 
 	MockFor rdiffCommands
 
@@ -22,33 +22,33 @@ class RestoreBackupServiceTest extends AbstractTest {
 
 	void testNotExistingTargetDir() {
 		increment.targetPath = tmpPath + 'NotExisting/'
-		RestoreBackupService service = new RestoreBackupService()
-		shouldFail (DirectoryNotExistsException) {new RestoreBackupService().restore(increment, new File(tmpPath + 'restoreDir/'), {})}
+		RestoreIncrementService service = new RestoreIncrementService()
+		shouldFail (DirectoryNotExistsException) {new RestoreIncrementService().restore(increment, new File(tmpPath + 'restoreDir/'), {})}
 	}
 
 	void testTargetIsNotADirectory() {
 		targetDir = new File(tmpPath, 'File.txt') << 'I am a real file'
 		increment.targetPath = targetDir.absolutePath
-		RestoreBackupService service = new RestoreBackupService()
-		shouldFail (FileIsNotADirectoryException) {new RestoreBackupService().restore(increment, restoreDir, {})}
+		RestoreIncrementService service = new RestoreIncrementService()
+		shouldFail (FileIsNotADirectoryException) {new RestoreIncrementService().restore(increment, restoreDir, {})}
 	}
 
 	void testNotExisitingRestoreDir() {
-		RestoreBackupService service = new RestoreBackupService()
+		RestoreIncrementService service = new RestoreIncrementService()
 		restoreDir = new File(tmpPath + 'NotExisting/')
-		shouldFail (DirectoryNotExistsException) {new RestoreBackupService().restore(increment, restoreDir, {})}
+		shouldFail (DirectoryNotExistsException) {new RestoreIncrementService().restore(increment, restoreDir, {})}
 	}
 
 	void testRestoreDirIsNotADirectory() {
-		RestoreBackupService service = new RestoreBackupService()
+		RestoreIncrementService service = new RestoreIncrementService()
 		restoreDir = new File(tmpPath + 'aFile.txt/')
 		restoreDir.createNewFile()
-		shouldFail (FileIsNotADirectoryException) {new RestoreBackupService().restore(increment, restoreDir, {})}
+		shouldFail (FileIsNotADirectoryException) {new RestoreIncrementService().restore(increment, restoreDir, {})}
 	}
 
 	void testRestoreCommandIsExecutedWithCorrectParams1() {
 		rdiffCommands.use {
-			new RestoreBackupService().restore(increment, restoreDir, {})
+			new RestoreIncrementService().restore(increment, restoreDir, {})
 		}
 	}
 
@@ -57,7 +57,7 @@ class RestoreBackupServiceTest extends AbstractTest {
 		int numberOfInvocations = 0
 		Closure callback = { numberOfInvocations++ }
 		rdiffCommands.use {
-			new RestoreBackupService().restore(increment, restoreDir, callback)
+			new RestoreIncrementService().restore(increment, restoreDir, callback)
 			assert numberOfInvocations == 1
 		}
 	}
@@ -67,7 +67,7 @@ class RestoreBackupServiceTest extends AbstractTest {
 		int numberOfInvocations = 0
 		Closure callback = { numberOfInvocations++ }
 		rdiffCommands.use {
-			new RestoreBackupService().restore(increment, restoreDir, callback)
+			new RestoreIncrementService().restore(increment, restoreDir, callback)
 			assert numberOfInvocations == 2
 		}
 	}

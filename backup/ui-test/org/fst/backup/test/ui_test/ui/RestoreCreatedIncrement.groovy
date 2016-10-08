@@ -10,7 +10,7 @@ class RestoreCreatedIncrement extends AbstractUITest {
 	void test() {
 		CREATE_SOME_SOURCE_FILES.execute()
 
-		CREATE_BACKUP.execute()
+		CREATE_INCREMENT.execute()
 		CHOOSE_TARGET_DIR.execute()
 
 		JList incrementsList

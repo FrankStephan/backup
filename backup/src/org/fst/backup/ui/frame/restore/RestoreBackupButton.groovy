@@ -6,7 +6,7 @@ import java.awt.Color
 
 import javax.swing.JButton
 
-import org.fst.backup.service.RestoreBackupService
+import org.fst.backup.service.RestoreIncrementService
 import org.fst.backup.ui.CommonViewModel
 import org.fst.backup.ui.Tab
 
@@ -21,9 +21,9 @@ class RestoreBackupButton {
 				commonViewModel.consoleStatus = 'Status: Laufend'
 				clearConsole(commonViewModel)
 
-				def restoreBackupService = new RestoreBackupService()
+				def restoreIncrementService = new RestoreIncrementService()
 				swing.doOutside {
-					restoreBackupService.restore(commonViewModel.selectedIncrement.increment, commonViewModel.restoreDir, {
+					restoreIncrementService.restore(commonViewModel.selectedIncrement.increment, commonViewModel.restoreDir, {
 						commonViewModel.consoleDocument.insertString(commonViewModel.consoleDocument.length, it + System.lineSeparator(), null)
 					})
 					commonViewModel.consoleStatus = 'Status: Abgeschlossen'

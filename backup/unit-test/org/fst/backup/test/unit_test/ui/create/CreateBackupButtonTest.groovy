@@ -12,7 +12,7 @@ import javax.swing.JButton
 import javax.swing.text.PlainDocument
 
 import org.fst.backup.model.Increment
-import org.fst.backup.service.CreateBackupService
+import org.fst.backup.service.CreateIncrementService
 import org.fst.backup.test.AbstractTest
 import org.fst.backup.ui.CommonViewModel
 import org.fst.backup.ui.IncrementListEntry
@@ -21,7 +21,7 @@ import org.fst.backup.ui.frame.create.CreateBackupButton
 
 class CreateBackupButtonTest extends AbstractTest {
 
-	MockFor createBackupService = new MockFor(CreateBackupService.class)
+	MockFor createIncrementService = new MockFor(CreateIncrementService.class)
 	CommonViewModel commonViewModel
 	SwingBuilder swing
 	JButton button
@@ -49,15 +49,15 @@ class CreateBackupButtonTest extends AbstractTest {
 		button = new CreateBackupButton().createComponent(commonViewModel, swing, onFinish)
 	}
 
-	private void verifyCreateBackupServiceInvocation(Closure assertParams) {
-		createBackupService.demand.createBackup(1) {File sourceDir, File targetDir, Closure commandLineCallback ->
+	private void verifyCreateIncrementServiceInvocation(Closure assertParams) {
+		createIncrementService.demand.createIncrement(1) {File sourceDir, File targetDir, Closure commandLineCallback ->
 			assertParams?.call(sourceDir, targetDir, commandLineCallback)
 			commandLines?.each { it -> commandLineCallback(it) }
 		}
 	}
 
 	private void clickButton() {
-		createBackupService.use { button.doClick() }
+		createIncrementService.use { button.doClick() }
 	}
 
 	private void assertConsoleEqualsCommandLines() {
@@ -67,12 +67,12 @@ class CreateBackupButtonTest extends AbstractTest {
 	}
 
 	void testButtonCallsCreateBackupService() {
-		verifyCreateBackupServiceInvocation()
+		verifyCreateIncrementServiceInvocation()
 		clickButton()
 	}
 
 	void testCreateBackupServiceReceivesCorrectParams() {
-		verifyCreateBackupServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
+		verifyCreateIncrementServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
 			assert commonViewModel.sourceDir == sourceDir
 			assert commonViewModel.targetDir == targetDir
 		}
@@ -80,14 +80,14 @@ class CreateBackupButtonTest extends AbstractTest {
 	}
 
 	void testConsoleTabIsOpened() {
-		verifyCreateBackupServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
+		verifyCreateIncrementServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
 			assert Tab.CONSOLE.ordinal() == commonViewModel.tabsModel.selectedIndex
 		}
 		clickButton()
 	}
 
 	void testConsoleStatusIsRedAtTheBeginning() {
-		verifyCreateBackupServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
+		verifyCreateIncrementServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
 		}
@@ -95,16 +95,16 @@ class CreateBackupButtonTest extends AbstractTest {
 	}
 
 	void testConsoleStatusChangesFromRedToGreenOnFinish() {
-		verifyCreateBackupServiceInvocation()
+		verifyCreateIncrementServiceInvocation()
 		clickButton()
 		assert Color.GREEN == commonViewModel.consoleStatusColor
 		assert 'Status: Abgeschlossen' == commonViewModel.consoleStatus
 	}
 
 	void testConsoleStatusIsRedAgainAtTheBeginning() {
-		verifyCreateBackupServiceInvocation()
+		verifyCreateIncrementServiceInvocation()
 		clickButton()
-		verifyCreateBackupServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
+		verifyCreateIncrementServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
 		}
@@ -113,24 +113,24 @@ class CreateBackupButtonTest extends AbstractTest {
 
 	void testComandLinesGetWrittenToConsoleDocument() {
 		commandLines = ['Line1', 'Line2', 'Line3']
-		verifyCreateBackupServiceInvocation()
+		verifyCreateIncrementServiceInvocation()
 		clickButton()
 		assertConsoleEqualsCommandLines()
 	}
 
 	void testConsoleGetsClearedBeforeEachBackup() {
 		commandLines = ['I have been', 'invoked the', 'first time']
-		verifyCreateBackupServiceInvocation()
+		verifyCreateIncrementServiceInvocation()
 		clickButton()
 
 		commandLines = ['I have been', 'invoked the', 'second time']
-		verifyCreateBackupServiceInvocation()
+		verifyCreateIncrementServiceInvocation()
 		clickButton()
 		assertConsoleEqualsCommandLines()
 	}
 
 	void testOnFinishClosureIsInvoked() {
-		verifyCreateBackupServiceInvocation()
+		verifyCreateIncrementServiceInvocation()
 		clickButton()
 		assert true == isOnFinishClosureInvoked
 	}
@@ -140,7 +140,7 @@ class CreateBackupButtonTest extends AbstractTest {
 
 		boolean isCreateBackupServiceInvoked = false
 		boolean isInvokedOutsideUIThread = false
-		verifyCreateBackupServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
+		verifyCreateIncrementServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
 			isCreateBackupServiceInvoked = true
 		}
 

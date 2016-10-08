@@ -6,7 +6,7 @@ import java.awt.Color
 
 import javax.swing.JButton
 
-import org.fst.backup.service.CreateBackupService
+import org.fst.backup.service.CreateIncrementService
 import org.fst.backup.ui.CommonViewModel
 import org.fst.backup.ui.Tab
 
@@ -21,7 +21,7 @@ class CreateBackupButton {
 					commonViewModel.consoleStatus = 'Status: Laufend'
 					clearConsole(commonViewModel)
 					swing.doOutside {
-						new CreateBackupService().createBackup(commonViewModel.sourceDir, commonViewModel.targetDir, {
+						new CreateIncrementService().createIncrement(commonViewModel.sourceDir, commonViewModel.targetDir, {
 							commonViewModel.consoleDocument.insertString(commonViewModel.consoleDocument.length, it + System.lineSeparator(), null)
 						} )
 						commonViewModel.consoleStatus = 'Status: Abgeschlossen'

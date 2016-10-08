@@ -12,7 +12,7 @@ class InspectCreatedIncrementTest extends AbstractUITest {
 		CREATE_SOME_SOURCE_FILES.execute()
 
 		JFileChooser sfc
-		CREATE_BACKUP.execute(null) { sfc = it }
+		CREATE_INCREMENT.execute(null) { sfc = it }
 		CHOOSE_TARGET_DIR.execute()
 
 		JList incrementsList

@@ -13,7 +13,7 @@ class RestoreIncrementTest extends AbstractServiceTest {
 		root.mkdir()
 
 		CREATE_SOME_SOURCE_FILES.execute()
-		DO_BACKUP.execute()
+		CREATE_INCREMENT.execute()
 		LIST_INCREMENTS.execute(null) { increments = it }
 
 		RESTORE_INCREMENT.execute([increments[0]]) {}

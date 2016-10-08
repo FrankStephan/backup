@@ -4,14 +4,14 @@ import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 
 import org.fst.backup.rdiff.RDiffCommands
-import org.fst.backup.service.CreateBackupService
+import org.fst.backup.service.CreateIncrementService
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
 import org.fst.backup.test.AbstractTest;
 
-class CreateBackupServiceTest extends AbstractTest {
+class CreateIncrementServiceTest extends AbstractTest {
 
-	CreateBackupService service = new CreateBackupService()
+	CreateIncrementService service = new CreateIncrementService()
 	MockFor rdiffCommands
 
 	void setUp() {
@@ -23,7 +23,7 @@ class CreateBackupServiceTest extends AbstractTest {
 		sourceDir = new File(tmpPath + 'NE1/')
 		targetDir = new File(tmpPath + 'NE2/')
 		shouldFail(DirectoryNotExistsException) {
-			service.createBackup(sourceDir, targetDir, {})
+			service.createIncrement(sourceDir, targetDir, {})
 		}
 	}
 
@@ -32,20 +32,20 @@ class CreateBackupServiceTest extends AbstractTest {
 		File file2 = new File (tmpPath, 'File2.txt') << 'Content'
 
 		shouldFail(FileIsNotADirectoryException) {
-			service.createBackup(file1, file2, {})
+			service.createIncrement(file1, file2, {})
 		}
 		shouldFail(FileIsNotADirectoryException) {
-			service.createBackup(sourceDir, file2, {})
+			service.createIncrement(sourceDir, file2, {})
 		}
 		shouldFail(FileIsNotADirectoryException) {
-			service.createBackup(file1, targetDir, {})
+			service.createIncrement(file1, targetDir, {})
 		}
 	}
 
 	void testBackupCommandIsExecutedWithCorrectDirs() {
 		rdiffCommands.use {
-			def CreateBackupService service = new CreateBackupService()
-			service.createBackup(sourceDir, targetDir, {})
+			def CreateIncrementService service = new CreateIncrementService()
+			service.createIncrement(sourceDir, targetDir, {})
 		}
 	}
 
@@ -54,8 +54,8 @@ class CreateBackupServiceTest extends AbstractTest {
 		int numberOfInvocations = 0
 		Closure callback = { numberOfInvocations++ }
 		rdiffCommands.use {
-			def CreateBackupService service = new CreateBackupService()
-			service.createBackup(sourceDir, targetDir, callback)
+			def CreateIncrementService service = new CreateIncrementService()
+			service.createIncrement(sourceDir, targetDir, callback)
 			assert numberOfInvocations == 1
 		}
 	}
@@ -65,8 +65,8 @@ class CreateBackupServiceTest extends AbstractTest {
 		int numberOfInvocations = 0
 		Closure callback = { numberOfInvocations++ }
 		rdiffCommands.use {
-			def CreateBackupService service = new CreateBackupService()
-			service.createBackup(sourceDir, targetDir, callback)
+			def CreateIncrementService service = new CreateIncrementService()
+			service.createIncrement(sourceDir, targetDir, callback)
 			assert numberOfInvocations == 2
 		}
 	}

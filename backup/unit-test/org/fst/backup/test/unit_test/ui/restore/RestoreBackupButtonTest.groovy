@@ -12,7 +12,7 @@ import javax.swing.JButton
 import javax.swing.text.PlainDocument
 
 import org.fst.backup.model.Increment
-import org.fst.backup.service.RestoreBackupService
+import org.fst.backup.service.RestoreIncrementService
 import org.fst.backup.test.AbstractTest
 import org.fst.backup.ui.CommonViewModel
 import org.fst.backup.ui.IncrementListEntry
@@ -21,7 +21,7 @@ import org.fst.backup.ui.frame.restore.RestoreBackupButton
 
 class RestoreBackupButtonTest extends AbstractTest {
 
-	MockFor restoreBackupService = new MockFor(RestoreBackupService.class)
+	MockFor restoreIncrementService = new MockFor(RestoreIncrementService.class)
 	CommonViewModel commonViewModel
 	SwingBuilder swing
 	JButton button
@@ -47,15 +47,15 @@ class RestoreBackupButtonTest extends AbstractTest {
 		button = new RestoreBackupButton().createComponent(commonViewModel, swing, onFinish)
 	}
 
-	private void verifyRestoreBackupServiceInvocation(Closure assertParams) {
-		restoreBackupService.demand.restore(1) {Increment increment, File restoreDir, Closure commandLineCallback ->
+	private void verifyRestoreIncrementServiceInvocation(Closure assertParams) {
+		restoreIncrementService.demand.restore(1) {Increment increment, File restoreDir, Closure commandLineCallback ->
 			assertParams?.call(increment, restoreDir, commandLineCallback)
 			commandLines?.each { it -> commandLineCallback(it) }
 		}
 	}
 
 	private void clickButton() {
-		restoreBackupService.use { button.doClick() }
+		restoreIncrementService.use { button.doClick() }
 	}
 
 	private void assertConsoleEqualsCommandLines() {
@@ -66,17 +66,17 @@ class RestoreBackupButtonTest extends AbstractTest {
 
 	void testNothingHappensIfNoIncrementIsSelected() {
 		commonViewModel.selectedIncrement = null
-		restoreBackupService.demand.restore(0) {Increment increment, File restoreDir, Closure commandLineCallback ->}
+		restoreIncrementService.demand.restore(0) {Increment increment, File restoreDir, Closure commandLineCallback ->}
 		clickButton()
 	}
 
-	void testButtonCallsRestoreBackupService() {
-		verifyRestoreBackupServiceInvocation()
+	void testButtonCallsRestoreIncrementService() {
+		verifyRestoreIncrementServiceInvocation()
 		clickButton()
 	}
 
-	void testRestoreBackupServiceReceivesCorrectParams() {
-		verifyRestoreBackupServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
+	void testRestoreIncrementServiceReceivesCorrectParams() {
+		verifyRestoreIncrementServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
 			assert commonViewModel.selectedIncrement.increment == increment
 			assert commonViewModel.restoreDir == restoreDir
 		}
@@ -84,14 +84,14 @@ class RestoreBackupButtonTest extends AbstractTest {
 	}
 
 	void testConsoleTabIsOpened() {
-		verifyRestoreBackupServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
+		verifyRestoreIncrementServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
 			assert Tab.CONSOLE.ordinal() == commonViewModel.tabsModel.selectedIndex
 		}
 		clickButton()
 	}
 
 	void testConsoleStatusIsRedAtTheBeginning() {
-		verifyRestoreBackupServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
+		verifyRestoreIncrementServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
 		}
@@ -99,16 +99,16 @@ class RestoreBackupButtonTest extends AbstractTest {
 	}
 
 	void testConsoleStatusChangesFromRedToGreenOnFinish() {
-		verifyRestoreBackupServiceInvocation()
+		verifyRestoreIncrementServiceInvocation()
 		clickButton()
 		assert Color.GREEN == commonViewModel.consoleStatusColor
 		assert 'Status: Abgeschlossen' == commonViewModel.consoleStatus
 	}
 
 	void testConsoleStatusIsRedAgainAtTheBeginning() {
-		verifyRestoreBackupServiceInvocation()
+		verifyRestoreIncrementServiceInvocation()
 		clickButton()
-		verifyRestoreBackupServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
+		verifyRestoreIncrementServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
 		}
@@ -117,24 +117,24 @@ class RestoreBackupButtonTest extends AbstractTest {
 
 	void testComandLinesGetWrittenToConsoleDocument() {
 		commandLines = ['Line1', 'Line2', 'Line3']
-		verifyRestoreBackupServiceInvocation()
+		verifyRestoreIncrementServiceInvocation()
 		clickButton()
 		assertConsoleEqualsCommandLines()
 	}
 
 	void testConsoleGetsClearedBeforeEachBackup() {
 		commandLines = ['I have been', 'invoked the', 'first time']
-		verifyRestoreBackupServiceInvocation()
+		verifyRestoreIncrementServiceInvocation()
 		clickButton()
 
 		commandLines = ['I have been', 'invoked the', 'second time']
-		verifyRestoreBackupServiceInvocation()
+		verifyRestoreIncrementServiceInvocation()
 		clickButton()
 		assertConsoleEqualsCommandLines()
 	}
 
 	void testOnFinishClosureIsInvoked() {
-		verifyRestoreBackupServiceInvocation()
+		verifyRestoreIncrementServiceInvocation()
 		clickButton()
 		assert true == isOnFinishClosureInvoked
 	}
@@ -142,10 +142,10 @@ class RestoreBackupButtonTest extends AbstractTest {
 	void testCmdLinesAreWrittenToConsoleAsync() {
 		commandLines = ['Line1', 'Line2', 'Line3']
 
-		boolean isRestoreBackupServiceInvoked = false
+		boolean isRestoreIncrementServiceInvoked = false
 		boolean isInvokedOutsideUIThread = false
-		verifyRestoreBackupServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
-			isRestoreBackupServiceInvoked = true
+		verifyRestoreIncrementServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
+			isRestoreIncrementServiceInvoked = true
 		}
 
 		final swingStub = new StubFor(SwingBuilder.class)
@@ -158,7 +158,7 @@ class RestoreBackupButtonTest extends AbstractTest {
 			assert 0 == commonViewModel.consoleDocument.length
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
-			assert false == isRestoreBackupServiceInvoked
+			assert false == isRestoreIncrementServiceInvoked
 
 			it()
 
@@ -166,7 +166,7 @@ class RestoreBackupButtonTest extends AbstractTest {
 			assert Color.GREEN == commonViewModel.consoleStatusColor
 			assert 'Status: Abgeschlossen' == commonViewModel.consoleStatus
 			assert true == isOnFinishClosureInvoked
-			assert true == isRestoreBackupServiceInvoked
+			assert true == isRestoreIncrementServiceInvoked
 		}
 
 		button = new RestoreBackupButton().createComponent(commonViewModel, swingStub.proxyInstance(), onFinish)

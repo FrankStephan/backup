@@ -16,7 +16,7 @@ class ListCreatedIncrementTest extends AbstractUITest {
 		assert null == firstEntry(incrementsList)
 
 		CREATE_SOME_SOURCE_FILES.execute()
-		CREATE_BACKUP.execute()
+		CREATE_INCREMENT.execute()
 		CHOOSE_TARGET_DIR.execute()
 
 

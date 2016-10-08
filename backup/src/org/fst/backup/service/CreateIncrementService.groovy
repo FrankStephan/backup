@@ -4,11 +4,11 @@ import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
 
-class CreateBackupService {
+class CreateIncrementService {
 
 	RDiffCommands commands = new RDiffCommands()
 
-	void createBackup (File sourceDir, File targetDir, Closure commandLineCallback) throws FileIsNotADirectoryException, DirectoryNotExistsException {
+	void createIncrement (File sourceDir, File targetDir, Closure commandLineCallback) throws FileIsNotADirectoryException, DirectoryNotExistsException {
 		if (sourceDir.exists() && targetDir.exists()) {
 			if (sourceDir.isDirectory() && targetDir.isDirectory()) {
 				Process process = commands.backup(sourceDir, targetDir)

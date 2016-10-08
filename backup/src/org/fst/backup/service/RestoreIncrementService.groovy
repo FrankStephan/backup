@@ -5,7 +5,7 @@ import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
 
-class RestoreBackupService {
+class RestoreIncrementService {
 
 	RDiffCommands rdiffCommands = new RDiffCommands()
 

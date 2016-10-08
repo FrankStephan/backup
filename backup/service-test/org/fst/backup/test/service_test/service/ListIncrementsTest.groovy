@@ -9,10 +9,10 @@ class ListIncrementsTest extends AbstractServiceTest {
 
 	public void test() {
 		CREATE_SOME_SOURCE_FILES.execute()
-		DO_BACKUP.execute()
+		CREATE_INCREMENT.execute()
 		WAIT_BECAUSE_RDIFF_CAN_DO_ONLY_ONE_BACKUP_PER_SECOND.execute()
 		ADD_ANOTHER_SOURCE_FILE.execute()
-		DO_BACKUP.execute()
+		CREATE_INCREMENT.execute()
 		WAIT_BECAUSE_RDIFF_CAN_DO_ONLY_ONE_BACKUP_PER_SECOND.execute()
 
 		List<Increment> increments

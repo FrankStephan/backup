@@ -39,7 +39,7 @@ enum UITestStep {
 		}
 	},
 
-	CREATE_BACKUP {
+	CREATE_INCREMENT {
 		void execute(def params, Closure setResult) {
 			def sfc = new SourceFileChooser().createComponent(commonViewModel, swing)
 			def tfc = new TargetFileChooser().createComponent(commonViewModel, swing)
