@@ -7,7 +7,7 @@ import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.CreateIncrementService
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
-import org.fst.backup.test.AbstractTest;
+import org.fst.backup.test.AbstractTest
 
 class CreateIncrementServiceTest extends AbstractTest {
 

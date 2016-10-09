@@ -47,14 +47,12 @@ class PathsToFilesServiceTest extends AbstractTest {
 	}
 
 	private void assertPathsCreated(List<String> paths) {
-		println '---'
 		paths.each {
 			String[] segments = it.split('/')
 			StringBuilder pathBuilder = new StringBuilder()
 			segments.each { String segment ->
 				pathBuilder.append(segment)
 				pathBuilder.append('/')
-				println new File(root, pathBuilder.toString())
 				assert new File(root, pathBuilder.toString()).exists()
 			}
 		}

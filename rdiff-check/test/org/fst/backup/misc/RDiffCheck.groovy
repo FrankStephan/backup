@@ -2,7 +2,12 @@ package org.fst.backup.misc
 
 import static org.junit.Assert.*
 
+import java.awt.Color
+
+import javax.swing.text.PlainDocument
+
 import org.fst.backup.rdiff.RDiffCommands
+import org.fst.backup.ui.DocumentWriter
 
 class RDiffCheck extends GroovyTestCase {
 
@@ -13,17 +18,15 @@ class RDiffCheck extends GroovyTestCase {
 	static final String FILE1_NAME = 'File1.txt'
 	static final String FILE2_NAME = 'File2.txt'
 
-	private static final boolean DEBUG = false
+	private static final boolean DEBUG = true
 
 	File file1
 	File file2
-
 
 	String cmdLineOutput
 	boolean errorsExpected = false
 	String error
 	int exitValue
-
 
 	RDiffCommands rdiffCommands = new RDiffCommands()
 
@@ -237,13 +240,14 @@ class RDiffCheck extends GroovyTestCase {
 	}
 
 	private void generateProcessResult(Process process) {
-		if (errorsExpected) {
-			StringBuilder sb = new StringBuilder()
-			process.errorStream.eachLine { sb.append(it) }
-			error = sb.toString()
-		}
-		cmdLineOutput = process.text.trim()
+		PlainDocument outDoc = new PlainDocument()
+		PlainDocument errDoc = new PlainDocument()
+		DocumentWriter outWriter = new DocumentWriter(document: outDoc, textColor: Color.BLUE)
+		DocumentWriter errWriter = new DocumentWriter(document: errDoc, textColor: Color.RED)
 
+		process.waitForProcessOutput(outWriter, errWriter)
+		cmdLineOutput = outDoc.getText(0, outDoc.getLength()).trim()
+		error = errDoc.getText(0, errDoc.getLength()).trim()
 		exitValue = process.exitValue()
 		if (DEBUG) {
 			println '----------------------------------------------------------------'
@@ -251,7 +255,7 @@ class RDiffCheck extends GroovyTestCase {
 			println '----------------------------------------------------------------'
 			println ('cmdLineOutput:' + System.lineSeparator() + cmdLineOutput)
 			println '----------------------------------------------------------------'
-			println ('error:' + System.lineSeparator() + error)
+			System.err.println ('error:' + System.lineSeparator() + error)
 			println '----------------------------------------------------------------'
 		}
 	}

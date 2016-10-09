@@ -18,11 +18,6 @@ class RestoreIncrementTest extends AbstractServiceTest {
 
 		RESTORE_INCREMENT.execute([increments[0]]) {}
 
-		println sourceDir
-		println restoreDir
-		println subPaths(sourceDir)
-		println subPaths(restoreDir)
-
 		assertRestoreDirContainsFilesFromSource()
 	}
 
