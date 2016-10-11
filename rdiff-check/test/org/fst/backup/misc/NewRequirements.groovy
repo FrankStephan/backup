@@ -4,6 +4,10 @@ import static org.junit.Assert.*
 
 class NewRequirements extends GroovyTestCase {
 
+	void inspectBackupWithParallelThreads() {
+		// Process cmd line by line?
+	}
+
 	void testCmdIsLogged() {
 	}
 
@@ -43,5 +47,4 @@ class NewRequirements extends GroovyTestCase {
 	public void testConsoleShowsOutputAndErrors() {
 		fail()
 	}
-
 }

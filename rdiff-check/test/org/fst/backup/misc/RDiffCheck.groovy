@@ -24,7 +24,6 @@ class RDiffCheck extends GroovyTestCase {
 	File file2
 
 	String cmdLineOutput
-	boolean errorsExpected = false
 	String error
 	int exitValue
 
@@ -55,7 +54,6 @@ class RDiffCheck extends GroovyTestCase {
 		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
 
 		deleteFile1()
-		errorsExpected = true
 		verify(secondsSinceTheEpochPerIncrement[0])
 		assert error.contains('Could not restore file File1.txt')
 		assert 1 == exitValue
@@ -66,7 +64,6 @@ class RDiffCheck extends GroovyTestCase {
 		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
 
 		deleteFile2()
-		errorsExpected = true
 		verify(secondsSinceTheEpochPerIncrement[1])
 		assert error.contains('Could not restore file File2.txt')
 		assert 1 == exitValue
@@ -81,7 +78,6 @@ class RDiffCheck extends GroovyTestCase {
 	}
 
 	void testListIncrementsNoBackupDir() {
-		errorsExpected = true
 		new File(TARGET_DIR).mkdirs()
 		listIncrements()
 		assert 1 == exitValue
@@ -114,7 +110,6 @@ class RDiffCheck extends GroovyTestCase {
 	}
 
 	void testListFilesFromNonBackupDirectory() {
-		errorsExpected = true
 		listFiles('now')
 		assert cmdLineOutput.isEmpty()
 		assert 1 == exitValue
@@ -125,7 +120,6 @@ class RDiffCheck extends GroovyTestCase {
 	void testListFilesFromEmptyBackup() {
 		new File(SOURCE_DIR).mkdirs()
 		backup()
-		errorsExpected = true
 		def paths = listFiles('now')
 
 		assert 1 == paths.size()
@@ -162,14 +156,12 @@ class RDiffCheck extends GroovyTestCase {
 
 	void testRestoreWithNonEmptyRestoreDir() {
 		createTwoIncrements()
-		errorsExpected = true
 		restore('now', new File(SOURCE_DIR))
 		assert 1 == exitValue
 	}
 
 	void testRestoreFromNonBackupDir() {
 		createTwoIncrements()
-		errorsExpected = true
 		restore('now', new File(SOURCE_DIR), new File(TMP_DIR))
 		assert 1 == exitValue
 	}
