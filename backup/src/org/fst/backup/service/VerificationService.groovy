@@ -10,10 +10,18 @@ class VerificationService {
 	private RDiffCommands rdiffCommands = new RDiffCommands()
 
 	boolean verifyIncrement(Increment increment, Appendable cmdOut, Appendable cmdErr) throws FileIsNotADirectoryException, DirectoryNotExistsException{
-		File targetDir = new File(increment.targetPath)
+		return verify(increment.targetPath, increment.secondsSinceTheEpoch, cmdOut, cmdErr)
+	}
+
+	boolean verifyMirror(String targetPath, Appendable cmdOut, Appendable cmdErr) throws FileIsNotADirectoryException, DirectoryNotExistsException{
+		return verify(targetPath, 'now', cmdOut, cmdErr)
+	}
+
+	private boolean verify(String targetPath, def when, Appendable cmdOut, Appendable cmdErr) throws FileIsNotADirectoryException, DirectoryNotExistsException{
+		File targetDir = new File(targetPath)
 		if (targetDir.exists()) {
 			if (targetDir.isDirectory()) {
-				Process process = rdiffCommands.verify(targetDir, increment.secondsSinceTheEpoch)
+				Process process = rdiffCommands.verify(targetDir, when)
 				process.waitForProcessOutput(cmdOut, cmdErr)
 
 				if (process.exitValue() == 0) {
@@ -27,8 +35,5 @@ class VerificationService {
 		} else {
 			throw new DirectoryNotExistsException()
 		}
-	}
-
-	boolean verifyMirror(String targetPath, Appendable outCallBack, Appendable errorCallBack) {
 	}
 }
