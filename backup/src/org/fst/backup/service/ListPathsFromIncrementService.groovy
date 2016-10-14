@@ -11,7 +11,7 @@ class ListPathsFromIncrementService {
 
 	RDiffCommands rdiffCommands = new RDiffCommands()
 
-	List<String> listPathsFromIncrement(Increment increment) {
+	List<String> listPathsFromIncrement(Increment increment) throws FileIsNotADirectoryException, DirectoryNotExistsException, NotABackupDirectoryException {
 		File targetDir = new File(increment.targetPath)
 		if (targetDir.exists()) {
 			if (targetDir.isDirectory()) {

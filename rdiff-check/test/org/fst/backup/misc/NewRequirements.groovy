@@ -4,6 +4,10 @@ import static org.junit.Assert.*
 
 class NewRequirements extends GroovyTestCase {
 
+	void probeFileType() {
+		//		Files.probeContentType(null)
+	}
+
 	void inspectBackupWithParallelThreads() {
 		// Process cmd line by line?
 	}

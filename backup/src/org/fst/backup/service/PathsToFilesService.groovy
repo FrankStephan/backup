@@ -7,16 +7,14 @@ import org.fst.backup.service.exception.FileIsNotADirectoryException
 
 class PathsToFilesService {
 
-	void createFileStructureFromPaths(List<String> pathsList, File rootDir) {
+	void createFileStructureFromPaths(List<String> pathsList, File rootDir) throws FileIsNotADirectoryException, DirectoryNotExistsException {
 		if (rootDir.exists()) {
 			if (rootDir.isDirectory()) {
 				List<? extends List<String>> paths = new ArrayList<? extends List<String>>()
 				pathsList.each { it ->
 					paths.add(it.split('/') as List)
 				}
-
 				createFileStructureRecursively(paths, rootDir)
-				//		Files.probeContentType(null)
 			} else {
 				throw new FileIsNotADirectoryException()
 			}

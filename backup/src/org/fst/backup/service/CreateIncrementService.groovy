@@ -9,8 +9,6 @@ class CreateIncrementService {
 	RDiffCommands commands = new RDiffCommands()
 
 	void createIncrement (File sourceDir, File targetDir, Closure commandLineCallback) throws FileIsNotADirectoryException, DirectoryNotExistsException {
-		// TODO: Now process error handling?
-
 		if (sourceDir.exists() && targetDir.exists()) {
 			if (sourceDir.isDirectory() && targetDir.isDirectory()) {
 				Process process = commands.backup(sourceDir, targetDir)
