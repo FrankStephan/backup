@@ -3,7 +3,7 @@ package org.fst.backup.test.service_test.service
 
 
 import org.fst.backup.model.Increment
-import org.fst.backup.service.CreateIncrementService
+import org.fst.backup.service.CreateAndVerifyIncrementService
 import org.fst.backup.service.IncrementFileStructureService
 import org.fst.backup.service.ListIncrementsService
 import org.fst.backup.service.RestoreIncrementService
@@ -41,9 +41,7 @@ enum ServiceTestStep {
 		@Override
 		void execute(def params, Closure setResult) {
 			StringBuilder sb = new StringBuilder()
-			new CreateIncrementService().createIncrement(sourceDir, targetDir, {
-				sb.append(it).append(System.lineSeparator())
-			})
+			new CreateAndVerifyIncrementService().createAndVerify(sourceDir, targetDir, sb, sb)
 			setResult?.call(sb.toString().trim())
 		}
 	},

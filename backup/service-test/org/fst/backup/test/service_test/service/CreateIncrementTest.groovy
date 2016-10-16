@@ -10,6 +10,8 @@ class CreateIncrementTest extends AbstractServiceTest {
 
 		String cmdLineContent
 		CREATE_INCREMENT.execute(null) { cmdLineContent = it }
+		println cmdLineContent
 		assert cmdLineContent.contains('Using rdiff-backup version 1.2.8')
+		assert cmdLineContent.trim().endsWith('Every file verified successfully.')
 	}
 }
