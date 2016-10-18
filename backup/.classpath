@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="test-common"/>
-	<classpathentry excluding="unit/|unit/" kind="src" path="unit-test"/>
-	<classpathentry kind="src" path="service-test"/>
-	<classpathentry kind="src" path="ui-test"/>
+	<classpathentry kind="src" path="test_common"/>
+	<classpathentry excluding="unit/|unit/" kind="src" path="unit_test"/>
+	<classpathentry kind="src" path="integration_test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
