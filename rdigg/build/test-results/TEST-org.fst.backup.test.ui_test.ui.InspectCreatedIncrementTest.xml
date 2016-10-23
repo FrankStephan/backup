@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.fst.backup.test.ui_test.ui.InspectCreatedIncrementTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2016-10-23T20:01:55" hostname="HP-Frank" time="3.657">
+  <properties/>
+  <testcase name="test" classname="org.fst.backup.test.ui_test.ui.InspectCreatedIncrementTest" time="3.657"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

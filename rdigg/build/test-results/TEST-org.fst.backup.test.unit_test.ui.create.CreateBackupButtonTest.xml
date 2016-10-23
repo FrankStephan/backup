@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.fst.backup.test.unit_test.ui.create.CreateBackupButtonTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2016-10-23T20:02:08" hostname="HP-Frank" time="1.301">
+  <properties/>
+  <testcase name="testCreateBackupServiceReceivesCorrectParams" classname="org.fst.backup.test.unit_test.ui.create.CreateBackupButtonTest" time="0.119"/>
+  <testcase name="testButtonCallsCreateBackupService" classname="org.fst.backup.test.unit_test.ui.create.CreateBackupButtonTest" time="0.112"/>
+  <testcase name="testConsoleTabIsOpened" classname="org.fst.backup.test.unit_test.ui.create.CreateBackupButtonTest" time="0.117"/>
+  <testcase name="testOnFinishClosureIsInvoked" classname="org.fst.backup.test.unit_test.ui.create.CreateBackupButtonTest" time="0.11"/>
+  <testcase name="testConsoleStatusIsRedAgainAtTheBeginning" classname="org.fst.backup.test.unit_test.ui.create.CreateBackupButtonTest" time="0.189"/>
+  <testcase name="testCmdLinesAreWrittenToConsoleAsync" classname="org.fst.backup.test.unit_test.ui.create.CreateBackupButtonTest" time="0.13"/>
+  <testcase name="testConsoleStatusChangesFromRedToGreenOnFinish" classname="org.fst.backup.test.unit_test.ui.create.CreateBackupButtonTest" time="0.117"/>
+  <testcase name="testComandLinesGetWrittenToConsoleDocument" classname="org.fst.backup.test.unit_test.ui.create.CreateBackupButtonTest" time="0.115"/>
+  <testcase name="testConsoleStatusIsRedAtTheBeginning" classname="org.fst.backup.test.unit_test.ui.create.CreateBackupButtonTest" time="0.114"/>
+  <testcase name="testConsoleGetsClearedBeforeEachBackup" classname="org.fst.backup.test.unit_test.ui.create.CreateBackupButtonTest" time="0.176"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

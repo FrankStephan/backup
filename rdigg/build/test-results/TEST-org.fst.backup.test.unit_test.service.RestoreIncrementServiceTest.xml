@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.fst.backup.test.unit_test.service.RestoreIncrementServiceTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2016-10-23T20:02:05" hostname="HP-Frank" time="0.354">
+  <properties/>
+  <testcase name="testCallbackGetsInvokedPerLineFromCmd1" classname="org.fst.backup.test.unit_test.service.RestoreIncrementServiceTest" time="0.049"/>
+  <testcase name="testCallbackGetsInvokedPerLineFromCmd2" classname="org.fst.backup.test.unit_test.service.RestoreIncrementServiceTest" time="0.045"/>
+  <testcase name="testNotExisitingRestoreDir" classname="org.fst.backup.test.unit_test.service.RestoreIncrementServiceTest" time="0.045"/>
+  <testcase name="testRestoreDirIsNotADirectory" classname="org.fst.backup.test.unit_test.service.RestoreIncrementServiceTest" time="0.054"/>
+  <testcase name="testNotExistingTargetDir" classname="org.fst.backup.test.unit_test.service.RestoreIncrementServiceTest" time="0.045"/>
+  <testcase name="testTargetIsNotADirectory" classname="org.fst.backup.test.unit_test.service.RestoreIncrementServiceTest" time="0.068"/>
+  <testcase name="testRestoreCommandIsExecutedWithCorrectParams1" classname="org.fst.backup.test.unit_test.service.RestoreIncrementServiceTest" time="0.047"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

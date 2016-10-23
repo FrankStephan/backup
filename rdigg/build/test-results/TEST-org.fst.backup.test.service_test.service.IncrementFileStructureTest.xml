@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.fst.backup.test.service_test.service.IncrementFileStructureTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2016-10-23T20:01:49" hostname="HP-Frank" time="1.263">
+  <properties/>
+  <testcase name="test" classname="org.fst.backup.test.service_test.service.IncrementFileStructureTest" time="1.263"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

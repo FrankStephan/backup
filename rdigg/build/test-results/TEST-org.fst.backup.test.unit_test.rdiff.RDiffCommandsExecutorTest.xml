@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.fst.backup.test.unit_test.rdiff.RDiffCommandsExecutorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2016-10-23T20:02:02" hostname="HP-Frank" time="0.031">
+  <properties/>
+  <testcase name="testExecutorCallsCommandLine" classname="org.fst.backup.test.unit_test.rdiff.RDiffCommandsExecutorTest" time="0.031"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

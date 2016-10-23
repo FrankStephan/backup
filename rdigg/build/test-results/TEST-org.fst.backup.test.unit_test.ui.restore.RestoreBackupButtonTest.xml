@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.fst.backup.test.unit_test.ui.restore.RestoreBackupButtonTest" tests="11" skipped="0" failures="0" errors="0" timestamp="2016-10-23T20:02:11" hostname="HP-Frank" time="1.426">
+  <properties/>
+  <testcase name="testConsoleTabIsOpened" classname="org.fst.backup.test.unit_test.ui.restore.RestoreBackupButtonTest" time="0.126"/>
+  <testcase name="testButtonCallsRestoreIncrementService" classname="org.fst.backup.test.unit_test.ui.restore.RestoreBackupButtonTest" time="0.115"/>
+  <testcase name="testNothingHappensIfNoIncrementIsSelected" classname="org.fst.backup.test.unit_test.ui.restore.RestoreBackupButtonTest" time="0.114"/>
+  <testcase name="testOnFinishClosureIsInvoked" classname="org.fst.backup.test.unit_test.ui.restore.RestoreBackupButtonTest" time="0.116"/>
+  <testcase name="testRestoreIncrementServiceReceivesCorrectParams" classname="org.fst.backup.test.unit_test.ui.restore.RestoreBackupButtonTest" time="0.115"/>
+  <testcase name="testConsoleStatusIsRedAgainAtTheBeginning" classname="org.fst.backup.test.unit_test.ui.restore.RestoreBackupButtonTest" time="0.184"/>
+  <testcase name="testCmdLinesAreWrittenToConsoleAsync" classname="org.fst.backup.test.unit_test.ui.restore.RestoreBackupButtonTest" time="0.123"/>
+  <testcase name="testConsoleStatusChangesFromRedToGreenOnFinish" classname="org.fst.backup.test.unit_test.ui.restore.RestoreBackupButtonTest" time="0.124"/>
+  <testcase name="testComandLinesGetWrittenToConsoleDocument" classname="org.fst.backup.test.unit_test.ui.restore.RestoreBackupButtonTest" time="0.122"/>
+  <testcase name="testConsoleStatusIsRedAtTheBeginning" classname="org.fst.backup.test.unit_test.ui.restore.RestoreBackupButtonTest" time="0.115"/>
+  <testcase name="testConsoleGetsClearedBeforeEachBackup" classname="org.fst.backup.test.unit_test.ui.restore.RestoreBackupButtonTest" time="0.171"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
