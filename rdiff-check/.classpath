@@ -3,8 +3,8 @@
 	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="GROOVY_DSL_SUPPORT"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/backup"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Groovy"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/rdigg"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
