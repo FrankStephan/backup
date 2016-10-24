@@ -10,6 +10,8 @@ import org.fst.backup.ui.CommonViewModel
 class RestoreDirectoryChooser {
 
 	JFileChooser createComponent(CommonViewModel commonViewModel, SwingBuilder swing) {
+		
 		return new BorderedFileChooser().createComponent('Wiederherstellungsverzeichnis', swing, { commonViewModel.restoreDir = it })
+		
 	}
 }
