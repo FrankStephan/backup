@@ -7,7 +7,7 @@ import java.awt.Color
 import javax.swing.text.PlainDocument
 
 import org.fst.backup.rdiff.RDiffCommands
-import org.fst.backup.ui.DocumentWriter
+import org.fst.backup.gui.DocumentWriter
 
 class RDiffCheck extends GroovyTestCase {
 

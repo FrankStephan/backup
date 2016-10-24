@@ -6,9 +6,9 @@ import java.awt.Container
 import javax.swing.Box
 import javax.swing.JTabbedPane
 
-import org.fst.backup.ui.Tab;
-import org.fst.backup.ui.frame.Frame;
-import org.fst.backup.ui.frame.TabsPane;
+import org.fst.backup.gui.Tab;
+import org.fst.backup.gui.frame.Frame;
+import org.fst.backup.gui.frame.TabsPane;
 
 enum GUITestStep {
 
