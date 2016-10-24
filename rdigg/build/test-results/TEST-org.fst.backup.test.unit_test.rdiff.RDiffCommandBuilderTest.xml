@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.fst.backup.test.unit_test.rdiff.RDiffCommandBuilderTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2016-10-23T20:02:02" hostname="HP-Frank" time="0.003">
-  <properties/>
-  <testcase name="testBuildWithOneCommand" classname="org.fst.backup.test.unit_test.rdiff.RDiffCommandBuilderTest" time="0.001"/>
-  <testcase name="testBuildWithTwoCommands" classname="org.fst.backup.test.unit_test.rdiff.RDiffCommandBuilderTest" time="0.001"/>
-  <testcase name="testCommandAlwaysRunsInCMD" classname="org.fst.backup.test.unit_test.rdiff.RDiffCommandBuilderTest" time="0.001"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
