@@ -4,11 +4,10 @@ import org.fst.backup.gui.frame.Frame
 import org.fst.backup.model.Configuration
 import org.fst.backup.service.ReadCliService
 
-Configuration configuration
-try {
-	configuration = new ReadCliService().read(args)
-} catch (Exception e) {
-}
-
 Frame frame = new Frame()
+
+Configuration configuration = new ReadCliService().read(args)
+frame.commonViewModel.sourceDir = configuration.defaultSourceDir
+frame.commonViewModel.targetDir = configuration.defaultTargetDir
+
 frame.show()

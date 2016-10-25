@@ -2,6 +2,10 @@ apply plugin: 'eclipse'
 apply plugin: 'groovy'
 apply plugin: 'com.github.johnrengelman.shadow'
 
+ext {
+    displayName = 'rdigg'
+}
+
 sourceSets {
     test {
         groovy {
@@ -26,6 +30,8 @@ repositories {
 }
 
 shadowJar {
+   baseName = displayName
+   classifier = null
    version = null
 }
 
@@ -39,6 +45,15 @@ dependencies {
 	compile group: 'commons-cli', name: 'commons-cli', version: '1.3.1'
 	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
 	testCompile 'junit:junit:4.12'
+}
+
+task createBatch() << {
+	String batchFileName = displayName + '.bat' 
+	String command = 'start javaw -jar ' + displayName + '.jar'
+	if (!libsDir.exists()) {
+		libsDir.mkdirs()
+	}
+	File bat = new File(libsDir, batchFileName) << command
 }
 
 task copyToReadyShare(type: Exec) {

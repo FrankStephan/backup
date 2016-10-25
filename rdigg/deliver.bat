@@ -1,3 +1,3 @@
 cd C:\dev\repository\backup\rdigg
-start cmd /k "gradle clean test shadowJar copyToReadyShare --info"
+start cmd /k "gradle clean test shadowJar createBatch copyToReadyShare --info"
 

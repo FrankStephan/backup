@@ -4,6 +4,8 @@ import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 
 import org.fst.backup.Main
+import org.fst.backup.gui.CommonViewModel
+import org.fst.backup.gui.frame.Frame
 import org.fst.backup.model.Configuration
 import org.fst.backup.service.ReadCliService
 import org.fst.backup.test.AbstractTest
@@ -18,7 +20,16 @@ class MainTest extends AbstractTest {
 			return new Configuration(defaultSourceDir: sourceDir, defaultTargetDir: targetDir)
 		}
 
-		Main.main(args)
-		fail()
+		CommonViewModel commonViewModel = new CommonViewModel()
+		MockFor frame = new MockFor(Frame.class)
+		frame.demand.getCommonViewModel(1) { -> return commonViewModel }
+		frame.demand.show(1) {}
+
+		readCliService.use {
+			frame.use { Main.main(args) }
+		}
+
+		assert sourceDir == commonViewModel.sourceDir
+		assert targetDir == commonViewModel.targetDir
 	}
 }

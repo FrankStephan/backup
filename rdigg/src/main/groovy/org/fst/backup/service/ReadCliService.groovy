@@ -1,14 +1,12 @@
 package org.fst.backup.service
 
 import org.fst.backup.model.Configuration
-import org.fst.backup.service.exception.DirectoryNotExistsException
-import org.fst.backup.service.exception.FileIsNotADirectoryException
 
 
 
 class ReadCliService {
 
-	Configuration read(String[] args) throws DirectoryNotExistsException, FileIsNotADirectoryException {
+	Configuration read(String[] args) {
 		CliBuilder cli = new CliBuilder()
 		cli.s('Default source directory', args: 1, argName: 'source directory')
 		cli.t('Default target directory', args: 1, argName: 'target directory')
@@ -25,14 +23,12 @@ class ReadCliService {
 
 	File createFile(String path) {
 		File file = new File(path)
-		if (file.exists()) {
+		if (file.exists() && file.isDirectory()) {
 			if (file.isDirectory()) {
 				return file
 			} else {
-				throw new FileIsNotADirectoryException()
+				return null
 			}
-		} else {
-			throw new DirectoryNotExistsException()
 		}
 	}
 }
