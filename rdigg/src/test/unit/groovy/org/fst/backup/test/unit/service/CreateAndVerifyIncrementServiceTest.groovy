@@ -32,7 +32,7 @@ class CreateAndVerifyIncrementServiceTest extends AbstractTest {
 
 	void testCmdLineCallbackIsAddedToAppenable() {
 		MockFor outMock = new MockFor(Appendable.class)
-		outMock.demand.append(1) { CharSequence cs -> }
+		outMock.demand.append(2) { CharSequence cs -> }
 		cmdOut = outMock.proxyInstance()
 
 		prepareAndExecuteTest({ File sourceDir, File targetDir, Closure commandLineCallback ->
@@ -41,7 +41,14 @@ class CreateAndVerifyIncrementServiceTest extends AbstractTest {
 	}
 
 	void testLineSeparatorsAreAddedAfterEachCommandLineCallback() {
-		fail()
+		cmdOut = new StringBuffer()
+
+		List<String> cmdLines = ['Line1', 'Line2', 'Line3']
+
+		prepareAndExecuteTest({ File sourceDir, File targetDir, Closure commandLineCallback ->
+			cmdLines.each { commandLineCallback(it) }
+		})
+		assert (cmdLines.collect { String it -> it + System.lineSeparator }).join('') == cmdOut.toString()
 	}
 
 	private void prepareAndExecuteTest(Closure assertCreate = null, Closure assertVerify = null) {
