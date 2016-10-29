@@ -22,7 +22,7 @@ class MainTest extends AbstractTest {
 
 		CommonViewModel commonViewModel = new CommonViewModel()
 		MockFor frame = new MockFor(Frame.class)
-		frame.demand.getCommonViewModel(1) { -> return commonViewModel }
+		frame.demand.getCommonViewModel(2) { -> return commonViewModel }
 		frame.demand.show(1) {}
 
 		readCliService.use {

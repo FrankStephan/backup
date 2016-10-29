@@ -2,8 +2,6 @@ package org.fst.backup.service
 
 import org.fst.backup.model.Configuration
 
-
-
 class ReadCliService {
 
 	Configuration read(String[] args) {

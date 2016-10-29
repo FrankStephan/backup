@@ -49,7 +49,7 @@ dependencies {
 
 task createBatch() << {
 	String batchFileName = displayName + '.bat' 
-	String command = 'start javaw -jar ' + displayName + '.jar'
+	String command = 'start javaw -jar ' + displayName + '.jar' + ' -s \"\" -t \"\"' 
 	if (!libsDir.exists()) {
 		libsDir.mkdirs()
 	}
