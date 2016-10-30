@@ -34,6 +34,11 @@ shadowJar {
    classifier = null
    version = null
 }
+shadowJar.doFirst {
+   clean
+   test
+}
+shadowJar.dependsOn clean, test
 
 jar {
     manifest {
