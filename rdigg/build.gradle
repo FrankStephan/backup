@@ -58,5 +58,5 @@ task createBatch() << {
 
 task deliver(type: Exec, dependsOn: ['clean', 'test', 'shadowJar', 'createBatch']) {
 	println 'Copy artifacts from ' + libsDir.absolutePath + ' to ' + deliveryDir
-    commandLine 'xcopy', '/Y', '/S', '/I', 'C:\\dev\\repository\\backup\\rdigg\\build\\libs', deliveryDir
+    commandLine 'xcopy', '/Y', '/S', '/I', libsDir.absolutePath, deliveryDir
 }
