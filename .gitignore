@@ -2,4 +2,3 @@ bin
 build
 .gradle
 .settings
-*.bat
