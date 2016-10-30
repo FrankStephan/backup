@@ -9,11 +9,11 @@ import javax.swing.JFileChooser
 
 class BorderedFileChooser {
 
-	JFileChooser createComponent (String text, SwingBuilder swing, Closure setDir) {
-		def fc = swing.fileChooser(
+	JFileChooser createComponent (String text, SwingBuilder swing, File currentDir, Closure setDir) {
+		JFileChooser fc = swing.fileChooser(
 				fileSelectionMode: JFileChooser.DIRECTORIES_ONLY,
 				controlButtonsAreShown: false,
-				border: swing.titledBorder(title: text)
+				border: swing.titledBorder(title: text),
 				)
 		fc.addPropertyChangeListener(new PropertyChangeListener() {
 					void propertyChange(PropertyChangeEvent pce) {
@@ -22,6 +22,7 @@ class BorderedFileChooser {
 						}
 					}
 				})
+		fc.setCurrentDirectory(currentDir)
 		return fc
 	}
 }

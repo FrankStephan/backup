@@ -6,11 +6,11 @@ import groovy.swing.SwingBuilder
 
 import javax.swing.DefaultListModel
 
+import org.fst.backup.gui.CommonViewModel
+import org.fst.backup.gui.frame.choose.BackupDirectoryChooser
 import org.fst.backup.model.Increment
 import org.fst.backup.service.ListIncrementsService
 import org.fst.backup.test.AbstractTest
-import org.fst.backup.gui.CommonViewModel
-import org.fst.backup.gui.frame.choose.BackupDirectoryChooser
 
 class BackupDirectoryChooserTest extends AbstractTest {
 
@@ -73,5 +73,12 @@ class BackupDirectoryChooserTest extends AbstractTest {
 		}
 		changeSelectedFile()
 		assert [increment1, increment2, increment3]== commonViewModel.incrementsListModel*.increment
+	}
+
+	void testCurrentDirIsDefaultDirInitially() {
+		listIncrementService.use {
+			def fc = new BackupDirectoryChooser().createComponent(commonViewModel, swing)
+			assert fc.getCurrentDirectory() == fc.getFileSystemView().getDefaultDirectory()
+		}
 	}
 }

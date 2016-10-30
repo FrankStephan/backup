@@ -11,13 +11,13 @@ import javax.swing.DefaultSingleSelectionModel
 import javax.swing.JButton
 import javax.swing.text.PlainDocument
 
-import org.fst.backup.model.Increment
-import org.fst.backup.service.CreateIncrementService
-import org.fst.backup.test.AbstractTest
 import org.fst.backup.gui.CommonViewModel
 import org.fst.backup.gui.IncrementListEntry
 import org.fst.backup.gui.Tab
 import org.fst.backup.gui.frame.create.CreateBackupButton
+import org.fst.backup.model.Increment
+import org.fst.backup.service.CreateIncrementService
+import org.fst.backup.test.AbstractTest
 
 class CreateBackupButtonTest extends AbstractTest {
 

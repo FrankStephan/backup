@@ -8,7 +8,7 @@ import org.fst.backup.service.IncrementFileStructureService
 import org.fst.backup.service.ListIncrementsService
 import org.fst.backup.service.RestoreIncrementService
 
-enum ServiceTestStep {
+enum IntegrationTestStep {
 
 	CREATE_SOME_SOURCE_FILES {
 		@Override

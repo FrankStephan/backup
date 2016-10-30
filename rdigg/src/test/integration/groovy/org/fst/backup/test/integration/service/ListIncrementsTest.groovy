@@ -1,11 +1,11 @@
 package org.fst.backup.test.integration.service
 
-import static org.fst.backup.test.integration.service.ServiceTestStep.*
+import static org.fst.backup.test.integration.service.IntegrationTestStep.*
 import static org.junit.Assert.*
 
 import org.fst.backup.model.Increment
 
-class ListIncrementsTest extends AbstractServiceTest {
+class ListIncrementsTest extends AbstractIntegrationTest {
 
 	public void test() {
 		CREATE_SOME_SOURCE_FILES.execute()

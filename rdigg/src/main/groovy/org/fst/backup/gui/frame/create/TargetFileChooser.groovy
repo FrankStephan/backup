@@ -10,6 +10,6 @@ import org.fst.backup.gui.CommonViewModel
 class TargetFileChooser {
 
 	JFileChooser createComponent(CommonViewModel commonViewModel, SwingBuilder swing) {
-		return new BorderedFileChooser().createComponent('Quellverzeichnis', swing, { commonViewModel.targetDir = it } )
+		return new BorderedFileChooser().createComponent('Quellverzeichnis', swing, commonViewModel.targetDir, { commonViewModel.targetDir = it } )
 	}
 }
