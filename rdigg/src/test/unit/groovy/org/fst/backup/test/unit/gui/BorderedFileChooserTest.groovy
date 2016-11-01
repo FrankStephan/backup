@@ -22,9 +22,5 @@ class BorderedFileChooserTest extends AbstractTest {
 		JFileChooser fc = new BorderedFileChooser().createComponent('', new SwingBuilder(), sourceDir, { } )
 		assert fc.getCurrentDirectory().absoluteFile == sourceDir.absoluteFile
 	}
-
-	void testSomethingFailsHere() {
-		fail()
-	}
 }
 
