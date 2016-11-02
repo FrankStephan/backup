@@ -22,7 +22,7 @@ class BorderedFileChooser {
 						}
 					}
 				})
-		fc.setCurrentDirectory(currentDir)
+		fc.currentDirectory = currentDir
 		return fc
 	}
 }

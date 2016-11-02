@@ -1,3 +1,5 @@
+
+
 package org.fst.backup.test.unit.gui
 
 import static org.junit.Assert.*
@@ -13,14 +15,20 @@ class BorderedFileChooserTest extends AbstractTest {
 
 	void testSetDirClosureIsInvokedWhenSelectedFileChanges() {
 		boolean isSetDirClosureInvoked = false
-		JFileChooser fc = new BorderedFileChooser().createComponent('', new SwingBuilder(), sourceDir, { isSetDirClosureInvoked = true } )
-		fc.selectedFile = sourceDir
-		assert true == isSetDirClosureInvoked
+		SwingBuilder swing = new SwingBuilder()
+		swing.edt {
+			JFileChooser fc = new BorderedFileChooser().createComponent('', swing, sourceDir, { isSetDirClosureInvoked = true } )
+			fc.selectedFile = sourceDir
+			assert true == isSetDirClosureInvoked
+		}
 	}
 
 	void testInitialDirectoryIsTakenFromCommonViewModel() {
-		JFileChooser fc = new BorderedFileChooser().createComponent('', new SwingBuilder(), sourceDir, { } )
-		assert fc.getCurrentDirectory().absoluteFile == sourceDir.absoluteFile
+		SwingBuilder swing = new SwingBuilder()
+		swing.edt {
+			JFileChooser fc = new BorderedFileChooser().createComponent('', new SwingBuilder(), sourceDir, { } )
+			assert fc.getCurrentDirectory().absoluteFile == sourceDir.absoluteFile
+		}
 	}
 }
 
