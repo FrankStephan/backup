@@ -62,6 +62,6 @@ task createBatch() << {
 }
 
 task deliver(type: Exec, dependsOn: ['clean', 'test', 'shadowJar', 'createBatch']) {
-	println 'Copy artifacts from ' + libsDir.absolutePath + ' to ' + deliveryDir
+    println 'Build and copy artifacts from ' + libsDir.absolutePath + ' to ' + deliveryDir
     commandLine 'xcopy', '/Y', '/S', '/I', libsDir.absolutePath, deliveryDir
 }
