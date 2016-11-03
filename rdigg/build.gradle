@@ -61,7 +61,14 @@ task createBatch() << {
 	File bat = new File(libsDir, batchFileName) << command
 }
 
-task deliver(type: Exec, dependsOn: ['clean', 'test', 'shadowJar', 'createBatch']) {
+task exposeIcon(type: Copy) {
+	from ('src/main/resources/') {
+		include 'icon.ico'
+	}
+    into libsDir
+}
+
+task deliver(type: Exec, dependsOn: ['clean', 'test', 'shadowJar', 'exposeIcon', 'createBatch']) {
     println 'Build and copy artifacts from ' + libsDir.absolutePath + ' to ' + deliveryDir
     commandLine 'xcopy', '/Y', '/S', '/I', libsDir.absolutePath, deliveryDir
 }
