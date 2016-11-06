@@ -9,7 +9,7 @@ class CreateIncrementTest extends AbstractIntegrationTest {
 		CREATE_SOME_SOURCE_FILES.execute()
 
 		String cmdLineContent
-		CREATE_INCREMENT.execute(null) { cmdLineContent = it }
+		CREATE_INCREMENT.execute(null, { cmdLineContent = it })
 		println cmdLineContent
 		assert cmdLineContent.contains('Using rdiff-backup version 1.2.8')
 		assertVerificationIsPerformed(cmdLineContent)

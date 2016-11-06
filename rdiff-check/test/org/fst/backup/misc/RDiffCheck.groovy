@@ -11,8 +11,8 @@ import org.fst.backup.rdiff.RDiffCommands
 class RDiffCheck extends GroovyTestCase {
 
 	static final String TMP_DIR = RDiffCheck.class.getSimpleName()
-	static final String SOURCE_DIR = TMP_DIR + '/source/'
-	static final String TARGET_DIR = TMP_DIR + '/target/'
+	static  String SOURCE_DIR = TMP_DIR + '/source/'
+	static  String TARGET_DIR = TMP_DIR + '/target/'
 	static final String RESTORE_DIR = TMP_DIR + '/restore/'
 	static final String FILE1_NAME = 'File1.txt'
 	static final String FILE2_NAME = 'File2.txt'
@@ -48,7 +48,7 @@ class RDiffCheck extends GroovyTestCase {
 		assert 0 == exitValue
 	}
 
-	void testVerifyCorruptedBackupDir1() {
+	void testVerifyFailsIfAFileIsMissing1() {
 		createTwoIncrements()
 		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
 
@@ -58,13 +58,59 @@ class RDiffCheck extends GroovyTestCase {
 		assert 1 == exitValue
 	}
 
-	void testVerifyCorruptedBackupDir2() {
+	void testVerifyFailsIfAFileIsMissing2() {
+		createTwoIncrements()
+		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
+
+		deleteFile1()
+		verify('now')
+		assert error.contains('Could not restore file File1.txt')
+		assert 1 == exitValue
+	}
+
+	void testVerifyFailsIfAFileIsMissing3() {
 		createTwoIncrements()
 		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
 
 		deleteFile2()
-		verify(secondsSinceTheEpochPerIncrement[1])
+		verify('now')
 		assert error.contains('Could not restore file File2.txt')
+		assert 1 == exitValue
+	}
+
+	void testVerifyIsSuccessfulIfMissingFileIsPartOfANewerIncrement() {
+		createTwoIncrements()
+		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
+
+		deleteFile2()
+		verify(secondsSinceTheEpochPerIncrement[0])
+		assert 'Every file verified successfully.' == cmdLineOutput
+		assert 0 == exitValue
+	}
+
+	void testVerifySucceedsButWritesErrorIfMissingFileWasEmpty() {
+		createTwoIncrements()
+		file1.text = ''
+		backup()
+		waitSinceRDiffCanOnlyDoOneBackupPerSecond()
+
+		deleteFile1()
+		verify('now')
+		assert 'Every file verified successfully.' == cmdLineOutput
+		assert error.contains('Could not restore file File1.txt')
+		assert 0 == exitValue
+	}
+
+	void testVerifyFailsWithOneEmptyAndOneNonEmptyFileMissing() {
+		createTwoIncrements()
+		file1.text = ''
+		backup()
+		waitSinceRDiffCanOnlyDoOneBackupPerSecond()
+
+		deleteFile1()
+		deleteFile2()
+		verify('now')
+		assert error.contains('Could not restore file File1.txt')
 		assert 1 == exitValue
 	}
 

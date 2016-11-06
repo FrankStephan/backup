@@ -3,11 +3,8 @@ package org.fst.backup.gui.frame
 import groovy.swing.SwingBuilder
 
 import java.awt.Dimension
-import java.awt.Font
 
 import javax.swing.JScrollPane
-import javax.swing.border.TitledBorder
-import javax.swing.text.DefaultCaret
 
 import org.fst.backup.gui.CommonViewModel
 import org.fst.backup.gui.Tab
@@ -15,6 +12,7 @@ import org.fst.backup.gui.frame.choose.BackupDirectoryChooser
 import org.fst.backup.gui.frame.choose.IncrementsList
 import org.fst.backup.gui.frame.choose.InspectIncrementButton
 import org.fst.backup.gui.frame.choose.RestoreButton
+import org.fst.backup.gui.frame.console.ConsolePane
 import org.fst.backup.gui.frame.create.CreateBackupButton
 import org.fst.backup.gui.frame.create.SourceFileChooser
 import org.fst.backup.gui.frame.create.TargetFileChooser
@@ -96,19 +94,8 @@ class TabFactory {
 	}
 
 	def conoleTab = {
-		TitledBorder consoleScrollPaneBorder
-		def box = swing.hbox (name: 'Konsole') {
-			consoleScrollPane = scrollPane(border: consoleScrollPaneBorder = swing.titledBorder()) {
-				def console = textArea()
-				console.document = commonViewModel.consoleDocument
-				DefaultCaret caret = (DefaultCaret)console.getCaret()
-				caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE)
-				console.setFont(Font.decode('Monospaced'))
-				console.editable = false
-			}
+		swing.hbox (name: 'Konsole') {
+			consoleScrollPane = new ConsolePane().createComponent(commonViewModel, swing)
 		}
-		swing.bind(source: commonViewModel, sourceProperty: 'consoleStatus', target: consoleScrollPaneBorder, targetProperty: 'title')
-		swing.bind(source: commonViewModel, sourceProperty: 'consoleStatusColor', target: consoleScrollPaneBorder, targetProperty: 'titleColor')
-		return box
 	}
 }

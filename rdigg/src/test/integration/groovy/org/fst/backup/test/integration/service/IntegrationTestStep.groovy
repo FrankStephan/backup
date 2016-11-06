@@ -15,12 +15,13 @@ enum IntegrationTestStep {
 		void execute(def params, Closure setResult) {
 			FileTreeBuilder ftb = new FileTreeBuilder(sourceDir)
 			ftb {
-				'a0.suf'('')
+				'a0.suf'('I am a0')
 				a0 {
-					a1 { 'a2.suf'('') }
+					a1 { 'a2.suf'('I am a2') }
 				}
-				'b0.suf'('')
-				'c0.suf'('')
+				'b0.suf'('I am b0')
+				'c0.suf'('I am c0')
+				'empty.file'
 			}
 		}
 	},
@@ -31,7 +32,7 @@ enum IntegrationTestStep {
 			FileTreeBuilder ftb = new FileTreeBuilder(sourceDir)
 			ftb {
 				a0 {
-					b1 { 'b2.suf'('') }
+					b1 { 'b1.suf'('I am b1') }
 				}
 			}
 		}
@@ -40,7 +41,7 @@ enum IntegrationTestStep {
 	CREATE_INCREMENT {
 		@Override
 		void execute(def params, Closure setResult) {
-			StringBuilder sb = new StringBuilder()
+			StringBuffer sb = new StringBuffer()
 			new CreateAndVerifyIncrementService().createAndVerify(sourceDir, targetDir, sb, sb)
 			setResult?.call(sb.toString().trim())
 		}

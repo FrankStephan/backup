@@ -28,16 +28,8 @@ class NewRequirements extends GroovyTestCase {
 	void checkRDiffSystem() {
 	}
 
-	public void testWhatHappensinUIIfAnyExceptionIsRaised() {
-		fail("Not yet implemented")
-	}
-
 	void testBackupIsVerified() {
 		fail()
-	}
-
-	public void testUserDir() {
-		println System.getProperty("user.dir")
 	}
 
 	public void testDisplayRunningProcessOnShutdown() {

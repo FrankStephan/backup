@@ -73,23 +73,12 @@ class VerificationServiceTest extends AbstractTest {
 	}
 
 	@Test
-	void testServiceReturnsAfterOutIsWrittenToAppenables() {
+	void testServiceReturnsAfterStreamsWereFlushed() {
 		process.demand.waitForProcessOutput(1) { Appendable cmdOut, Appendable cmdErr ->
 			assert this.cmdOut == cmdOut
-		}
-		process.demand.exitValue(1) { return 0 }
-		rdiffCommands.demand.verify(1) { File targetDir, def when ->
-			return process.proxyInstance()
-		}
-		invokeService()
-	}
-
-	@Test
-	void testServiceReturnsAfterErrIsWrittenToAppenables() {
-		process.demand.waitForProcessOutput(1) { Appendable cmdOut, Appendable cmdErr ->
 			assert this.cmdErr == cmdErr
 		}
-		process.demand.exitValue(1) { return 1 }
+		process.demand.exitValue(1) { return 0 }
 		rdiffCommands.demand.verify(1) { File targetDir, def when ->
 			return process.proxyInstance()
 		}

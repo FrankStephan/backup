@@ -23,7 +23,6 @@ class VerificationService {
 			if (targetDir.isDirectory()) {
 				Process process = rdiffCommands.verify(targetDir, when)
 				process.waitForProcessOutput(cmdOut, cmdErr)
-
 				if (process.exitValue() == 0) {
 					return true
 				} else {
