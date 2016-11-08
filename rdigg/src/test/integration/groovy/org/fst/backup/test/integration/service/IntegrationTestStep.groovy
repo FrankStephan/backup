@@ -21,7 +21,6 @@ enum IntegrationTestStep {
 				}
 				'b0.suf'('I am b0')
 				'c0.suf'('I am c0')
-				'empty.file'
 			}
 		}
 	},

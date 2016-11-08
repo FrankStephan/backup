@@ -1,4 +1,4 @@
-package org.fst.backup.test.unit.gui.inspect
+package org.fst.backup.test.unit.gui.frame.inspect
 
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor

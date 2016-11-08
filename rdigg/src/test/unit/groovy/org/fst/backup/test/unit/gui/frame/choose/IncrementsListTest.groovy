@@ -1,4 +1,4 @@
-package org.fst.backup.test.unit.gui.choose
+package org.fst.backup.test.unit.gui.frame.choose
 
 import static org.junit.Assert.*
 import groovy.swing.SwingBuilder

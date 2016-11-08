@@ -9,6 +9,7 @@ import javax.swing.DefaultSingleSelectionModel
 import javax.swing.JButton
 import javax.swing.JFileChooser
 import javax.swing.JList
+import javax.swing.JScrollPane
 import javax.swing.text.PlainDocument
 
 import org.fst.backup.gui.CommonViewModel
@@ -16,6 +17,7 @@ import org.fst.backup.gui.frame.choose.BackupDirectoryChooser
 import org.fst.backup.gui.frame.choose.IncrementsList
 import org.fst.backup.gui.frame.choose.InspectIncrementButton
 import org.fst.backup.gui.frame.choose.RestoreButton
+import org.fst.backup.gui.frame.console.ConsolePane
 import org.fst.backup.gui.frame.create.CreateBackupButton
 import org.fst.backup.gui.frame.create.SourceFileChooser
 import org.fst.backup.gui.frame.create.TargetFileChooser
@@ -29,12 +31,12 @@ enum UITestStep {
 		void execute(def params, Closure setResult) {
 			FileTreeBuilder ftb = new FileTreeBuilder(sourceDir)
 			ftb {
-				'a0.suf'('')
+				'a0.suf'('I am a0')
 				a0 {
-					a1 { 'a2.suf'('') }
+					a1 { 'a2.suf'('I am a2') }
 				}
-				'b0.suf'('')
-				'c0.suf'('')
+				'b0.suf'('I am b0')
+				'c0.suf'('I am c0')
 			}
 		}
 	},
@@ -91,6 +93,13 @@ enum UITestStep {
 
 			fc.selectedFile = restoreDir
 			button.doClick()
+		}
+	},
+
+
+	CONSOLE {
+		void execute(def params, Closure setResult) {
+			JScrollPane pane = new ConsolePane().createComponent(commonViewModel, swing)
 		}
 	}
 

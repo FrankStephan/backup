@@ -12,7 +12,7 @@ import org.fst.backup.gui.CommonViewModel
 
 class ConsolePane {
 
-	def createComponent(CommonViewModel commonViewModel, SwingBuilder swing) {
+	JScrollPane createComponent(CommonViewModel commonViewModel, SwingBuilder swing) {
 		TitledBorder consoleScrollPaneBorder
 		JScrollPane consoleScrollPane = swing.scrollPane(border: consoleScrollPaneBorder = swing.titledBorder()) {
 			def console = swing.textArea()
