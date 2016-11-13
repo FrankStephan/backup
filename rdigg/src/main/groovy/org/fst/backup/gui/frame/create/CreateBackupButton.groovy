@@ -6,9 +6,9 @@ import java.awt.Color
 
 import javax.swing.JButton
 
-import org.fst.backup.service.CreateIncrementService
 import org.fst.backup.gui.CommonViewModel
 import org.fst.backup.gui.Tab
+import org.fst.backup.service.CreateAndVerifyIncrementService
 
 class CreateBackupButton {
 
@@ -21,9 +21,9 @@ class CreateBackupButton {
 					commonViewModel.consoleStatus = 'Status: Laufend'
 					clearConsole(commonViewModel)
 					swing.doOutside {
-						new CreateIncrementService().createIncrement(commonViewModel.sourceDir, commonViewModel.targetDir, {
-							commonViewModel.consoleDocument.insertString(commonViewModel.consoleDocument.length, it + System.lineSeparator(), null)
-						} )
+						DocumentWriter cmdWriter = new DocumentWriter(document: commonViewModel.consoleDocument, textColor: Color.BLACK)
+						DocumentWriter errWriter = new DocumentWriter(document: commonViewModel.consoleDocument, textColor: Color.RED)
+						new CreateAndVerifyIncrementService().createAndVerify(commonViewModel.sourceDir, commonViewModel.targetDir, cmdWriter, errWriter)
 						commonViewModel.consoleStatus = 'Status: Abgeschlossen'
 						commonViewModel.consoleStatusColor = Color.GREEN
 						onFinish.call()

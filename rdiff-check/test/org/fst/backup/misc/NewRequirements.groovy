@@ -12,6 +12,10 @@ class NewRequirements extends GroovyTestCase {
 		// Process cmd line by line?
 	}
 
+	void testDesktopIsNotAvaibleInInspectTab() {
+		fail()
+	}
+
 	void testCmdIsLogged() {
 	}
 

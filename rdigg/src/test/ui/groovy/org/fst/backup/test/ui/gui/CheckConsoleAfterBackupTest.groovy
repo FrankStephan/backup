@@ -9,5 +9,9 @@ class CheckConsoleAfterBackupTest extends AbstractUITest {
 
 		CREATE_SOME_SOURCE_FILES.execute()
 		CREATE_INCREMENT.execute()
+		String text
+		VIEW_CONSOLE.execute(null, {it -> text = it})
+		println text
+		fail()
 	}
 }

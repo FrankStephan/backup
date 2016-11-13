@@ -15,13 +15,14 @@ import org.fst.backup.gui.CommonViewModel
 import org.fst.backup.gui.IncrementListEntry
 import org.fst.backup.gui.Tab
 import org.fst.backup.gui.frame.create.CreateBackupButton
+import org.fst.backup.gui.frame.create.DocumentWriter
 import org.fst.backup.model.Increment
-import org.fst.backup.service.CreateIncrementService
+import org.fst.backup.service.CreateAndVerifyIncrementService
 import org.fst.backup.test.AbstractTest
 
 class CreateBackupButtonTest extends AbstractTest {
 
-	MockFor createIncrementService = new MockFor(CreateIncrementService.class)
+	MockFor createIncrementService = new MockFor(CreateAndVerifyIncrementService.class)
 	CommonViewModel commonViewModel
 	SwingBuilder swing
 	JButton button
@@ -30,6 +31,7 @@ class CreateBackupButtonTest extends AbstractTest {
 	Closure onFinish = { isOnFinishClosureInvoked = true }
 
 	String[] commandLines
+	String[] errLines
 
 	void setUp() {
 		super.setUp()
@@ -44,15 +46,20 @@ class CreateBackupButtonTest extends AbstractTest {
 		swingStub.demand.button(1) { Map it ->
 			return new SwingBuilder().button(it)
 		}
-		swingStub.demand.doOutside (1..2) {Closure it -> it()}
+		swingStub.demand.doOutside (1..2) { Closure it -> it() }
 		swing = swingStub.proxyInstance()
 		button = new CreateBackupButton().createComponent(commonViewModel, swing, onFinish)
 	}
 
-	private void verifyCreateIncrementServiceInvocation(Closure assertParams) {
-		createIncrementService.demand.createIncrement(1) {File sourceDir, File targetDir, Closure commandLineCallback ->
-			assertParams?.call(sourceDir, targetDir, commandLineCallback)
-			commandLines?.each { it -> commandLineCallback(it) }
+	private void verifyServiceInvocation(Closure assertParams) {
+		createIncrementService.demand.createAndVerify(1) { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
+			assertParams?.call(sourceDir, targetDir, cmdOut, cmdErr)
+			commandLines?.each { String it ->
+				cmdOut.append(it).append(System.lineSeparator())
+			}
+			errLines?.each {String it ->
+				cmdErr.append(it).append(System.lineSeparator())
+			}
 		}
 	}
 
@@ -60,19 +67,21 @@ class CreateBackupButtonTest extends AbstractTest {
 		createIncrementService.use { button.doClick() }
 	}
 
-	private void assertConsoleEqualsCommandLines() {
-		def expected = commandLines.join(System.lineSeparator()).trim()
-		def actual = commonViewModel.consoleDocument.getText(0, commonViewModel.consoleDocument.getLength()).trim()
-		assert expected == actual
+	private void assertConsoleContainsCmdLinesAndErrLines() {
+		def expectedCmd = commandLines?.join(System.lineSeparator())
+		def expectedErr = errLines?.join(System.lineSeparator())
+		def expected = expectedCmd + System.lineSeparator() + expectedErr
+		def actual = commonViewModel.consoleDocument.getText(0, commonViewModel.consoleDocument.getLength())
+		assert expected.trim() == actual.trim()
 	}
 
-	void testButtonCallsCreateBackupService() {
-		verifyCreateIncrementServiceInvocation()
+	void testButtonCallsService() {
+		verifyServiceInvocation()
 		clickButton()
 	}
 
-	void testCreateBackupServiceReceivesCorrectParams() {
-		verifyCreateIncrementServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
+	void testServiceReceivesCorrectSourceAndTargetDir() {
+		verifyServiceInvocation { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
 			assert commonViewModel.sourceDir == sourceDir
 			assert commonViewModel.targetDir == targetDir
 		}
@@ -80,14 +89,14 @@ class CreateBackupButtonTest extends AbstractTest {
 	}
 
 	void testConsoleTabIsOpened() {
-		verifyCreateIncrementServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
+		verifyServiceInvocation { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
 			assert Tab.CONSOLE.ordinal() == commonViewModel.tabsModel.selectedIndex
 		}
 		clickButton()
 	}
 
 	void testConsoleStatusIsRedAtTheBeginning() {
-		verifyCreateIncrementServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
+		verifyServiceInvocation { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
 		}
@@ -95,42 +104,60 @@ class CreateBackupButtonTest extends AbstractTest {
 	}
 
 	void testConsoleStatusChangesFromRedToGreenOnFinish() {
-		verifyCreateIncrementServiceInvocation()
+		verifyServiceInvocation()
 		clickButton()
 		assert Color.GREEN == commonViewModel.consoleStatusColor
 		assert 'Status: Abgeschlossen' == commonViewModel.consoleStatus
 	}
 
 	void testConsoleStatusIsRedAgainAtTheBeginning() {
-		verifyCreateIncrementServiceInvocation()
+		verifyServiceInvocation()
 		clickButton()
-		verifyCreateIncrementServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
+		verifyServiceInvocation { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
 		}
 		clickButton()
 	}
 
-	void testComandLinesGetWrittenToConsoleDocument() {
-		commandLines = ['Line1', 'Line2', 'Line3']
-		verifyCreateIncrementServiceInvocation()
+	void testStreamToConsole() {
+		verifyServiceInvocation() { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
+			assert commonViewModel.consoleDocument == ((DocumentWriter) cmdOut).document
+			assert commonViewModel.consoleDocument == ((DocumentWriter) cmdErr).document
+		}
 		clickButton()
-		assertConsoleEqualsCommandLines()
+	}
+
+	void testCmdLinesAreBlack() {
+		verifyServiceInvocation() { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
+			assert Color.BLACK == ((DocumentWriter) cmdOut).textColor
+		}
+		clickButton()
+	}
+
+	void testErrLinesAreRed() {
+		verifyServiceInvocation() { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
+			assert Color.RED == ((DocumentWriter) cmdErr).textColor
+		}
+		clickButton()
 	}
 
 	void testConsoleGetsClearedBeforeEachBackup() {
 		commandLines = ['I have been', 'invoked the', 'first time']
-		verifyCreateIncrementServiceInvocation()
+		errLines = ['Err1', 'Err2', 'Err3']
+		verifyServiceInvocation()
 		clickButton()
+		assertConsoleContainsCmdLinesAndErrLines()
 
 		commandLines = ['I have been', 'invoked the', 'second time']
-		verifyCreateIncrementServiceInvocation()
+		errLines = []
+		verifyServiceInvocation()
 		clickButton()
-		assertConsoleEqualsCommandLines()
+		assertConsoleContainsCmdLinesAndErrLines()
 	}
 
 	void testOnFinishClosureIsInvoked() {
-		verifyCreateIncrementServiceInvocation()
+		verifyServiceInvocation()
 		clickButton()
 		assert true == isOnFinishClosureInvoked
 	}
@@ -140,7 +167,7 @@ class CreateBackupButtonTest extends AbstractTest {
 
 		boolean isCreateBackupServiceInvoked = false
 		boolean isInvokedOutsideUIThread = false
-		verifyCreateIncrementServiceInvocation { File sourceDir, File targetDir, Closure commandLineCallback ->
+		verifyServiceInvocation { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
 			isCreateBackupServiceInvoked = true
 		}
 
@@ -148,7 +175,7 @@ class CreateBackupButtonTest extends AbstractTest {
 		swingStub.demand.button(1) { Map it ->
 			return new SwingBuilder().button(it)
 		}
-		swingStub.demand.doOutside(1) {Closure it ->
+		swingStub.demand.doOutside(1) { Closure it ->
 			isInvokedOutsideUIThread = true
 
 			assert 0 == commonViewModel.consoleDocument.length

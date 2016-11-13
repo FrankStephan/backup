@@ -1,6 +1,7 @@
 package org.fst.backup.test.ui.gui
 
 
+
 import groovy.swing.SwingBuilder
 
 import javax.swing.DefaultListModel
@@ -10,6 +11,7 @@ import javax.swing.JButton
 import javax.swing.JFileChooser
 import javax.swing.JList
 import javax.swing.JScrollPane
+import javax.swing.JTextArea
 import javax.swing.text.PlainDocument
 
 import org.fst.backup.gui.CommonViewModel
@@ -96,10 +98,11 @@ enum UITestStep {
 		}
 	},
 
-
-	CONSOLE {
+	VIEW_CONSOLE {
 		void execute(def params, Closure setResult) {
 			JScrollPane pane = new ConsolePane().createComponent(commonViewModel, swing)
+			JTextArea textArea = pane.getViewport().getView()
+			setResult?.call(textArea.getText())
 		}
 	}
 
