@@ -6,6 +6,7 @@ import static org.junit.Assert.*
 import java.nio.file.Files
 
 import org.fst.backup.service.VerificationService
+import org.fst.backup.test.IncrementDestroyer;
 
 class CreateIncrementTest extends AbstractIntegrationTest {
 
@@ -33,7 +34,7 @@ class CreateIncrementTest extends AbstractIntegrationTest {
 
 	void testWithNonEmptyMissingFile() {
 		CREATE_SOME_SOURCE_FILES.execute()
-
+		
 		destroyIncrementBeforeVerification().use {
 			CREATE_INCREMENT.execute(null, { cmdLineContent = it })
 		}
@@ -58,33 +59,6 @@ class CreateIncrementTest extends AbstractIntegrationTest {
 	}
 
 	private ProxyMetaClass destroyIncrementBeforeVerification() {
-		ProxyMetaClass verificationServiceProxy = ProxyMetaClass.getInstance(VerificationService.class)
-		verificationServiceProxy.interceptor = new Interceptor() {
-
-					@Override
-					public Object beforeInvoke(Object object, String methodName,
-							Object[] arguments) {
-
-						if (methodName == 'verifyMirror') {
-							File fileToDelete = new File(targetPath, 'a0.suf')
-							assert fileToDelete.exists()
-							Files.delete(fileToDelete.toPath())
-							assert !fileToDelete.exists()
-						}
-						return null
-					}
-
-					@Override
-					public Object afterInvoke(Object object, String methodName,
-							Object[] arguments, Object result) {
-						return result
-					}
-
-					@Override
-					public boolean doInvoke() {
-						return true
-					}
-				}
-		return verificationServiceProxy
+		return IncrementDestroyer.destroyIncrementBeforeVerification(new File(targetPath, 'a0.suf'))
 	}
 }
