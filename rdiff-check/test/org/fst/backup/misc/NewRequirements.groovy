@@ -4,19 +4,19 @@ import static org.junit.Assert.*
 
 class NewRequirements extends GroovyTestCase {
 
+	void testDesktopIsNotAvaibleInInspectTab() {
+		fail()
+	}
+	
+	void testCmdIsLogged() {
+	}
+	
 	void probeFileType() {
 		//		Files.probeContentType(null)
 	}
 
 	void inspectBackupWithParallelThreads() {
 		// Process cmd line by line?
-	}
-
-	void testDesktopIsNotAvaibleInInspectTab() {
-		fail()
-	}
-
-	void testCmdIsLogged() {
 	}
 
 	void testConsoleHasLimitedSize() {
@@ -32,19 +32,11 @@ class NewRequirements extends GroovyTestCase {
 	void checkRDiffSystem() {
 	}
 
-	void testBackupIsVerified() {
-		fail()
-	}
-
 	public void testDisplayRunningProcessOnShutdown() {
 		fail()
 	}
 
-	public void testRemoteFile() {
+	public void testRestoreRemoteFile() {
 		fail("Not yet implemented")
-	}
-
-	public void testConsoleShowsOutputAndErrors() {
-		fail()
 	}
 }
