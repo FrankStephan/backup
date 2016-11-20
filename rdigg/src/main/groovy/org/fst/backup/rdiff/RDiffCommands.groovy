@@ -15,9 +15,9 @@ class RDiffCommands {
 		command = command + ' ' + sourceDir.absolutePath + ' ' + targetDir.absolutePath
 		executor.execute(command)
 	}
-	
+
 	Process verify(File targetDir, def when) {
-		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.VERIFY)
+		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.HIGHEST_VERBOSITY, RDiffCommandElement.VERIFY)
 		command = command + ' ' + when + ' ' + targetDir.absolutePath
 		executor.execute(command)
 	}

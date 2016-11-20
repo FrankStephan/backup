@@ -53,6 +53,7 @@ class RDiffCommandsTest extends AbstractTest  {
 		expectedCommand = 'cmd /c rdiff-backup --verify-at-time now ' + targetDir.absolutePath
 		defineExpectedCommandBuilderInvocation('cmd /c rdiff-backup --verify-at-time',
 				RDiffCommandElement.RDIFF_COMMAND,
+				RDiffCommandElement.HIGHEST_VERBOSITY,
 				RDiffCommandElement.VERIFY
 				)
 		callMethodUnderTestAndVerifyProcess( {
