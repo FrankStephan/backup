@@ -8,13 +8,13 @@ import javax.swing.DefaultListSelectionModel
 import javax.swing.JFileChooser
 import javax.swing.border.TitledBorder
 
-import org.fst.backup.model.Increment
-import org.fst.backup.service.IncrementFileStructureService
-import org.fst.backup.test.AbstractTest
 import org.fst.backup.gui.CommonViewModel
 import org.fst.backup.gui.IncrementListEntry
 import org.fst.backup.gui.frame.inspect.InspectIncrementFileChooser
 import org.fst.backup.gui.frame.inspect.InspectIncrementFileSystemView
+import org.fst.backup.model.Increment
+import org.fst.backup.service.IncrementFileStructureService
+import org.fst.backup.test.AbstractTest
 
 class InspectIncrementFileChooserTest extends AbstractTest {
 
@@ -57,6 +57,10 @@ class InspectIncrementFileChooserTest extends AbstractTest {
 			assert fsv.root == root
 		} )
 		changeSelectedIncrement(increment)
+	}
+
+	void testServiceIsInvokedAsync() {
+		fail()
 	}
 
 	void testFileStructureIsCalculatedOnlyOnceIfSelectedIncrementDidNotChange() {

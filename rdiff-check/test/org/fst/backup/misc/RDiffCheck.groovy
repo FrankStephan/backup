@@ -6,7 +6,7 @@ import java.awt.Color
 
 import javax.swing.text.PlainDocument
 
-import org.fst.backup.gui.frame.create.DocumentWriter;
+import org.fst.backup.gui.frame.create.DocumentWriter
 import org.fst.backup.rdiff.RDiffCommands
 
 class RDiffCheck extends GroovyTestCase {
@@ -36,16 +36,35 @@ class RDiffCheck extends GroovyTestCase {
 
 	void testBackupCommandIsExecuted() {
 		createTwoIncrements()
-		backup()
 		assert cmdLineOutput.contains('Using rdiff-backup version 1.2.8')
 		assert 0 == exitValue
+	}
+
+	void testBackupWithLostConnectionToRemoteDir() {
+
+		use GradleTestProperties
+
+		new File(SOURCE_DIR).mkdirs()
+		file1 = new File(SOURCE_DIR, FILE1_NAME)
+
+		for (int i=0; i<10000; i++) {
+			file1 << ('Line x' + i + System.lineSeparator())
+		}
+		System.err.println('File created.')
+		Process process = rdiffCommands.backup(new File(SOURCE_DIR), new File(TARGET_DIR))
+		process.consumeProcessOutput(System.out, System.err)
+		System.err.println('Sleep.')
+		Thread.sleep(300L)
+		System.err.println('Woke up.')
+		System.err.println(new File(TARGET_DIR).deleteDir())
+		process.waitFor()
 	}
 
 	void testVerifyConsistentBackupDir() {
 		createTwoIncrements()
 		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
 		verify(secondsSinceTheEpochPerIncrement[0])
-		assert 'Every file verified successfully.' == cmdLineOutput
+		assert cmdLineOutput.contains('Every file verified successfully.')
 		assert 0 == exitValue
 	}
 
@@ -85,7 +104,7 @@ class RDiffCheck extends GroovyTestCase {
 
 		deleteFile2()
 		verify(secondsSinceTheEpochPerIncrement[0])
-		assert 'Every file verified successfully.' == cmdLineOutput
+		assert cmdLineOutput.contains('Every file verified successfully.')
 		assert 0 == exitValue
 	}
 
@@ -97,7 +116,7 @@ class RDiffCheck extends GroovyTestCase {
 
 		deleteFile1()
 		verify('now')
-		assert 'Every file verified successfully.' == cmdLineOutput
+		assert cmdLineOutput.contains('Every file verified successfully.')
 		assert error.contains('Could not restore file File1.txt')
 		assert 0 == exitValue
 	}

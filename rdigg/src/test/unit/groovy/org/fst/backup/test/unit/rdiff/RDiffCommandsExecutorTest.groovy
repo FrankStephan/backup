@@ -6,10 +6,18 @@ import org.fst.backup.rdiff.RDiffCommandExecutor
 
 class RDiffCommandsExecutorTest extends GroovyTestCase {
 
-	public void testExecutorCallsCommandLine() {
+	void testExecutorCallsCommandLine() {
 		Process process = new RDiffCommandExecutor().execute('cmd /c dir')
 		assert process.errorStream.readLines().isEmpty()
 		assert !process.text.isEmpty()
 		assert 0 == process.exitValue()
+	}
+
+	void testCmdLineIsLogged() {
+		fail()
+	}
+
+	void testErrLineIsLogged() {
+		fail()
 	}
 }
