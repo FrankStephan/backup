@@ -1,16 +1,15 @@
 package org.fst.backup.rdiff
 
-import groovy.util.logging.Log4j2
+import org.apache.logging.log4j.Level
+import org.apache.logging.log4j.io.IoBuilder
 
-
-@Log4j2
 class RDiffCommandExecutor {
 
-
-	Process execute(String command) {
-		http://logging.apache.org/log4j/2.x/manual/configuration.html
-		ProcessBuilder pb
-		Process p
-		command.execute()
+	Process execute(String command, Writer outWriter=null, Writer errWriter=null) {
+		Process process = command.execute()
+		Appendable output = IoBuilder.forLogger().setLevel(Level.INFO).filter((Writer) outWriter).buildPrintWriter()
+		Appendable error = IoBuilder.forLogger().setLevel(Level.ERROR).filter((Writer) errWriter).buildPrintWriter()
+		process.consumeProcessOutput(output, error)
+		return process
 	}
 }
