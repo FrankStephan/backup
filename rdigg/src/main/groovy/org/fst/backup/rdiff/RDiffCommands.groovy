@@ -1,5 +1,7 @@
 package org.fst.backup.rdiff
 
+import org.fst.backup.model.CommandLineCallback
+
 
 class RDiffCommands {
 
@@ -10,16 +12,16 @@ class RDiffCommands {
 		executor.execute(command)
 	}
 
-	Process backup(File sourceDir, File targetDir) {
+	Process backup(File sourceDir, File targetDir, CommandLineCallback outputCallback=null, CommandLineCallback errorCallback=null) {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.HIGHEST_VERBOSITY)
 		command = command + ' ' + sourceDir.absolutePath + ' ' + targetDir.absolutePath
-		executor.execute(command)
+		executor.execute(command, outputCallback, errorCallback)
 	}
 
-	Process verify(File targetDir, def when) {
+	Process verify(File targetDir, def when, CommandLineCallback outputCallback=null, CommandLineCallback errorCallback=null) {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.HIGHEST_VERBOSITY, RDiffCommandElement.VERIFY)
 		command = command + ' ' + when + ' ' + targetDir.absolutePath
-		executor.execute(command)
+		executor.execute(command, outputCallback, errorCallback)
 	}
 
 	Process listIncrements(File targetDir) {

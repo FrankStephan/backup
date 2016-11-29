@@ -8,8 +8,10 @@ import javax.swing.text.Document
 import javax.swing.text.SimpleAttributeSet
 import javax.swing.text.StyleConstants
 
+import org.fst.backup.model.CommandLineCallback
+
 @TupleConstructor
-class DocumentWriter implements Appendable {
+class DocumentWriter implements CommandLineCallback {
 
 	private Document document
 	private Color textColor
@@ -21,19 +23,8 @@ class DocumentWriter implements Appendable {
 	}
 
 	@Override
-	public Appendable append(CharSequence csq) throws IOException {
-		document.insertString(document.getLength(), csq.toString(), color())
-		return this
+	public void callback(String commandLineData) {
+		document.insertString(document.getLength(), commandLineData, color())
 	}
 
-	@Override
-	public Appendable append(CharSequence csq, int start, int end)
-	throws IOException {
-		return append(csq.subSequence(start, end))
-	}
-
-	@Override
-	public Appendable append(char c) throws IOException {
-		return append(c.toString())
-	}
 }

@@ -3,16 +3,20 @@ package org.fst.backup.test.unit.service
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 
+import org.fst.backup.model.CommandLineCallback
 import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.CreateIncrementService
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
 import org.fst.backup.test.AbstractTest
+import org.fst.backup.test.TestCallback
 
 class CreateIncrementServiceTest extends AbstractTest {
 
 	CreateIncrementService service = new CreateIncrementService()
 	MockFor rdiffCommands
+	CommandLineCallback expectedOutputCallback
+	CommandLineCallback expectedErrorCallback
 
 	void setUp() {
 		super.setUp()
@@ -23,7 +27,7 @@ class CreateIncrementServiceTest extends AbstractTest {
 		sourceDir = new File(tmpPath + 'NE1/')
 		targetDir = new File(tmpPath + 'NE2/')
 		shouldFail(DirectoryNotExistsException) {
-			service.createIncrement(sourceDir, targetDir, {})
+			service.createIncrement(sourceDir, targetDir)
 		}
 	}
 
@@ -32,42 +36,29 @@ class CreateIncrementServiceTest extends AbstractTest {
 		File file2 = new File (tmpPath, 'File2.txt') << 'Content'
 
 		shouldFail(FileIsNotADirectoryException) {
-			service.createIncrement(file1, file2, {})
+			service.createIncrement(file1, file2)
 		}
 		shouldFail(FileIsNotADirectoryException) {
-			service.createIncrement(sourceDir, file2, {})
+			service.createIncrement(sourceDir, file2)
 		}
 		shouldFail(FileIsNotADirectoryException) {
-			service.createIncrement(file1, targetDir, {})
+			service.createIncrement(file1, targetDir)
 		}
 	}
 
 	void testBackupCommandIsExecutedWithCorrectDirs() {
 		rdiffCommands.use {
 			def CreateIncrementService service = new CreateIncrementService()
-			service.createIncrement(sourceDir, targetDir, {})
+			service.createIncrement(sourceDir, targetDir)
 		}
 	}
-
-	void testCallbackGetsInvokedPerLineFromCmd1() {
-		rdiffCommands = mockRDiffCommands('Line1')
-		int numberOfInvocations = 0
-		Closure callback = { numberOfInvocations++ }
+	
+	void testCallbacksAreForwarded() {
+		expectedOutputCallback = new TestCallback()
+		expectedErrorCallback = new TestCallback()
 		rdiffCommands.use {
 			def CreateIncrementService service = new CreateIncrementService()
-			service.createIncrement(sourceDir, targetDir, callback)
-			assert numberOfInvocations == 1
-		}
-	}
-
-	void testCallbackGetsInvokedPerLineFromCmd2() {
-		rdiffCommands = mockRDiffCommands('Line1' + System.lineSeparator() + 'Line2')
-		int numberOfInvocations = 0
-		Closure callback = { numberOfInvocations++ }
-		rdiffCommands.use {
-			def CreateIncrementService service = new CreateIncrementService()
-			service.createIncrement(sourceDir, targetDir, callback)
-			assert numberOfInvocations == 2
+			service.createIncrement(sourceDir, targetDir, expectedOutputCallback, expectedErrorCallback)
 		}
 	}
 
@@ -75,10 +66,12 @@ class CreateIncrementServiceTest extends AbstractTest {
 		MockFor rdiffCommands = new MockFor(RDiffCommands.class)
 		MockFor process = new MockFor(Process.class)
 		ByteArrayInputStream is = new ByteArrayInputStream((cmdLineContent ?: '').getBytes())
-		process.demand.getInputStream(1) { return is }
-		rdiffCommands.demand.backup(1) {File f1, File f2 ->
+		
+		rdiffCommands.demand.backup(1) {File f1, File f2, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			assert sourceDir == f1
 			assert targetDir == f2
+			assert expectedOutputCallback == outputCallback
+			assert expectedErrorCallback == errorCallback
 			return process.proxyInstance()
 		}
 		return rdiffCommands

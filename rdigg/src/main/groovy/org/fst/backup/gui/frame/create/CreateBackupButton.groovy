@@ -21,9 +21,9 @@ class CreateBackupButton {
 					commonViewModel.consoleStatus = 'Status: Laufend'
 					clearConsole(commonViewModel)
 					swing.doOutside {
-						DocumentWriter cmdWriter = new DocumentWriter(document: commonViewModel.consoleDocument, textColor: Color.BLACK)
+						DocumentWriter outWriter = new DocumentWriter(document: commonViewModel.consoleDocument, textColor: Color.BLACK)
 						DocumentWriter errWriter = new DocumentWriter(document: commonViewModel.consoleDocument, textColor: Color.RED)
-						new CreateAndVerifyIncrementService().createAndVerify(commonViewModel.sourceDir, commonViewModel.targetDir, cmdWriter, errWriter)
+						new CreateAndVerifyIncrementService().createAndVerify(commonViewModel.sourceDir, commonViewModel.targetDir, outWriter, errWriter)
 						commonViewModel.consoleStatus = 'Status: Abgeschlossen'
 						commonViewModel.consoleStatusColor = Color.GREEN
 						onFinish.call()

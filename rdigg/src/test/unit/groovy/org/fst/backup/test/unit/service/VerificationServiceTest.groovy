@@ -4,6 +4,7 @@ import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 import groovy.mock.interceptor.StubFor
 
+import org.fst.backup.model.CommandLineCallback
 import org.fst.backup.model.Increment
 import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.VerificationService
@@ -22,16 +23,16 @@ class VerificationServiceTest extends AbstractTest {
 
 	MockFor rdiffCommands = new MockFor(RDiffCommands.class)
 	StubFor process = new StubFor(Process.class)
-	Appendable cmdOut = new MockFor(Appendable.class).proxyInstance()
-	Appendable cmdErr = new MockFor(Appendable.class).proxyInstance()
+	CommandLineCallback outputCallback = new MockFor(CommandLineCallback.class).proxyInstance()
+	CommandLineCallback errorCallback = new MockFor(CommandLineCallback.class).proxyInstance()
 
 	@Parameters
 	public static Collection params() {
-		def verifyIncrement = {String targetPath, def when, Appendable out, Appendable err ->
+		def verifyIncrement = {String targetPath, def when, CommandLineCallback out, CommandLineCallback err ->
 			new VerificationService().verifyIncrement(new Increment(targetPath: targetPath, secondsSinceTheEpoch: when), out, err)
 		}
 
-		def verifyMirror = {String targetPath, def when, Appendable out, Appendable err ->
+		def verifyMirror = {String targetPath, def when, CommandLineCallback out, CommandLineCallback err ->
 			new VerificationService().verifyMirror(targetPath, out, err)
 		}
 
@@ -74,9 +75,9 @@ class VerificationServiceTest extends AbstractTest {
 
 	@Test
 	void testServiceReturnsAfterStreamsWereFlushed() {
-		process.demand.waitForProcessOutput(1) { Appendable cmdOut, Appendable cmdErr ->
-			assert this.cmdOut == cmdOut
-			assert this.cmdErr == cmdErr
+		process.demand.waitForProcessOutput(1) { CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			assert this.outputCallback == outputCallback
+			assert this.errorCallback == errorCallback
 		}
 		process.demand.exitValue(1) { return 0 }
 		rdiffCommands.demand.verify(1) { File targetDir, def when ->
@@ -87,7 +88,7 @@ class VerificationServiceTest extends AbstractTest {
 
 	@Test
 	void testRDiffIsInvokedWithCorrectParams() {
-		process.demand.waitForProcessOutput(1) { Appendable cmdOut, Appendable cmdErr -> }
+		process.demand.waitForProcessOutput(1) { CommandLineCallback outputCallback, CommandLineCallback errorCallback -> }
 		process.demand.exitValue(1) { return 0 }
 		rdiffCommands.demand.verify(1) { File targetDir, def when ->
 			assert new File(targetPath) == targetDir
@@ -99,7 +100,7 @@ class VerificationServiceTest extends AbstractTest {
 
 	@Test
 	void testReturnFalseIfRDiffFails() {
-		process.demand.waitForProcessOutput(1) { Appendable cmdOut, Appendable cmdErr -> }
+		process.demand.waitForProcessOutput(1) { CommandLineCallback outputCallback, CommandLineCallback errorCallback -> }
 		process.demand.exitValue(1) { return 1 }
 		rdiffCommands.demand.verify(1) { File targetDir, def when ->
 			return process.proxyInstance()
@@ -109,7 +110,7 @@ class VerificationServiceTest extends AbstractTest {
 
 	@Test
 	void testReturnTrueIfRDiffSucceeds() {
-		process.demand.waitForProcessOutput(1) { Appendable cmdOut, Appendable cmdErr -> }
+		process.demand.waitForProcessOutput(1) { CommandLineCallback outputCallback, CommandLineCallback errorCallback -> }
 		process.demand.exitValue(1) { return 0 }
 		rdiffCommands.demand.verify(1) { File targetDir, def when ->
 			return process.proxyInstance()
@@ -120,7 +121,7 @@ class VerificationServiceTest extends AbstractTest {
 	private boolean invokeService() {
 		boolean retVal
 		rdiffCommands.use {
-			retVal = invokeService(targetPath, when, cmdOut, cmdErr)
+			retVal = invokeService(targetPath, when, outputCallback, errorCallback)
 		}
 		return retVal
 	}
@@ -129,7 +130,7 @@ class VerificationServiceTest extends AbstractTest {
 		boolean retVal
 		createIncrement()
 		rdiffCommands.use {
-			retVal = new VerificationService().verifyMirror(targetPath, cmdOut, cmdErr)
+			retVal = new VerificationService().verifyMirror(targetPath, outputCallback, errorCallback)
 		}
 		return retVal
 	}

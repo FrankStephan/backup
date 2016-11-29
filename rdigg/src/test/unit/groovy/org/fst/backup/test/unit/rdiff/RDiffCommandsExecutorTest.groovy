@@ -2,7 +2,9 @@ package org.fst.backup.test.unit.rdiff
 
 import static org.junit.Assert.*
 
+import org.fst.backup.model.CommandLineCallback
 import org.fst.backup.rdiff.RDiffCommandExecutor
+import org.fst.backup.test.TestCallback
 
 class RDiffCommandsExecutorTest extends GroovyTestCase {
 
@@ -16,8 +18,8 @@ class RDiffCommandsExecutorTest extends GroovyTestCase {
 		System.setErr(new PrintStream(capturedSyserr, true))
 	}
 
-	StringWriter outWriter = new StringWriter()
-	StringWriter errWriter = new StringWriter()
+	CommandLineCallback outputCallback = new TestCallback()
+	CommandLineCallback errorCallback = new TestCallback()
 	Process process
 
 	void setUp() {
@@ -42,7 +44,7 @@ class RDiffCommandsExecutorTest extends GroovyTestCase {
 		List<String> expectedLines = capturedSysout.toString().readLines().collect {String it ->
 			extractLogEntry(it)
 		}
-		List<String> actualLines = outWriter.toString().readLines()
+		List<String> actualLines = outputCallback.toString().readLines()
 
 		assert expectedLines == actualLines
 	}
@@ -53,7 +55,7 @@ class RDiffCommandsExecutorTest extends GroovyTestCase {
 		List<String> expectedLines = capturedSyserr.toString().readLines().collect {String it ->
 			extractLogEntry(it)
 		}
-		List<String> actualLines = errWriter.toString().readLines()
+		List<String> actualLines = errorCallback.toString().readLines()
 	}
 
 	void testProcessOutputIsLoggedOnInfoLevel() {
@@ -67,13 +69,13 @@ class RDiffCommandsExecutorTest extends GroovyTestCase {
 	}
 
 	void testAcceptsNullForOutWriter() {
-		outWriter = null
+		outputCallback = null
 		callDirCommandAndWaitForLogging()
 		assertProcessOutputIsWritten()
 	}
 
 	void testAcceptsNullForErrWriter() {
-		errWriter = null
+		errorCallback = null
 		callUnknownCommandAndWaitForLogging()
 		assertProcessErrorIsWritten()
 	}
@@ -84,7 +86,7 @@ class RDiffCommandsExecutorTest extends GroovyTestCase {
 	}
 
 	private void callCommandAndWaitForLogging(String command) {
-		process = new RDiffCommandExecutor().execute(command, outWriter, errWriter)
+		process = new RDiffCommandExecutor().execute(command, outputCallback, errorCallback)
 		process.waitFor()
 		waitToFinishLoggingToSystemOut()
 	}
@@ -102,14 +104,14 @@ class RDiffCommandsExecutorTest extends GroovyTestCase {
 	}
 
 	private assertProcessOutputIsWritten() {
-		assert errWriter.toString().isEmpty()
-		assert !outWriter.toString().isEmpty()
+		assert errorCallback.toString().isEmpty()
+		assert !outputCallback.toString().isEmpty()
 		assert 0 == process.exitValue()
 	}
 
 	private assertProcessErrorIsWritten() {
-		assert !errWriter.toString().isEmpty()
-		assert outWriter.toString().isEmpty()
+		assert !errorCallback.toString().isEmpty()
+		assert outputCallback.toString().isEmpty()
 		assert 0 != process.exitValue()
 	}
 

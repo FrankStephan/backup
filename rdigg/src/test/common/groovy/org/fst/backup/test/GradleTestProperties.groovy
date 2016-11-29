@@ -3,13 +3,15 @@ package org.fst.backup.test
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier
 
-
+// For integration tests to a (simulated) remote backup dir
+// See RDiffCheck
 class GradleTestProperties {
 
 	private String remoteTestFolder
 
 
 	public GradleTestProperties() {
+		
 	}
 
 	public void read() {

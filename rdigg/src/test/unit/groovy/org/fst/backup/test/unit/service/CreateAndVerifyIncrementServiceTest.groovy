@@ -5,6 +5,7 @@ import groovy.mock.interceptor.MockFor
 
 import java.nio.file.Paths
 
+import org.fst.backup.model.CommandLineCallback
 import org.fst.backup.service.CreateAndVerifyIncrementService
 import org.fst.backup.service.CreateIncrementService
 import org.fst.backup.service.VerificationService
@@ -12,57 +13,38 @@ import org.fst.backup.test.AbstractTest
 
 class CreateAndVerifyIncrementServiceTest extends AbstractTest {
 
-	Appendable cmdOut = new MockFor(Appendable.class).proxyInstance()
-	Appendable cmdErr = new MockFor(Appendable.class).proxyInstance()
+	CommandLineCallback outputCallback = new MockFor(CommandLineCallback.class).proxyInstance()
+	CommandLineCallback errorCallback = new MockFor(CommandLineCallback.class).proxyInstance()
 
 	void testServicesAreInvoked() {
 		prepareAndExecuteTest()
 	}
 
 	void testServicesAreInvokedWithCorrectParams() {
-		prepareAndExecuteTest( {File sourceDir, File targetDir, Closure commandLineCallback ->
+		prepareAndExecuteTest( {File sourceDir, File targetDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			assert this.sourceDir == sourceDir
 			assert this.targetDir == targetDir
-		}, { String targetPath, Appendable cmdOut, Appendable cmdErr ->
+			assert this.outputCallback == outputCallback
+			assert this.errorCallback == errorCallback
+		}, { String targetPath, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			assert Paths.get(this.targetPath) == Paths.get(targetPath)
-			assert this.cmdOut == cmdOut
-			assert this.cmdErr == cmdErr
+			assert this.outputCallback == outputCallback
+			assert this.errorCallback == errorCallback
 		})
 	}
-
-	void testCmdLineCallbackIsAddedToAppenable() {
-		MockFor outMock = new MockFor(Appendable.class)
-		outMock.demand.append(2) { CharSequence cs -> }
-		cmdOut = outMock.proxyInstance()
-
-		prepareAndExecuteTest({ File sourceDir, File targetDir, Closure commandLineCallback ->
-			commandLineCallback('out')
-		})
-	}
-
-	void testLineSeparatorsAreAddedAfterEachCommandLineCallback() {
-		cmdOut = new StringBuffer()
-
-		List<String> cmdLines = ['Line1', 'Line2', 'Line3']
-
-		prepareAndExecuteTest({ File sourceDir, File targetDir, Closure commandLineCallback ->
-			cmdLines.each { commandLineCallback(it) }
-		})
-		assert (cmdLines.collect { String it -> it + System.lineSeparator }).join('') == cmdOut.toString()
-	}
-
+	
 	private void prepareAndExecuteTest(Closure assertCreate = null, Closure assertVerify = null) {
 		MockFor createIncrementService = new MockFor(CreateIncrementService.class)
-		createIncrementService.demand.createIncrement(1) { File sourceDir, File targetDir, Closure commandLineCallback ->
-			assertCreate?.call(sourceDir, targetDir, commandLineCallback)
+		createIncrementService.demand.createIncrement(1) { File sourceDir, File targetDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			assertCreate?.call(sourceDir, targetDir, outputCallback, errorCallback)
 		}
 		MockFor verificationService = new MockFor(VerificationService.class)
-		verificationService.demand.verifyMirror(1) { String targetPath, Appendable cmdOut, Appendable cmdErr ->
-			assertVerify?.call(targetPath, cmdOut, cmdErr)
+		verificationService.demand.verifyMirror(1) { String targetPath, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			assertVerify?.call(targetPath, outputCallback, errorCallback)
 		}
 		verificationService.use {
 			createIncrementService.use {
-				new CreateAndVerifyIncrementService().createAndVerify(sourceDir, targetDir, cmdOut, cmdErr)
+				new CreateAndVerifyIncrementService().createAndVerify(sourceDir, targetDir, outputCallback, errorCallback)
 			}
 		}
 	}

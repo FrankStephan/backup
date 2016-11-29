@@ -16,6 +16,7 @@ import org.fst.backup.gui.IncrementListEntry
 import org.fst.backup.gui.Tab
 import org.fst.backup.gui.frame.create.CreateBackupButton
 import org.fst.backup.gui.frame.create.DocumentWriter
+import org.fst.backup.model.CommandLineCallback
 import org.fst.backup.model.Increment
 import org.fst.backup.service.CreateAndVerifyIncrementService
 import org.fst.backup.test.AbstractTest
@@ -30,8 +31,8 @@ class CreateBackupButtonTest extends AbstractTest {
 	boolean isOnFinishClosureInvoked = false
 	Closure onFinish = { isOnFinishClosureInvoked = true }
 
-	String[] commandLines
-	String[] errLines
+	String[] cmdOutput
+	String[] cmdError
 
 	void setUp() {
 		super.setUp()
@@ -52,13 +53,13 @@ class CreateBackupButtonTest extends AbstractTest {
 	}
 
 	private void verifyServiceInvocation(Closure assertParams) {
-		createIncrementService.demand.createAndVerify(1) { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
-			assertParams?.call(sourceDir, targetDir, cmdOut, cmdErr)
-			commandLines?.each { String it ->
-				cmdOut.append(it).append(System.lineSeparator())
+		createIncrementService.demand.createAndVerify(1) { File sourceDir, File targetDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			assertParams?.call(sourceDir, targetDir, outputCallback, errorCallback)
+			cmdOutput?.each { String it ->
+				outputCallback.callback(it)
 			}
-			errLines?.each {String it ->
-				cmdErr.append(it).append(System.lineSeparator())
+			cmdError?.each {String it ->
+				errorCallback.callback(it)
 			}
 		}
 	}
@@ -68,9 +69,9 @@ class CreateBackupButtonTest extends AbstractTest {
 	}
 
 	private void assertConsoleContainsCmdLinesAndErrLines() {
-		def expectedCmd = commandLines?.join(System.lineSeparator())
-		def expectedErr = errLines?.join(System.lineSeparator())
-		def expected = expectedCmd + System.lineSeparator() + expectedErr
+		def expectedOut = cmdOutput?.join()
+		def expectedErr = cmdError?.join()
+		def expected = expectedOut + expectedErr
 		def actual = commonViewModel.consoleDocument.getText(0, commonViewModel.consoleDocument.getLength())
 		assert expected.trim() == actual.trim()
 	}
@@ -81,7 +82,7 @@ class CreateBackupButtonTest extends AbstractTest {
 	}
 
 	void testServiceReceivesCorrectSourceAndTargetDir() {
-		verifyServiceInvocation { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
+		verifyServiceInvocation { File sourceDir, File targetDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			assert commonViewModel.sourceDir == sourceDir
 			assert commonViewModel.targetDir == targetDir
 		}
@@ -89,14 +90,14 @@ class CreateBackupButtonTest extends AbstractTest {
 	}
 
 	void testConsoleTabIsOpened() {
-		verifyServiceInvocation { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
+		verifyServiceInvocation { File sourceDir, File targetDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			assert Tab.CONSOLE.ordinal() == commonViewModel.tabsModel.selectedIndex
 		}
 		clickButton()
 	}
 
 	void testConsoleStatusIsRedAtTheBeginning() {
-		verifyServiceInvocation { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
+		verifyServiceInvocation { File sourceDir, File targetDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
 		}
@@ -113,7 +114,7 @@ class CreateBackupButtonTest extends AbstractTest {
 	void testConsoleStatusIsRedAgainAtTheBeginning() {
 		verifyServiceInvocation()
 		clickButton()
-		verifyServiceInvocation { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
+		verifyServiceInvocation { File sourceDir, File targetDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
 		}
@@ -121,36 +122,36 @@ class CreateBackupButtonTest extends AbstractTest {
 	}
 
 	void testStreamToConsole() {
-		verifyServiceInvocation() { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
-			assert commonViewModel.consoleDocument == ((DocumentWriter) cmdOut).document
-			assert commonViewModel.consoleDocument == ((DocumentWriter) cmdErr).document
+		verifyServiceInvocation() { File sourceDir, File targetDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			assert commonViewModel.consoleDocument == ((DocumentWriter) outputCallback).document
+			assert commonViewModel.consoleDocument == ((DocumentWriter) errorCallback).document
 		}
 		clickButton()
 	}
 
 	void testCmdLinesAreBlack() {
-		verifyServiceInvocation() { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
-			assert Color.BLACK == ((DocumentWriter) cmdOut).textColor
+		verifyServiceInvocation() { File sourceDir, File targetDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			assert Color.BLACK == ((DocumentWriter) outputCallback).textColor
 		}
 		clickButton()
 	}
 
 	void testErrLinesAreRed() {
-		verifyServiceInvocation() { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
-			assert Color.RED == ((DocumentWriter) cmdErr).textColor
+		verifyServiceInvocation() { File sourceDir, File targetDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			assert Color.RED == ((DocumentWriter) errorCallback).textColor
 		}
 		clickButton()
 	}
 
 	void testConsoleGetsClearedBeforeEachBackup() {
-		commandLines = ['I have been', 'invoked the', 'first time']
-		errLines = ['Err1', 'Err2', 'Err3']
+		cmdOutput = ['I have been', 'invoked the', 'first time'].collect { String it -> it + System.lineSeparator() }
+		cmdError = ['Err1', 'Err2', 'Err3'].collect { String it -> it + System.lineSeparator() }
 		verifyServiceInvocation()
 		clickButton()
 		assertConsoleContainsCmdLinesAndErrLines()
 
-		commandLines = ['I have been', 'invoked the', 'second time']
-		errLines = []
+		cmdOutput = ['I have been', 'invoked the', 'second time'].collect { String it -> it + System.lineSeparator() }
+		cmdError = []
 		verifyServiceInvocation()
 		clickButton()
 		assertConsoleContainsCmdLinesAndErrLines()
@@ -163,11 +164,11 @@ class CreateBackupButtonTest extends AbstractTest {
 	}
 
 	void testCmdLinesAreWrittenToConsoleAsync() {
-		commandLines = ['Line1', 'Line2', 'Line3']
+		cmdOutput = ['Line1', 'Line2', 'Line3'].collect { String it -> it + System.lineSeparator() }
 
 		boolean isCreateBackupServiceInvoked = false
 		boolean isInvokedOutsideUIThread = false
-		verifyServiceInvocation { File sourceDir, File targetDir, Appendable cmdOut, Appendable cmdErr ->
+		verifyServiceInvocation { File sourceDir, File targetDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			isCreateBackupServiceInvoked = true
 		}
 
@@ -184,8 +185,8 @@ class CreateBackupButtonTest extends AbstractTest {
 			assert false == isCreateBackupServiceInvoked
 
 			it()
-
-			assert commandLines == commonViewModel.consoleDocument.getText(0, commonViewModel.consoleDocument.getLength()).readLines()
+			
+			assert cmdOutput.join() == commonViewModel.consoleDocument.getText(0, commonViewModel.consoleDocument.getLength())
 			assert Color.GREEN == commonViewModel.consoleStatusColor
 			assert 'Status: Abgeschlossen' == commonViewModel.consoleStatus
 			assert true == isOnFinishClosureInvoked

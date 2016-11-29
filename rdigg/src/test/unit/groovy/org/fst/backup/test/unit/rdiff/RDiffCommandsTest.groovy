@@ -3,15 +3,19 @@ package org.fst.backup.test.unit.rdiff
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 
+import org.fst.backup.model.CommandLineCallback
 import org.fst.backup.rdiff.RDiffCommandBuilder
 import org.fst.backup.rdiff.RDiffCommandElement
 import org.fst.backup.rdiff.RDiffCommandExecutor
 import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.test.AbstractTest
+import org.fst.backup.test.TestCallback
 
 class RDiffCommandsTest extends AbstractTest  {
 
 	private String expectedCommand
+	private CommandLineCallback expectedOutputCallback
+	private CommandLineCallback expectedErrorCallback
 	private Process process
 	private def commandBuilder
 	private def executor
@@ -21,8 +25,10 @@ class RDiffCommandsTest extends AbstractTest  {
 		executor = new MockFor(RDiffCommandExecutor.class)
 		commandBuilder = new MockFor(RDiffCommandBuilder.class)
 		process = new MockFor(Process.class).proxyInstance()
-		executor.demand.execute(1) { String command ->
+		executor.demand.execute(1) { String command, CommandLineCallback outputCallback=null, CommandLineCallback errorCallback=null ->
 			assert expectedCommand == command
+			assert expectedOutputCallback == outputCallback
+			assert expectedErrorCallback == errorCallback
 			return process
 		}
 	}
@@ -44,11 +50,14 @@ class RDiffCommandsTest extends AbstractTest  {
 				RDiffCommandElement.RDIFF_COMMAND,
 				RDiffCommandElement.HIGHEST_VERBOSITY
 				)
+		
+		expectedOutputCallback = new TestCallback()
+		expectedErrorCallback = new TestCallback()
 		callMethodUnderTestAndVerifyProcess( {
-			new RDiffCommands().backup(sourceDir, targetDir)
+			new RDiffCommands().backup(sourceDir, targetDir, expectedOutputCallback, expectedErrorCallback)
 		} )
 	}
-
+	
 	void testVerify() {
 		expectedCommand = 'cmd /c rdiff-backup --verify-at-time now ' + targetDir.absolutePath
 		defineExpectedCommandBuilderInvocation('cmd /c rdiff-backup --verify-at-time',
@@ -56,8 +65,11 @@ class RDiffCommandsTest extends AbstractTest  {
 				RDiffCommandElement.HIGHEST_VERBOSITY,
 				RDiffCommandElement.VERIFY
 				)
+		
+		expectedOutputCallback = new TestCallback()
+		expectedErrorCallback = new TestCallback()
 		callMethodUnderTestAndVerifyProcess( {
-			new RDiffCommands().verify(targetDir, 'now')
+			new RDiffCommands().verify(targetDir, 'now', expectedOutputCallback, expectedErrorCallback)
 		} )
 	}
 
