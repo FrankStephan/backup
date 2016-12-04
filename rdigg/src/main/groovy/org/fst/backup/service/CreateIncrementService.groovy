@@ -12,7 +12,7 @@ class CreateIncrementService {
 	void createIncrement (File sourceDir, File targetDir, CommandLineCallback outputCallback=null, CommandLineCallback errorCallback=null) throws FileIsNotADirectoryException, DirectoryNotExistsException {
 		if (sourceDir.exists() && targetDir.exists()) {
 			if (sourceDir.isDirectory() && targetDir.isDirectory()) {
-				Process process = commands.backup(sourceDir, targetDir, outputCallback, errorCallback)
+				commands.backup(sourceDir, targetDir, outputCallback, errorCallback)
 			} else {
 				throw new FileIsNotADirectoryException()
 			}

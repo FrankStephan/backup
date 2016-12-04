@@ -7,6 +7,7 @@ import org.fst.backup.service.CreateAndVerifyIncrementService
 import org.fst.backup.service.IncrementFileStructureService
 import org.fst.backup.service.ListIncrementsService
 import org.fst.backup.service.RestoreIncrementService
+import org.fst.backup.test.TestCallback
 
 enum IntegrationTestStep {
 
@@ -40,9 +41,9 @@ enum IntegrationTestStep {
 	CREATE_INCREMENT {
 		@Override
 		void execute(def params, Closure setResult) {
-			StringBuffer sb = new StringBuffer()
-			new CreateAndVerifyIncrementService().createAndVerify(sourceDir, targetDir, sb, sb)
-			setResult?.call(sb.toString().trim())
+			TestCallback callback = new TestCallback()
+			new CreateAndVerifyIncrementService().createAndVerify(sourceDir, targetDir, callback, callback)
+			setResult?.call(callback.toString().trim())
 		}
 	},
 

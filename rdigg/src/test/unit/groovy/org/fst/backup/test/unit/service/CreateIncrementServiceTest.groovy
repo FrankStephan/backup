@@ -52,7 +52,7 @@ class CreateIncrementServiceTest extends AbstractTest {
 			service.createIncrement(sourceDir, targetDir)
 		}
 	}
-	
+
 	void testCallbacksAreForwarded() {
 		expectedOutputCallback = new TestCallback()
 		expectedErrorCallback = new TestCallback()
@@ -62,18 +62,16 @@ class CreateIncrementServiceTest extends AbstractTest {
 		}
 	}
 
-	private MockFor mockRDiffCommands(String cmdLineContent) {
+	private MockFor mockRDiffCommands() {
 		MockFor rdiffCommands = new MockFor(RDiffCommands.class)
-		MockFor process = new MockFor(Process.class)
-		ByteArrayInputStream is = new ByteArrayInputStream((cmdLineContent ?: '').getBytes())
-		
 		rdiffCommands.demand.backup(1) {File f1, File f2, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			assert sourceDir == f1
 			assert targetDir == f2
 			assert expectedOutputCallback == outputCallback
 			assert expectedErrorCallback == errorCallback
-			return process.proxyInstance()
+			return null
 		}
+
 		return rdiffCommands
 	}
 }

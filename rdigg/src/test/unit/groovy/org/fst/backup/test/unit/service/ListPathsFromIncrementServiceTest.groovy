@@ -3,7 +3,9 @@ package org.fst.backup.test.unit.service
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 
+import org.fst.backup.model.CommandLineCallback
 import org.fst.backup.model.Increment
+import org.fst.backup.model.ProcessStatus
 import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.ListPathsFromIncrementService
 import org.fst.backup.service.exception.DirectoryNotExistsException
@@ -31,32 +33,30 @@ class ListPathsFromIncrementServiceTest extends AbstractTest {
 
 	void testTargetIsNoBackupDir() {
 		createIncrement()
-		ListPathsFromIncrementService service = new ListPathsFromIncrementService()
-		shouldFail (NotABackupDirectoryException) {service.listPathsFromIncrement(increment)}
+		def rdiffCommands = new MockFor(RDiffCommands.class)
+		rdiffCommands.demand.listFiles(1) { File targetDir, def when, CommandLineCallback outputCallback ->
+			return ProcessStatus.FAILURE
+		}
+		rdiffCommands.use {
+			ListPathsFromIncrementService service = new ListPathsFromIncrementService()
+			shouldFail (NotABackupDirectoryException) {service.listPathsFromIncrement(increment)}
+		}
 	}
 
 	void testListFiles() {
 		createIncrement()
 		def rdiffCommands = new MockFor(RDiffCommands.class)
-		MockFor process = new MockFor(Process.class)
-		process.demand.getText(1) { return '.' + System.lineSeparator() + 'a0/a1/a2.suf' }
-		process.demand.exitValue(1) { return 0 }
-
-		rdiffCommands.demand.listFiles(1) { File targetDir, def when ->
+		rdiffCommands.demand.listFiles(1) { File targetDir, def when, CommandLineCallback outputCallback ->
 			assert new File(increment.targetPath) == targetDir
+			outputCallback.callback('.' + System.lineSeparator())
+			outputCallback.callback('a0/a1/a2.suf')
 			assert increment.secondsSinceTheEpoch == when
-			return process.proxyInstance()
+			return ProcessStatus.SUCCESS
 		}
 
 		rdiffCommands.use {
 			ListPathsFromIncrementService service = new ListPathsFromIncrementService()
 			assert ['.', 'a0/a1/a2.suf']== service.listPathsFromIncrement(increment)
 		}
-	}
-
-	private long nowAsSecondsSinceTheEpoch() {
-		Calendar c = Calendar.getInstance()
-		c.set(Calendar.MILLISECOND, 0)
-		return c.timeInMillis / 1000
 	}
 }

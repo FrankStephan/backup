@@ -2,10 +2,10 @@ package org.fst.backup.test.unit.service
 
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
-import groovy.mock.interceptor.StubFor
 
 import org.fst.backup.model.CommandLineCallback
 import org.fst.backup.model.Increment
+import org.fst.backup.model.ProcessStatus
 import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.VerificationService
 import org.fst.backup.service.exception.DirectoryNotExistsException
@@ -22,28 +22,27 @@ import org.junit.runners.Parameterized.Parameters
 class VerificationServiceTest extends AbstractTest {
 
 	MockFor rdiffCommands = new MockFor(RDiffCommands.class)
-	StubFor process = new StubFor(Process.class)
 	CommandLineCallback outputCallback = new MockFor(CommandLineCallback.class).proxyInstance()
 	CommandLineCallback errorCallback = new MockFor(CommandLineCallback.class).proxyInstance()
 
 	@Parameters
 	public static Collection params() {
-		def verifyIncrement = {String targetPath, def when, CommandLineCallback out, CommandLineCallback err ->
-			new VerificationService().verifyIncrement(new Increment(targetPath: targetPath, secondsSinceTheEpoch: when), out, err)
+		def verifyIncrement = {String targetPath, def when, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			new VerificationService().verifyIncrement(new Increment(targetPath: targetPath, secondsSinceTheEpoch: when), outputCallback, errorCallback)
 		}
 
-		def verifyMirror = {String targetPath, def when, CommandLineCallback out, CommandLineCallback err ->
-			new VerificationService().verifyMirror(targetPath, out, err)
+		def verifyMirror = {String targetPath, def when, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			new VerificationService().verifyMirror(targetPath, outputCallback, errorCallback)
 		}
 
 		return Arrays.asList([verifyIncrement, 1467750198].toArray(), [verifyMirror, 'now'].toArray())
 	}
 
-	Closure invokeService
+	Closure<Boolean> invoke
 	def when
 
-	public VerificationServiceTest(Closure invokeService, def when) {
-		this.invokeService = invokeService
+	public VerificationServiceTest(Closure<Boolean> invokeService, def when) {
+		this.invoke = invokeService
 		this.when = when
 	}
 
@@ -74,46 +73,29 @@ class VerificationServiceTest extends AbstractTest {
 	}
 
 	@Test
-	void testServiceReturnsAfterStreamsWereFlushed() {
-		process.demand.waitForProcessOutput(1) { CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
-			assert this.outputCallback == outputCallback
-			assert this.errorCallback == errorCallback
-		}
-		process.demand.exitValue(1) { return 0 }
-		rdiffCommands.demand.verify(1) { File targetDir, def when ->
-			return process.proxyInstance()
-		}
-		invokeService()
-	}
-
-	@Test
-	void testRDiffIsInvokedWithCorrectParams() {
-		process.demand.waitForProcessOutput(1) { CommandLineCallback outputCallback, CommandLineCallback errorCallback -> }
-		process.demand.exitValue(1) { return 0 }
-		rdiffCommands.demand.verify(1) { File targetDir, def when ->
+	void testServiceIsInvokedWithCorrectParams() {
+		rdiffCommands.demand.verify(1) { File targetDir, def when, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			assert new File(targetPath) == targetDir
 			assert this.when == when
-			return process.proxyInstance()
+			assert this.outputCallback == outputCallback
+			assert this.errorCallback == errorCallback
+			return ProcessStatus.SUCCESS
 		}
 		invokeService()
 	}
 
 	@Test
 	void testReturnFalseIfRDiffFails() {
-		process.demand.waitForProcessOutput(1) { CommandLineCallback outputCallback, CommandLineCallback errorCallback -> }
-		process.demand.exitValue(1) { return 1 }
-		rdiffCommands.demand.verify(1) { File targetDir, def when ->
-			return process.proxyInstance()
+		rdiffCommands.demand.verify(1) { File targetDir, def when, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			return ProcessStatus.FAILURE
 		}
 		assert false == invokeService()
 	}
 
 	@Test
 	void testReturnTrueIfRDiffSucceeds() {
-		process.demand.waitForProcessOutput(1) { CommandLineCallback outputCallback, CommandLineCallback errorCallback -> }
-		process.demand.exitValue(1) { return 0 }
-		rdiffCommands.demand.verify(1) { File targetDir, def when ->
-			return process.proxyInstance()
+		rdiffCommands.demand.verify(1) { File targetDir, def when, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			return ProcessStatus.SUCCESS
 		}
 		assert true == invokeService()
 	}
@@ -121,16 +103,7 @@ class VerificationServiceTest extends AbstractTest {
 	private boolean invokeService() {
 		boolean retVal
 		rdiffCommands.use {
-			retVal = invokeService(targetPath, when, outputCallback, errorCallback)
-		}
-		return retVal
-	}
-
-	private boolean invokeMirror() {
-		boolean retVal
-		createIncrement()
-		rdiffCommands.use {
-			retVal = new VerificationService().verifyMirror(targetPath, outputCallback, errorCallback)
+			retVal = invoke(targetPath, when, outputCallback, errorCallback)
 		}
 		return retVal
 	}

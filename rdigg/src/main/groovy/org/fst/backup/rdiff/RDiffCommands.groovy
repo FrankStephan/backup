@@ -1,44 +1,45 @@
 package org.fst.backup.rdiff
 
 import org.fst.backup.model.CommandLineCallback
+import org.fst.backup.model.ProcessStatus
 
 
 class RDiffCommands {
 
 	RDiffCommandExecutor executor = new RDiffCommandExecutor()
 
-	Process version() {
+	ProcessStatus version() {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.VERSION_ARG)
 		executor.execute(command)
 	}
 
-	Process backup(File sourceDir, File targetDir, CommandLineCallback outputCallback=null, CommandLineCallback errorCallback=null) {
+	ProcessStatus backup(File sourceDir, File targetDir, CommandLineCallback outputCallback=null, CommandLineCallback errorCallback=null) {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.HIGHEST_VERBOSITY)
 		command = command + ' ' + sourceDir.absolutePath + ' ' + targetDir.absolutePath
 		executor.execute(command, outputCallback, errorCallback)
 	}
 
-	Process verify(File targetDir, def when, CommandLineCallback outputCallback=null, CommandLineCallback errorCallback=null) {
+	ProcessStatus verify(File targetDir, def when, CommandLineCallback outputCallback=null, CommandLineCallback errorCallback=null) {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.HIGHEST_VERBOSITY, RDiffCommandElement.VERIFY)
 		command = command + ' ' + when + ' ' + targetDir.absolutePath
 		executor.execute(command, outputCallback, errorCallback)
 	}
 
-	Process listIncrements(File targetDir) {
+	ProcessStatus listIncrements(File targetDir, CommandLineCallback outputCallback=null) {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.LIST_INCREMENTS_ARG, RDiffCommandElement.PARSABLE_OUTPUT_ARG)
 		command = command + ' ' + targetDir.absolutePath
-		executor.execute(command)
+		executor.execute(command, outputCallback)
 	}
 
-	Process listFiles(File targetDir, def when) {
+	ProcessStatus listFiles(File targetDir, def when, CommandLineCallback outputCallback=null) {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.LIST_AT_TIME_ARG)
 		command = command + ' ' + when + ' ' + targetDir.absolutePath
-		executor.execute(command)
+		executor.execute(command, outputCallback)
 	}
 
-	Process restore(File targetDir, File restoreDir, def when) {
+	ProcessStatus restore(File targetDir, File restoreDir, def when, CommandLineCallback outputCallback=null, CommandLineCallback errorCallback=null) {
 		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.HIGHEST_VERBOSITY, RDiffCommandElement.RESTORE)
 		command = command + ' ' + when + ' ' + targetDir.absolutePath + ' ' +  restoreDir.absolutePath
-		executor.execute(command)
+		executor.execute(command, outputCallback, errorCallback)
 	}
 }

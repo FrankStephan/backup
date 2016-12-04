@@ -1,4 +1,4 @@
-package org.fst.backup.test.unit.gui.create
+package org.fst.backup.test.unit.gui.frame.create
 
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
@@ -6,33 +6,32 @@ import groovy.swing.SwingBuilder
 
 import org.fst.backup.gui.BorderedFileChooser
 import org.fst.backup.gui.CommonViewModel
-import org.fst.backup.gui.frame.create.TargetFileChooser
+import org.fst.backup.gui.frame.create.SourceFileChooser
 import org.fst.backup.test.AbstractTest
 
-class TargetFileChooserTest extends AbstractTest {
+class SourceFileChooserTest extends AbstractTest {
 
-	void testTargetDirChangesOnFileSelection() {
+	void testSourceDirChangesOnFileSelection() {
 		def commonViewModel = new CommonViewModel()
 		def borderedFileChooser = new MockFor(BorderedFileChooser.class)
 		borderedFileChooser.demand.createComponent(1) { String text, SwingBuilder swing, File currentDirectory, Closure setDir ->
-			setDir(targetDir)
-			assert targetDir == commonViewModel.targetDir
+			setDir(sourceDir)
+			assert sourceDir == commonViewModel.sourceDir
 		}
-
 		borderedFileChooser.use {
-			def fc = new TargetFileChooser().createComponent(commonViewModel, new SwingBuilder())
+			def fc = new SourceFileChooser().createComponent(commonViewModel, new SwingBuilder())
 		}
 	}
 
-	void testTargetDirIsSetAsCurrentDirInitially() {
+	void testSourceDirIsSetAsCurrentDirInitially() {
 		def commonViewModel = new CommonViewModel()
-		commonViewModel.targetDir = targetDir
+		commonViewModel.sourceDir = sourceDir
 		def borderedFileChooser = new MockFor(BorderedFileChooser.class)
 		borderedFileChooser.demand.createComponent(1) { String text, SwingBuilder swing, File currentDirectory, Closure setDir ->
-			assert targetDir == currentDirectory
+			assert sourceDir == currentDirectory
 		}
 		borderedFileChooser.use {
-			def fc = new TargetFileChooser().createComponent(commonViewModel, new SwingBuilder())
+			def fc = new SourceFileChooser().createComponent(commonViewModel, new SwingBuilder())
 		}
 	}
 }

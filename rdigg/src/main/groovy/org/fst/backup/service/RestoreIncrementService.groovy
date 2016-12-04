@@ -1,5 +1,6 @@
 package org.fst.backup.service
 
+import org.fst.backup.model.CommandLineCallback
 import org.fst.backup.model.Increment
 import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.exception.DirectoryNotExistsException
@@ -9,12 +10,11 @@ class RestoreIncrementService {
 
 	RDiffCommands rdiffCommands = new RDiffCommands()
 
-	void restore(Increment increment, File restoreDir, Closure commandLineCallback) throws DirectoryNotExistsException, FileIsNotADirectoryException {
+	void restore(Increment increment, File restoreDir, CommandLineCallback outputCallback=null, CommandLineCallback errorCallback=null) throws DirectoryNotExistsException, FileIsNotADirectoryException {
 		File targetDir = new File(increment.targetPath)
 		if (targetDir.exists() && restoreDir.exists()) {
 			if (targetDir.isDirectory() && restoreDir.isDirectory()) {
-				Process process = rdiffCommands.restore(targetDir, restoreDir, increment.secondsSinceTheEpoch)
-				process.getInputStream().eachLine { commandLineCallback(it) }
+				rdiffCommands.restore(targetDir, restoreDir, increment.secondsSinceTheEpoch, outputCallback, errorCallback)
 			} else {
 				throw new FileIsNotADirectoryException()
 			}

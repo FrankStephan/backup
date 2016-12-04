@@ -26,5 +26,4 @@ class DocumentWriter implements CommandLineCallback {
 	public void callback(String commandLineData) {
 		document.insertString(document.getLength(), commandLineData, color())
 	}
-
 }

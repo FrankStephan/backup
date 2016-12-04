@@ -1,4 +1,4 @@
-package org.fst.backup.test.unit.gui.create
+package org.fst.backup.test.unit.gui.frame.create
 
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
@@ -10,13 +10,12 @@ import javax.swing.text.Document
 import javax.swing.text.StyleConstants
 
 import org.fst.backup.gui.frame.create.DocumentWriter
-import org.fst.backup.test.AbstractTest
 
-class DocumentWriterTest extends AbstractTest {
+class DocumentWriterTest extends GroovyTestCase {
 
 	DocumentWriter documentWriter
 
-	public void testCallbackIsWrittenToDocument() {
+	void testCallbackIsWrittenToDocument() {
 		String text = 'text'
 		int length = 24648
 		MockFor document = new MockFor(Document.class)
@@ -29,5 +28,9 @@ class DocumentWriterTest extends AbstractTest {
 
 		documentWriter = new DocumentWriter(document: document.proxyInstance(), textColor: Color.BLUE)
 		documentWriter.callback(text)
+	}
+
+	void testCallbackIsBuffered() {
+		fail()
 	}
 }

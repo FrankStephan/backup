@@ -2,6 +2,7 @@ package org.fst.backup.service
 
 import org.fst.backup.model.CommandLineCallback
 import org.fst.backup.model.Increment
+import org.fst.backup.model.ProcessStatus
 import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.service.exception.DirectoryNotExistsException
 import org.fst.backup.service.exception.FileIsNotADirectoryException
@@ -22,9 +23,8 @@ class VerificationService {
 		File targetDir = new File(targetPath)
 		if (targetDir.exists()) {
 			if (targetDir.isDirectory()) {
-				Process process = rdiffCommands.verify(targetDir, when)
-				process.waitForProcessOutput(outputCallback, errorCallback)
-				if (process.exitValue() == 0) {
+				ProcessStatus processStatus = rdiffCommands.verify(targetDir, when, outputCallback, errorCallback)
+				if (ProcessStatus.SUCCESS == processStatus) {
 					return true
 				} else {
 					return false
