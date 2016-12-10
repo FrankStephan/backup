@@ -74,9 +74,10 @@ enum IntegrationTestStep {
 	RESTORE_INCREMENT {
 		@Override
 		void execute(def params, Closure setResult) {
+			TestCallback callback = new TestCallback()
 			RestoreIncrementService restoreIncrementService = new RestoreIncrementService()
 			Increment increment = params[0]
-			restoreIncrementService.restore(increment, restoreDir, {})
+			restoreIncrementService.restore(increment, restoreDir, callback, callback)
 			setResult()
 		}
 	}

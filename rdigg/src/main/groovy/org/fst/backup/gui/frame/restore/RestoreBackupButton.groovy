@@ -6,9 +6,10 @@ import java.awt.Color
 
 import javax.swing.JButton
 
-import org.fst.backup.service.RestoreIncrementService
 import org.fst.backup.gui.CommonViewModel
 import org.fst.backup.gui.Tab
+import org.fst.backup.gui.frame.create.DocumentWriter
+import org.fst.backup.service.RestoreIncrementService
 
 
 class RestoreBackupButton {
@@ -23,9 +24,9 @@ class RestoreBackupButton {
 
 				def restoreIncrementService = new RestoreIncrementService()
 				swing.doOutside {
-					restoreIncrementService.restore(commonViewModel.selectedIncrement.increment, commonViewModel.restoreDir, {
-						commonViewModel.consoleDocument.insertString(commonViewModel.consoleDocument.length, it + System.lineSeparator(), null)
-					})
+					DocumentWriter outputWriter = new DocumentWriter(document: commonViewModel.consoleDocument, textColor: Color.BLACK)
+					DocumentWriter errorWriter = new DocumentWriter(document: commonViewModel.consoleDocument, textColor: Color.RED)
+					restoreIncrementService.restore(commonViewModel.selectedIncrement.increment, commonViewModel.restoreDir, outputWriter, errorWriter)
 					commonViewModel.consoleStatus = 'Status: Abgeschlossen'
 					commonViewModel.consoleStatusColor = Color.GREEN
 					onFinish.call()

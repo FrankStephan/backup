@@ -11,13 +11,15 @@ import javax.swing.DefaultSingleSelectionModel
 import javax.swing.JButton
 import javax.swing.text.PlainDocument
 
-import org.fst.backup.model.Increment
-import org.fst.backup.service.RestoreIncrementService
-import org.fst.backup.test.AbstractTest
 import org.fst.backup.gui.CommonViewModel
 import org.fst.backup.gui.IncrementListEntry
 import org.fst.backup.gui.Tab
+import org.fst.backup.gui.frame.create.DocumentWriter
 import org.fst.backup.gui.frame.restore.RestoreBackupButton
+import org.fst.backup.model.CommandLineCallback
+import org.fst.backup.model.Increment
+import org.fst.backup.service.RestoreIncrementService
+import org.fst.backup.test.AbstractTest
 
 class RestoreBackupButtonTest extends AbstractTest {
 
@@ -29,11 +31,14 @@ class RestoreBackupButtonTest extends AbstractTest {
 	boolean isOnFinishClosureInvoked = false
 	Closure onFinish = { isOnFinishClosureInvoked = true }
 
-	String[] commandLines
+	String[] cmdOutput
+	String[] cmdError
 
 	void setUp() {
 		super.setUp()
 		commonViewModel = new CommonViewModel()
+		commonViewModel.targetDir = targetDir
+		commonViewModel.restoreDir = restoreDir
 		commonViewModel.tabsModel = new DefaultSingleSelectionModel()
 		commonViewModel.consoleDocument = new PlainDocument()
 		createIncrement()
@@ -42,15 +47,20 @@ class RestoreBackupButtonTest extends AbstractTest {
 		swingStub.demand.button(1) { Map it ->
 			return new SwingBuilder().button(it)
 		}
-		swingStub.demand.doOutside (1..2) {Closure it -> it()}
+		swingStub.demand.doOutside (1..2) { Closure it -> it() }
 		swing = swingStub.proxyInstance()
 		button = new RestoreBackupButton().createComponent(commonViewModel, swing, onFinish)
 	}
 
-	private void verifyRestoreIncrementServiceInvocation(Closure assertParams) {
-		restoreIncrementService.demand.restore(1) {Increment increment, File restoreDir, Closure commandLineCallback ->
-			assertParams?.call(increment, restoreDir, commandLineCallback)
-			commandLines?.each { it -> commandLineCallback(it) }
+	private void verifyServiceInvocation(Closure assertParams) {
+		restoreIncrementService.demand.restore(1) { Increment increment, File restoreDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			assertParams?.call(increment, restoreDir, outputCallback, errorCallback)
+			cmdOutput?.each { String it ->
+				outputCallback.callback(it)
+			}
+			cmdError?.each {String it ->
+				errorCallback.callback(it)
+			}
 		}
 	}
 
@@ -58,25 +68,21 @@ class RestoreBackupButtonTest extends AbstractTest {
 		restoreIncrementService.use { button.doClick() }
 	}
 
-	private void assertConsoleEqualsCommandLines() {
-		def expected = commandLines.join(System.lineSeparator()).trim()
-		def actual = commonViewModel.consoleDocument.getText(0, commonViewModel.consoleDocument.getLength()).trim()
-		assert expected == actual
+	private void assertConsoleContainsCmdLinesAndErrLines() {
+		def expectedOut = cmdOutput?.join()
+		def expectedErr = cmdError?.join()
+		def expected = expectedOut + expectedErr
+		def actual = commonViewModel.consoleDocument.getText(0, commonViewModel.consoleDocument.getLength())
+		assert expected.trim() == actual.trim()
 	}
 
-	void testNothingHappensIfNoIncrementIsSelected() {
-		commonViewModel.selectedIncrement = null
-		restoreIncrementService.demand.restore(0) {Increment increment, File restoreDir, Closure commandLineCallback ->}
+	void testButtonCallsService() {
+		verifyServiceInvocation()
 		clickButton()
 	}
 
-	void testButtonCallsRestoreIncrementService() {
-		verifyRestoreIncrementServiceInvocation()
-		clickButton()
-	}
-
-	void testRestoreIncrementServiceReceivesCorrectParams() {
-		verifyRestoreIncrementServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
+	void testServiceReceivesCorrectIncrementAndRestoreDir() {
+		verifyServiceInvocation { Increment increment, File restoreDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			assert commonViewModel.selectedIncrement.increment == increment
 			assert commonViewModel.restoreDir == restoreDir
 		}
@@ -84,14 +90,14 @@ class RestoreBackupButtonTest extends AbstractTest {
 	}
 
 	void testConsoleTabIsOpened() {
-		verifyRestoreIncrementServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
+		verifyServiceInvocation { Increment increment, File restoreDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			assert Tab.CONSOLE.ordinal() == commonViewModel.tabsModel.selectedIndex
 		}
 		clickButton()
 	}
 
 	void testConsoleStatusIsRedAtTheBeginning() {
-		verifyRestoreIncrementServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
+		verifyServiceInvocation { Increment increment, File restoreDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
 		}
@@ -99,52 +105,70 @@ class RestoreBackupButtonTest extends AbstractTest {
 	}
 
 	void testConsoleStatusChangesFromRedToGreenOnFinish() {
-		verifyRestoreIncrementServiceInvocation()
+		verifyServiceInvocation()
 		clickButton()
 		assert Color.GREEN == commonViewModel.consoleStatusColor
 		assert 'Status: Abgeschlossen' == commonViewModel.consoleStatus
 	}
 
 	void testConsoleStatusIsRedAgainAtTheBeginning() {
-		verifyRestoreIncrementServiceInvocation()
+		verifyServiceInvocation()
 		clickButton()
-		verifyRestoreIncrementServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
+		verifyServiceInvocation { Increment increment, File restoreDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			assert 'Status: Laufend' == commonViewModel.consoleStatus
 			assert Color.RED == commonViewModel.consoleStatusColor
 		}
 		clickButton()
 	}
 
-	void testComandLinesGetWrittenToConsoleDocument() {
-		commandLines = ['Line1', 'Line2', 'Line3']
-		verifyRestoreIncrementServiceInvocation()
+	void testStreamToConsole() {
+		verifyServiceInvocation() { Increment increment, File restoreDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			assert commonViewModel.consoleDocument == ((DocumentWriter) outputCallback).document
+			assert commonViewModel.consoleDocument == ((DocumentWriter) errorCallback).document
+		}
 		clickButton()
-		assertConsoleEqualsCommandLines()
 	}
 
-	void testConsoleGetsClearedBeforeEachBackup() {
-		commandLines = ['I have been', 'invoked the', 'first time']
-		verifyRestoreIncrementServiceInvocation()
+	void testCmdLinesAreBlack() {
+		verifyServiceInvocation() { Increment increment, File restoreDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			assert Color.BLACK == ((DocumentWriter) outputCallback).textColor
+		}
 		clickButton()
+	}
 
-		commandLines = ['I have been', 'invoked the', 'second time']
-		verifyRestoreIncrementServiceInvocation()
+	void testErrLinesAreRed() {
+		verifyServiceInvocation() { Increment increment, File restoreDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
+			assert Color.RED == ((DocumentWriter) errorCallback).textColor
+		}
 		clickButton()
-		assertConsoleEqualsCommandLines()
+	}
+
+	void testConsoleGetsClearedBeforeEachRestore() {
+		cmdOutput = ['I have been', 'invoked the', 'first time'].collect { String it -> it + System.lineSeparator() }
+		cmdError = ['Err1', 'Err2', 'Err3'].collect { String it -> it + System.lineSeparator() }
+		verifyServiceInvocation()
+		clickButton()
+		assertConsoleContainsCmdLinesAndErrLines()
+
+		cmdOutput = ['I have been', 'invoked the', 'second time'].collect { String it -> it + System.lineSeparator() }
+		cmdError = []
+		verifyServiceInvocation()
+		clickButton()
+		assertConsoleContainsCmdLinesAndErrLines()
 	}
 
 	void testOnFinishClosureIsInvoked() {
-		verifyRestoreIncrementServiceInvocation()
+		verifyServiceInvocation()
 		clickButton()
 		assert true == isOnFinishClosureInvoked
 	}
 
 	void testCmdLinesAreWrittenToConsoleAsync() {
-		commandLines = ['Line1', 'Line2', 'Line3']
+		cmdOutput = ['Line1', 'Line2', 'Line3'].collect { String it -> it + System.lineSeparator() }
 
 		boolean isRestoreIncrementServiceInvoked = false
 		boolean isInvokedOutsideUIThread = false
-		verifyRestoreIncrementServiceInvocation { Increment increment, File restoreDir, Closure commandLineCallback ->
+		verifyServiceInvocation { Increment increment, File restoreDir, CommandLineCallback outputCallback, CommandLineCallback errorCallback ->
 			isRestoreIncrementServiceInvoked = true
 		}
 
@@ -152,7 +176,7 @@ class RestoreBackupButtonTest extends AbstractTest {
 		swingStub.demand.button(1) { Map it ->
 			return new SwingBuilder().button(it)
 		}
-		swingStub.demand.doOutside(1) {Closure it ->
+		swingStub.demand.doOutside(1) { Closure it ->
 			isInvokedOutsideUIThread = true
 
 			assert 0 == commonViewModel.consoleDocument.length
@@ -162,7 +186,7 @@ class RestoreBackupButtonTest extends AbstractTest {
 
 			it()
 
-			assert commandLines == commonViewModel.consoleDocument.getText(0, commonViewModel.consoleDocument.getLength()).readLines()
+			assert cmdOutput.join() == commonViewModel.consoleDocument.getText(0, commonViewModel.consoleDocument.getLength())
 			assert Color.GREEN == commonViewModel.consoleStatusColor
 			assert 'Status: Abgeschlossen' == commonViewModel.consoleStatus
 			assert true == isOnFinishClosureInvoked
