@@ -6,11 +6,11 @@ import javax.swing.DefaultListModel
 import javax.swing.DefaultListSelectionModel
 import javax.swing.DefaultSingleSelectionModel
 import javax.swing.JFrame
-import javax.swing.text.PlainDocument
 
 import org.fst.backup.gui.CommonViewModel
 import org.fst.backup.gui.Tab
 import org.fst.backup.gui.frame.Frame
+import org.fst.backup.gui.frame.console.LimitedLengthDocument
 import org.fst.backup.model.Configuration
 import org.fst.backup.service.ReadCliService
 
@@ -26,7 +26,7 @@ class Application {
 
 	private CommonViewModel createDefaultCommonViewModel() {
 		CommonViewModel commonViewModel = new CommonViewModel()
-		commonViewModel.consoleDocument = new PlainDocument()
+		commonViewModel.consoleDocument = new LimitedLengthDocument(maxLength: 10000)
 		commonViewModel.consoleStatus = 'Status'
 		commonViewModel.incrementsListModel = new DefaultListModel<String>()
 		commonViewModel.incrementsListSelectionModel = new DefaultListSelectionModel()

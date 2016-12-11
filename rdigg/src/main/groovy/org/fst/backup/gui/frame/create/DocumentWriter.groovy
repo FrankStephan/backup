@@ -24,6 +24,8 @@ class DocumentWriter implements CommandLineCallback {
 
 	@Override
 	public void callback(String commandLineData) {
-		document.insertString(document.getLength(), commandLineData, color())
+		synchronized (document) {
+			document.insertString(document.getLength(), commandLineData, color())
+		}
 	}
 }

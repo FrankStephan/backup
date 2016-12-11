@@ -246,6 +246,10 @@ class RDiffCheck extends GroovyTestCase {
 		restore(secondsSinceTheEpochOlder)
 		assert [FILE1_NAME]== new File(RESTORE_DIR).list()
 	}
+	
+	void callbackIsReturnedLineByLine() {
+		fail()
+	}
 
 	void tearDown() {
 		new File(TMP_DIR).deleteDir()

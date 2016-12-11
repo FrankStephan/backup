@@ -59,10 +59,6 @@ class InspectIncrementFileChooserTest extends AbstractTest {
 		changeSelectedIncrement(increment)
 	}
 
-	void testServiceIsInvokedAsync() {
-		fail()
-	}
-
 	void testFileStructureIsCalculatedOnlyOnceIfSelectedIncrementDidNotChange() {
 		verifyIncrementFileStructureServiceInvocation( { Increment _increment, File root ->
 			changeSelectedIncrement(increment)

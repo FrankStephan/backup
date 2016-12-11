@@ -5,12 +5,12 @@ import groovy.mock.interceptor.MockFor
 import groovy.swing.SwingBuilder
 
 import javax.swing.JFrame
-import javax.swing.text.PlainDocument
 
 import org.fst.backup.Application
 import org.fst.backup.gui.CommonViewModel
 import org.fst.backup.gui.Tab
 import org.fst.backup.gui.frame.Frame
+import org.fst.backup.gui.frame.console.LimitedLengthDocument
 import org.fst.backup.model.Configuration
 import org.fst.backup.service.ReadCliService
 import org.fst.backup.test.AbstractTest
@@ -44,7 +44,7 @@ class ApplicationTest extends AbstractTest {
 
 	void testCommonViewModelIsCreatedProperly() {
 		prepareAndExecute(null, {CommonViewModel commonViewModel ->
-			assert (null != commonViewModel.consoleDocument && commonViewModel.consoleDocument instanceof PlainDocument)
+			assert (null != commonViewModel.consoleDocument && commonViewModel.consoleDocument instanceof LimitedLengthDocument)
 			assert 'Status' == commonViewModel.consoleStatus
 			assert null == commonViewModel.consoleStatusColor
 			assert null != commonViewModel.incrementsListModel
