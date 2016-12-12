@@ -7,7 +7,10 @@ import java.awt.Color
 import javax.swing.text.PlainDocument
 
 import org.fst.backup.gui.frame.create.DocumentWriter
+import org.fst.backup.model.ProcessStatus
 import org.fst.backup.rdiff.RDiffCommands
+import org.fst.backup.test.GradleTestProperties
+import org.fst.backup.test.TestCallback;
 
 class RDiffCheck extends GroovyTestCase {
 
@@ -23,21 +26,27 @@ class RDiffCheck extends GroovyTestCase {
 	File file1
 	File file2
 
-	String cmdLineOutput
+	TestCallback outputCallback
+	TestCallback errorCallback
+	
+	String output
 	String error
-	int exitValue
+	ProcessStatus processStatus
 
 	RDiffCommands rdiffCommands = new RDiffCommands()
 
 	void testRDiffIsAvailableAndHasCorrectVersion() {
-		def process = rdiffCommands.version()
-		assertEquals('rdiff-backup 1.2.8', process.text.trim())
+		resetCommandLineCallbacks()
+		processStatus = rdiffCommands.version(outputCallback, errorCallback)
+		generateProcessResult()
+		assert ProcessStatus.SUCCESS == processStatus
+		assertEquals('rdiff-backup 1.2.8', output.trim())
 	}
 
 	void testBackupCommandIsExecuted() {
 		createTwoIncrements()
-		assert cmdLineOutput.contains('Using rdiff-backup version 1.2.8')
-		assert 0 == exitValue
+		assert output.contains('Using rdiff-backup version 1.2.8')
+		assert ProcessStatus.SUCCESS == processStatus
 	}
 
 	void testBackupWithLostConnectionToRemoteDir() {
@@ -59,13 +68,17 @@ class RDiffCheck extends GroovyTestCase {
 		System.err.println(new File(TARGET_DIR).deleteDir())
 		process.waitFor()
 	}
+	
+	void testCallbackIsReturnedLineByLine() {
+		fail() // Could be better to test it inside the real application since the streams are pipelined via log4j2
+	}
 
 	void testVerifyConsistentBackupDir() {
 		createTwoIncrements()
 		def secondsSinceTheEpochPerIncrement = listSecondsSinceTheEpochPerIncrement()
 		verify(secondsSinceTheEpochPerIncrement[0])
-		assert cmdLineOutput.contains('Every file verified successfully.')
-		assert 0 == exitValue
+		assert output.contains('Every file verified successfully.')
+		assert ProcessStatus.SUCCESS == processStatus
 	}
 
 	void testVerifyFailsIfAFileIsMissing1() {
@@ -75,7 +88,7 @@ class RDiffCheck extends GroovyTestCase {
 		deleteFile1()
 		verify(secondsSinceTheEpochPerIncrement[0])
 		assert error.contains('Could not restore file File1.txt')
-		assert 1 == exitValue
+		assert ProcessStatus.FAILURE == processStatus
 	}
 
 	void testVerifyFailsIfAFileIsMissing2() {
@@ -85,7 +98,7 @@ class RDiffCheck extends GroovyTestCase {
 		deleteFile1()
 		verify('now')
 		assert error.contains('Could not restore file File1.txt')
-		assert 1 == exitValue
+		assert ProcessStatus.FAILURE == processStatus
 	}
 
 	void testVerifyFailsIfAFileIsMissing3() {
@@ -95,7 +108,7 @@ class RDiffCheck extends GroovyTestCase {
 		deleteFile2()
 		verify('now')
 		assert error.contains('Could not restore file File2.txt')
-		assert 1 == exitValue
+		assert ProcessStatus.FAILURE == processStatus
 	}
 
 	void testVerifyIsSuccessfulIfMissingFileIsPartOfANewerIncrement() {
@@ -104,8 +117,8 @@ class RDiffCheck extends GroovyTestCase {
 
 		deleteFile2()
 		verify(secondsSinceTheEpochPerIncrement[0])
-		assert cmdLineOutput.contains('Every file verified successfully.')
-		assert 0 == exitValue
+		assert output.contains('Every file verified successfully.')
+		assert ProcessStatus.SUCCESS == processStatus
 	}
 
 	void testVerifySucceedsButWritesErrorIfMissingFileWasEmpty() {
@@ -116,9 +129,9 @@ class RDiffCheck extends GroovyTestCase {
 
 		deleteFile1()
 		verify('now')
-		assert cmdLineOutput.contains('Every file verified successfully.')
+		assert output.contains('Every file verified successfully.')
 		assert error.contains('Could not restore file File1.txt')
-		assert 0 == exitValue
+		assert ProcessStatus.SUCCESS == processStatus
 	}
 
 	void testVerifyFailsWithOneEmptyAndOneNonEmptyFileMissing() {
@@ -131,7 +144,7 @@ class RDiffCheck extends GroovyTestCase {
 		deleteFile2()
 		verify('now')
 		assert error.contains('Could not restore file File1.txt')
-		assert 1 == exitValue
+		assert ProcessStatus.FAILURE == processStatus
 	}
 
 	private void deleteFile1() {
@@ -145,7 +158,7 @@ class RDiffCheck extends GroovyTestCase {
 	void testListIncrementsNoBackupDir() {
 		new File(TARGET_DIR).mkdirs()
 		listIncrements()
-		assert 1 == exitValue
+		assert ProcessStatus.FAILURE == processStatus
 	}
 
 	void testListIncrementsAfterBackups() {
@@ -176,10 +189,10 @@ class RDiffCheck extends GroovyTestCase {
 
 	void testListFilesFromNonBackupDirectory() {
 		listFiles('now')
-		assert cmdLineOutput.isEmpty()
-		assert 1 == exitValue
+		assert output.isEmpty()
+		assert ProcessStatus.FAILURE == processStatus
 		assert error.startsWith('Fatal Error:')
-		assert error.endsWith('It doesn\'t appear to be an rdiff-backup destination dir')
+		assert error.trim().endsWith('It doesn\'t appear to be an rdiff-backup destination dir')
 	}
 
 	void testListFilesFromEmptyBackup() {
@@ -222,13 +235,13 @@ class RDiffCheck extends GroovyTestCase {
 	void testRestoreWithNonEmptyRestoreDir() {
 		createTwoIncrements()
 		restore('now', new File(SOURCE_DIR))
-		assert 1 == exitValue
+		assert ProcessStatus.FAILURE == processStatus
 	}
 
 	void testRestoreFromNonBackupDir() {
 		createTwoIncrements()
 		restore('now', new File(SOURCE_DIR), new File(TMP_DIR))
-		assert 1 == exitValue
+		assert ProcessStatus.FAILURE == processStatus
 	}
 
 	void testRestoreFromBackupDirectoryMirror() {
@@ -247,10 +260,6 @@ class RDiffCheck extends GroovyTestCase {
 		assert [FILE1_NAME]== new File(RESTORE_DIR).list()
 	}
 	
-	void callbackIsReturnedLineByLine() {
-		fail()
-	}
-
 	void tearDown() {
 		new File(TMP_DIR).deleteDir()
 	}
@@ -274,47 +283,52 @@ class RDiffCheck extends GroovyTestCase {
 	}
 
 	private void backup() {
-		Process process = rdiffCommands.backup(new File(SOURCE_DIR), new File(TARGET_DIR))
-		generateProcessResult(process)
+		resetCommandLineCallbacks()
+		processStatus = rdiffCommands.backup(new File(SOURCE_DIR), new File(TARGET_DIR), outputCallback, errorCallback)
+		generateProcessResult()
 	}
 
 	private void verify(def when) {
-		Process process = rdiffCommands.verify(new File(TARGET_DIR), when)
-		generateProcessResult(process)
+		resetCommandLineCallbacks()
+		processStatus = rdiffCommands.verify(new File(TARGET_DIR), when, outputCallback, errorCallback)
+		generateProcessResult()
 	}
 
 	private List<String> listIncrements() {
-		def process = rdiffCommands.listIncrements(new File(TARGET_DIR))
-		generateProcessResult(process)
-		return cmdLineOutput.readLines()
+		resetCommandLineCallbacks()
+		processStatus = rdiffCommands.listIncrements(new File(TARGET_DIR), outputCallback, errorCallback)
+		generateProcessResult()
+		return output.readLines()
 	}
 
 	private List<String> listFiles(def when) {
-		def process = rdiffCommands.listFiles(new File(TARGET_DIR), when)
-		generateProcessResult(process)
-		return cmdLineOutput.readLines()
+		resetCommandLineCallbacks()
+		processStatus = rdiffCommands.listFiles(new File(TARGET_DIR), when, outputCallback, errorCallback)
+		generateProcessResult()
+		return output.readLines()
 	}
 
 	private void restore(def when, File restoreDir = new File(RESTORE_DIR), File targetDir = new File(TARGET_DIR)) {
-		def process = rdiffCommands.restore(targetDir, restoreDir, when)
-		generateProcessResult(process)
+		resetCommandLineCallbacks()
+		processStatus = rdiffCommands.restore(targetDir, restoreDir, when, outputCallback, errorCallback)
+		generateProcessResult()
+	}
+	
+	private resetCommandLineCallbacks() {
+		outputCallback = new TestCallback()
+		errorCallback = new TestCallback()
+		output == 'N.E.'
+		error == 'N.E.'
 	}
 
-	private void generateProcessResult(Process process) {
-		PlainDocument outDoc = new PlainDocument()
-		PlainDocument errDoc = new PlainDocument()
-		DocumentWriter outWriter = new DocumentWriter(document: outDoc, textColor: Color.BLUE)
-		DocumentWriter errWriter = new DocumentWriter(document: errDoc, textColor: Color.RED)
-
-		process.waitForProcessOutput(outWriter, errWriter)
-		cmdLineOutput = outDoc.getText(0, outDoc.getLength()).trim()
-		error = errDoc.getText(0, errDoc.getLength()).trim()
-		exitValue = process.exitValue()
+	private void generateProcessResult() {
+		output = outputCallback.toString()
+		error = errorCallback.toString()
 		if (DEBUG) {
 			println '----------------------------------------------------------------'
-			println ('exitValue:' + System.lineSeparator() + exitValue)
+			println ('exitValue:' + System.lineSeparator() + processStatus)
 			println '----------------------------------------------------------------'
-			println ('cmdLineOutput:' + System.lineSeparator() + cmdLineOutput)
+			println ('cmdLineOutput:' + System.lineSeparator() + output)
 			println '----------------------------------------------------------------'
 			System.err.println ('error:' + System.lineSeparator() + error)
 			println '----------------------------------------------------------------'

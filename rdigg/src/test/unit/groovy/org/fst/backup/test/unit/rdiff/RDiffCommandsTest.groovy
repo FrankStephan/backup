@@ -39,8 +39,10 @@ class RDiffCommandsTest extends AbstractTest  {
 				RDiffCommandElement.RDIFF_COMMAND,
 				RDiffCommandElement.VERSION_ARG
 				)
+		expectedOutputCallback = new TestCallback()
+		expectedErrorCallback = new TestCallback()
 		callMethodUnderTestAndVerifyProcess( {
-			new RDiffCommands().version()
+			new RDiffCommands().version(expectedOutputCallback, expectedErrorCallback)
 		} )
 	}
 
@@ -81,8 +83,9 @@ class RDiffCommandsTest extends AbstractTest  {
 				RDiffCommandElement.PARSABLE_OUTPUT_ARG
 				)
 		expectedOutputCallback = new TestCallback()
+		expectedErrorCallback = new TestCallback()
 		callMethodUnderTestAndVerifyProcess( {
-			new RDiffCommands().listIncrements(targetDir, expectedOutputCallback)
+			new RDiffCommands().listIncrements(targetDir, expectedOutputCallback, expectedErrorCallback)
 		} )
 	}
 
@@ -93,8 +96,9 @@ class RDiffCommandsTest extends AbstractTest  {
 				RDiffCommandElement.LIST_AT_TIME_ARG,
 				)
 		expectedOutputCallback = new TestCallback()
+		expectedErrorCallback = new TestCallback()
 		callMethodUnderTestAndVerifyProcess( {
-			new RDiffCommands().listFiles(targetDir, '1467750198', expectedOutputCallback)
+			new RDiffCommands().listFiles(targetDir, '1467750198', expectedOutputCallback, expectedErrorCallback)
 		} )
 	}
 
@@ -118,9 +122,11 @@ class RDiffCommandsTest extends AbstractTest  {
 				RDiffCommandElement.RDIFF_COMMAND,
 				RDiffCommandElement.VERSION_ARG
 				)
+		expectedOutputCallback = new TestCallback()
+		expectedErrorCallback = new TestCallback()
 		expectedProcessStatus = ProcessStatus.SUCCESS
 		callMethodUnderTestAndVerifyProcess( {
-			new RDiffCommands().version()
+			new RDiffCommands().version(expectedOutputCallback, expectedErrorCallback)
 		} )
 	}
 
