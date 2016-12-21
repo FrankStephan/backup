@@ -2,118 +2,121 @@ package org.fst.backup.test.unit.rdiff
 
 import static org.junit.Assert.*
 
+import org.apache.logging.log4j.Level
+import org.apache.logging.log4j.core.Appender
+import org.apache.logging.log4j.core.Filter
+import org.apache.logging.log4j.core.LoggerContext
+import org.apache.logging.log4j.core.appender.WriterAppender
+import org.apache.logging.log4j.core.config.Configuration
+import org.apache.logging.log4j.core.config.LoggerConfig
+import org.apache.logging.log4j.core.layout.PatternLayout
 import org.fst.backup.model.CommandLineCallback
 import org.fst.backup.model.ProcessStatus
 import org.fst.backup.rdiff.RDiffCommandExecutor
-import org.fst.backup.test.AbstractTest
 import org.fst.backup.test.TestCallback
+import org.junit.Before
+import org.junit.Test
 
-class RDiffCommandsExecutorTest extends AbstractTest {
+class RDiffCommandsExecutorTest {
 
-	static PrintStream sysout
-	static PrintStream syserr
-	static ByteArrayOutputStream capturedSysout
-	static ByteArrayOutputStream capturedSyserr
+	private static final String CMD_C_DIR = 'cmd /c dir'
+	private static final String CMD_C_SILLY_COMMAND = 'cmd /c sillyCommand'
 
-	static {
-		rememberSystemStreams()
-		captureSystemStreams()
-	}
+	static StringWriter outputLogger = captureProcessOutput()
+	static StringWriter errorLogger = captureProcessError()
 
-	static void rememberSystemStreams() {
-		sysout = System.out
-		syserr = System.err
-	}
-
-	static void captureSystemStreams() {
-		capturedSysout = new ByteArrayOutputStream()
-		capturedSyserr = new ByteArrayOutputStream()
-		System.setOut(new PrintStream(capturedSysout))
-		System.setErr(new PrintStream(capturedSyserr))
-	}
-
-	CommandLineCallback outputCallback = new TestCallback()
-	CommandLineCallback errorCallback = new TestCallback()
+	CommandLineCallback outputCallback
+	CommandLineCallback errorCallback
 	ProcessStatus processStatus = null
 
+	@Before
 	void setUp() {
-		super.setUp()
-		capturedSysout.reset()
-		capturedSyserr.reset()
+		clearLogs()
+		outputCallback = new TestCallback()
+		errorCallback = new TestCallback()
 	}
 
-	void tearDown() {
-		super.tearDown()
-	}
-
+	@Test
 	void testMethodReturnsAfterProcessIsFinished() {
 		assert null == processStatus
 		callDirCommand()
 		assert null != processStatus
 	}
 
-	void testSuccessfulCommandOuputGetsWritten() {
+	@Test
+	void testSuccessfulCommandInvokesOutputCallback() {
 		callDirCommand()
-		assertOutputCallbackIsInvoked()
+		assert ProcessStatus.SUCCESS == processStatus
+		assert errorCallback.toString().isEmpty()
+		assert !outputCallback.toString().isEmpty()
 	}
 
-	void testFailingCommandErrGetsWritten() {
+	@Test
+	void testFailingCommandInvokesErrorCallback() {
 		callUnknownCommand()
-		assertErrorCallbackIsInvoked()
+		assert ProcessStatus.FAILURE == processStatus
+		assert !errorCallback.toString().isEmpty()
+		assert outputCallback.toString().isEmpty()
 	}
 
-	void testLogAndOutputCallbackAreEqual() {
+	@Test
+	void testSuccessfulCommandIsLoggedOnInfoLevel() {
 		callDirCommand()
-
-		List<String> logged = capturedSysout.toString().readLines().collect { String it ->
-			extractLogEntry(it)
-		}
-		List<String> callback = outputCallback.toString().readLines()
-
-		assert logged == callback
-	}
-
-	void testErrorsAreLoggedToSysout() {
-		callUnknownCommand()
-		assert capturedSysout.size() > 0
-		assert capturedSyserr.size() == 0
-	}
-
-	void testLogEqualsProcessError() {
-		callUnknownCommand()
-
-		List<String> logged = capturedSysout.toString().readLines().collect { String it ->
-			extractLogEntry(it)
-		}
-		List<String> callback = errorCallback.toString().readLines()
-
-		assert logged == callback
-	}
-
-	void testProcessOutputIsLoggedOnInfoLevel() {
-		callDirCommand()
-		assert capturedSysout.toString().readLines().every { String it ->
+		assert outputLogger.buffer.length() > 0
+		assert outputLogger.toString().readLines().every { String it ->
 			it.contains('INFO')
 		}
 	}
 
-	void testProcessErrorIsLoggedOnErrorLevel() {
+	@Test
+	void testFailingCommandIsLoggedOnErrorLevel() {
 		callUnknownCommand()
-		assert capturedSysout.toString().readLines().every { String it ->
+		assert errorLogger.buffer.length() > 0
+		assert errorLogger.toString().readLines().every { String it ->
 			it.contains('ERROR')
 		}
 	}
 
+	@Test
+	void testLogsStartAndEndOfProcess() {
+		callDirCommand()
+		List<String> logged = extractLogEntries(outputLogger)
+		assert ('>> Executing: ' + CMD_C_DIR) == logged[0].trim()
+		assert ('>> Finished with exitValue 0: ' + CMD_C_DIR) == logged[logged.size() - 1].trim()
+	}
+
+	@Test
+	void testInfoLogEqualsOutputCallback() {
+		callDirCommand()
+		List<String> logged = extractLogEntries(outputLogger)
+		List<String> callback = outputCallback.toString().readLines()
+		assert trimStartAndEndOfProcess(logged) == callback
+	}
+
+	private List<String> trimStartAndEndOfProcess(List<String> logged) {
+		return logged[1..(logged.size() - 2)]
+	}
+
+	@Test
+	void testErrorLogEqualsErrorCallback() {
+		callUnknownCommand()
+		List<String> logged = extractLogEntries(errorLogger)
+		List<String> callback = errorCallback.toString().readLines()
+		assert logged == callback
+	}
+
+	@Test
 	void testAcceptsNullForOutputCallback() {
 		outputCallback = null
 		callDirCommand()
-		assert capturedSysout.size() > 0
+		assert outputLogger.buffer.length() > 0
 	}
 
+	@Test
 	void testAcceptsNullForErrWriter() {
 		errorCallback = null
 		callUnknownCommand()
-		assert capturedSysout.size() > 0
+		assert errorLogger.buffer.length() > 0
 	}
 
 	private void callCommand(String command) {
@@ -121,30 +124,56 @@ class RDiffCommandsExecutorTest extends AbstractTest {
 	}
 
 	private void callDirCommand() {
-		callCommand('cmd /c dir' )
+		callCommand(CMD_C_DIR)
 	}
 
 	private void callUnknownCommand() {
-		callCommand('cmd /c sillyCommand')
+		callCommand(CMD_C_SILLY_COMMAND)
 	}
 
-	private assertOutputCallbackIsInvoked() {
-		assert errorCallback.toString().isEmpty()
-		assert !outputCallback.toString().isEmpty()
-		assert ProcessStatus.SUCCESS == processStatus
+	private static List<String> extractLogEntries(StringWriter logger) {
+		return logger.toString().readLines().collect { String it ->
+			extractLogEntry(it)
+		}
 	}
 
-	private assertErrorCallbackIsInvoked() {
-		assert !errorCallback.toString().isEmpty()
-		assert outputCallback.toString().isEmpty()
-		assert ProcessStatus.FAILURE == processStatus
-	}
-
-	private String extractLoggingInfo(String logEntry) {
-		return logEntry.substring(0, logEntry.indexOf(' - ') + 3)
-	}
-
-	private String extractLogEntry(String logEntry) {
+	private static String extractLogEntry(String logEntry) {
 		return logEntry.substring(logEntry.indexOf(' - ') + 3, logEntry.length())
+	}
+
+	private static StringWriter captureProcessOutput() {
+		StringWriter outputWriter = new StringWriter()
+		addAppender(outputWriter, 'outputWriter', Level.INFO)
+		return outputWriter
+	}
+
+	private static StringWriter captureProcessError() {
+		StringWriter errorWriter = new StringWriter()
+		addAppender(errorWriter, 'errorWriter', Level.ERROR)
+		return errorWriter
+	}
+
+	private static void addAppender(final Writer writer, final String writerName, Level level) {
+		final LoggerContext context = LoggerContext.getContext(false)
+		final Configuration config = context.getConfiguration()
+		final PatternLayout layout = config.getAppender('RDiffCommandExecutor').getLayout()
+		assert null != layout
+		final Appender appender = WriterAppender.createAppender(layout, null, writer, writerName, false, true)
+		appender.start()
+		config.addAppender(appender)
+		updateLoggers(appender, config, level)
+	}
+
+	private static void updateLoggers(final Appender appender, final Configuration config, Level level) {
+		final Filter filter = null
+		for (final LoggerConfig loggerConfig : config.getLoggers().values()) {
+			loggerConfig.addAppender(appender, level, filter)
+		}
+		config.getRootLogger().addAppender(appender, level, filter)
+	}
+
+	private void clearLogs() {
+		outputLogger.buffer.setLength(0)
+		errorLogger.buffer.setLength(0)
 	}
 }

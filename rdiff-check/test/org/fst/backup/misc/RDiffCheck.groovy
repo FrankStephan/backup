@@ -8,6 +8,7 @@ import javax.swing.text.PlainDocument
 
 import org.fst.backup.gui.frame.create.DocumentWriter
 import org.fst.backup.rdiff.RDiffCommands
+import org.fst.backup.test.GradleTestProperties
 
 class RDiffCheck extends GroovyTestCase {
 
@@ -246,7 +247,7 @@ class RDiffCheck extends GroovyTestCase {
 		restore(secondsSinceTheEpochOlder)
 		assert [FILE1_NAME]== new File(RESTORE_DIR).list()
 	}
-	
+
 	void callbackIsReturnedLineByLine() {
 		fail()
 	}

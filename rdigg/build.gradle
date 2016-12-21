@@ -29,6 +29,10 @@ repositories {
     mavenCentral()
 }
 
+test {
+	systemProperty 'log4j.configurationFile', 'src/test/common/groovy/log4j2-test.xml'
+}
+
 shadowJar {
    baseName = displayName
    classifier = null
