@@ -154,18 +154,18 @@ class RDiffCommandsExecutorTest {
 	}
 
 	private static void addAppender(final Writer writer, final String writerName, Level level) {
-		final LoggerContext context = LoggerContext.getContext(false)
-		final Configuration config = context.getConfiguration()
-		final PatternLayout layout = config.getAppender('RDiffCommandExecutor').getLayout()
+		LoggerContext context = LoggerContext.getContext(false)
+		Configuration config = context.getConfiguration()
+		PatternLayout layout = config.getAppender('RDiffCommandExecutor').getLayout()
 		assert null != layout
-		final Appender appender = WriterAppender.createAppender(layout, null, writer, writerName, false, true)
+		Appender appender = WriterAppender.createAppender(layout, null, writer, writerName, false, true)
 		appender.start()
 		config.addAppender(appender)
 		updateLoggers(appender, config, level)
 	}
 
 	private static void updateLoggers(final Appender appender, final Configuration config, Level level) {
-		final Filter filter = null
+		Filter filter = null
 		for (final LoggerConfig loggerConfig : config.getLoggers().values()) {
 			loggerConfig.addAppender(appender, level, filter)
 		}
