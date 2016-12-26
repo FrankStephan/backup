@@ -28,7 +28,6 @@ repositories {
 
 ext {
     displayName = 'rdigg'
-    defaultLogFileBaseDir = System.getProperty('user.home') + '\\.rdigg\\logs'
 }
 
 sourceSets {
@@ -62,7 +61,7 @@ jar {
 
 task createBatch() << {
 	String batchFileName = displayName + '.bat' 
-	String command = 'start javaw -jar ' + deliveryDir + displayName + '.jar' + ' -s \"\" -t \"\" -l \"' + defaultLogFileBaseDir + '\"' 
+	String command = 'start javaw -jar ' + deliveryDir + displayName + '.jar' + ' -s \"\" -t \"\"'
 	if (!libsDir.exists()) {
 		libsDir.mkdirs()
 	}

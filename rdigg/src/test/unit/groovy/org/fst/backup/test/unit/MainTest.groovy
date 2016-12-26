@@ -10,7 +10,7 @@ import org.fst.backup.test.AbstractTest
 class MainTest extends AbstractTest {
 
 	void testApplicationInstanceIsCreatedWithArgs() {
-		String[] args = ['-s', sourceDir, '-t', targetDir, '-l', 'logs/']
+		String[] args = ['-s', sourceDir, '-t', targetDir]
 		MockFor application = new MockFor(Application.class, true)
 		MockFor dummy =  new MockFor(Application.class)
 		application.demand.with {

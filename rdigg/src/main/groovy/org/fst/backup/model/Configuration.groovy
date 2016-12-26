@@ -5,5 +5,4 @@ class Configuration {
 
 	File defaultSourceDir
 	File defaultTargetDir
-	File logFileBaseDir
 }

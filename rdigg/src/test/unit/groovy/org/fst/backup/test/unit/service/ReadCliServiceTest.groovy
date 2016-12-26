@@ -8,17 +8,7 @@ import org.fst.backup.test.AbstractTest
 
 class ReadCliServiceTest extends AbstractTest {
 
-	String logFileBasePath
-	File logFileBaseDir
 	Configuration configuration
-
-	@Override
-	public void setUp() {
-		super.setUp()
-		logFileBasePath = tmpPath + 'logs'
-		logFileBaseDir = new File(logFileBasePath)
-		logFileBaseDir.mkdir()
-	}
 
 	void testSourceDirNotExists() {
 		sourcePath = aNotExistingPath()
@@ -46,24 +36,10 @@ class ReadCliServiceTest extends AbstractTest {
 		assert null == configuration.defaultTargetDir
 	}
 
-	void testLogFileBaseDirNotExists() {
-		logFileBasePath = aNotExistingPath()
-		prepareAndInvokeService()
-		assert null == configuration.logFileBaseDir
-	}
-
-	void testLogFileBaseDirIsNotADirectory() {
-		logFileBaseDir = createSomeFile()
-		logFileBasePath = logFileBaseDir.getPath()
-		prepareAndInvokeService()
-		assert null == configuration.logFileBaseDir
-	}
-
 	void testConfigurationTakesVariablesFromArgs() {
 		prepareAndInvokeService()
 		assert sourceDir == configuration.defaultSourceDir
 		assert targetDir == configuration.defaultTargetDir
-		assert logFileBaseDir == configuration.logFileBaseDir
 	}
 
 	void testCanHandleBackslashes() {
@@ -73,29 +49,23 @@ class ReadCliServiceTest extends AbstractTest {
 		targetDir = new File(tmpPath + 'tdir/subDir')
 		targetDir.mkdirs()
 		targetPath = tmpPath + 'tdir\\subdir\\'
-		logFileBaseDir = new File(tmpPath + 'ldir/logs')
-		logFileBaseDir.mkdirs()
-		logFileBasePath = tmpPath + 'ldir\\logs'
 
 		prepareAndInvokeService()
 		assert sourceDir == configuration.defaultSourceDir
 		assert targetDir == configuration.defaultTargetDir
-		assert logFileBaseDir == configuration.logFileBaseDir
 	}
 
 	void testHandleEmptyDirs() {
 		sourcePath = ''
 		targetPath = ''
-		logFileBasePath = ''
 
 		prepareAndInvokeService()
 		assert null == configuration.defaultSourceDir
 		assert null == configuration.defaultTargetDir
-		assert null == configuration.logFileBaseDir
 	}
 
 	private String[] buildArgs() {
-		return ['-s', sourcePath, '-t', targetPath, '-l', logFileBasePath]
+		return ['-s', sourcePath, '-t', targetPath]
 	}
 
 	private void prepareAndInvokeService() {

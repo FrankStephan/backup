@@ -47,7 +47,9 @@ class Application {
 	}
 
 	private void configureLogging(Configuration configuration) {
-		MainMapLookup.setMainArguments('logFileBaseDir', configuration.logFileBaseDir?.getPath())
+		File logFileBaseDir = new File(System.getProperty('user.home'), '/.rdigg/logs')
+		logFileBaseDir.mkdirs()
+		MainMapLookup.setMainArguments('logFileBaseDir', logFileBaseDir.getPath())
 	}
 
 	private JFrame createComponent(CommonViewModel commonViewModel) {

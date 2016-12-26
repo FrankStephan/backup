@@ -15,8 +15,17 @@ import org.fst.backup.gui.frame.console.LimitedLengthDocument
 import org.fst.backup.model.Configuration
 import org.fst.backup.service.ReadCliService
 import org.fst.backup.test.AbstractTest
+import org.junit.AfterClass
+import org.junit.Before
+import org.junit.BeforeClass
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
+@RunWith(JUnit4.class)
 class ApplicationTest extends AbstractTest {
+
+	static String realUserHome
 
 	String[] args
 	MockFor readCliService
@@ -26,28 +35,55 @@ class ApplicationTest extends AbstractTest {
 
 	Configuration configuration
 
-	void setUp() {
-		super.setUp()
-		logFileBaseDir = new File(tmpPath, 'logs')
-		args = ['-s', sourceDir, '-t', targetDir, '-l', logFileBaseDir]
-		jFrame = new JFrame()
-		configuration = new Configuration()
+	@BeforeClass
+	static void beforeClass() {
+		rememberUserHome()
+		System.setProperty('user.home', ApplicationTest.class.getSimpleName() + '-tmp/')
 	}
 
+	private static rememberUserHome() {
+		realUserHome = System.getProperty('user.home')
+	}
+
+	private static resetUserHome() {
+		System.setProperty('user.home', realUserHome)
+	}
+
+	@AfterClass
+	static void afterClass() {
+		String testUserHome = System.getProperty('user.home')
+		resetUserHome()
+		if (testUserHome != realUserHome) {
+			assert new File(testUserHome).deleteDir()
+		}
+	}
+
+	@Before
+	void setUp() {
+		super.setUp()
+		args = ['-s', sourceDir, '-t', targetDir]
+		jFrame = new JFrame()
+		configuration = new Configuration()
+		logFileBaseDir = new File(System.getProperty('user.home'), '/.rdigg/logs')
+	}
+
+	@Test
 	void testReadArgsFromCli() {
-		prepareAndExecute({String[] _args ->
+		prepareAndExecute({ String[] _args ->
 			assert args == _args
 		})
 	}
 
+	@Test
 	void testFrameIsCreatedWithCommonViewModel() {
-		prepareAndExecute(null, {CommonViewModel commonViewModel ->
+		prepareAndExecute(null, { CommonViewModel commonViewModel ->
 			assert null != commonViewModel
 		})
 	}
 
+	@Test
 	void testCommonViewModelIsCreatedProperly() {
-		prepareAndExecute(null, {CommonViewModel commonViewModel ->
+		prepareAndExecute(null, { CommonViewModel commonViewModel ->
 			assert (null != commonViewModel.consoleDocument && commonViewModel.consoleDocument instanceof LimitedLengthDocument)
 			assert 'Status' == commonViewModel.consoleStatus
 			assert null == commonViewModel.consoleStatusColor
@@ -59,41 +95,33 @@ class ApplicationTest extends AbstractTest {
 		})
 	}
 
+	@Test
 	void testDefaultSourceAndTargetDirAreSetFromCli() {
-		configuration = new Configuration(defaultSourceDir: sourceDir, defaultTargetDir: targetDir, logFileBaseDir: logFileBaseDir)
-		prepareAndExecute(null, {CommonViewModel commonViewModel ->
+		configuration = new Configuration(defaultSourceDir: sourceDir, defaultTargetDir: targetDir)
+		prepareAndExecute(null, { CommonViewModel commonViewModel ->
 			assert sourceDir == commonViewModel.sourceDir
 			assert targetDir == commonViewModel.targetDir
 		})
 	}
 
-	void testLogFileBaseDirIsSetFromConfiguration() {
-		configuration = new Configuration(defaultSourceDir: sourceDir, defaultTargetDir: targetDir, logFileBaseDir: logFileBaseDir)
+	@Test
+	void testSetAndCreateLogFileBaseDir() {
 		prepareAndExecute()
 		assert logFileBaseDir.getPath() == MainMapLookup.MAIN_SINGLETON.lookup('logFileBaseDir')
-	}
-
-	void testCreatesLogFileBaseDirIfSpecified() {
-		configuration = new Configuration(defaultSourceDir: sourceDir, defaultTargetDir: targetDir, logFileBaseDir: logFileBaseDir)
-		prepareAndExecute()
 		assert logFileBaseDir.exists()
 	}
 
-	void testNotCreatesLogFileBaseDirIfNotSpecified() {
-		configuration = new Configuration(defaultSourceDir: sourceDir, defaultTargetDir: targetDir)
-		prepareAndExecute()
-		assert !logFileBaseDir.exists()
-	}
-
+	@Test
 	void testCreateTabIsOpenedInitiallyAfterFrameIsVisible() {
 		CommonViewModel commonViewModel
-		prepareAndExecute(null, {CommonViewModel _commonViewModel ->
+		prepareAndExecute(null, { CommonViewModel _commonViewModel ->
 			assert -1 == _commonViewModel.tabsModel.selectedIndex
 			commonViewModel = _commonViewModel
 		})
 		assert Tab.CREATE.ordinal() == commonViewModel.tabsModel.selectedIndex
 	}
 
+	@Test
 	void testFrameIsOpened() {
 		assert false == jFrame.isVisible()
 		prepareAndExecute()
@@ -102,7 +130,7 @@ class ApplicationTest extends AbstractTest {
 
 	private void prepareAndExecute(Closure assertReadCli = null, Closure assertCommonViewModel = null) {
 		readCliService = new MockFor(ReadCliService.class)
-		readCliService.demand.read(1) {String[] _args ->
+		readCliService.demand.read(1) { String[] _args ->
 			assertReadCli?.call(args)
 			return configuration
 		}
