@@ -7,6 +7,7 @@ import javax.swing.DefaultListSelectionModel
 import javax.swing.DefaultSingleSelectionModel
 import javax.swing.JFrame
 
+import org.apache.logging.log4j.core.lookup.MainMapLookup
 import org.fst.backup.gui.CommonViewModel
 import org.fst.backup.gui.Tab
 import org.fst.backup.gui.frame.Frame
@@ -17,8 +18,10 @@ import org.fst.backup.service.ReadCliService
 class Application {
 
 	public Application(String[] args) {
+		Configuration configuration = readConfiguration(args)
+		configureLogging(configuration)
 		CommonViewModel commonViewModel = createDefaultCommonViewModel()
-		readDefaultSourceAndTargetDir(args, commonViewModel)
+		configureDefaultSourceAndTargetDir(configuration, commonViewModel)
 		JFrame frame = createComponent(commonViewModel)
 		showFrame(frame)
 		commonViewModel.tabsModel.selectedIndex = Tab.CREATE.ordinal()
@@ -34,10 +37,17 @@ class Application {
 		return commonViewModel
 	}
 
-	private void readDefaultSourceAndTargetDir(String[] args, CommonViewModel commonViewModel) {
+	private Configuration readConfiguration(String[] args) {
 		Configuration configuration = new ReadCliService().read(args)
+	}
+
+	private void configureDefaultSourceAndTargetDir(Configuration configuration, CommonViewModel commonViewModel) {
 		commonViewModel.sourceDir = configuration.defaultSourceDir
 		commonViewModel.targetDir = configuration.defaultTargetDir
+	}
+
+	private void configureLogging(Configuration configuration) {
+		MainMapLookup.setMainArguments('logFileBaseDir', configuration.logFileBaseDir?.getPath())
 	}
 
 	private JFrame createComponent(CommonViewModel commonViewModel) {

@@ -21,6 +21,7 @@ class LoggerTest {
 
 	@BeforeClass
 	static void beforeClass() {
+		LogManager.shutdown()
 		System.setProperty('log4j.configurationFile', 'src/main/resources/log4j2.xml')
 		MainMapLookup.setMainArguments(logFileBaseDirProperty, path + 'logs')
 	}
@@ -28,14 +29,7 @@ class LoggerTest {
 	@Test
 	void testCreatesLogFileInTheSpecifiedDir() {
 		LogManager.getLogger(this.getClass()).info('I\'m working')
-		Path logFileBaseDir = Paths.get(path + 'logs')
-		def logFiles = Files.list(logFileBaseDir)
-
-		Path expectedLog = logFileBaseDir.resolve('app.log')
-		boolean result = logFiles.toArray().contains(expectedLog)
-		logFiles.close()
-
-		assert result
+		assert baseDirContainsLogFile()
 	}
 
 	@AfterClass
@@ -43,6 +37,15 @@ class LoggerTest {
 		System.clearProperty('log4j.configurationFile')
 		LoggerContext context = LoggerContext.getContext(false)
 		context.stop(5000, TimeUnit.MILLISECONDS)
-		new File(path).deleteDir()
+		assert new File(path).deleteDir()
+	}
+
+	private boolean baseDirContainsLogFile() {
+		Path logFileBaseDir = Paths.get(path + 'logs')
+		def logFiles = Files.list(logFileBaseDir)
+		Path expectedLog = logFileBaseDir.resolve('app.log')
+		boolean result = logFiles.toArray().contains(expectedLog)
+		logFiles.close()
+		return result
 	}
 }

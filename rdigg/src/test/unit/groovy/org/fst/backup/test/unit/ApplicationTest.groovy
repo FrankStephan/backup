@@ -6,6 +6,7 @@ import groovy.swing.SwingBuilder
 
 import javax.swing.JFrame
 
+import org.apache.logging.log4j.core.lookup.MainMapLookup
 import org.fst.backup.Application
 import org.fst.backup.gui.CommonViewModel
 import org.fst.backup.gui.Tab
@@ -21,11 +22,14 @@ class ApplicationTest extends AbstractTest {
 	MockFor readCliService
 	MockFor frame
 	JFrame jFrame
+	File logFileBaseDir
+
 	Configuration configuration
 
 	void setUp() {
 		super.setUp()
-		args = ['-s', sourceDir, '-t', targetDir]
+		logFileBaseDir = new File(tmpPath, 'logs')
+		args = ['-s', sourceDir, '-t', targetDir, '-l', logFileBaseDir]
 		jFrame = new JFrame()
 		configuration = new Configuration()
 	}
@@ -56,11 +60,29 @@ class ApplicationTest extends AbstractTest {
 	}
 
 	void testDefaultSourceAndTargetDirAreSetFromCli() {
-		configuration = new Configuration(defaultSourceDir: sourceDir, defaultTargetDir: targetDir)
+		configuration = new Configuration(defaultSourceDir: sourceDir, defaultTargetDir: targetDir, logFileBaseDir: logFileBaseDir)
 		prepareAndExecute(null, {CommonViewModel commonViewModel ->
 			assert sourceDir == commonViewModel.sourceDir
 			assert targetDir == commonViewModel.targetDir
 		})
+	}
+
+	void testLogFileBaseDirIsSetFromConfiguration() {
+		configuration = new Configuration(defaultSourceDir: sourceDir, defaultTargetDir: targetDir, logFileBaseDir: logFileBaseDir)
+		prepareAndExecute()
+		assert logFileBaseDir.getPath() == MainMapLookup.MAIN_SINGLETON.lookup('logFileBaseDir')
+	}
+
+	void testCreatesLogFileBaseDirIfSpecified() {
+		configuration = new Configuration(defaultSourceDir: sourceDir, defaultTargetDir: targetDir, logFileBaseDir: logFileBaseDir)
+		prepareAndExecute()
+		assert logFileBaseDir.exists()
+	}
+
+	void testNotCreatesLogFileBaseDirIfNotSpecified() {
+		configuration = new Configuration(defaultSourceDir: sourceDir, defaultTargetDir: targetDir)
+		prepareAndExecute()
+		assert !logFileBaseDir.exists()
 	}
 
 	void testCreateTabIsOpenedInitiallyAfterFrameIsVisible() {
@@ -77,7 +99,6 @@ class ApplicationTest extends AbstractTest {
 		prepareAndExecute()
 		assert true == jFrame.isVisible()
 	}
-
 
 	private void prepareAndExecute(Closure assertReadCli = null, Closure assertCommonViewModel = null) {
 		readCliService = new MockFor(ReadCliService.class)
