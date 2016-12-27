@@ -96,7 +96,7 @@ class ApplicationTest extends AbstractTest {
 	}
 
 	@Test
-	void testDefaultSourceAndTargetDirAreSetFromCli() {
+	void testDefaultSourceAndTargetDirAreSetFromConfiguration() {
 		configuration = new Configuration(defaultSourceDir: sourceDir, defaultTargetDir: targetDir)
 		prepareAndExecute(null, { CommonViewModel commonViewModel ->
 			assert sourceDir == commonViewModel.sourceDir
@@ -105,10 +105,9 @@ class ApplicationTest extends AbstractTest {
 	}
 
 	@Test
-	void testSetAndCreateLogFileBaseDir() {
+	void testLogFileBaseDirIsSetFromConfiguration() {
 		prepareAndExecute()
 		assert logFileBaseDir.getPath() == MainMapLookup.MAIN_SINGLETON.lookup('logFileBaseDir')
-		assert logFileBaseDir.exists()
 	}
 
 	@Test

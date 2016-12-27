@@ -48,7 +48,6 @@ class Application {
 
 	private void configureLogging(Configuration configuration) {
 		File logFileBaseDir = new File(System.getProperty('user.home'), '/.rdigg/logs')
-		logFileBaseDir.mkdirs()
 		MainMapLookup.setMainArguments('logFileBaseDir', logFileBaseDir.getPath())
 	}
 
