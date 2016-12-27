@@ -7,14 +7,9 @@ class NewRequirements extends GroovyTestCase {
 	void abortRDiffCommands() {
 	}
 
-	void testCmdIsLogged() {
-	}
-
 	void probeFileType() {
 		//		Files.probeContentType(null)
 	}
-
-
 
 	void inspectBackupWithParallelThreads() {
 		// Process cmd line by line?
@@ -22,10 +17,6 @@ class NewRequirements extends GroovyTestCase {
 
 	void testDesktopIsNotAvaibleInInspectTab() {
 		fail()
-	}
-
-
-	void testConsoleHasLimitedSize() {
 	}
 
 	void testFileNamesAreNotEditable() {
@@ -37,9 +28,5 @@ class NewRequirements extends GroovyTestCase {
 
 	public void testDisplayRunningProcessOnShutdown() {
 		fail()
-	}
-
-	public void testRestoreRemoteFile() {
-		fail("Not yet implemented")
 	}
 }
