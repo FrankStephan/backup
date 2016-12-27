@@ -16,13 +16,15 @@ import org.junit.Test
 
 class LoggerTest {
 
+	static String realLog4jConfigurationFile
+
 	static String path = LoggerTest.class.getSimpleName() + '/'
 	static String logFileBaseDirProperty = 'logFileBaseDir'
 
 	@BeforeClass
 	static void beforeClass() {
 		LogManager.shutdown()
-		System.setProperty('log4j.configurationFile', 'src/main/resources/log4j2.xml')
+		realLog4jConfigurationFile = System.setProperty('log4j.configurationFile', 'src/main/resources/log4j2.xml')
 		MainMapLookup.setMainArguments(logFileBaseDirProperty, path + 'logs')
 	}
 
@@ -34,7 +36,7 @@ class LoggerTest {
 
 	@AfterClass
 	public static void afterClass() {
-		System.clearProperty('log4j.configurationFile')
+		System.setProperty('log4j.configurationFile', realLog4jConfigurationFile)
 		LoggerContext context = LoggerContext.getContext(false)
 		context.stop(5000, TimeUnit.MILLISECONDS)
 		assert new File(path).deleteDir()
