@@ -1,4 +1,4 @@
-package org.fst.backup.test
+package org.fst.backup.misc
 
 import java.lang.reflect.Field
 import java.lang.reflect.Modifier

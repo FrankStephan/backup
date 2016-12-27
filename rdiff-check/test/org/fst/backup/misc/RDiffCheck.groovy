@@ -4,7 +4,6 @@ import static org.junit.Assert.*
 
 import org.fst.backup.model.ProcessStatus
 import org.fst.backup.rdiff.RDiffCommands
-import org.fst.backup.test.GradleTestProperties
 import org.fst.backup.test.TestCallback
 
 class RDiffCheck extends GroovyTestCase {
