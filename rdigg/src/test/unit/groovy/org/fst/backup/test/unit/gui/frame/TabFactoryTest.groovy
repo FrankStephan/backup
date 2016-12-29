@@ -15,6 +15,7 @@ import org.fst.backup.gui.frame.choose.IncrementsList
 import org.fst.backup.gui.frame.choose.InspectIncrementButton
 import org.fst.backup.gui.frame.choose.RestoreButton
 import org.fst.backup.gui.frame.console.ConsolePane
+import org.fst.backup.gui.frame.console.ShutdownSystemCheckbox
 import org.fst.backup.gui.frame.create.CreateBackupButton
 import org.fst.backup.gui.frame.create.SourceFileChooser
 import org.fst.backup.gui.frame.create.TargetFileChooser
@@ -23,7 +24,7 @@ import org.fst.backup.gui.frame.restore.RestoreBackupButton
 import org.fst.backup.gui.frame.restore.RestoreDirectoryChooser
 import org.fst.backup.test.AbstractTest
 
-class TabsFactoryTest extends AbstractTest {
+class TabFactoryTest extends AbstractTest {
 
 	void testChooseTab() {
 		def expectedComponentCreatorClasses = [
@@ -36,7 +37,7 @@ class TabsFactoryTest extends AbstractTest {
 	}
 
 	void testConsoleTab() {
-		def expectedComponentCreatorClasses = [ConsolePane.class,]
+		def expectedComponentCreatorClasses = [ConsolePane.class, ShutdownSystemCheckbox.class]
 		this.verifyUsageOfComponentCreatorsForTab(expectedComponentCreatorClasses, Tab.CONSOLE)
 	}
 

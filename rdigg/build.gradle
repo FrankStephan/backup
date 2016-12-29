@@ -36,6 +36,12 @@ sourceSets {
             srcDirs = ['src/test/common/groovy', 'src/test/unit/groovy', 'src/test/integration/groovy', 'src/test/ui/groovy']
         }
     }
+    
+    manual {
+    	groovy {
+    		 srcDirs = ['src/test/manual/groovy']
+    	}
+    }
 }
 
 test {

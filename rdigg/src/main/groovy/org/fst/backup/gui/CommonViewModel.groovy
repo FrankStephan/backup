@@ -30,4 +30,7 @@ class CommonViewModel {
 	String consoleStatus
 	@Bindable
 	Color consoleStatusColor
+
+	@Bindable
+	boolean shutdownSystemOnFinish
 }

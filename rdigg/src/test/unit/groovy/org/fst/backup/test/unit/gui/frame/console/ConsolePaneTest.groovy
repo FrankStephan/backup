@@ -12,9 +12,8 @@ import javax.swing.text.PlainDocument
 
 import org.fst.backup.gui.CommonViewModel
 import org.fst.backup.gui.frame.console.ConsolePane
-import org.fst.backup.test.AbstractTest
 
-class ConsolePaneTest extends AbstractTest {
+class ConsolePaneTest extends GroovyTestCase {
 
 	private static final String INITIAL_TITLE = 'Status:'
 	private static final Color INITIAL_COLOR = Color.GRAY
@@ -25,7 +24,6 @@ class ConsolePaneTest extends AbstractTest {
 	CommonViewModel commonViewModel
 
 	void setUp() {
-		super.setUp()
 		commonViewModel = new CommonViewModel()
 		commonViewModel.consoleDocument = new PlainDocument()
 		commonViewModel.consoleStatus = INITIAL_TITLE

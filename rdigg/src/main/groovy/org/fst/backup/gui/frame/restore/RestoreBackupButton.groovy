@@ -15,7 +15,7 @@ import org.fst.backup.service.RestoreIncrementService
 class RestoreBackupButton {
 
 	JButton createComponent(CommonViewModel commonViewModel, SwingBuilder swing, Closure onFinish) {
-		return swing.button(text: 'Wiederherstellen', actionPerformed: {
+		JButton button = swing.button(text: 'Wiederherstellen', actionPerformed: {
 			if (commonViewModel.selectedIncrement != null) {
 				commonViewModel.tabsModel.selectedIndex = Tab.CONSOLE.ordinal()
 				commonViewModel.consoleStatusColor = Color.RED
@@ -33,6 +33,7 @@ class RestoreBackupButton {
 				}
 			}
 		})
+		return button
 	}
 
 	private clearConsole(CommonViewModel commonViewModel) {

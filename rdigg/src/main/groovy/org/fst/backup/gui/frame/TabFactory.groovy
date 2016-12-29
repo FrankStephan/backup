@@ -13,6 +13,7 @@ import org.fst.backup.gui.frame.choose.IncrementsList
 import org.fst.backup.gui.frame.choose.InspectIncrementButton
 import org.fst.backup.gui.frame.choose.RestoreButton
 import org.fst.backup.gui.frame.console.ConsolePane
+import org.fst.backup.gui.frame.console.ShutdownSystemCheckbox
 import org.fst.backup.gui.frame.create.CreateBackupButton
 import org.fst.backup.gui.frame.create.SourceFileChooser
 import org.fst.backup.gui.frame.create.TargetFileChooser
@@ -94,8 +95,14 @@ class TabFactory {
 	}
 
 	def conoleTab = {
-		swing.hbox (name: 'Konsole') {
-			consoleScrollPane = new ConsolePane().createComponent(commonViewModel, swing)
+		swing.vbox (name: 'Konsole') {
+			hbox() {
+				consoleScrollPane = new ConsolePane().createComponent(commonViewModel, swing)
+			}
+			hbox() {
+				new ShutdownSystemCheckbox().createComponent(commonViewModel, swing)
+				panel()
+			}
 		}
 	}
 }

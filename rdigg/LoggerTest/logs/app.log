@@ -1,0 +1,1274 @@
+23:39:59.898 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c dir
+23:39:59.940 [RDiffCommandExecutor] INFO  -  Volume in Laufwerk C: hat keine Bezeichnung.
+23:39:59.941 [RDiffCommandExecutor] INFO  -  Volumeseriennummer: 32D9-317D
+23:39:59.942 [RDiffCommandExecutor] INFO  - 
+23:39:59.942 [RDiffCommandExecutor] INFO  -  Verzeichnis von C:\dev\repository\backup\rdigg
+23:39:59.942 [RDiffCommandExecutor] INFO  - 
+23:39:59.942 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          .
+23:39:59.942 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          ..
+23:39:59.942 [RDiffCommandExecutor] INFO  - 28.12.2016  20:07             2.689 .classpath
+23:39:59.942 [RDiffCommandExecutor] INFO  - 24.10.2016  22:16    <DIR>          .gradle
+23:39:59.942 [RDiffCommandExecutor] INFO  - 18.11.2016  22:01               620 .project
+23:39:59.943 [RDiffCommandExecutor] INFO  - 24.11.2016  22:04    <DIR>          .settings
+23:39:59.943 [RDiffCommandExecutor] INFO  - 28.12.2016  20:06    <DIR>          bin
+23:39:59.943 [RDiffCommandExecutor] INFO  - 28.12.2016  20:15    <DIR>          build
+23:39:59.943 [RDiffCommandExecutor] INFO  - 28.12.2016  20:11             2.028 build.gradle
+23:39:59.943 [RDiffCommandExecutor] INFO  - 30.10.2016  17:09                71 deliver.bat
+23:39:59.943 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          LoggerTest
+23:39:59.943 [RDiffCommandExecutor] INFO  - 28.12.2016  19:50    <DIR>          src
+23:39:59.943 [RDiffCommandExecutor] INFO  -                4 Datei(en),          5.408 Bytes
+23:39:59.943 [RDiffCommandExecutor] INFO  -                8 Verzeichnis(se), 26.311.770.112 Bytes frei
+23:39:59.943 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c dir
+23:39:59.969 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c dir
+23:40:00.008 [RDiffCommandExecutor] INFO  -  Volume in Laufwerk C: hat keine Bezeichnung.
+23:40:00.009 [RDiffCommandExecutor] INFO  -  Volumeseriennummer: 32D9-317D
+23:40:00.009 [RDiffCommandExecutor] INFO  - 
+23:40:00.009 [RDiffCommandExecutor] INFO  -  Verzeichnis von C:\dev\repository\backup\rdigg
+23:40:00.009 [RDiffCommandExecutor] INFO  - 
+23:40:00.009 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          .
+23:40:00.010 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          ..
+23:40:00.010 [RDiffCommandExecutor] INFO  - 28.12.2016  20:07             2.689 .classpath
+23:40:00.010 [RDiffCommandExecutor] INFO  - 24.10.2016  22:16    <DIR>          .gradle
+23:40:00.010 [RDiffCommandExecutor] INFO  - 18.11.2016  22:01               620 .project
+23:40:00.010 [RDiffCommandExecutor] INFO  - 24.11.2016  22:04    <DIR>          .settings
+23:40:00.010 [RDiffCommandExecutor] INFO  - 28.12.2016  20:06    <DIR>          bin
+23:40:00.010 [RDiffCommandExecutor] INFO  - 28.12.2016  20:15    <DIR>          build
+23:40:00.011 [RDiffCommandExecutor] INFO  - 28.12.2016  20:11             2.028 build.gradle
+23:40:00.011 [RDiffCommandExecutor] INFO  - 30.10.2016  17:09                71 deliver.bat
+23:40:00.011 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          LoggerTest
+23:40:00.011 [RDiffCommandExecutor] INFO  - 28.12.2016  19:50    <DIR>          src
+23:40:00.011 [RDiffCommandExecutor] INFO  -                4 Datei(en),          5.408 Bytes
+23:40:00.011 [RDiffCommandExecutor] INFO  -                8 Verzeichnis(se), 26.311.766.016 Bytes frei
+23:40:00.011 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c dir
+23:40:00.012 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c dir
+23:40:00.052 [RDiffCommandExecutor] INFO  -  Volume in Laufwerk C: hat keine Bezeichnung.
+23:40:00.052 [RDiffCommandExecutor] INFO  -  Volumeseriennummer: 32D9-317D
+23:40:00.052 [RDiffCommandExecutor] INFO  - 
+23:40:00.052 [RDiffCommandExecutor] INFO  -  Verzeichnis von C:\dev\repository\backup\rdigg
+23:40:00.053 [RDiffCommandExecutor] INFO  - 
+23:40:00.053 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          .
+23:40:00.053 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          ..
+23:40:00.053 [RDiffCommandExecutor] INFO  - 28.12.2016  20:07             2.689 .classpath
+23:40:00.053 [RDiffCommandExecutor] INFO  - 24.10.2016  22:16    <DIR>          .gradle
+23:40:00.053 [RDiffCommandExecutor] INFO  - 18.11.2016  22:01               620 .project
+23:40:00.053 [RDiffCommandExecutor] INFO  - 24.11.2016  22:04    <DIR>          .settings
+23:40:00.053 [RDiffCommandExecutor] INFO  - 28.12.2016  20:06    <DIR>          bin
+23:40:00.053 [RDiffCommandExecutor] INFO  - 28.12.2016  20:15    <DIR>          build
+23:40:00.053 [RDiffCommandExecutor] INFO  - 28.12.2016  20:11             2.028 build.gradle
+23:40:00.053 [RDiffCommandExecutor] INFO  - 30.10.2016  17:09                71 deliver.bat
+23:40:00.054 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          LoggerTest
+23:40:00.054 [RDiffCommandExecutor] INFO  - 28.12.2016  19:50    <DIR>          src
+23:40:00.054 [RDiffCommandExecutor] INFO  -                4 Datei(en),          5.408 Bytes
+23:40:00.054 [RDiffCommandExecutor] INFO  -                8 Verzeichnis(se), 26.311.766.016 Bytes frei
+23:40:00.054 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c dir
+23:40:00.055 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c sillyCommand
+23:40:00.122 [RDiffCommandExecutor] ERROR - Der Befehl "sillyCommand" ist entweder falsch geschrieben oder
+23:40:00.122 [RDiffCommandExecutor] ERROR - konnte nicht gefunden werden.
+23:40:00.123 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 1: cmd /c sillyCommand
+23:40:00.125 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c sillyCommand
+23:40:00.173 [RDiffCommandExecutor] ERROR - Der Befehl "sillyCommand" ist entweder falsch geschrieben oder
+23:40:00.174 [RDiffCommandExecutor] ERROR - konnte nicht gefunden werden.
+23:40:00.174 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 1: cmd /c sillyCommand
+23:40:00.195 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c dir
+23:40:00.238 [RDiffCommandExecutor] INFO  -  Volume in Laufwerk C: hat keine Bezeichnung.
+23:40:00.238 [RDiffCommandExecutor] INFO  -  Volumeseriennummer: 32D9-317D
+23:40:00.238 [RDiffCommandExecutor] INFO  - 
+23:40:00.238 [RDiffCommandExecutor] INFO  -  Verzeichnis von C:\dev\repository\backup\rdigg
+23:40:00.239 [RDiffCommandExecutor] INFO  - 
+23:40:00.239 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          .
+23:40:00.239 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          ..
+23:40:00.239 [RDiffCommandExecutor] INFO  - 28.12.2016  20:07             2.689 .classpath
+23:40:00.239 [RDiffCommandExecutor] INFO  - 24.10.2016  22:16    <DIR>          .gradle
+23:40:00.239 [RDiffCommandExecutor] INFO  - 18.11.2016  22:01               620 .project
+23:40:00.239 [RDiffCommandExecutor] INFO  - 24.11.2016  22:04    <DIR>          .settings
+23:40:00.239 [RDiffCommandExecutor] INFO  - 28.12.2016  20:06    <DIR>          bin
+23:40:00.239 [RDiffCommandExecutor] INFO  - 28.12.2016  20:15    <DIR>          build
+23:40:00.240 [RDiffCommandExecutor] INFO  - 28.12.2016  20:11             2.028 build.gradle
+23:40:00.240 [RDiffCommandExecutor] INFO  - 30.10.2016  17:09                71 deliver.bat
+23:40:00.240 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          LoggerTest
+23:40:00.240 [RDiffCommandExecutor] INFO  - 28.12.2016  19:50    <DIR>          src
+23:40:00.240 [RDiffCommandExecutor] INFO  -                4 Datei(en),          5.408 Bytes
+23:40:00.240 [RDiffCommandExecutor] INFO  -                8 Verzeichnis(se), 26.311.761.920 Bytes frei
+23:40:00.240 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c dir
+23:40:00.261 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c dir
+23:40:00.306 [RDiffCommandExecutor] INFO  -  Volume in Laufwerk C: hat keine Bezeichnung.
+23:40:00.306 [RDiffCommandExecutor] INFO  -  Volumeseriennummer: 32D9-317D
+23:40:00.306 [RDiffCommandExecutor] INFO  - 
+23:40:00.306 [RDiffCommandExecutor] INFO  -  Verzeichnis von C:\dev\repository\backup\rdigg
+23:40:00.306 [RDiffCommandExecutor] INFO  - 
+23:40:00.306 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          .
+23:40:00.307 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          ..
+23:40:00.307 [RDiffCommandExecutor] INFO  - 28.12.2016  20:07             2.689 .classpath
+23:40:00.307 [RDiffCommandExecutor] INFO  - 24.10.2016  22:16    <DIR>          .gradle
+23:40:00.307 [RDiffCommandExecutor] INFO  - 18.11.2016  22:01               620 .project
+23:40:00.307 [RDiffCommandExecutor] INFO  - 24.11.2016  22:04    <DIR>          .settings
+23:40:00.307 [RDiffCommandExecutor] INFO  - 28.12.2016  20:06    <DIR>          bin
+23:40:00.307 [RDiffCommandExecutor] INFO  - 28.12.2016  20:15    <DIR>          build
+23:40:00.307 [RDiffCommandExecutor] INFO  - 28.12.2016  20:11             2.028 build.gradle
+23:40:00.307 [RDiffCommandExecutor] INFO  - 30.10.2016  17:09                71 deliver.bat
+23:40:00.307 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          LoggerTest
+23:40:00.307 [RDiffCommandExecutor] INFO  - 28.12.2016  19:50    <DIR>          src
+23:40:00.307 [RDiffCommandExecutor] INFO  -                4 Datei(en),          5.408 Bytes
+23:40:00.308 [RDiffCommandExecutor] INFO  -                8 Verzeichnis(se), 26.311.761.920 Bytes frei
+23:40:00.308 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c dir
+23:40:00.310 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c sillyCommand
+23:40:00.353 [RDiffCommandExecutor] ERROR - Der Befehl "sillyCommand" ist entweder falsch geschrieben oder
+23:40:00.353 [RDiffCommandExecutor] ERROR - konnte nicht gefunden werden.
+23:40:00.354 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 1: cmd /c sillyCommand
+23:40:00.355 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c sillyCommand
+23:40:00.396 [RDiffCommandExecutor] ERROR - Der Befehl "sillyCommand" ist entweder falsch geschrieben oder
+23:40:00.397 [RDiffCommandExecutor] ERROR - konnte nicht gefunden werden.
+23:40:00.398 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 1: cmd /c sillyCommand
+23:40:00.399 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c dir
+23:40:00.442 [RDiffCommandExecutor] INFO  -  Volume in Laufwerk C: hat keine Bezeichnung.
+23:40:00.442 [RDiffCommandExecutor] INFO  -  Volumeseriennummer: 32D9-317D
+23:40:00.442 [RDiffCommandExecutor] INFO  - 
+23:40:00.442 [RDiffCommandExecutor] INFO  -  Verzeichnis von C:\dev\repository\backup\rdigg
+23:40:00.442 [RDiffCommandExecutor] INFO  - 
+23:40:00.442 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          .
+23:40:00.443 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          ..
+23:40:00.443 [RDiffCommandExecutor] INFO  - 28.12.2016  20:07             2.689 .classpath
+23:40:00.443 [RDiffCommandExecutor] INFO  - 24.10.2016  22:16    <DIR>          .gradle
+23:40:00.443 [RDiffCommandExecutor] INFO  - 18.11.2016  22:01               620 .project
+23:40:00.443 [RDiffCommandExecutor] INFO  - 24.11.2016  22:04    <DIR>          .settings
+23:40:00.443 [RDiffCommandExecutor] INFO  - 28.12.2016  20:06    <DIR>          bin
+23:40:00.443 [RDiffCommandExecutor] INFO  - 28.12.2016  20:15    <DIR>          build
+23:40:00.443 [RDiffCommandExecutor] INFO  - 28.12.2016  20:11             2.028 build.gradle
+23:40:00.444 [RDiffCommandExecutor] INFO  - 30.10.2016  17:09                71 deliver.bat
+23:40:00.444 [RDiffCommandExecutor] INFO  - 29.12.2016  23:39    <DIR>          LoggerTest
+23:40:00.444 [RDiffCommandExecutor] INFO  - 28.12.2016  19:50    <DIR>          src
+23:40:00.444 [RDiffCommandExecutor] INFO  -                4 Datei(en),          5.408 Bytes
+23:40:00.444 [RDiffCommandExecutor] INFO  -                8 Verzeichnis(se), 26.311.753.728 Bytes frei
+23:40:00.444 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c dir
+23:40:00.505 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\source C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:00.764 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Using rdiff-backup version 1.2.8
+23:40:00.765 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Making directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data
+23:40:00.765 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Hardlinks disabled by default on Windows
+23:40:00.765 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Unable to import module xattr.
+23:40:00.765 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\source
+23:40:00.765 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Unable to import module posix1e from pylibacl package.
+23:40:00.765 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\source
+23:40:00.765 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\source
+23:40:00.765 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  -----------------------------------------------------------------
+23:40:00.765 [RDiffCommandExecutor] INFO  - Detected abilities for source (read only) file system:
+23:40:00.765 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:00.765 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:00.765 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:00.765 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:00.765 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:00.765 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:00.766 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:00.766 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:00.766 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:00.766 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Making directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:00.766 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:00.766 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:00.766 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/uniᄉ
+23:40:00.766 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/uniᄉ
+23:40:00.766 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/:\"
+23:40:00.766 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/A
+23:40:00.766 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/a
+23:40:00.766 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/foo
+23:40:00.766 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/foo
+23:40:00.766 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Making directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hl
+23:40:00.766 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hardlinked_file1
+23:40:00.767 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Hard linking C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hl/hardlinked_file2 to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hardlinked_file1
+23:40:00.767 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Directories on file system at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0 are not fsyncable.
+23:40:00.767 [RDiffCommandExecutor] INFO  - Assuming it's unnecessary.
+23:40:00.767 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Unable to import module xattr.
+23:40:00.767 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:00.767 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Unable to import module posix1e from pylibacl package.
+23:40:00.767 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:00.767 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Unable to load a Windows ACL.
+23:40:00.889 [RDiffCommandExecutor] INFO  - Windows ACLs not supported by filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:00.889 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/dir_inc_check
+23:40:00.889 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/dir_inc_check
+23:40:00.889 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/regfile
+23:40:00.890 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/regfile
+23:40:00.890 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_file
+23:40:00.890 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_dir
+23:40:00.890 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_file
+23:40:00.890 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_dir
+23:40:00.890 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/symlinked_file1
+23:40:00.890 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/symlinked_file1
+23:40:00.890 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:00.890 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:00.890 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Removing directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:00.890 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  -----------------------------------------------------------------
+23:40:00.890 [RDiffCommandExecutor] INFO  - Detected abilities for destination (read/write) file system:
+23:40:00.890 [RDiffCommandExecutor] INFO  -   Ownership changing                           Off
+23:40:00.890 [RDiffCommandExecutor] INFO  -   Hard linking                                 N/A
+23:40:00.890 [RDiffCommandExecutor] INFO  -   fsync() directories                          Off
+23:40:00.890 [RDiffCommandExecutor] INFO  -   Directory inc permissions                    Off
+23:40:00.890 [RDiffCommandExecutor] INFO  -   High-bit permissions                         On
+23:40:00.891 [RDiffCommandExecutor] INFO  -   Symlink permissions                          Off
+23:40:00.891 [RDiffCommandExecutor] INFO  -   Extended filenames                           On
+23:40:00.891 [RDiffCommandExecutor] INFO  -   Windows reserved filenames                   On
+23:40:00.891 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:00.891 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:00.891 [RDiffCommandExecutor] INFO  -   Windows access control lists                 Off
+23:40:00.891 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:00.891 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:00.891 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:00.891 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:00.891 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:00.891 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:00.891 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Backup: must_escape_dos_devices = 0
+23:40:00.891 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Making directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/increments
+23:40:00.891 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Symbolic links excluded by default on Windows
+23:40:00.891 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Starting mirror C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\source to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:00.892 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Processing changed file .
+23:40:00.892 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Processing changed file a0
+23:40:00.892 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Making directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0
+23:40:00.892 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Processing changed file a0/a1
+23:40:00.892 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Making directory path C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/increments/a0
+23:40:00.892 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Making directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/a1
+23:40:00.892 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Processing changed file a0/a1/a2.suf
+23:40:01.031 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Making directory path C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/increments/a0/a1
+23:40:01.031 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Regular copying ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:01.031 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Writing file object to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:01.031 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Copying attributes from ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:01.031 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Setting time of C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/a1/rdiff-backup.tmp.1 to 1483051200
+23:40:01.031 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Renaming C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/a1/rdiff-backup.tmp.1 to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/a1/a2.suf
+23:40:01.031 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Processing changed file a0.suf
+23:40:01.031 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Copying attributes from ('a0', 'a1') to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/a1
+23:40:01.031 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Setting time of C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/a1 to 1483051200
+23:40:01.031 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Copying attributes from ('a0',) to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0
+23:40:01.031 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Setting time of C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0 to 1483051200
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Regular copying ('a0.suf',) to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.2
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Writing file object to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.2
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Copying attributes from ('a0.suf',) to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.2
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Setting time of C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.2 to 1483051200
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Renaming C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.2 to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0.suf
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Processing changed file b0.suf
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Regular copying ('b0.suf',) to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.3
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Writing file object to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.3
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Copying attributes from ('b0.suf',) to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.3
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Setting time of C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.3 to 1483051200
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Renaming C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.3 to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/b0.suf
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Processing changed file c0.suf
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Regular copying ('c0.suf',) to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.4
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Writing file object to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.4
+23:40:01.032 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Copying attributes from ('c0.suf',) to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.4
+23:40:01.033 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Setting time of C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.4 to 1483051200
+23:40:01.033 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Renaming C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup.tmp.4 to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/c0.suf
+23:40:01.033 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Copying attributes from () to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:01.033 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:00 2016  Setting time of C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target to 1483051200
+23:40:01.057 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Writing mirror marker C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/current_mirror.2016-12-29T23;05840;05800+01;05800.data
+23:40:01.057 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Cleaning up
+23:40:01.057 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/error_log.2016-12-29T23;05840;05800+01;05800.data
+23:40:01.066 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\source C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:01.068 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 --verify-at-time now C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:01.281 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Using rdiff-backup version 1.2.8
+23:40:01.281 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Using mirror root directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:01.281 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Unable to import module xattr.
+23:40:01.281 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data
+23:40:01.281 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Unable to import module posix1e from pylibacl package.
+23:40:01.281 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data
+23:40:01.281 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data
+23:40:01.281 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  -----------------------------------------------------------------
+23:40:01.281 [RDiffCommandExecutor] INFO  - Detected abilities for C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data (read only) file system:
+23:40:01.282 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:01.282 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:01.282 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:01.282 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:01.282 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:01.282 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:01.282 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:01.282 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:01.282 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:01.282 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Restore: must_escape_dos_devices = 0
+23:40:01.282 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Verified SHA1 digest of a0/a1/a2.suf
+23:40:01.282 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Verified SHA1 digest of a0.suf
+23:40:01.282 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Verified SHA1 digest of b0.suf
+23:40:01.282 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Verified SHA1 digest of c0.suf
+23:40:01.282 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Every file verified successfully.
+23:40:01.283 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:01 2016  Cleaning up
+23:40:01.295 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 --verify-at-time now C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:02.373 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\source C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:02.621 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Using rdiff-backup version 1.2.8
+23:40:02.621 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Hardlinks disabled by default on Windows
+23:40:02.621 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Unable to import module xattr.
+23:40:02.621 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\source
+23:40:02.621 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Unable to import module posix1e from pylibacl package.
+23:40:02.621 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\source
+23:40:02.622 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\source
+23:40:02.622 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  -----------------------------------------------------------------
+23:40:02.622 [RDiffCommandExecutor] INFO  - Detected abilities for source (read only) file system:
+23:40:02.622 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:02.622 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:02.622 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:02.622 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:02.622 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:02.622 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:02.622 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:02.622 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:02.622 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:02.623 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Making directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:02.623 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:02.623 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:02.623 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/uniᄉ
+23:40:02.623 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/uniᄉ
+23:40:02.623 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/:\"
+23:40:02.623 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/A
+23:40:02.623 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/a
+23:40:02.623 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/foo
+23:40:02.623 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/foo
+23:40:02.623 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Making directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hl
+23:40:02.623 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hardlinked_file1
+23:40:02.623 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Hard linking C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hl/hardlinked_file2 to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hardlinked_file1
+23:40:02.624 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Directories on file system at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0 are not fsyncable.
+23:40:02.624 [RDiffCommandExecutor] INFO  - Assuming it's unnecessary.
+23:40:02.624 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Unable to import module xattr.
+23:40:02.624 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:02.624 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Unable to import module posix1e from pylibacl package.
+23:40:02.624 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:02.624 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Unable to load a Windows ACL.
+23:40:02.624 [RDiffCommandExecutor] INFO  - Windows ACLs not supported by filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:02.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/dir_inc_check
+23:40:02.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/dir_inc_check
+23:40:02.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/regfile
+23:40:02.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/regfile
+23:40:02.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_file
+23:40:02.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_dir
+23:40:02.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_file
+23:40:02.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_dir
+23:40:02.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/symlinked_file1
+23:40:02.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/symlinked_file1
+23:40:02.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:02.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:02.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Removing directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:02.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  -----------------------------------------------------------------
+23:40:02.738 [RDiffCommandExecutor] INFO  - Detected abilities for destination (read/write) file system:
+23:40:02.738 [RDiffCommandExecutor] INFO  -   Ownership changing                           Off
+23:40:02.738 [RDiffCommandExecutor] INFO  -   Hard linking                                 N/A
+23:40:02.738 [RDiffCommandExecutor] INFO  -   fsync() directories                          Off
+23:40:02.738 [RDiffCommandExecutor] INFO  -   Directory inc permissions                    Off
+23:40:02.738 [RDiffCommandExecutor] INFO  -   High-bit permissions                         On
+23:40:02.739 [RDiffCommandExecutor] INFO  -   Symlink permissions                          Off
+23:40:02.739 [RDiffCommandExecutor] INFO  -   Extended filenames                           On
+23:40:02.739 [RDiffCommandExecutor] INFO  -   Windows reserved filenames                   On
+23:40:02.739 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:02.739 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:02.739 [RDiffCommandExecutor] INFO  -   Windows access control lists                 Off
+23:40:02.739 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:02.739 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:02.739 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:02.739 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:02.739 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:02.739 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:02.739 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Backup: must_escape_dos_devices = 0
+23:40:02.739 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Symbolic links excluded by default on Windows
+23:40:02.739 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Writing mirror marker C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/current_mirror.2016-12-29T23;05840;05802+01;05800.data
+23:40:02.739 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Starting increment operation C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\source to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:02.739 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Processing changed file .
+23:40:02.739 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Incrementing mirror file C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:02.739 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/increments.2016-12-29T23;05840;05800+01;05800.dir
+23:40:02.740 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Copying inc attrs from () to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/increments.2016-12-29T23;05840;05800+01;05800.dir
+23:40:02.740 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Setting time of C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/increments.2016-12-29T23;05840;05800+01;05800.dir to 1483051200
+23:40:02.876 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Processing changed file a0
+23:40:02.876 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Incrementing mirror file C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0
+23:40:02.876 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/increments/a0.2016-12-29T23;05840;05800+01;05800.dir
+23:40:02.876 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Copying inc attrs from ('a0',) to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/increments/a0.2016-12-29T23;05840;05800+01;05800.dir
+23:40:02.876 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Setting time of C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/increments/a0.2016-12-29T23;05840;05800+01;05800.dir to 1483051200
+23:40:02.876 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Processing changed file a0/b1
+23:40:02.876 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Incrementing mirror file C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/b1
+23:40:02.876 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Making directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/increments/a0/b1
+23:40:02.876 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/increments/a0/b1.2016-12-29T23;05840;05800+01;05800.missing
+23:40:02.876 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Making directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/b1
+23:40:02.876 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Processing changed file a0/b1/b1.suf
+23:40:02.876 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Regular copying ('a0', 'b1', 'b1.suf') to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/b1/rdiff-backup.tmp.1
+23:40:02.876 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Writing file object to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/b1/rdiff-backup.tmp.1
+23:40:02.877 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Copying attributes from ('a0', 'b1', 'b1.suf') to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/b1/rdiff-backup.tmp.1
+23:40:02.877 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Setting time of C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/b1/rdiff-backup.tmp.1 to 1483051202
+23:40:02.877 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Incrementing mirror file C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/b1/b1.suf
+23:40:02.877 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/increments/a0/b1/b1.suf.2016-12-29T23;05840;05800+01;05800.missing
+23:40:02.877 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Renaming C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/b1/rdiff-backup.tmp.1 to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/b1/b1.suf
+23:40:02.877 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Copying attributes from ('a0', 'b1') to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/b1
+23:40:02.877 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Setting time of C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0/b1 to 1483051202
+23:40:02.877 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Copying attributes from ('a0',) to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0
+23:40:02.877 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Setting time of C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/a0 to 1483051202
+23:40:02.877 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Copying attributes from () to C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:02.877 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Setting time of C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target to 1483051200
+23:40:02.877 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Writing mirror_metadata diff
+23:40:02.877 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/mirror_metadata.2016-12-29T23;05840;05800+01;05800.snapshot.gz
+23:40:02.887 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Deleting C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/current_mirror.2016-12-29T23;05840;05800+01;05800.data
+23:40:02.887 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Cleaning up
+23:40:02.887 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:02 2016  Touching C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data/error_log.2016-12-29T23;05840;05802+01;05800.data
+23:40:02.891 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\source C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:02.892 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 --verify-at-time now C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:03.090 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  Using rdiff-backup version 1.2.8
+23:40:03.091 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  Using mirror root directory C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:03.091 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  Unable to import module xattr.
+23:40:03.091 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data
+23:40:03.091 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  Unable to import module posix1e from pylibacl package.
+23:40:03.091 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data
+23:40:03.091 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data
+23:40:03.091 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  -----------------------------------------------------------------
+23:40:03.091 [RDiffCommandExecutor] INFO  - Detected abilities for C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target/rdiff-backup-data (read only) file system:
+23:40:03.091 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:03.091 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:03.091 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:03.091 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:03.091 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:03.091 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:03.092 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:03.092 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:03.092 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:03.092 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  Restore: must_escape_dos_devices = 0
+23:40:03.092 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  Verified SHA1 digest of a0/a1/a2.suf
+23:40:03.092 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  Verified SHA1 digest of a0/b1/b1.suf
+23:40:03.092 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  Verified SHA1 digest of a0.suf
+23:40:03.092 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  Verified SHA1 digest of b0.suf
+23:40:03.092 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  Verified SHA1 digest of c0.suf
+23:40:03.092 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  Every file verified successfully.
+23:40:03.092 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:03 2016  Cleaning up
+23:40:03.103 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 --verify-at-time now C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:04.142 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -l --parsable-output C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:04.358 [RDiffCommandExecutor] INFO  - 1483051200 directory
+23:40:04.358 [RDiffCommandExecutor] INFO  - 1483051202 directory
+23:40:04.363 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -l --parsable-output C:\dev\repository\backup\rdigg\ListIncrementsTest-tmp\target
+23:40:05.026 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\source C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target
+23:40:05.287 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Using rdiff-backup version 1.2.8
+23:40:05.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Making directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data
+23:40:05.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Hardlinks disabled by default on Windows
+23:40:05.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Unable to import module xattr.
+23:40:05.288 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\source
+23:40:05.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Unable to import module posix1e from pylibacl package.
+23:40:05.288 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\source
+23:40:05.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\source
+23:40:05.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  -----------------------------------------------------------------
+23:40:05.288 [RDiffCommandExecutor] INFO  - Detected abilities for source (read only) file system:
+23:40:05.288 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:05.288 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:05.288 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:05.288 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:05.288 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:05.288 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:05.288 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:05.288 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:05.288 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:05.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Making directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:05.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:05.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:05.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/uniᄉ
+23:40:05.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/uniᄉ
+23:40:05.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/:\"
+23:40:05.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/A
+23:40:05.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/a
+23:40:05.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/foo
+23:40:05.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/foo
+23:40:05.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Making directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hl
+23:40:05.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hardlinked_file1
+23:40:05.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Hard linking C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hl/hardlinked_file2 to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hardlinked_file1
+23:40:05.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Directories on file system at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0 are not fsyncable.
+23:40:05.289 [RDiffCommandExecutor] INFO  - Assuming it's unnecessary.
+23:40:05.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Unable to import module xattr.
+23:40:05.289 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:05.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Unable to import module posix1e from pylibacl package.
+23:40:05.289 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:05.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Unable to load a Windows ACL.
+23:40:05.407 [RDiffCommandExecutor] INFO  - Windows ACLs not supported by filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/dir_inc_check
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/dir_inc_check
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/regfile
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/regfile
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_file
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_dir
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_file
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_dir
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/symlinked_file1
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/symlinked_file1
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Removing directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:05.408 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  -----------------------------------------------------------------
+23:40:05.408 [RDiffCommandExecutor] INFO  - Detected abilities for destination (read/write) file system:
+23:40:05.408 [RDiffCommandExecutor] INFO  -   Ownership changing                           Off
+23:40:05.408 [RDiffCommandExecutor] INFO  -   Hard linking                                 N/A
+23:40:05.408 [RDiffCommandExecutor] INFO  -   fsync() directories                          Off
+23:40:05.408 [RDiffCommandExecutor] INFO  -   Directory inc permissions                    Off
+23:40:05.408 [RDiffCommandExecutor] INFO  -   High-bit permissions                         On
+23:40:05.408 [RDiffCommandExecutor] INFO  -   Symlink permissions                          Off
+23:40:05.408 [RDiffCommandExecutor] INFO  -   Extended filenames                           On
+23:40:05.409 [RDiffCommandExecutor] INFO  -   Windows reserved filenames                   On
+23:40:05.409 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:05.409 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:05.409 [RDiffCommandExecutor] INFO  -   Windows access control lists                 Off
+23:40:05.409 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:05.409 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:05.409 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:05.409 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:05.409 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:05.409 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:05.409 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Backup: must_escape_dos_devices = 0
+23:40:05.409 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Making directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/increments
+23:40:05.409 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Symbolic links excluded by default on Windows
+23:40:05.409 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Starting mirror C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\source to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target
+23:40:05.409 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Processing changed file .
+23:40:05.409 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Processing changed file a0
+23:40:05.409 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Making directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/a0
+23:40:05.409 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Processing changed file a0/a1
+23:40:05.410 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Making directory path C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/increments/a0
+23:40:05.410 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Making directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/a0/a1
+23:40:05.510 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Processing changed file a0/a1/a2.suf
+23:40:05.510 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Making directory path C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/increments/a0/a1
+23:40:05.510 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Regular copying ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:05.510 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:05.510 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Copying attributes from ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:05.510 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/a0/a1/rdiff-backup.tmp.1 to 1483051205
+23:40:05.510 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Renaming C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/a0/a1/rdiff-backup.tmp.1 to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/a0/a1/a2.suf
+23:40:05.510 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Processing changed file a0.suf
+23:40:05.510 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Copying attributes from ('a0', 'a1') to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/a0/a1
+23:40:05.510 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/a0/a1 to 1483051205
+23:40:05.510 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Copying attributes from ('a0',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/a0
+23:40:05.510 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/a0 to 1483051205
+23:40:05.510 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Regular copying ('a0.suf',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.2
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.2
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Copying attributes from ('a0.suf',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.2
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.2 to 1483051204
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Renaming C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.2 to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/a0.suf
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Processing changed file b0.suf
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Regular copying ('b0.suf',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.3
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.3
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Copying attributes from ('b0.suf',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.3
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.3 to 1483051205
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Renaming C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.3 to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/b0.suf
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Processing changed file c0.suf
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Regular copying ('c0.suf',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.4
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.4
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Copying attributes from ('c0.suf',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.4
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.4 to 1483051205
+23:40:05.511 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Renaming C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup.tmp.4 to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/c0.suf
+23:40:05.512 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Copying attributes from () to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target
+23:40:05.575 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target to 1483051205
+23:40:05.575 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Writing mirror marker C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/current_mirror.2016-12-29T23;05840;05805+01;05800.data
+23:40:05.576 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Cleaning up
+23:40:05.576 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data/error_log.2016-12-29T23;05840;05805+01;05800.data
+23:40:05.581 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\source C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target
+23:40:05.582 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 --verify-at-time now C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target
+23:40:05.789 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Using rdiff-backup version 1.2.8
+23:40:05.789 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Using mirror root directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target
+23:40:05.790 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Unable to import module xattr.
+23:40:05.790 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data
+23:40:05.790 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Unable to import module posix1e from pylibacl package.
+23:40:05.790 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data
+23:40:05.790 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data
+23:40:05.790 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  -----------------------------------------------------------------
+23:40:05.790 [RDiffCommandExecutor] INFO  - Detected abilities for C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data (read only) file system:
+23:40:05.790 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:05.790 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:05.790 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:05.790 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:05.790 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:05.790 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:05.790 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:05.790 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:05.790 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:05.790 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Restore: must_escape_dos_devices = 0
+23:40:05.790 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Verified SHA1 digest of a0/a1/a2.suf
+23:40:05.790 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Verified SHA1 digest of a0.suf
+23:40:05.790 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Verified SHA1 digest of b0.suf
+23:40:05.790 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Verified SHA1 digest of c0.suf
+23:40:05.790 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Every file verified successfully.
+23:40:05.790 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:05 2016  Cleaning up
+23:40:05.803 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 --verify-at-time now C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target
+23:40:05.821 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -l --parsable-output C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target
+23:40:06.019 [RDiffCommandExecutor] INFO  - 1483051205 directory
+23:40:06.024 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -l --parsable-output C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target
+23:40:06.040 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 -r 1483051205 C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore
+23:40:06.287 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Using rdiff-backup version 1.2.8
+23:40:06.287 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Using mirror root directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target
+23:40:06.287 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Hardlinks disabled by default on Windows
+23:40:06.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Unable to import module xattr.
+23:40:06.288 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data
+23:40:06.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Unable to import module posix1e from pylibacl package.
+23:40:06.288 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data
+23:40:06.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target/rdiff-backup-data
+23:40:06.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  -----------------------------------------------------------------
+23:40:06.288 [RDiffCommandExecutor] INFO  - Detected abilities for rdiff-backup repository (read only) file system:
+23:40:06.288 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:06.288 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:06.288 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:06.288 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:06.288 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:06.288 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:06.288 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:06.288 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:06.288 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:06.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Making directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0
+23:40:06.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:06.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:06.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/uniᄉ
+23:40:06.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/uniᄉ
+23:40:06.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/:\"
+23:40:06.288 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/A
+23:40:06.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/a
+23:40:06.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/foo
+23:40:06.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/foo
+23:40:06.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Making directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/hl
+23:40:06.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/hardlinked_file1
+23:40:06.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Hard linking C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/hl/hardlinked_file2 to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/hardlinked_file1
+23:40:06.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Directories on file system at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0 are not fsyncable.
+23:40:06.289 [RDiffCommandExecutor] INFO  - Assuming it's unnecessary.
+23:40:06.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Unable to import module xattr.
+23:40:06.289 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0
+23:40:06.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Unable to import module posix1e from pylibacl package.
+23:40:06.289 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0
+23:40:06.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Unable to load a Windows ACL.
+23:40:06.289 [RDiffCommandExecutor] INFO  - Windows ACLs not supported by filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0
+23:40:06.289 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/dir_inc_check
+23:40:06.403 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/dir_inc_check
+23:40:06.404 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/regfile
+23:40:06.404 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/regfile
+23:40:06.404 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/high_perms_file
+23:40:06.404 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/high_perms_dir
+23:40:06.404 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/high_perms_file
+23:40:06.404 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/high_perms_dir
+23:40:06.404 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Touching C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/symlinked_file1
+23:40:06.404 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0/symlinked_file1
+23:40:06.404 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0
+23:40:06.404 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Deleting C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0
+23:40:06.404 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Removing directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.0
+23:40:06.404 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  -----------------------------------------------------------------
+23:40:06.404 [RDiffCommandExecutor] INFO  - Detected abilities for restore target (read/write) file system:
+23:40:06.404 [RDiffCommandExecutor] INFO  -   Ownership changing                           Off
+23:40:06.404 [RDiffCommandExecutor] INFO  -   Hard linking                                 N/A
+23:40:06.404 [RDiffCommandExecutor] INFO  -   fsync() directories                          Off
+23:40:06.404 [RDiffCommandExecutor] INFO  -   Directory inc permissions                    Off
+23:40:06.404 [RDiffCommandExecutor] INFO  -   High-bit permissions                         On
+23:40:06.404 [RDiffCommandExecutor] INFO  -   Symlink permissions                          Off
+23:40:06.404 [RDiffCommandExecutor] INFO  -   Extended filenames                           On
+23:40:06.404 [RDiffCommandExecutor] INFO  -   Windows reserved filenames                   On
+23:40:06.404 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:06.405 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:06.405 [RDiffCommandExecutor] INFO  -   Windows access control lists                 Off
+23:40:06.405 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:06.405 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:06.405 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:06.405 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:06.405 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:06.405 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:06.405 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Restore: must_escape_dos_devices = 0
+23:40:06.405 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Starting restore of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore as it was as of Thu Dec 29 23:40:05 2016.
+23:40:06.405 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Processing changed file .
+23:40:06.405 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Processing changed file a0
+23:40:06.405 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Making directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/a0
+23:40:06.405 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Processing changed file a0/a1
+23:40:06.405 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Making directory C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/a0/a1
+23:40:06.405 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Processing changed file a0/a1/a2.suf
+23:40:06.405 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Regular copying ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/a0/a1/rdiff-backup.tmp.1
+23:40:06.405 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/a0/a1/rdiff-backup.tmp.1
+23:40:06.405 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Hash 95864bad7ae853b134824907834fe9dd01ff9eea of a0/a1/a2.suf verified
+23:40:06.405 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Copying attributes from ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/a0/a1/rdiff-backup.tmp.1
+23:40:06.405 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/a0/a1/rdiff-backup.tmp.1 to 1483051205
+23:40:06.502 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Renaming C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/a0/a1/rdiff-backup.tmp.1 to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/a0/a1/a2.suf
+23:40:06.502 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Processing changed file a0.suf
+23:40:06.502 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Copying attributes from ('a0', 'a1') to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/a0/a1
+23:40:06.502 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/a0/a1 to 1483051205
+23:40:06.502 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Copying attributes from ('a0',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/a0
+23:40:06.502 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/a0 to 1483051205
+23:40:06.502 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Regular copying ('a0.suf',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.2
+23:40:06.502 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.2
+23:40:06.502 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Hash 502b3970303710df48bdb7205ca2cebc191b8905 of a0.suf verified
+23:40:06.502 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Copying attributes from ('a0.suf',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.2
+23:40:06.502 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.2 to 1483051204
+23:40:06.502 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Renaming C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.2 to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/a0.suf
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Processing changed file b0.suf
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Regular copying ('b0.suf',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.3
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.3
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Hash c8fb0d70892e6547336ea9184d81c3960dede4ba of b0.suf verified
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Copying attributes from ('b0.suf',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.3
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.3 to 1483051205
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Renaming C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.3 to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/b0.suf
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Processing changed file c0.suf
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Regular copying ('c0.suf',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.4
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.4
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Hash 1b5786eee9316127089891db39030ea278b56b86 of c0.suf verified
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Copying attributes from ('c0.suf',) to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.4
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.4 to 1483051205
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Renaming C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/rdiff-backup.tmp.4 to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore/c0.suf
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Copying attributes from () to C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore to 1483051205
+23:40:06.503 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Restore finished
+23:40:06.504 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:06 2016  Cleaning up
+23:40:06.507 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 -r 1483051205 C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\target C:\dev\repository\backup\rdigg\RestoreIncrementTest-tmp\restore
+23:40:08.432 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\source C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target
+23:40:08.727 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Using rdiff-backup version 1.2.8
+23:40:08.727 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Making directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data
+23:40:08.728 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Hardlinks disabled by default on Windows
+23:40:08.728 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Unable to import module xattr.
+23:40:08.728 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\source
+23:40:08.728 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Unable to import module posix1e from pylibacl package.
+23:40:08.728 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\source
+23:40:08.728 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\source
+23:40:08.728 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  -----------------------------------------------------------------
+23:40:08.729 [RDiffCommandExecutor] INFO  - Detected abilities for source (read only) file system:
+23:40:08.729 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:08.729 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:08.729 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:08.729 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:08.730 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:08.730 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:08.730 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:08.730 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:08.730 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:08.730 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Making directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:08.730 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:08.731 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:08.731 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/uniᄉ
+23:40:08.731 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/uniᄉ
+23:40:08.731 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/:\"
+23:40:08.732 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/A
+23:40:08.732 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/a
+23:40:08.732 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/foo
+23:40:08.732 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/foo
+23:40:08.733 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Making directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hl
+23:40:08.733 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hardlinked_file1
+23:40:08.733 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Hard linking C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hl/hardlinked_file2 to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hardlinked_file1
+23:40:08.733 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Directories on file system at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0 are not fsyncable.
+23:40:08.733 [RDiffCommandExecutor] INFO  - Assuming it's unnecessary.
+23:40:08.733 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Unable to import module xattr.
+23:40:08.733 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:08.733 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Unable to import module posix1e from pylibacl package.
+23:40:08.734 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:08.865 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Unable to load a Windows ACL.
+23:40:08.865 [RDiffCommandExecutor] INFO  - Windows ACLs not supported by filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:08.866 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/dir_inc_check
+23:40:08.866 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/dir_inc_check
+23:40:08.866 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/regfile
+23:40:08.866 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/regfile
+23:40:08.866 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_file
+23:40:08.866 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_dir
+23:40:08.866 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_file
+23:40:08.866 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_dir
+23:40:08.866 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/symlinked_file1
+23:40:08.867 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/symlinked_file1
+23:40:08.867 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:08.867 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:08.867 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Removing directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:08.867 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  -----------------------------------------------------------------
+23:40:08.867 [RDiffCommandExecutor] INFO  - Detected abilities for destination (read/write) file system:
+23:40:08.867 [RDiffCommandExecutor] INFO  -   Ownership changing                           Off
+23:40:08.867 [RDiffCommandExecutor] INFO  -   Hard linking                                 N/A
+23:40:08.867 [RDiffCommandExecutor] INFO  -   fsync() directories                          Off
+23:40:08.868 [RDiffCommandExecutor] INFO  -   Directory inc permissions                    Off
+23:40:08.868 [RDiffCommandExecutor] INFO  -   High-bit permissions                         On
+23:40:08.868 [RDiffCommandExecutor] INFO  -   Symlink permissions                          Off
+23:40:08.868 [RDiffCommandExecutor] INFO  -   Extended filenames                           On
+23:40:08.868 [RDiffCommandExecutor] INFO  -   Windows reserved filenames                   On
+23:40:08.868 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:08.868 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:08.868 [RDiffCommandExecutor] INFO  -   Windows access control lists                 Off
+23:40:08.868 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:08.869 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:08.869 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:08.869 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:08.869 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:08.869 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:08.869 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Backup: must_escape_dos_devices = 0
+23:40:08.869 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Making directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/increments
+23:40:08.869 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Symbolic links excluded by default on Windows
+23:40:08.869 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Starting mirror C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\source to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target
+23:40:08.870 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Processing changed file .
+23:40:08.870 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Processing changed file a0
+23:40:08.870 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Making directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/a0
+23:40:08.870 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Processing changed file a0/a1
+23:40:08.870 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Making directory path C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/increments/a0
+23:40:08.991 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Making directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/a0/a1
+23:40:08.991 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Processing changed file a0/a1/a2.suf
+23:40:08.991 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Making directory path C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/increments/a0/a1
+23:40:08.992 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Regular copying ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:08.992 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:08.992 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Copying attributes from ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:08.992 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/a0/a1/rdiff-backup.tmp.1 to 1483051208
+23:40:08.992 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Renaming C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/a0/a1/rdiff-backup.tmp.1 to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/a0/a1/a2.suf
+23:40:08.992 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Processing changed file a0.suf
+23:40:08.992 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Copying attributes from ('a0', 'a1') to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/a0/a1
+23:40:08.992 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/a0/a1 to 1483051208
+23:40:08.992 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Copying attributes from ('a0',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/a0
+23:40:08.992 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/a0 to 1483051208
+23:40:08.992 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Regular copying ('a0.suf',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.2
+23:40:08.993 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.2
+23:40:08.993 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Copying attributes from ('a0.suf',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.2
+23:40:08.993 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.2 to 1483051208
+23:40:08.993 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Renaming C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.2 to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/a0.suf
+23:40:08.993 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Processing changed file b0.suf
+23:40:08.993 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Regular copying ('b0.suf',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.3
+23:40:08.993 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.3
+23:40:08.993 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Copying attributes from ('b0.suf',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.3
+23:40:08.994 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.3 to 1483051208
+23:40:08.994 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Renaming C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.3 to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/b0.suf
+23:40:08.994 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Processing changed file c0.suf
+23:40:08.994 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Regular copying ('c0.suf',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.4
+23:40:08.994 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.4
+23:40:08.994 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Copying attributes from ('c0.suf',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.4
+23:40:08.994 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.4 to 1483051208
+23:40:08.994 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Renaming C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup.tmp.4 to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/c0.suf
+23:40:09.084 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Copying attributes from () to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target
+23:40:09.085 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:08 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target to 1483051208
+23:40:09.085 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Writing mirror marker C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/current_mirror.2016-12-29T23;05840;05808+01;05800.data
+23:40:09.085 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Cleaning up
+23:40:09.085 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data/error_log.2016-12-29T23;05840;05808+01;05800.data
+23:40:09.129 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\source C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target
+23:40:09.130 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 --verify-at-time now C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target
+23:40:09.387 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Using rdiff-backup version 1.2.8
+23:40:09.387 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Using mirror root directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target
+23:40:09.387 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Unable to import module xattr.
+23:40:09.387 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data
+23:40:09.388 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Unable to import module posix1e from pylibacl package.
+23:40:09.388 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data
+23:40:09.388 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data
+23:40:09.388 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  -----------------------------------------------------------------
+23:40:09.388 [RDiffCommandExecutor] INFO  - Detected abilities for C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data (read only) file system:
+23:40:09.388 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:09.388 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:09.388 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:09.389 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:09.389 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:09.389 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:09.389 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:09.389 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:09.389 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:09.389 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Restore: must_escape_dos_devices = 0
+23:40:09.389 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Verified SHA1 digest of a0/a1/a2.suf
+23:40:09.390 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Verified SHA1 digest of a0.suf
+23:40:09.390 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Verified SHA1 digest of b0.suf
+23:40:09.390 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Verified SHA1 digest of c0.suf
+23:40:09.390 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Every file verified successfully.
+23:40:09.390 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:09 2016  Cleaning up
+23:40:09.402 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 --verify-at-time now C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target
+23:40:09.454 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -l --parsable-output C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target
+23:40:09.711 [RDiffCommandExecutor] INFO  - 1483051208 directory
+23:40:09.727 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -l --parsable-output C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target
+23:40:09.847 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup --list-at-time 1483051208 C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target
+23:40:10.108 [RDiffCommandExecutor] INFO  - .
+23:40:10.109 [RDiffCommandExecutor] INFO  - a0
+23:40:10.109 [RDiffCommandExecutor] INFO  - a0/a1
+23:40:10.109 [RDiffCommandExecutor] INFO  - a0/a1/a2.suf
+23:40:10.109 [RDiffCommandExecutor] INFO  - a0.suf
+23:40:10.109 [RDiffCommandExecutor] INFO  - b0.suf
+23:40:10.109 [RDiffCommandExecutor] INFO  - c0.suf
+23:40:10.113 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup --list-at-time 1483051208 C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target
+23:40:10.374 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 -r 1483051208 C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore
+23:40:10.700 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Using rdiff-backup version 1.2.8
+23:40:10.700 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Using mirror root directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target
+23:40:10.700 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Hardlinks disabled by default on Windows
+23:40:10.700 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Unable to import module xattr.
+23:40:10.700 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data
+23:40:10.700 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Unable to import module posix1e from pylibacl package.
+23:40:10.700 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data
+23:40:10.700 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target/rdiff-backup-data
+23:40:10.700 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  -----------------------------------------------------------------
+23:40:10.700 [RDiffCommandExecutor] INFO  - Detected abilities for rdiff-backup repository (read only) file system:
+23:40:10.701 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:10.701 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:10.701 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:10.701 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:10.701 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:10.701 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:10.701 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:10.701 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:10.701 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:10.701 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Making directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0
+23:40:10.701 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:10.701 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:10.701 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/uniᄉ
+23:40:10.701 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/uniᄉ
+23:40:10.702 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/:\"
+23:40:10.702 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/A
+23:40:10.702 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/a
+23:40:10.702 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/foo
+23:40:10.702 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/foo
+23:40:10.702 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Making directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/hl
+23:40:10.702 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/hardlinked_file1
+23:40:10.702 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Hard linking C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/hl/hardlinked_file2 to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/hardlinked_file1
+23:40:10.702 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Directories on file system at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0 are not fsyncable.
+23:40:10.702 [RDiffCommandExecutor] INFO  - Assuming it's unnecessary.
+23:40:10.702 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Unable to import module xattr.
+23:40:10.702 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0
+23:40:10.702 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Unable to import module posix1e from pylibacl package.
+23:40:10.703 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0
+23:40:10.703 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Unable to load a Windows ACL.
+23:40:10.703 [RDiffCommandExecutor] INFO  - Windows ACLs not supported by filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0
+23:40:10.816 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/dir_inc_check
+23:40:10.816 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/dir_inc_check
+23:40:10.816 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/regfile
+23:40:10.816 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/regfile
+23:40:10.817 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/high_perms_file
+23:40:10.817 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/high_perms_dir
+23:40:10.817 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/high_perms_file
+23:40:10.817 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/high_perms_dir
+23:40:10.817 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Touching C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/symlinked_file1
+23:40:10.817 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0/symlinked_file1
+23:40:10.817 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0
+23:40:10.817 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Deleting C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0
+23:40:10.817 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Removing directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.0
+23:40:10.817 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  -----------------------------------------------------------------
+23:40:10.817 [RDiffCommandExecutor] INFO  - Detected abilities for restore target (read/write) file system:
+23:40:10.817 [RDiffCommandExecutor] INFO  -   Ownership changing                           Off
+23:40:10.818 [RDiffCommandExecutor] INFO  -   Hard linking                                 N/A
+23:40:10.818 [RDiffCommandExecutor] INFO  -   fsync() directories                          Off
+23:40:10.818 [RDiffCommandExecutor] INFO  -   Directory inc permissions                    Off
+23:40:10.818 [RDiffCommandExecutor] INFO  -   High-bit permissions                         On
+23:40:10.818 [RDiffCommandExecutor] INFO  -   Symlink permissions                          Off
+23:40:10.818 [RDiffCommandExecutor] INFO  -   Extended filenames                           On
+23:40:10.818 [RDiffCommandExecutor] INFO  -   Windows reserved filenames                   On
+23:40:10.818 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:10.818 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:10.818 [RDiffCommandExecutor] INFO  -   Windows access control lists                 Off
+23:40:10.818 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:10.818 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:10.819 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:10.819 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:10.819 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:10.819 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:10.819 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Restore: must_escape_dos_devices = 0
+23:40:10.819 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Starting restore of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore as it was as of Thu Dec 29 23:40:08 2016.
+23:40:10.819 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Processing changed file .
+23:40:10.819 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Processing changed file a0
+23:40:10.819 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Making directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/a0
+23:40:10.820 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Processing changed file a0/a1
+23:40:10.820 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Making directory C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/a0/a1
+23:40:10.820 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Processing changed file a0/a1/a2.suf
+23:40:10.820 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Regular copying ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/a0/a1/rdiff-backup.tmp.1
+23:40:10.820 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/a0/a1/rdiff-backup.tmp.1
+23:40:10.820 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Hash 95864bad7ae853b134824907834fe9dd01ff9eea of a0/a1/a2.suf verified
+23:40:10.820 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Copying attributes from ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/a0/a1/rdiff-backup.tmp.1
+23:40:10.919 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/a0/a1/rdiff-backup.tmp.1 to 1483051208
+23:40:10.920 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Renaming C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/a0/a1/rdiff-backup.tmp.1 to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/a0/a1/a2.suf
+23:40:10.920 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Processing changed file a0.suf
+23:40:10.920 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Copying attributes from ('a0', 'a1') to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/a0/a1
+23:40:10.920 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/a0/a1 to 1483051208
+23:40:10.920 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Copying attributes from ('a0',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/a0
+23:40:10.920 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/a0 to 1483051208
+23:40:10.920 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Regular copying ('a0.suf',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.2
+23:40:10.920 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.2
+23:40:10.920 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Hash 502b3970303710df48bdb7205ca2cebc191b8905 of a0.suf verified
+23:40:10.920 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Copying attributes from ('a0.suf',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.2
+23:40:10.920 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.2 to 1483051208
+23:40:10.920 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Renaming C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.2 to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/a0.suf
+23:40:10.921 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Processing changed file b0.suf
+23:40:10.921 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Regular copying ('b0.suf',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.3
+23:40:10.921 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.3
+23:40:10.921 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Hash c8fb0d70892e6547336ea9184d81c3960dede4ba of b0.suf verified
+23:40:10.921 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Copying attributes from ('b0.suf',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.3
+23:40:10.921 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.3 to 1483051208
+23:40:10.921 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Renaming C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.3 to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/b0.suf
+23:40:10.921 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Processing changed file c0.suf
+23:40:10.922 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Regular copying ('c0.suf',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.4
+23:40:10.922 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Writing file object to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.4
+23:40:10.922 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Hash 1b5786eee9316127089891db39030ea278b56b86 of c0.suf verified
+23:40:10.922 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Copying attributes from ('c0.suf',) to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.4
+23:40:10.922 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.4 to 1483051208
+23:40:10.922 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Renaming C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/rdiff-backup.tmp.4 to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore/c0.suf
+23:40:10.922 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Copying attributes from () to C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore
+23:40:10.922 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Setting time of C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore to 1483051208
+23:40:10.922 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Restore finished
+23:40:10.922 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:10 2016  Cleaning up
+23:40:10.925 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 -r 1483051208 C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\target C:\dev\repository\backup\rdigg\RestoreCreatedIncrement-tmp\restore
+23:40:13.486 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\source C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target
+23:40:13.736 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Using rdiff-backup version 1.2.8
+23:40:13.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Making directory C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data
+23:40:13.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Hardlinks disabled by default on Windows
+23:40:13.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Unable to import module xattr.
+23:40:13.737 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\source
+23:40:13.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Unable to import module posix1e from pylibacl package.
+23:40:13.737 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\source
+23:40:13.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\source
+23:40:13.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  -----------------------------------------------------------------
+23:40:13.737 [RDiffCommandExecutor] INFO  - Detected abilities for source (read only) file system:
+23:40:13.737 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:13.737 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:13.737 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:13.737 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:13.737 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:13.737 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:13.737 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:13.737 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:13.737 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:13.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Making directory C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:13.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Touching C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:13.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Deleting C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:13.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Touching C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/uniᄉ
+23:40:13.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Deleting C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/uniᄉ
+23:40:13.737 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Touching C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/:\"
+23:40:13.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Touching C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/A
+23:40:13.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Deleting C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/a
+23:40:13.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Touching C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/foo
+23:40:13.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Deleting C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/foo
+23:40:13.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Making directory C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hl
+23:40:13.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Touching C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hardlinked_file1
+23:40:13.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Hard linking C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hl/hardlinked_file2 to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hardlinked_file1
+23:40:13.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Directories on file system at C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0 are not fsyncable.
+23:40:13.738 [RDiffCommandExecutor] INFO  - Assuming it's unnecessary.
+23:40:13.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Unable to import module xattr.
+23:40:13.738 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:13.738 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Unable to import module posix1e from pylibacl package.
+23:40:13.848 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:13.848 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Unable to load a Windows ACL.
+23:40:13.848 [RDiffCommandExecutor] INFO  - Windows ACLs not supported by filesystem at C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:13.848 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Touching C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/dir_inc_check
+23:40:13.848 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Deleting C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/dir_inc_check
+23:40:13.848 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Touching C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/regfile
+23:40:13.848 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Deleting C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/regfile
+23:40:13.848 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Touching C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_file
+23:40:13.848 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Touching C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_dir
+23:40:13.848 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Deleting C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_file
+23:40:13.848 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Deleting C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_dir
+23:40:13.848 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Touching C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/symlinked_file1
+23:40:13.848 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Deleting C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/symlinked_file1
+23:40:13.848 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:13.849 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Deleting C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:13.849 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Removing directory C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:13.849 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  -----------------------------------------------------------------
+23:40:13.849 [RDiffCommandExecutor] INFO  - Detected abilities for destination (read/write) file system:
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Ownership changing                           Off
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Hard linking                                 N/A
+23:40:13.849 [RDiffCommandExecutor] INFO  -   fsync() directories                          Off
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Directory inc permissions                    Off
+23:40:13.849 [RDiffCommandExecutor] INFO  -   High-bit permissions                         On
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Symlink permissions                          Off
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Extended filenames                           On
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Windows reserved filenames                   On
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Windows access control lists                 Off
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:13.849 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:13.849 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:13.849 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Backup: must_escape_dos_devices = 0
+23:40:13.849 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Making directory C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/increments
+23:40:13.849 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Symbolic links excluded by default on Windows
+23:40:13.849 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Starting mirror C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\source to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target
+23:40:13.849 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Processing changed file .
+23:40:13.849 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Processing changed file a0
+23:40:13.849 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Making directory C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/a0
+23:40:13.850 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Processing changed file a0/a1
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Making directory path C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/increments/a0
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Making directory C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/a0/a1
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Processing changed file a0/a1/a2.suf
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Making directory path C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/increments/a0/a1
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Regular copying ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Writing file object to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Copying attributes from ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Setting time of C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/a0/a1/rdiff-backup.tmp.1 to 1483051213
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Renaming C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/a0/a1/rdiff-backup.tmp.1 to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/a0/a1/a2.suf
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Processing changed file a0.suf
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Copying attributes from ('a0', 'a1') to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/a0/a1
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Setting time of C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/a0/a1 to 1483051213
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Copying attributes from ('a0',) to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/a0
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Setting time of C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/a0 to 1483051213
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Regular copying ('a0.suf',) to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.2
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Writing file object to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.2
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Copying attributes from ('a0.suf',) to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.2
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Setting time of C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.2 to 1483051213
+23:40:13.961 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Renaming C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.2 to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/a0.suf
+23:40:13.962 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Processing changed file b0.suf
+23:40:13.962 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Regular copying ('b0.suf',) to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.3
+23:40:13.962 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Writing file object to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.3
+23:40:13.962 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Copying attributes from ('b0.suf',) to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.3
+23:40:13.962 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Setting time of C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.3 to 1483051213
+23:40:13.962 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Renaming C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.3 to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/b0.suf
+23:40:13.962 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Processing changed file c0.suf
+23:40:13.962 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Regular copying ('c0.suf',) to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.4
+23:40:13.962 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Writing file object to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.4
+23:40:13.962 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Copying attributes from ('c0.suf',) to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.4
+23:40:13.962 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Setting time of C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.4 to 1483051213
+23:40:14.033 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Renaming C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup.tmp.4 to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/c0.suf
+23:40:14.033 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Copying attributes from () to C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target
+23:40:14.033 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:13 2016  Setting time of C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target to 1483051213
+23:40:14.033 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Writing mirror marker C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/current_mirror.2016-12-29T23;05840;05813+01;05800.data
+23:40:14.033 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Cleaning up
+23:40:14.033 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Touching C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data/error_log.2016-12-29T23;05840;05813+01;05800.data
+23:40:14.038 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\source C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target
+23:40:14.038 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 --verify-at-time now C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target
+23:40:14.229 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Using rdiff-backup version 1.2.8
+23:40:14.229 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Using mirror root directory C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target
+23:40:14.229 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Unable to import module xattr.
+23:40:14.229 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data
+23:40:14.229 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Unable to import module posix1e from pylibacl package.
+23:40:14.229 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data
+23:40:14.229 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data
+23:40:14.229 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  -----------------------------------------------------------------
+23:40:14.229 [RDiffCommandExecutor] INFO  - Detected abilities for C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target/rdiff-backup-data (read only) file system:
+23:40:14.229 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:14.229 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:14.229 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:14.229 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:14.229 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:14.229 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:14.230 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:14.230 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:14.230 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:14.230 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Restore: must_escape_dos_devices = 0
+23:40:14.230 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Verified SHA1 digest of a0/a1/a2.suf
+23:40:14.230 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Verified SHA1 digest of a0.suf
+23:40:14.230 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Verified SHA1 digest of b0.suf
+23:40:14.230 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Verified SHA1 digest of c0.suf
+23:40:14.230 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Every file verified successfully.
+23:40:14.230 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:14 2016  Cleaning up
+23:40:14.241 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 --verify-at-time now C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target
+23:40:14.258 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -l --parsable-output C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target
+23:40:14.454 [RDiffCommandExecutor] INFO  - 1483051213 directory
+23:40:14.459 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -l --parsable-output C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target
+23:40:14.477 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup --list-at-time 1483051213 C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target
+23:40:14.700 [RDiffCommandExecutor] INFO  - .
+23:40:14.700 [RDiffCommandExecutor] INFO  - a0
+23:40:14.701 [RDiffCommandExecutor] INFO  - a0/a1
+23:40:14.701 [RDiffCommandExecutor] INFO  - a0/a1/a2.suf
+23:40:14.701 [RDiffCommandExecutor] INFO  - a0.suf
+23:40:14.701 [RDiffCommandExecutor] INFO  - b0.suf
+23:40:14.701 [RDiffCommandExecutor] INFO  - c0.suf
+23:40:14.706 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup --list-at-time 1483051213 C:\dev\repository\backup\rdigg\IncrementFileStructureTest-tmp\target
+23:40:15.625 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\source C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target
+23:40:16.001 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Using rdiff-backup version 1.2.8
+23:40:16.001 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Making directory C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data
+23:40:16.001 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Hardlinks disabled by default on Windows
+23:40:16.001 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Unable to import module xattr.
+23:40:16.002 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\source
+23:40:16.002 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Unable to import module posix1e from pylibacl package.
+23:40:16.002 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\source
+23:40:16.002 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\source
+23:40:16.002 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  -----------------------------------------------------------------
+23:40:16.002 [RDiffCommandExecutor] INFO  - Detected abilities for source (read only) file system:
+23:40:16.002 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:16.002 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:16.002 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:16.003 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:16.003 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:16.003 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:16.003 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:16.003 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:16.003 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:16.003 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Making directory C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:16.003 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Touching C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:16.004 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Deleting C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/5-_ a.snapshot.gz
+23:40:16.004 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Touching C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/uniᄉ
+23:40:16.004 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Deleting C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/uniᄉ
+23:40:16.004 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Touching C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/:\"
+23:40:16.004 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Touching C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/A
+23:40:16.004 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Deleting C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/a
+23:40:16.004 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Touching C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/foo
+23:40:16.004 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Deleting C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/foo
+23:40:16.005 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Making directory C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hl
+23:40:16.005 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:15 2016  Touching C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hardlinked_file1
+23:40:16.005 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Hard linking C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hl/hardlinked_file2 to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/hardlinked_file1
+23:40:16.005 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Directories on file system at C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0 are not fsyncable.
+23:40:16.005 [RDiffCommandExecutor] INFO  - Assuming it's unnecessary.
+23:40:16.005 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Unable to import module xattr.
+23:40:16.005 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:16.005 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Unable to import module posix1e from pylibacl package.
+23:40:16.006 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:16.172 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Unable to load a Windows ACL.
+23:40:16.172 [RDiffCommandExecutor] INFO  - Windows ACLs not supported by filesystem at C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:16.173 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Touching C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/dir_inc_check
+23:40:16.173 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Deleting C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/dir_inc_check
+23:40:16.173 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Touching C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/regfile
+23:40:16.173 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Deleting C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/regfile
+23:40:16.173 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Touching C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_file
+23:40:16.173 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Touching C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_dir
+23:40:16.173 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Deleting C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_file
+23:40:16.173 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Deleting C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/high_perms_dir
+23:40:16.173 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Touching C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/symlinked_file1
+23:40:16.173 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Deleting C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0/symlinked_file1
+23:40:16.173 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:16.174 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Deleting C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:16.174 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Removing directory C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/rdiff-backup.tmp.0
+23:40:16.174 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  -----------------------------------------------------------------
+23:40:16.174 [RDiffCommandExecutor] INFO  - Detected abilities for destination (read/write) file system:
+23:40:16.174 [RDiffCommandExecutor] INFO  -   Ownership changing                           Off
+23:40:16.174 [RDiffCommandExecutor] INFO  -   Hard linking                                 N/A
+23:40:16.174 [RDiffCommandExecutor] INFO  -   fsync() directories                          Off
+23:40:16.174 [RDiffCommandExecutor] INFO  -   Directory inc permissions                    Off
+23:40:16.174 [RDiffCommandExecutor] INFO  -   High-bit permissions                         On
+23:40:16.174 [RDiffCommandExecutor] INFO  -   Symlink permissions                          Off
+23:40:16.174 [RDiffCommandExecutor] INFO  -   Extended filenames                           On
+23:40:16.175 [RDiffCommandExecutor] INFO  -   Windows reserved filenames                   On
+23:40:16.175 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:16.175 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:16.175 [RDiffCommandExecutor] INFO  -   Windows access control lists                 Off
+23:40:16.175 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:16.175 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:16.175 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:16.175 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:16.175 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:16.175 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:16.175 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Backup: must_escape_dos_devices = 0
+23:40:16.176 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Making directory C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/increments
+23:40:16.176 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Symbolic links excluded by default on Windows
+23:40:16.176 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Starting mirror C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\source to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target
+23:40:16.176 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Processing changed file .
+23:40:16.176 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Processing changed file a0
+23:40:16.176 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Making directory C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/a0
+23:40:16.176 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Processing changed file a0/a1
+23:40:16.176 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Making directory path C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/increments/a0
+23:40:16.299 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Making directory C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/a0/a1
+23:40:16.299 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Processing changed file a0/a1/a2.suf
+23:40:16.299 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Making directory path C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/increments/a0/a1
+23:40:16.299 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Regular copying ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:16.299 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Writing file object to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:16.299 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Copying attributes from ('a0', 'a1', 'a2.suf') to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/a0/a1/rdiff-backup.tmp.1
+23:40:16.299 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Setting time of C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/a0/a1/rdiff-backup.tmp.1 to 1483051215
+23:40:16.299 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Renaming C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/a0/a1/rdiff-backup.tmp.1 to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/a0/a1/a2.suf
+23:40:16.300 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Processing changed file a0.suf
+23:40:16.300 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Copying attributes from ('a0', 'a1') to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/a0/a1
+23:40:16.300 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Setting time of C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/a0/a1 to 1483051215
+23:40:16.300 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Copying attributes from ('a0',) to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/a0
+23:40:16.300 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Setting time of C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/a0 to 1483051215
+23:40:16.300 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Regular copying ('a0.suf',) to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.2
+23:40:16.300 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Writing file object to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.2
+23:40:16.300 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Copying attributes from ('a0.suf',) to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.2
+23:40:16.300 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Setting time of C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.2 to 1483051215
+23:40:16.301 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Renaming C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.2 to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/a0.suf
+23:40:16.301 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Processing changed file b0.suf
+23:40:16.301 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Regular copying ('b0.suf',) to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.3
+23:40:16.301 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Writing file object to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.3
+23:40:16.301 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Copying attributes from ('b0.suf',) to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.3
+23:40:16.301 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Setting time of C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.3 to 1483051215
+23:40:16.301 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Renaming C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.3 to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/b0.suf
+23:40:16.301 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Processing changed file c0.suf
+23:40:16.301 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Regular copying ('c0.suf',) to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.4
+23:40:16.301 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Writing file object to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.4
+23:40:16.302 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Copying attributes from ('c0.suf',) to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.4
+23:40:16.302 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Setting time of C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.4 to 1483051215
+23:40:16.391 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Renaming C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup.tmp.4 to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/c0.suf
+23:40:16.391 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Copying attributes from () to C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target
+23:40:16.392 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Setting time of C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target to 1483051215
+23:40:16.392 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Writing mirror marker C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/current_mirror.2016-12-29T23;05840;05815+01;05800.data
+23:40:16.392 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Cleaning up
+23:40:16.392 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Touching C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data/error_log.2016-12-29T23;05840;05815+01;05800.data
+23:40:16.438 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\source C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target
+23:40:16.438 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -v9 --verify-at-time now C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target
+23:40:16.695 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Using rdiff-backup version 1.2.8
+23:40:16.696 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Using mirror root directory C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target
+23:40:16.696 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Unable to import module xattr.
+23:40:16.696 [RDiffCommandExecutor] INFO  - Extended attributes not supported on filesystem at C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data
+23:40:16.696 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Unable to import module posix1e from pylibacl package.
+23:40:16.697 [RDiffCommandExecutor] INFO  - POSIX ACLs not supported on filesystem at C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data
+23:40:16.697 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  escape_dos_devices not required by filesystem at C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data
+23:40:16.697 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  -----------------------------------------------------------------
+23:40:16.697 [RDiffCommandExecutor] INFO  - Detected abilities for C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target/rdiff-backup-data (read only) file system:
+23:40:16.697 [RDiffCommandExecutor] INFO  -   Access control lists                         Off
+23:40:16.697 [RDiffCommandExecutor] INFO  -   Extended attributes                          Off
+23:40:16.697 [RDiffCommandExecutor] INFO  -   Windows access control lists                 On
+23:40:16.697 [RDiffCommandExecutor] INFO  -   Case sensitivity                             Off
+23:40:16.698 [RDiffCommandExecutor] INFO  -   Escape DOS devices                           Off
+23:40:16.698 [RDiffCommandExecutor] INFO  -   Escape trailing spaces                       Off
+23:40:16.698 [RDiffCommandExecutor] INFO  -   Mac OS X style resource forks                Off
+23:40:16.698 [RDiffCommandExecutor] INFO  -   Mac OS X Finder information                  Off
+23:40:16.698 [RDiffCommandExecutor] INFO  - -----------------------------------------------------------------
+23:40:16.698 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Restore: must_escape_dos_devices = 0
+23:40:16.698 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Verified SHA1 digest of a0/a1/a2.suf
+23:40:16.698 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Verified SHA1 digest of a0.suf
+23:40:16.698 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Verified SHA1 digest of b0.suf
+23:40:16.699 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Verified SHA1 digest of c0.suf
+23:40:16.699 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Every file verified successfully.
+23:40:16.699 [RDiffCommandExecutor] INFO  - Thu Dec 29 23:40:16 2016  Cleaning up
+23:40:16.732 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -v9 --verify-at-time now C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target
+23:40:16.787 [RDiffCommandExecutor] INFO  - >> Executing: cmd /c rdiff-backup -l --parsable-output C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target
+23:40:17.017 [RDiffCommandExecutor] INFO  - 1483051215 directory
+23:40:17.021 [RDiffCommandExecutor] INFO  - >> Finished with exitValue 0: cmd /c rdiff-backup -l --parsable-output C:\dev\repository\backup\rdigg\ListCreatedIncrementTest-tmp\target

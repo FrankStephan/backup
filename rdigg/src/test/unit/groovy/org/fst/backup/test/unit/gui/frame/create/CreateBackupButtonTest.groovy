@@ -9,6 +9,7 @@ import java.awt.Color
 
 import javax.swing.DefaultSingleSelectionModel
 import javax.swing.JButton
+import javax.swing.JFrame
 import javax.swing.text.PlainDocument
 
 import org.fst.backup.gui.CommonViewModel
@@ -19,6 +20,7 @@ import org.fst.backup.gui.frame.create.DocumentWriter
 import org.fst.backup.model.CommandLineCallback
 import org.fst.backup.model.Increment
 import org.fst.backup.service.CreateAndVerifyIncrementService
+import org.fst.backup.service.ShutdownSystemService
 import org.fst.backup.test.AbstractTest
 
 class CreateBackupButtonTest extends AbstractTest {
@@ -43,12 +45,7 @@ class CreateBackupButtonTest extends AbstractTest {
 		commonViewModel.consoleDocument = new PlainDocument()
 		createIncrement()
 		commonViewModel.selectedIncrement = new IncrementListEntry('', increment)
-		final swingStub = new StubFor(SwingBuilder.class)
-		swingStub.demand.button(1) { Map it ->
-			return new SwingBuilder().button(it)
-		}
-		swingStub.demand.doOutside (1..2) { Closure it -> it() }
-		swing = swingStub.proxyInstance()
+		swing = new SwingBuilder()
 		button = new CreateBackupButton().createComponent(commonViewModel, swing, onFinish)
 	}
 
@@ -185,7 +182,7 @@ class CreateBackupButtonTest extends AbstractTest {
 			assert false == isCreateBackupServiceInvoked
 
 			it()
-			
+
 			assert cmdOutput.join() == commonViewModel.consoleDocument.getText(0, commonViewModel.consoleDocument.getLength())
 			assert Color.GREEN == commonViewModel.consoleStatusColor
 			assert 'Status: Abgeschlossen' == commonViewModel.consoleStatus
@@ -197,5 +194,31 @@ class CreateBackupButtonTest extends AbstractTest {
 
 		clickButton()
 		assert true == isInvokedOutsideUIThread
+	}
+
+	void testCallsShutdownSystemServiceIfSelected() {
+		JFrame frame
+		MockFor shutdownSystemService = new MockFor(ShutdownSystemService.class)
+		shutdownSystemService.demand.shutdown(1) { JFrame _frame ->
+			assert frame == _frame
+		}
+
+		verifyServiceInvocation()
+		commonViewModel.shutdownSystemOnFinish = true
+		shutdownSystemService.use {
+			frame = swing.frame(title: 'test') { button = new CreateBackupButton().createComponent(commonViewModel, swing, onFinish) }
+			frame.setVisible(true)
+			clickButton()
+		}
+	}
+
+	void testDontCallShutdownSystemServiceIfNotSelected() {
+		MockFor shutdownSystemService = new MockFor(ShutdownSystemService.class)
+		shutdownSystemService.demand.shutdown(0) { JFrame _frame ->
+		}
+
+		verifyServiceInvocation()
+		commonViewModel.shutdownSystemOnFinish = false
+		shutdownSystemService.use { clickButton() }
 	}
 }

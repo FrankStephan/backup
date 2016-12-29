@@ -92,6 +92,7 @@ class ApplicationTest extends AbstractTest {
 			assert null == commonViewModel.restoreDir
 			assert null == commonViewModel.selectedIncrement
 			assert null != commonViewModel.tabsModel
+			assert false == commonViewModel.shutdownSystemOnFinish
 		})
 	}
 

@@ -36,7 +36,9 @@ class LoggerTest {
 
 	@AfterClass
 	public static void afterClass() {
-		System.setProperty('log4j.configurationFile', realLog4jConfigurationFile)
+		if (null != realLog4jConfigurationFile) {
+			System.setProperty('log4j.configurationFile', realLog4jConfigurationFile)
+		}
 		LoggerContext context = LoggerContext.getContext(false)
 		context.stop(5000, TimeUnit.MILLISECONDS)
 		assert new File(path).deleteDir()

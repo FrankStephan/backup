@@ -35,7 +35,7 @@ class RDiffCommandExecutor {
 		return exitValue == 0 ? ProcessStatus.SUCCESS : ProcessStatus.FAILURE
 	}
 
-	void log(Logger logger, String s) {
+	private void log(Logger logger, String s) {
 		logger.info(s)
 	}
 }
