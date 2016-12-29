@@ -4,7 +4,13 @@ import static org.junit.Assert.*
 
 class ShutdownTest {
 
-	void test() {
-		//		fail("Not yet implemented")
+	void testShutdownAfterBackup() {
+		fail("Not yet implemented")
+	}
+
+	void testShutdownAfterRestore() {
+		fail("Not yet implemented")
+
+		// Ensure restore is really completed
 	}
 }
