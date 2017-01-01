@@ -47,7 +47,7 @@ enum UITestStep {
 		void execute(def params, Closure setResult) {
 			def sfc = new SourceFileChooser().createComponent(commonViewModel, swing)
 			def tfc = new TargetFileChooser().createComponent(commonViewModel, swing)
-			def button = new CreateBackupButton().createComponent(commonViewModel, swing, {})
+			def button = new CreateBackupButton().createComponent(commonViewModel, swing, extractOnFinishClosure(params))
 			sfc.selectedFile = sourceDir
 			tfc.selectedFile = targetDir
 			button.doClick()
@@ -91,7 +91,7 @@ enum UITestStep {
 	RESTORE_INCREMENT {
 		void execute(def params, Closure setResult) {
 			JFileChooser fc = new RestoreDirectoryChooser().createComponent(commonViewModel, swing)
-			JButton button = new RestoreBackupButton().createComponent(commonViewModel, swing, {})
+			JButton button = new RestoreBackupButton().createComponent(commonViewModel, swing, extractOnFinishClosure(params))
 
 			fc.selectedFile = restoreDir
 			button.doClick()
@@ -106,6 +106,11 @@ enum UITestStep {
 		}
 	}
 
+	/**
+	 * NOTE: Calls to {@link SwingBuilder#doOutside(groovy.lang.Closure)} open a new thread only when accessed via the event dispatch thread. 
+	 * During test execution there is only the thread started by JUnit. 
+	 * Hence we have a consecutive processing with only one thread and <i>doOutside</i> is ignored.
+	 */
 	abstract void execute(def params = [:], Closure setResult = null)
 
 	static File sourceDir
@@ -128,5 +133,9 @@ enum UITestStep {
 		JList incrementsList = params['incrementsList']
 		int selectionIndex = params['selectionIndex']
 		incrementsList.setSelectedIndex(selectionIndex)
+	}
+
+	private static Closure extractOnFinishClosure(def params) {
+		return params != null ? params['onFinish'] : null
 	}
 }

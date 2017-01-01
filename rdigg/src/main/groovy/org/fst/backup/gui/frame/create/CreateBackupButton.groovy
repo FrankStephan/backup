@@ -29,11 +29,9 @@ class CreateBackupButton {
 						new CreateAndVerifyIncrementService().createAndVerify(commonViewModel.sourceDir, commonViewModel.targetDir, outWriter, errWriter)
 						commonViewModel.consoleStatus = 'Status: Abgeschlossen'
 						commonViewModel.consoleStatusColor = Color.GREEN
-						onFinish.call()
+						onFinish?.call()
 
 						if (commonViewModel.shutdownSystemOnFinish) {
-							println e.getSource()
-							println SwingUtilities.windowForComponent(e.getSource())
 							new ShutdownSystemService().shutdown(SwingUtilities.getWindowAncestor(e.getSource()))
 						}
 					}

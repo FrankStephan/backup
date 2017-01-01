@@ -15,7 +15,8 @@ class ConsolePane {
 
 	JScrollPane createComponent(CommonViewModel commonViewModel, SwingBuilder swing) {
 		TitledBorder consoleScrollPaneBorder = swing.titledBorder()
-		JScrollPane consoleScrollPane = swing.scrollPane(border: consoleScrollPaneBorder) {
+		JScrollPane consoleScrollPane = swing.scrollPane(border: consoleScrollPaneBorder
+		) {
 			JTextArea console = swing.textArea()
 			console.document = commonViewModel.consoleDocument
 			DefaultCaret caret = (DefaultCaret)console.getCaret()

@@ -96,13 +96,8 @@ class TabFactory {
 
 	def conoleTab = {
 		swing.vbox (name: 'Konsole') {
-			hbox() {
-				consoleScrollPane = new ConsolePane().createComponent(commonViewModel, swing)
-			}
-			hbox() {
-				new ShutdownSystemCheckbox().createComponent(commonViewModel, swing)
-				panel()
-			}
+			consoleScrollPane = new ConsolePane().createComponent(commonViewModel, swing)
+			new ShutdownSystemCheckbox().createComponent(commonViewModel, swing)
 		}
 	}
 }

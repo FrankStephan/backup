@@ -13,7 +13,9 @@ import org.fst.backup.gui.CommonViewModel
 class ShutdownSystemCheckbox {
 
 	JCheckBox createComponent(CommonViewModel commonViewModel, SwingBuilder swing) {
-		JCheckBox checkBox = swing.checkBox(text: 'System nach Abschluss herunterfahren')
+		JCheckBox checkBox = swing.checkBox(
+				text: 'System nach Abschluss herunterfahren',
+				)
 		FullBinding binding = swing.bind(source: commonViewModel, sourceProperty: 'shutdownSystemOnFinish', target: checkBox.model, targetProperty: 'selected')
 		checkBox.model.addItemListener(new ItemListener() {
 					void itemStateChanged(ItemEvent e) {

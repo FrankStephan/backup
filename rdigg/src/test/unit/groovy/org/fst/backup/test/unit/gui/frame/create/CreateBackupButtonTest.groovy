@@ -31,7 +31,7 @@ class CreateBackupButtonTest extends AbstractTest {
 	JButton button
 
 	boolean isOnFinishClosureInvoked = false
-	Closure onFinish = { isOnFinishClosureInvoked = true }
+	Closure onFinish
 
 	String[] cmdOutput
 	String[] cmdError
@@ -155,12 +155,15 @@ class CreateBackupButtonTest extends AbstractTest {
 	}
 
 	void testOnFinishClosureIsInvoked() {
+		onFinish = { isOnFinishClosureInvoked = true }
+		button = new CreateBackupButton().createComponent(commonViewModel, swing, onFinish)
 		verifyServiceInvocation()
 		clickButton()
 		assert true == isOnFinishClosureInvoked
 	}
 
 	void testCmdLinesAreWrittenToConsoleAsync() {
+		onFinish = { isOnFinishClosureInvoked = true }
 		cmdOutput = ['Line1', 'Line2', 'Line3'].collect { String it -> it + System.lineSeparator() }
 
 		boolean isCreateBackupServiceInvoked = false
