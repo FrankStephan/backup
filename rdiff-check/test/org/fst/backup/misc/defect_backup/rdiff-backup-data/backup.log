@@ -1,0 +1,78 @@
+Sat Jan 21 15:08:18 2017  Making directory X:\test/rdiff-backup-data/increments
+Sat Jan 21 15:08:18 2017  Symbolic links excluded by default on Windows
+Sat Jan 21 15:08:18 2017  Starting mirror C:\Dev\repositories\backup\rdigg\src\test\common\groovy\res to X:\test
+Sat Jan 21 15:08:19 2017  Processing changed file .
+Sat Jan 21 15:08:19 2017  Processing changed file 1Mb.txt
+Sat Jan 21 15:08:19 2017  Regular copying ('1Mb.txt',) to X:\test/rdiff-backup.tmp.1
+Sat Jan 21 15:08:19 2017  Writing file object to X:\test/rdiff-backup.tmp.1
+Sat Jan 21 15:08:20 2017  Copying attributes from ('1Mb.txt',) to X:\test/rdiff-backup.tmp.1
+Sat Jan 21 15:08:20 2017  Setting time of X:\test/rdiff-backup.tmp.1 to 1485007223
+Sat Jan 21 15:08:20 2017  Warning: unable to set ACL on 'X:\\test/rdiff-backup.tmp.1': (5, 'SetNamedSecurityInfo', 'Zugriff verweigert')
+Sat Jan 21 15:08:20 2017  Renaming X:\test/rdiff-backup.tmp.1 to X:\test/1Mb.txt
+Sat Jan 21 15:08:20 2017  Copying attributes from () to X:\test
+Sat Jan 21 15:08:20 2017  Setting time of X:\test to 1485007430
+Sat Jan 21 15:08:20 2017  Warning: unable to set ACL on 'X:\\test': (5, 'SetNamedSecurityInfo', 'Zugriff verweigert')
+Sat Jan 21 15:08:21 2017  Writing mirror marker X:\test/rdiff-backup-data/current_mirror.2017-01-21T15;05808;05816+01;05800.data
+Sat Jan 21 15:08:21 2017  Cleaning up
+Sat Jan 21 15:08:21 2017  Touching X:\test/rdiff-backup-data/error_log.2017-01-21T15;05808;05816+01;05800.data
+Sat Jan 21 15:09:37 2017  Symbolic links excluded by default on Windows
+Sat Jan 21 15:09:37 2017  Writing mirror marker X:\test/rdiff-backup-data/current_mirror.2017-01-21T15;05809;05833+01;05800.data
+Sat Jan 21 15:09:37 2017  Starting increment operation C:\Dev\repositories\backup\rdigg\src\test\common\groovy\res to X:\test
+Sat Jan 21 15:09:38 2017  Getting signature of 1Mb.txt with blocksize 1024
+Sat Jan 21 15:09:38 2017  Getting delta (with hash) of C:\Dev\repositories\backup\rdigg\src\test\common\groovy\res/1Mb.txt with signature 1Mb.txt
+Sat Jan 21 15:09:38 2017  Processing changed file .
+Sat Jan 21 15:09:39 2017  Incrementing mirror file X:\test
+Sat Jan 21 15:09:39 2017  Touching X:\test/rdiff-backup-data/increments.2017-01-21T15;05808;05816+01;05800.dir
+Sat Jan 21 15:09:39 2017  Copying inc attrs from () to X:\test/rdiff-backup-data/increments.2017-01-21T15;05808;05816+01;05800.dir
+Sat Jan 21 15:09:39 2017  Setting time of X:\test/rdiff-backup-data/increments.2017-01-21T15;05808;05816+01;05800.dir to 1485007430
+Sat Jan 21 15:09:39 2017  Processing changed file 1Mb.txt
+Sat Jan 21 15:09:39 2017  Writing file object to X:\test/rdiff-backup.tmp.1
+Sat Jan 21 15:09:40 2017  Copying attributes from ('1Mb.txt',) to X:\test/rdiff-backup.tmp.1
+Sat Jan 21 15:09:40 2017  Setting time of X:\test/rdiff-backup.tmp.1 to 1485007763
+Sat Jan 21 15:09:40 2017  Warning: unable to set ACL on 'X:\\test/rdiff-backup.tmp.1': (5, 'SetNamedSecurityInfo', 'Zugriff verweigert')
+Sat Jan 21 15:09:40 2017  Incrementing mirror file X:\test/1Mb.txt
+Sat Jan 21 15:09:40 2017  Writing delta X:\test/rdiff-backup.tmp.1 from X:\test/1Mb.txt -> X:\test/rdiff-backup-data/increments/1Mb.txt.2017-01-21T15;05808;05816+01;05800.diff.gz
+Sat Jan 21 15:09:40 2017  Getting signature of rdiff-backup.tmp.1 with blocksize 1024
+Sat Jan 21 15:09:41 2017  Writing file object to X:\test/rdiff-backup-data/increments/1Mb.txt.2017-01-21T15;05808;05816+01;05800.diff.gz
+Sat Jan 21 15:09:41 2017  Copying inc attrs from ('1Mb.txt',) to X:\test/rdiff-backup-data/increments/1Mb.txt.2017-01-21T15;05808;05816+01;05800.diff.gz
+Sat Jan 21 15:09:41 2017  Setting time of X:\test/rdiff-backup-data/increments/1Mb.txt.2017-01-21T15;05808;05816+01;05800.diff.gz to 1485007223
+Sat Jan 21 15:09:41 2017  Renaming X:\test/rdiff-backup.tmp.1 to X:\test/1Mb.txt
+Sat Jan 21 15:09:42 2017  Copying attributes from () to X:\test
+Sat Jan 21 15:09:42 2017  Setting time of X:\test to 1485007430
+Sat Jan 21 15:09:42 2017  Writing mirror_metadata diff
+Sat Jan 21 15:09:43 2017  Deleting X:\test/rdiff-backup-data/mirror_metadata.2017-01-21T15;05808;05816+01;05800.snapshot.gz
+Sat Jan 21 15:09:43 2017  Deleting X:\test/rdiff-backup-data/current_mirror.2017-01-21T15;05808;05816+01;05800.data
+Sat Jan 21 15:09:43 2017  Cleaning up
+Sat Jan 21 15:09:43 2017  Touching X:\test/rdiff-backup-data/error_log.2017-01-21T15;05809;05833+01;05800.data
+Sat Jan 21 15:10:26 2017  Symbolic links excluded by default on Windows
+Sat Jan 21 15:10:26 2017  Writing mirror marker X:\test/rdiff-backup-data/current_mirror.2017-01-21T15;05810;05823+01;05800.data
+Sat Jan 21 15:10:26 2017  Starting increment operation C:\Dev\repositories\backup\rdigg\src\test\common\groovy\res to X:\test
+Sat Jan 21 15:10:28 2017  Getting signature of 1Mb.txt with blocksize 1024
+Sat Jan 21 15:10:28 2017  Getting delta (with hash) of C:\Dev\repositories\backup\rdigg\src\test\common\groovy\res/1Mb.txt with signature 1Mb.txt
+Sat Jan 21 15:10:28 2017  Processing changed file .
+Sat Jan 21 15:10:28 2017  Incrementing mirror file X:\test
+Sat Jan 21 15:10:28 2017  Touching X:\test/rdiff-backup-data/increments.2017-01-21T15;05809;05833+01;05800.dir
+Sat Jan 21 15:10:28 2017  Copying inc attrs from () to X:\test/rdiff-backup-data/increments.2017-01-21T15;05809;05833+01;05800.dir
+Sat Jan 21 15:10:28 2017  Setting time of X:\test/rdiff-backup-data/increments.2017-01-21T15;05809;05833+01;05800.dir to 1485007430
+Sat Jan 21 15:10:28 2017  Processing changed file 1Mb.txt
+Sat Jan 21 15:10:29 2017  Writing file object to X:\test/rdiff-backup.tmp.1
+Sat Jan 21 15:10:29 2017  Copying attributes from ('1Mb.txt',) to X:\test/rdiff-backup.tmp.1
+Sat Jan 21 15:10:29 2017  Setting time of X:\test/rdiff-backup.tmp.1 to 1485007814
+Sat Jan 21 15:10:29 2017  Warning: unable to set ACL on 'X:\\test/rdiff-backup.tmp.1': (5, 'SetNamedSecurityInfo', 'Zugriff verweigert')
+Sat Jan 21 15:10:29 2017  Incrementing mirror file X:\test/1Mb.txt
+Sat Jan 21 15:10:29 2017  Writing delta X:\test/rdiff-backup.tmp.1 from X:\test/1Mb.txt -> X:\test/rdiff-backup-data/increments/1Mb.txt.2017-01-21T15;05809;05833+01;05800.diff.gz
+Sat Jan 21 15:10:29 2017  Getting signature of rdiff-backup.tmp.1 with blocksize 1024
+Sat Jan 21 15:10:30 2017  Writing file object to X:\test/rdiff-backup-data/increments/1Mb.txt.2017-01-21T15;05809;05833+01;05800.diff.gz
+Sat Jan 21 15:10:30 2017  Copying inc attrs from ('1Mb.txt',) to X:\test/rdiff-backup-data/increments/1Mb.txt.2017-01-21T15;05809;05833+01;05800.diff.gz
+Sat Jan 21 15:10:30 2017  Setting time of X:\test/rdiff-backup-data/increments/1Mb.txt.2017-01-21T15;05809;05833+01;05800.diff.gz to 1485007763
+Sat Jan 21 15:10:30 2017  Renaming X:\test/rdiff-backup.tmp.1 to X:\test/1Mb.txt
+Sat Jan 21 15:10:30 2017  Copying attributes from () to X:\test
+Sat Jan 21 15:10:30 2017  Setting time of X:\test to 1485007430
+Sat Jan 21 15:10:31 2017  Writing mirror_metadata diff
+Sat Jan 21 15:10:32 2017  Deleting X:\test/rdiff-backup-data/mirror_metadata.2017-01-21T15;05809;05833+01;05800.snapshot.gz
+Sat Jan 21 15:10:32 2017  Deleting X:\test/rdiff-backup-data/current_mirror.2017-01-21T15;05809;05833+01;05800.data
+Sat Jan 21 15:10:32 2017  Cleaning up
+Sat Jan 21 15:10:32 2017  Touching X:\test/rdiff-backup-data/error_log.2017-01-21T15;05810;05823+01;05800.data
+Sat Jan 21 15:20:34 2017  Symbolic links excluded by default on Windows
+Sat Jan 21 15:20:34 2017  Writing mirror marker X:\test/rdiff-backup-data/current_mirror.2017-01-21T15;05820;05831+01;05800.data
+Sat Jan 21 15:20:35 2017  Starting increment operation C:\Dev\repositories\backup\rdigg\src\test\common\groovy\res to X:\test
