@@ -3,6 +3,9 @@ package org.fst.backup.misc
 import static org.junit.Assert.*
 
 import org.fst.backup.model.ProcessStatus
+import org.fst.backup.rdiff.RDiffCommandBuilder
+import org.fst.backup.rdiff.RDiffCommandElement
+import org.fst.backup.rdiff.RDiffCommandExecutor
 import org.fst.backup.rdiff.RDiffCommands
 import org.fst.backup.test.TestCallback
 
@@ -15,7 +18,7 @@ class RDiffCheck extends GroovyTestCase {
 	static final String FILE1_NAME = 'File1.txt'
 	static final String FILE2_NAME = 'File2.txt'
 
-	private static final boolean DEBUG = true
+	private static final boolean DEBUG = false
 
 	File file1
 	File file2
@@ -42,29 +45,23 @@ class RDiffCheck extends GroovyTestCase {
 		assert output.contains('Using rdiff-backup version 1.2.8')
 		assert ProcessStatus.SUCCESS == processStatus
 	}
-
-	void testBackupWithLostConnectionToRemoteDir() {
-
-		use GradleTestProperties
-
-		new File(SOURCE_DIR).mkdirs()
-		file1 = new File(SOURCE_DIR, FILE1_NAME)
-
-		for (int i=0; i<10000; i++) {
-			file1 << ('Line x' + i + System.lineSeparator())
-		}
-		System.err.println('File created.')
-		Process process = rdiffCommands.backup(new File(SOURCE_DIR), new File(TARGET_DIR))
-		process.consumeProcessOutput(System.out, System.err)
-		System.err.println('Sleep.')
-		Thread.sleep(300L)
-		System.err.println('Woke up.')
-		System.err.println(new File(TARGET_DIR).deleteDir())
-		process.waitFor()
-	}
-
-	void testCallbackIsReturnedLineByLine() {
-		fail() // Could be better to test it inside the real application since the streams are pipelined via log4j2
+	
+	void testNoCompareINodeOptionIsRequiredToBackupOnlyChangedFiles() {
+		createTwoIncrements()
+		
+		String compareCommand = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND) + ' --compare ' + SOURCE_DIR + ' ' + TARGET_DIR 
+		new RDiffCommandExecutor().execute(compareCommand, outputCallback)
+		generateProcessResult()
+		assert output.contains('changed: ' + FILE1_NAME)
+		assert output.contains('changed: ' + FILE2_NAME)
+		
+		resetCommandLineCallbacks()
+		file1.append('I have changed')
+		String compareNoINodeCommand = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.NO_COMPARE_INODE) + ' --compare ' + SOURCE_DIR + ' ' + TARGET_DIR 
+		new RDiffCommandExecutor().execute(compareNoINodeCommand, outputCallback)
+		generateProcessResult()
+		assert output.contains('changed: ' + FILE1_NAME)
+		assert !output.contains('changed: ' + FILE2_NAME)
 	}
 
 	void testVerifyConsistentBackupDir() {

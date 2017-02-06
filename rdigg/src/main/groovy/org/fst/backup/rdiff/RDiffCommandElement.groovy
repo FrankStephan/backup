@@ -2,6 +2,7 @@ package org.fst.backup.rdiff
 
 enum RDiffCommandElement {
 	RDIFF_COMMAND('rdiff-backup'),
+	NO_COMPARE_INODE('--no-compare-inode'),
 	VERSION_ARG('--version'),
 	HIGHEST_VERBOSITY('-v9'),
 	LIST_INCREMENTS_ARG('-l'),

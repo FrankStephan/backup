@@ -53,6 +53,10 @@ class CreateIncrementTest extends AbstractIntegrationTest {
 		assertRDiffIndicatesVerificationSuccess()
 		assertRDiffIndicatesVerificationFail()
 	}
+	
+	void testBackupOnlyConsidersChangedFiles() {
+		fail()
+	}
 
 	private removeFileContent(String sourcePath) {
 		new File(sourcePath, 'a0.suf').text = ''
