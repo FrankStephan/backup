@@ -47,10 +47,11 @@ class RDiffCommandsTest extends AbstractTest  {
 	}
 
 	void testBackup() {
-		expectedCommand = 'cmd /c rdiff-backup -v9 ' + sourceDir.absolutePath + ' ' + targetDir.absolutePath
-		defineExpectedCommandBuilderInvocation('cmd /c rdiff-backup -v9',
+		expectedCommand = 'cmd /c rdiff-backup -v9 --no-compare-inode ' + sourceDir.absolutePath + ' ' + targetDir.absolutePath
+		defineExpectedCommandBuilderInvocation('cmd /c rdiff-backup -v9 --no-compare-inode',
 				RDiffCommandElement.RDIFF_COMMAND,
-				RDiffCommandElement.HIGHEST_VERBOSITY
+				RDiffCommandElement.HIGHEST_VERBOSITY,
+				RDiffCommandElement.NO_COMPARE_INODE
 				)
 
 		expectedOutputCallback = new TestCallback()

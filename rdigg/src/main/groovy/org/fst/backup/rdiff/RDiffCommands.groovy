@@ -14,7 +14,7 @@ class RDiffCommands {
 	}
 
 	ProcessStatus backup(File sourceDir, File targetDir, CommandLineCallback outputCallback=null, CommandLineCallback errorCallback=null) {
-		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.HIGHEST_VERBOSITY)
+		def command = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.HIGHEST_VERBOSITY, RDiffCommandElement.NO_COMPARE_INODE)
 		command = command + ' ' + sourceDir.absolutePath + ' ' + targetDir.absolutePath
 		executor.execute(command, outputCallback, errorCallback)
 	}
