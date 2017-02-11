@@ -45,19 +45,25 @@ class RDiffCheck extends GroovyTestCase {
 		assert output.contains('Using rdiff-backup version 1.2.8')
 		assert ProcessStatus.SUCCESS == processStatus
 	}
-	
+
 	void testNoCompareINodeOptionIsRequiredToBackupOnlyChangedFiles() {
 		createTwoIncrements()
-		
-		String compareCommand = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND) + ' --compare ' + SOURCE_DIR + ' ' + TARGET_DIR 
+
+		String compareCommand = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND) + ' --compare ' + SOURCE_DIR + ' ' + TARGET_DIR
 		new RDiffCommandExecutor().execute(compareCommand, outputCallback)
 		generateProcessResult()
 		assert output.contains('changed: ' + FILE1_NAME)
 		assert output.contains('changed: ' + FILE2_NAME)
-		
+
 		resetCommandLineCallbacks()
-		file1.append('I have changed')
-		String compareNoINodeCommand = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.NO_COMPARE_INODE) + ' --compare ' + SOURCE_DIR + ' ' + TARGET_DIR 
+		file1.append(' I have changed ')
+		new RDiffCommandExecutor().execute(compareCommand, outputCallback)
+		assert output.contains('changed: ' + FILE1_NAME)
+		assert output.contains('changed: ' + FILE2_NAME)
+
+		resetCommandLineCallbacks()
+		file1.append('I have changed again ')
+		String compareNoINodeCommand = new RDiffCommandBuilder().build(RDiffCommandElement.RDIFF_COMMAND, RDiffCommandElement.NO_COMPARE_INODE) + ' --compare ' + SOURCE_DIR + ' ' + TARGET_DIR
 		new RDiffCommandExecutor().execute(compareNoINodeCommand, outputCallback)
 		generateProcessResult()
 		assert output.contains('changed: ' + FILE1_NAME)

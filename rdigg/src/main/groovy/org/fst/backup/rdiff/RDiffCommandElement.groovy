@@ -5,7 +5,6 @@ enum RDiffCommandElement {
 	NO_COMPARE_INODE('--no-compare-inode'),
 	VERSION_ARG('--version'),
 	HIGHEST_VERBOSITY('-v9'),
-	NO_COMPARE_INODE('--no-compare-inode'),
 	LIST_INCREMENTS_ARG('-l'),
 	PARSABLE_OUTPUT_ARG('--parsable-output'),
 	LIST_AT_TIME_ARG('--list-at-time'),
