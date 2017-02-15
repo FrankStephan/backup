@@ -6,7 +6,7 @@ import groovy.io.FileType
 class Check extends GroovyTestCase {
 
 	File root = new File('root')
-
+	
 	void setUp() {
 		super.setUp()
 		root.mkdir()
