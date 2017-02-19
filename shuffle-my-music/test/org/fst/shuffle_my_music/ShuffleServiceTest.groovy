@@ -29,7 +29,7 @@ class ShuffleServiceTest extends GroovyTestCase {
 			}
 			'a0.mp3'('') // 2
 			'b0.mp3'('') // 3
-			'c0.jpg'('') // 4
+			'c0.unknown'('') // 4
 		}
 	}
 

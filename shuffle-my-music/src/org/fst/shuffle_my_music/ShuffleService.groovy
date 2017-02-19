@@ -9,6 +9,8 @@ class ShuffleService {
 	List<Path> selectRandomSongs(Path mediaLibraryDir, int approximateTotalSongCount, int numberOfSelectedSongs) {
 		int[] randoms = new RandomService().randoms(approximateTotalSongCount, numberOfSelectedSongs)
 		Arrays.sort(randoms)
+		println randoms
+
 		int highestIndex = randoms[randoms.length-1]
 		Queue indexQueue = (randoms as List) as Queue
 
@@ -22,7 +24,7 @@ class ShuffleService {
 				Path path = pathIterator.next()
 				if (path.toFile().isFile()) {
 					if (index == nextSongIndex) {
-						if (Files.probeContentType(path).startsWith('audio')) {
+						if (Files.probeContentType(path)?.startsWith('audio')) {
 							songs << path
 						}
 						if (!indexQueue.isEmpty()) {

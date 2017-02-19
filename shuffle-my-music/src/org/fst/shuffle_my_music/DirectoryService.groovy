@@ -5,15 +5,15 @@ import java.nio.file.Path
 
 class DirectoryService {
 
-	boolean createDirAndIndexList(List<Path> songs, Path targetDir) {
+	void createDirAndIndexList(List<Path> songs, Path targetDir) {
 		if (Files.exists(targetDir)) {
 			targetDir.toFile().deleteDir()
 		}
 		Files.createDirectories(targetDir)
+		Files.createFile(targetDir.resolve('songs.txt'))
+		Files.write(targetDir.resolve('songs.txt'), songs*.toString())
 		songs.each {
 			Files.copy(it, targetDir.resolve(it.fileName))
 		}
-		Files.createFile(targetDir.resolve('songs.txt'))
-		Files.write(targetDir.resolve('songs.txt'), songs*.toString())
 	}
 }
