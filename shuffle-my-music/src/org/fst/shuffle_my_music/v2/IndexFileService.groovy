@@ -1,14 +1,14 @@
-package org.fst.shuffle_my_music
+package org.fst.shuffle_my_music.v2
 
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.stream.Stream
 
-class IndexService {
+class IndexFileService {
 
 	void createIndexIfNecessary(Path mediaLibrary) {
 		Path indexPath = mediaLibrary.resolve('index.txt')
-		if (!Files.exists(indexPath)) {
+		if (!Files.exists(indexPath )) {
 			createIndex(indexPath, mediaLibrary)
 		} else {
 			List<String> indexList = Files.readAllLines(indexPath)

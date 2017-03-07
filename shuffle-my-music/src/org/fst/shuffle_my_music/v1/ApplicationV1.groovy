@@ -1,11 +1,13 @@
-package org.fst.shuffle_my_music
+package org.fst.shuffle_my_music.v1
 
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class Application {
+import org.fst.shuffle_my_music.v2.DirectoryService;
 
-	public Application(String mediaLibraryPath, String targetPath, int approximateTotalSongCount, int numberOfSelectedSongs) {
+class ApplicationV1 {
+
+	public ApplicationV1(String mediaLibraryPath, String targetPath, int approximateTotalSongCount, int numberOfSelectedSongs) {
 		println 'Everyday I\'m Shuffling'
 		List<Path> songs = new ShuffleService().selectRandomSongs(Paths.get(mediaLibraryPath), approximateTotalSongCount, numberOfSelectedSongs)
 		println songs

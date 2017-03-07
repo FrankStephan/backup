@@ -1,8 +1,10 @@
-package org.fst.shuffle_my_music
+package org.fst.shuffle_my_music.v1
 
 import java.nio.file.Files
 import java.nio.file.Path
 import java.util.stream.Stream
+
+import org.fst.shuffle_my_music.v2.RandomService;
 
 class ShuffleService {
 

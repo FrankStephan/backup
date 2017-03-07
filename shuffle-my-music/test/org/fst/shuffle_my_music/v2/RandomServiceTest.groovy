@@ -1,6 +1,9 @@
-package org.fst.shuffle_my_music
+package org.fst.shuffle_my_music.v2
 
 import static org.junit.Assert.*
+
+import org.fst.shuffle_my_music.v2.RandomService;
+
 import groovy.mock.interceptor.MockFor
 
 class RandomServiceTest extends GroovyTestCase {

@@ -1,4 +1,4 @@
-package org.fst.shuffle_my_music
+package org.fst.shuffle_my_music.v2
 
 import java.nio.file.Files
 import java.nio.file.Path

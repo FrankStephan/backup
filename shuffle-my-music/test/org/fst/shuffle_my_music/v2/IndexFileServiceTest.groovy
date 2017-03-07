@@ -1,4 +1,4 @@
-package org.fst.shuffle_my_music
+package org.fst.shuffle_my_music.v2
 
 import static org.junit.Assert.*
 
@@ -6,7 +6,9 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class IndexServiceTest extends GroovyTestCase {
+import org.fst.shuffle_my_music.v2.IndexFileService;
+
+class IndexFileServiceTest extends GroovyTestCase {
 
 	Path testDir = Paths.get(this.getClass().getSimpleName())
 	Path targetDir = testDir.resolve('shuffle-my-music')
@@ -35,12 +37,12 @@ class IndexServiceTest extends GroovyTestCase {
 	void testCreatesIndexIfIndexFileDoesNotExist() {
 		Path indexPath = mediaLibraryDir.resolve('index.txt')
 		assert !Files.exists(indexPath)
-		new IndexService().createIndexIfNecessary(mediaLibraryDir)
+		new IndexFileService().createIndexIfNecessary(mediaLibraryDir)
 		assert Files.exists(indexPath)
 	}
 
 	void testIndexContainsAllAudioFiles() {
-		new IndexService().createIndexIfNecessary(mediaLibraryDir)
+		new IndexFileService().createIndexIfNecessary(mediaLibraryDir)
 		Path indexPath = mediaLibraryDir.resolve('index.txt')
 		assert [
 			'>>Start',
@@ -58,7 +60,7 @@ class IndexServiceTest extends GroovyTestCase {
 			mediaLibraryDir.resolve('a0/a1/a2.mp3').toString(),
 			mediaLibraryDir.resolve('a0.mp3').toString()
 		])
-		new IndexService().createIndexIfNecessary(mediaLibraryDir)
+		new IndexFileService().createIndexIfNecessary(mediaLibraryDir)
 		assert [
 			'>>Start',
 			mediaLibraryDir.resolve('a0/a1/a2.mp3').toString(),
@@ -68,11 +70,11 @@ class IndexServiceTest extends GroovyTestCase {
 		]== Files.readAllLines(indexPath)
 	}
 
-	void testDoesNothingIfIndexIsComplete() {
+	void testDoNothingIfIndexIsComplete() {
 		Path indexPath = Files.createFile(mediaLibraryDir.resolve('index.txt'))
 		List lines = ['>>Start', 'Some kind of monster.mp3' , '<<End']
 		Files.write(indexPath, lines)
-		new IndexService().createIndexIfNecessary(mediaLibraryDir)
+		new IndexFileService().createIndexIfNecessary(mediaLibraryDir)
 		assert lines == Files.readAllLines(indexPath)
 	}
 }

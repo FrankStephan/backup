@@ -1,4 +1,4 @@
-package org.fst.shuffle_my_music
+package org.fst.shuffle_my_music.v1
 
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
@@ -6,7 +6,11 @@ import groovy.mock.interceptor.MockFor
 import java.nio.file.Path
 import java.nio.file.Paths
 
-class ApplicationTest extends GroovyTestCase {
+import org.fst.shuffle_my_music.v1.ApplicationV1
+import org.fst.shuffle_my_music.v1.ShuffleService
+import org.fst.shuffle_my_music.v2.DirectoryService;
+
+class ApplicationV1Test extends GroovyTestCase {
 
 	void testServiceAreInvokedWithCorrectParams() {
 		String mediaLibraryPath = 'path/to/mediaLibrary'
@@ -16,6 +20,7 @@ class ApplicationTest extends GroovyTestCase {
 
 		MockFor shuffleService = new MockFor(ShuffleService)
 		MockFor directoryService = new MockFor(DirectoryService)
+
 
 		List<Path> songs = []
 		shuffleService.demand.selectRandomSongs(1) { Path _mediaLibraryDir, int _approximateTotalSongCount, int _numberOfSelectedSongs ->
@@ -32,7 +37,7 @@ class ApplicationTest extends GroovyTestCase {
 
 		shuffleService.use {
 			directoryService.use {
-				new Application(mediaLibraryPath, targetPath, approximateTotalSongCount, numberOfSelectedSongs)
+				new ApplicationV1(mediaLibraryPath, targetPath, approximateTotalSongCount, numberOfSelectedSongs)
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package org.fst.shuffle_my_music
+package org.fst.shuffle_my_music.v1
 
 import java.nio.file.Files
 import java.nio.file.Path
@@ -32,7 +32,7 @@ class IntegrationTest extends GroovyTestCase {
 
 
 	void testSongsInTargetDirMatchIndexList() {
-		new Application(mediaLibraryPath, targetPath, 5, 3)
+		new ApplicationV1(mediaLibraryPath, targetPath, 5, 3)
 		Path targetDir = Paths.get(targetPath)
 		List<String> fileNames =  targetDir.toFile().list() as List
 		assert fileNames.size() >= 2
@@ -48,5 +48,4 @@ class IntegrationTest extends GroovyTestCase {
 			}
 		}
 	}
-
 }
