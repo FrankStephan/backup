@@ -4,12 +4,12 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.util.stream.Stream
 
-import org.fst.shuffle_my_music.v2.RandomService;
+import org.fst.shuffle_my_music.v2.DistinctRandomService;
 
 class ShuffleService {
 
 	List<Path> selectRandomSongs(Path mediaLibraryDir, int approximateTotalSongCount, int numberOfSelectedSongs) {
-		int[] randoms = new RandomService().randoms(approximateTotalSongCount, numberOfSelectedSongs)
+		int[] randoms = new DistinctRandomService().randoms(approximateTotalSongCount, numberOfSelectedSongs)
 		Arrays.sort(randoms)
 		println randoms
 

@@ -6,7 +6,7 @@ import groovy.mock.interceptor.MockFor
 import java.nio.file.Path
 import java.nio.file.Paths
 
-import org.fst.shuffle_my_music.v2.RandomService
+import org.fst.shuffle_my_music.v2.DistinctRandomService
 
 class ShuffleServiceTest extends GroovyTestCase {
 
@@ -144,7 +144,7 @@ class ShuffleServiceTest extends GroovyTestCase {
 	}
 
 	private void mockRandomService() {
-		randomService = new MockFor(RandomService.class)
+		randomService = new MockFor(DistinctRandomService.class)
 		randomService.demand.randoms(1) {int _approximateTotalSongCount, int _numberOfSelectedSongs ->
 			assert approximateTotalSongCount == _approximateTotalSongCount
 			assert numberOfSelectedSongs == _numberOfSelectedSongs

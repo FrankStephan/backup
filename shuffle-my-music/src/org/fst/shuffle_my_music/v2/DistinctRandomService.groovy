@@ -1,14 +1,14 @@
 package org.fst.shuffle_my_music.v2
 
 
-class RandomService {
+class DistinctRandomService {
 
-	int[] randoms(int approximateTotalSongCount, int numberOfSelectedSongs) {
+	int[] randoms(int bound, int randomCount) {
 		Random random = new Random()
 		def randoms = []
-		numberOfSelectedSongs.times {
+		randomCount.times {
 			while (true) {
-				int nextRandom = random.nextInt(approximateTotalSongCount)
+				int nextRandom = random.nextInt(bound)
 				if (!randoms.contains(nextRandom)) {
 					randoms << nextRandom
 					break
