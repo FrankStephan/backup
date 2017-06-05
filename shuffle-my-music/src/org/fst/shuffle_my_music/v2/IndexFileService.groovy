@@ -21,8 +21,8 @@ class IndexFileService {
 
 		return Files.readAllLines(indexPath).size() - 2
 	}
-
-	Path[] retrieveIndexEntries(Path mediaLibraryPath, int[] indices) {
+	
+	Path[] retrieveIndexEntries(Path mediaLibraryPath, Integer[] indices) {
 		List<Path> indexEntries = []
 		if (indices != null) {
 			Path indexPath = mediaLibraryPath.resolve('index.txt')

@@ -72,7 +72,7 @@ class IndexFileServiceTest extends AbstractTest {
 			mediaLibraryPath.resolve('b0.mp3').toString(),
 			'<<End'
 		])
-		assert []== new IndexFileService().retrieveIndexEntries(mediaLibraryPath, [] as int[])
+		assert []== new IndexFileService().retrieveIndexEntries(mediaLibraryPath, [] as Integer[])
 	}
 
 	void testRetrievesIndexEntries() {
@@ -81,7 +81,7 @@ class IndexFileServiceTest extends AbstractTest {
 		Path indexPath = mediaLibraryPath.resolve('index.txt')
 
 		assert [mediaLibraryPath.resolve('a0/a1/a2.mp3'), mediaLibraryPath.resolve('b0.mp3')]==
-		new IndexFileService().retrieveIndexEntries(mediaLibraryPath, [0, 2] as int[])
+		new IndexFileService().retrieveIndexEntries(mediaLibraryPath, [0, 2] as Integer[])
 	}
 
 	void testSkipIndexEntriesOutOfRange() {
@@ -94,6 +94,6 @@ class IndexFileServiceTest extends AbstractTest {
 		])
 
 		assert [mediaLibraryPath.resolve('a0/a1/a2.mp3')]==
-		new IndexFileService().retrieveIndexEntries(mediaLibraryPath, [0, 2] as int[])
+		new IndexFileService().retrieveIndexEntries(mediaLibraryPath, [0, 2] as Integer[])
 	}
 }

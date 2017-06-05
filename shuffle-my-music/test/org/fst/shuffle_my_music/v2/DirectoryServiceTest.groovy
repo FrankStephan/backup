@@ -15,13 +15,13 @@ class DirectoryServiceTest extends AbstractTest {
 	}
 
 	void testAllSongsAreCopied() {
-		List songs = [path('a0.mp3'), path('a0/a1/a2.mp3')]
+		List<Path> songs = [path('a0.mp3'), path('a0/a1/a2.mp3')]
 		new DirectoryService().createDirAndIndexList(songs, targetPath)
 		assert (targetPath.toFile().list() as List).containsAll(['a0.mp3', 'a2.mp3'])
 	}
 
 	void testTargetDirIsClearedIfExisting() {
-		List songs = [path('a0.mp3')]
+		List<Path> songs = [path('a0.mp3')]
 		new DirectoryService().createDirAndIndexList(songs, targetPath)
 		songs = [path('a0/a1/a2.mp3')]
 		new DirectoryService().createDirAndIndexList([], targetPath)
@@ -29,7 +29,7 @@ class DirectoryServiceTest extends AbstractTest {
 	}
 
 	void testSongListIsCreated() {
-		List songs = [path('a0.mp3'), path('a0/a1/a2.mp3')]
+		List<Path> songs = [path('a0.mp3'), path('a0/a1/a2.mp3')]
 		new DirectoryService().createDirAndIndexList(songs, targetPath)
 		assert (targetPath.toFile().list() as List).contains('songs.txt')
 		assert songs*.toString() == Files.readAllLines(targetPath.resolve('songs.txt'))
