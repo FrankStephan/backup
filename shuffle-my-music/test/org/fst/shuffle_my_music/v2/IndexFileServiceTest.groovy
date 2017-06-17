@@ -76,7 +76,6 @@ class IndexFileServiceTest extends AbstractTest {
 	}
 
 	void testRetrievesIndexEntries() {
-
 		new IndexFileService().createIndexIfNecessary(mediaLibraryPath)
 		Path indexPath = mediaLibraryPath.resolve('index.txt')
 
@@ -95,5 +94,12 @@ class IndexFileServiceTest extends AbstractTest {
 
 		assert [mediaLibraryPath.resolve('a0/a1/a2.mp3')]==
 		new IndexFileService().retrieveIndexEntries(mediaLibraryPath, [0, 2] as Integer[])
+	}
+
+	void testIndexFileHasUTF8Encoding() {
+		Files.createFile(mediaLibraryPath.resolve('#+´´[]&% $�!~,;_.mp3'))
+		new IndexFileService().createIndexIfNecessary(mediaLibraryPath)
+		Path indexPath = mediaLibraryPath.resolve('index.txt')
+		new IndexFileService().retrieveIndexEntries(mediaLibraryPath, [0, 1, 2, 3] as Integer[])
 	}
 }

@@ -5,56 +5,84 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.stream.Stream
 
+
 class IndexFileService {
 
 	int createIndexIfNecessary(Path mediaLibraryPath) {
 		Path indexPath = mediaLibraryPath.resolve('index.txt')
-		if (!Files.exists(indexPath )) {
-			createIndex(indexPath, mediaLibraryPath)
+		int indexSize = -1
+		if (!Files.exists(indexPath)) {
+			indexSize = createIndex(indexPath, mediaLibraryPath)
 		} else {
-			List<String> indexList = Files.readAllLines(indexPath)
-			if ('>>Start' != indexList[0] || '<<End' != indexList.last()) {
+			println 'Calculating index size'
+			long currentMillis = System.currentTimeMillis()
+			String[] indexEntries = Files.readAllLines(indexPath).toArray()
+			if ('>>Start' != indexEntries[0] || '<<End' != indexEntries[indexEntries.length-1]) {
 				Files.delete(indexPath)
-				createIndex(indexPath, mediaLibraryPath)
+				indexSize = createIndex(indexPath, mediaLibraryPath)
+			} else {
+				indexSize =  removeStartAndEndTags(indexEntries).length
 			}
+			println 'Calculated index size ' + indexSize + ' within ' + ((System.currentTimeMillis() - currentMillis) / 1000d) + ' sec'
 		}
 
-		return Files.readAllLines(indexPath).size() - 2
+		return indexSize
 	}
-	
+
 	Path[] retrieveIndexEntries(Path mediaLibraryPath, Integer[] indices) {
-		List<Path> indexEntries = []
+		println 'Retrieving index entries'
+		long currentMillis = System.currentTimeMillis()
+		List<Path> selectedPaths = []
 		if (indices != null) {
-			Path indexPath = mediaLibraryPath.resolve('index.txt')
-			List<String> lines = Files.readAllLines(indexPath)
-			removeStartAndEndTags(lines)
-			indices.each {int index ->
-				if (index < lines.size) {
-					indexEntries.add(Paths.get(lines.get(index)))
+			Path[] indexPaths = indexPaths(mediaLibraryPath)
+			indices.each { int index ->
+				if (index < indexPaths.length) {
+					selectedPaths.add(indexPaths[index])
 				}
 			}
 		}
-		return indexEntries as Path[]
+		println 'Calculated indexEntries within ' + ((System.currentTimeMillis() - currentMillis) / 1000d) + ' sec'
+		return selectedPaths as Path[]
 	}
 
-	private removeStartAndEndTags(List lines) {
-		lines.remove(0)
-		lines.remove(lines.size()-1)
+	private Path[] indexPaths(Path mediaLibraryPath) {
+		Path indexPath = mediaLibraryPath.resolve('index.txt')
+		String[] indexEntries = Files.readAllLines(indexPath).toArray()
+		String[] trimmedIndexEntries = removeStartAndEndTags(indexEntries)
+		return toPaths(trimmedIndexEntries)
 	}
 
-	private createIndex(Path indexPath, Path mediaLibraryPath) {
+	private String[] removeStartAndEndTags(String[] indexEntries) {
+		return indexEntries[1..indexEntries.length-2]
+	}
+
+	private Path[] toPaths(String[] indexEntries) {
+		indexEntries.collect { String pathName -> Paths.get(pathName) }
+	}
+
+	private int createIndex(Path indexPath, Path mediaLibraryPath) {
+		int indexSize = 0
 		Files.createFile(indexPath)
 		Stream<Path> stream = Files.walk(mediaLibraryPath)
 
 		File indexFile = indexPath.toFile()
 		indexFile << '>>Start'
-		stream.each { Path it ->
-			if (Files.probeContentType(it)?.startsWith('audio')) {
-				indexFile << System.lineSeparator()
-				indexFile << it.toString()
+
+		try {
+			stream.each { Path it ->
+				if (Files.probeContentType(it)?.startsWith('audio')) {
+					indexFile << System.lineSeparator()
+					indexFile << new String(it.toString().bytes, 'UTF-8')
+					indexSize++
+				}
 			}
+
+			indexFile << System.lineSeparator()
+			indexFile << '<<End'
+		} finally {
+			stream.close()
 		}
-		indexFile << System.lineSeparator()
-		indexFile << '<<End'
+
+		return indexSize
 	}
 }

@@ -4,7 +4,6 @@ import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 
 import java.nio.file.Path
-import java.util.List;
 
 class ShuffleSongsServiceTest extends AbstractTest {
 
@@ -19,7 +18,7 @@ class ShuffleSongsServiceTest extends AbstractTest {
 		directoryService.use {
 			indexFileService.use {
 				distinctRandomService.use {
-					new ShuffleSongsService().createShuffledSongList(mediaLibraryPath, numberOfSongs)
+					new ShuffleSongsService().createShuffledSongList(mediaLibraryPath, targetPath, numberOfSongs)
 				}
 			}
 		}
@@ -38,7 +37,7 @@ class ShuffleSongsServiceTest extends AbstractTest {
 		indexFileService.demand.retrieveIndexEntries(1) {Path mediaLibraryPath, int[] indices ->
 			return [] as Path[]
 		}
-		
+
 		directoryService.demand.createDirAndIndexList(1) {List<Path> songs, Path targetDir ->
 		}
 
@@ -57,7 +56,7 @@ class ShuffleSongsServiceTest extends AbstractTest {
 		indexFileService.demand.retrieveIndexEntries(1) {Path mediaLibraryPath, int[] indices ->
 			return [] as Path[]
 		}
-		
+
 		directoryService.demand.createDirAndIndexList(1) {List<Path> songs, Path targetDir ->
 		}
 
@@ -76,7 +75,7 @@ class ShuffleSongsServiceTest extends AbstractTest {
 			assert this.randoms == indices
 			return [mediaLibraryPath.resolve('a0/a1/a2.mp3'), mediaLibraryPath.resolve('b0.mp3')] as Path[]
 		}
-		
+
 		directoryService.demand.createDirAndIndexList(1) {List<Path> songs, Path targetDir ->
 		}
 
@@ -113,7 +112,7 @@ class ShuffleSongsServiceTest extends AbstractTest {
 		}
 
 		directoryService.demand.createDirAndIndexList(1) {List<Path> songs, Path targetDir ->
-			assert mediaLibraryPath.resolve('shuffle-my-music') == targetDir
+			assert this.targetPath == targetDir
 		}
 
 		invokeService()
