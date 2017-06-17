@@ -70,7 +70,7 @@ class IndexFileService {
 
 		try {
 			stream.each { Path it ->
-				if (Files.probeContentType(it)?.startsWith('audio')) {
+				if (checkAudioContent(it)) {
 					indexFile << System.lineSeparator()
 					indexFile << new String(it.toString().bytes, 'UTF-8')
 					indexSize++
@@ -84,5 +84,16 @@ class IndexFileService {
 		}
 
 		return indexSize
+	}
+
+	private boolean checkAudioContent(Path path) {
+		String contentType = Files.probeContentType(path)
+		if (contentType != null) {
+			boolean isAudio = contentType.startsWith('audio')
+			boolean isNotPlayList = !contentType.equals('audio/x-mpegurl')
+			return isAudio && isNotPlayList
+		} else {
+			return false
+		}
 	}
 }

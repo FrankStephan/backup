@@ -85,12 +85,7 @@ class IndexFileServiceTest extends AbstractTest {
 
 	void testSkipIndexEntriesOutOfRange() {
 		Path indexPath = mediaLibraryPath.resolve('index.txt')
-		Files.write(indexPath, [
-			'>>Start',
-			mediaLibraryPath.resolve('a0/a1/a2.mp3').toString(),
-			mediaLibraryPath.resolve('a0.mp3').toString(),
-			'<<End'
-		])
+		Files.write(indexPath, ['>>Start', mediaLibraryPath.resolve('a0/a1/a2.mp3').toString(), mediaLibraryPath.resolve('a0.mp3').toString(), '<<End'])
 
 		assert [mediaLibraryPath.resolve('a0/a1/a2.mp3')]==
 		new IndexFileService().retrieveIndexEntries(mediaLibraryPath, [0, 2] as Integer[])
@@ -99,7 +94,15 @@ class IndexFileServiceTest extends AbstractTest {
 	void testIndexFileHasUTF8Encoding() {
 		Files.createFile(mediaLibraryPath.resolve('#+´´[]&% $�!~,;_.mp3'))
 		new IndexFileService().createIndexIfNecessary(mediaLibraryPath)
-		Path indexPath = mediaLibraryPath.resolve('index.txt')
 		new IndexFileService().retrieveIndexEntries(mediaLibraryPath, [0, 1, 2, 3] as Integer[])
+		// Last line will throw an exception if not UTF-8
+	}
+
+	void testPlayListAreSkipped() {
+		Files.createFile(mediaLibraryPath.resolve('playlist.m3u'))
+		new IndexFileService().createIndexIfNecessary(mediaLibraryPath)
+		Path indexPath = mediaLibraryPath.resolve('index.txt')
+		List<String> indexEntries = Files.readAllLines(indexPath)
+		assert !indexEntries.any { it.contains('playlist.m3u') }
 	}
 }
