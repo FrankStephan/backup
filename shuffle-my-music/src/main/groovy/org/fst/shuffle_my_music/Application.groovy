@@ -2,6 +2,8 @@ package org.fst.shuffle_my_music
 
 import java.nio.file.Paths
 
+import org.fst.shuffle_my_music.service.ShuffleSongsService;
+
 
 class Application {
 

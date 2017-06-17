@@ -1,4 +1,4 @@
-package org.fst.shuffle_my_music
+package org.fst.shuffle_my_music.service
 
 import static org.junit.Assert.*
 
@@ -6,7 +6,8 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.util.stream.Stream
 
-import org.fst.shuffle_my_music.DirectoryService;
+import org.fst.shuffle_my_music.AbstractTest;
+import org.fst.shuffle_my_music.service.DirectoryService;
 
 class DirectoryServiceTest extends AbstractTest {
 

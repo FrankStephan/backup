@@ -1,14 +1,15 @@
-package org.fst.shuffle_my_music
+package org.fst.shuffle_my_music.service
 
 import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 
 import java.nio.file.Path
 
-import org.fst.shuffle_my_music.DirectoryService;
-import org.fst.shuffle_my_music.DistinctRandomService;
-import org.fst.shuffle_my_music.IndexFileService;
-import org.fst.shuffle_my_music.ShuffleSongsService;
+import org.fst.shuffle_my_music.AbstractTest;
+import org.fst.shuffle_my_music.service.DirectoryService;
+import org.fst.shuffle_my_music.service.DistinctRandomService;
+import org.fst.shuffle_my_music.service.IndexFileService;
+import org.fst.shuffle_my_music.service.ShuffleSongsService;
 
 class ShuffleSongsServiceTest extends AbstractTest {
 
