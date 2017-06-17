@@ -13,7 +13,6 @@ class Check extends GroovyTestCase {
 		println Files.probeContentType(Paths.get('X:\\Media\\Musik\\Booka_Shade-More-(KMCD001)-WEB-2010-320\\00-booka_shade-more-(kmcd001)-web-2010.m3u'))
 		println Files.probeContentType(Paths.get('X:\\Media\\Musik\\Booka_Shade-More-(KMCD001)-WEB-2010-320\\00-booka_shade-more-(kmcd001)-web-2010.nfo'))
 		println Files.probeContentType(Paths.get('X:\\Media\\Musik\\Booka_Shade-More-(KMCD001)-WEB-2010-320\\01-booka_shade-havanna_sex_dwarf.mp3'))
-		fail()
 		//		String targetDir  = 'X:/Media/shuffly-my-music-test'
 		//		Path targetPath = Paths.get(targetDir)
 		//		Files.createDirectories(targetPath)
