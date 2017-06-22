@@ -46,7 +46,7 @@ class Frame {
 							textField(text: bind(target: viewModel, targetProperty: 'managementFactor', converter: new StringFloatConverter().stringToFloat))
 							separator()
 							separator()
-							label('PERT-Schätzung', horizontalAlignment: SwingConstants.RIGHT)
+							label('PERT-Sch\u00E4tzung', horizontalAlignment: SwingConstants.RIGHT)
 							textField(text: bind(source: viewModel, sourceProperty: 'pertCalculation'), editable: false, background: Color.WHITE)
 						}
 						p.setBorder(new EmptyBorder(spacing, spacing, spacing, spacing))
