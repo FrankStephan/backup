@@ -1,4 +1,4 @@
-package org.fst.shuffle_my_music.v2
+package org.fst.shuffle_my_music.service
 
 
 class DistinctRandomService {
