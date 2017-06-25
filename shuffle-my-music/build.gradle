@@ -1,5 +1,6 @@
 apply plugin: 'eclipse'
 apply plugin: 'groovy'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 dependencies {
 	compile group: 'commons-io', name: 'commons-io', version: '2.4'
@@ -17,8 +18,42 @@ buildscript {
 			url 'https://plugins.gradle.org/m2/'
 		}
 	}
+	dependencies {
+		classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.4'
+	}
 }
 
 test {
 	systemProperty "file.encoding", "utf-8"
 }
+
+ext {
+	jarName = 'shuffle-my-music'
+}
+
+shadowJar {
+	baseName = jarName
+	classifier = null
+	version = null
+ }
+
+shadowJar.doFirst {
+	clean
+	test
+ }
+ shadowJar.dependsOn clean, test
+ 
+ jar {
+	 manifest {
+		 attributes 'Main-Class': 'org.fst.shuffle_my_music.Main'
+	 }
+ }
+
+ task createBatch() << {
+	 String batchFileName = jarName + '.bat'
+	 String command = 'start javaw -jar ' + deliveryDir + jarName + '.jar' + ' -s \"\" -t \"\"'
+	 if (!libsDir.exists()) {
+		 libsDir.mkdirs()
+	 }
+	 File bat = new File(libsDir, batchFileName) << command
+ }
