@@ -22,7 +22,7 @@ class Frame {
 	def spacing = 10
 
 
-	JFrame createComponent(SwingBuilder swing, ViewModel viewModel) {
+	JFrame createComponent(SwingBuilder swing, ViewModel viewModel, Float defaultProbability, Float defaultManagementFactor) {
 
 		JFrame f
 		swing.edt {
@@ -41,13 +41,16 @@ class Frame {
 							label('Pessimistisch', horizontalAlignment: SwingConstants.RIGHT)
 							textField(text: bind(target: viewModel, targetProperty: 'pessimistic', converter: new StringFloatConverter().stringToFloat))
 							label('Sicherheit', horizontalAlignment: SwingConstants.RIGHT)
-							textField(text: bind(target: viewModel, targetProperty: 'probability', converter: new StringFloatConverter().stringToFloat))
+							textField(id:'probability', text: bind(target: viewModel, targetProperty: 'probability', converter: new StringFloatConverter().stringToFloat))
 							label('Managementfaktor', horizontalAlignment: SwingConstants.RIGHT)
-							textField(text: bind(target: viewModel, targetProperty: 'managementFactor', converter: new StringFloatConverter().stringToFloat))
+							textField(id:'managementFactor', text: bind(target: viewModel, targetProperty: 'managementFactor', converter: new StringFloatConverter().stringToFloat))
 							separator()
 							separator()
 							label('PERT-Sch\u00E4tzung', horizontalAlignment: SwingConstants.RIGHT)
 							textField(text: bind(source: viewModel, sourceProperty: 'pertCalculation'), editable: false, background: Color.WHITE)
+							
+							probability.text = String.valueOf(defaultProbability)
+							managementFactor.text = String.valueOf(defaultManagementFactor)
 						}
 						p.setBorder(new EmptyBorder(spacing, spacing, spacing, spacing))
 					}
