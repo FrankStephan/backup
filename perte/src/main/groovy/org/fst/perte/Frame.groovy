@@ -2,17 +2,16 @@ package org.fst.perte
 
 import groovy.swing.SwingBuilder
 
-import java.awt.Color;
-import java.awt.Font;
-import java.beans.PropertyChangeEvent;
+import java.awt.Color
+import java.beans.PropertyChangeEvent
 import java.beans.PropertyChangeListener
+
+import javax.swing.ImageIcon
 import javax.swing.JFrame
 import javax.swing.JPanel
-import javax.swing.JTextField
 import javax.swing.SwingConstants
 import javax.swing.WindowConstants
 import javax.swing.border.EmptyBorder
-import javax.swing.event.DocumentListener
 
 
 class Frame {
@@ -31,6 +30,7 @@ class Frame {
 					title: 'pertE',
 					size: [width, height],
 					locationRelativeTo: null,
+					iconImage: new ImageIcon(getClass().getResource('/icon.png')).getImage(),
 					defaultCloseOperation: WindowConstants.EXIT_ON_CLOSE) {
 						JPanel p = panel() {
 							gridLayout(cols: 2, rows: 7, vgap: spacing, hgap: spacing)
