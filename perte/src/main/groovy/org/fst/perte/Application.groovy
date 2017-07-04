@@ -10,10 +10,7 @@ class Application {
 	
 	Application() {
 		def viewModel = new ViewModel()
-		
-		new Frame().createComponent(new SwingBuilder(), viewModel).setVisible(true)
-		viewModel.probability = DEFAULT_PROBABILITY
-		viewModel.managementFactor = DEFAULT_MANAGEMENT_FACTOR
+		new Frame().createComponent(new SwingBuilder(), viewModel, DEFAULT_PROBABILITY, DEFAULT_MANAGEMENT_FACTOR).setVisible(true)
 	} 
 
 }

@@ -2,17 +2,16 @@ package org.fst.perte
 
 import groovy.swing.SwingBuilder
 
-import java.awt.Color;
-import java.awt.Font;
-import java.beans.PropertyChangeEvent;
+import java.awt.Color
+import java.beans.PropertyChangeEvent
 import java.beans.PropertyChangeListener
+
+import javax.swing.ImageIcon
 import javax.swing.JFrame
 import javax.swing.JPanel
-import javax.swing.JTextField
 import javax.swing.SwingConstants
 import javax.swing.WindowConstants
 import javax.swing.border.EmptyBorder
-import javax.swing.event.DocumentListener
 
 
 class Frame {
@@ -22,7 +21,7 @@ class Frame {
 	def spacing = 10
 
 
-	JFrame createComponent(SwingBuilder swing, ViewModel viewModel) {
+	JFrame createComponent(SwingBuilder swing, ViewModel viewModel, Float defaultProbability, Float defaultManagementFactor) {
 
 		JFrame f
 		swing.edt {
@@ -31,6 +30,7 @@ class Frame {
 					title: 'pertE',
 					size: [width, height],
 					locationRelativeTo: null,
+					iconImage: new ImageIcon(getClass().getResource('/icon.png')).getImage(),
 					defaultCloseOperation: WindowConstants.EXIT_ON_CLOSE) {
 						JPanel p = panel() {
 							gridLayout(cols: 2, rows: 7, vgap: spacing, hgap: spacing)
@@ -41,13 +41,16 @@ class Frame {
 							label('Pessimistisch', horizontalAlignment: SwingConstants.RIGHT)
 							textField(text: bind(target: viewModel, targetProperty: 'pessimistic', converter: new StringFloatConverter().stringToFloat))
 							label('Sicherheit', horizontalAlignment: SwingConstants.RIGHT)
-							textField(text: bind(target: viewModel, targetProperty: 'probability', converter: new StringFloatConverter().stringToFloat))
+							textField(id:'probability', text: bind(target: viewModel, targetProperty: 'probability', converter: new StringFloatConverter().stringToFloat))
 							label('Managementfaktor', horizontalAlignment: SwingConstants.RIGHT)
-							textField(text: bind(target: viewModel, targetProperty: 'managementFactor', converter: new StringFloatConverter().stringToFloat))
+							textField(id:'managementFactor', text: bind(target: viewModel, targetProperty: 'managementFactor', converter: new StringFloatConverter().stringToFloat))
 							separator()
 							separator()
 							label('PERT-Sch\u00E4tzung', horizontalAlignment: SwingConstants.RIGHT)
 							textField(text: bind(source: viewModel, sourceProperty: 'pertCalculation'), editable: false, background: Color.WHITE)
+							
+							probability.text = String.valueOf(defaultProbability)
+							managementFactor.text = String.valueOf(defaultManagementFactor)
 						}
 						p.setBorder(new EmptyBorder(spacing, spacing, spacing, spacing))
 					}
