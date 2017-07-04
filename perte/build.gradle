@@ -18,6 +18,8 @@ repositories {
 	mavenCentral()
 }
 
+targetCompatibility = 1.6
+
 dependencies {
 	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
     testCompile 'junit:junit:4.12'
@@ -37,10 +39,11 @@ launch4j {
 	mainClassName = 'org.fst.perte.Main'
 	outfile = 'pertE.exe'
 	language = 'GERMAN'
+	icon = '../resources/main/icon.ico'
 }
 
 task deliver(type: Exec, dependsOn: ['clean', 'test', 'createExe']) {
 	String srcDir = buildDir.absolutePath + '\\' + launch4j.outputDir
-	String targetDir =  deliveryDir + '\\' + displayName
+	String targetDir =  'C:\\Users\\Frank\\Google Drive\\CAESAR\\CAESAR 2\\ProjektManagement\\' + displayName
 	commandLine 'xcopy', '/Y', '/S', '/I', srcDir, targetDir
 }
