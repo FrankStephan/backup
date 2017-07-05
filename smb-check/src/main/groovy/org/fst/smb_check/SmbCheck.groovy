@@ -4,7 +4,7 @@ import jcifs.smb.NtlmPasswordAuthentication
 import jcifs.smb.SmbFile
 
 jcifs.Config.setProperty( 'jcifs.netbios.wins', '192.168.0.2' )
-NtlmPasswordAuthentication auth = new NtlmPasswordAuthentication(null, 'admin', 'yc#8hj@Ku7Gyv1')
+NtlmPasswordAuthentication auth = new NtlmPasswordAuthentication(null, 'admin', '')
 SmbFile smbFile = new SmbFile('smb://READYSHARE/all/Media/shuffle-my-music/songs.txt', auth)
 InputStream fis = smbFile.getInputStream()
 
