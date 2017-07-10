@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.frozen_foo.myapplication.R;
+import com.frozen_foo.shuffle_my_music_app.R;
 
 /**
  * Created by Frank on 04.07.2017.
