@@ -1,36 +1,21 @@
 package com.frozen_foo.shuffle_my_music_app.security;
 
 import android.content.Context;
-import android.os.Build;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyProperties;
-import android.support.annotation.RequiresApi;
 import android.util.Base64;
-
-import com.frozen_foo.shuffle_my_music_app.MainActivity;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.KeyStore;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-import java.security.spec.RSAKeyGenParameterSpec;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
@@ -64,8 +49,6 @@ public class CryptoService {
     }
 
     public String decrypt(String encodedString) throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, IOException, InvalidKeyException {
-
-
 		Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
 		cipher.init(Cipher.DECRYPT_MODE, keyStoreService.privateKey());
 

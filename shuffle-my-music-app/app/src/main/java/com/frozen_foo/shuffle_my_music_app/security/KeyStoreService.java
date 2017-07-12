@@ -1,12 +1,9 @@
 package com.frozen_foo.shuffle_my_music_app.security;
 
-import android.security.KeyPairGeneratorSpec;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
-import android.support.annotation.NonNull;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -16,15 +13,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.security.SecureRandom;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-import java.security.spec.AlgorithmParameterSpec;
-import java.security.spec.RSAKeyGenParameterSpec;
-
-import javax.security.auth.x500.X500Principal;
 
 /**
  * Created by Frank on 10.07.2017.
@@ -54,7 +44,7 @@ public class KeyStoreService {
 			NoSuchProviderException, NoSuchAlgorithmException, InvalidAlgorithmParameterException {
 
 
-		ndroidKeyStore.deleteEntry(ALIAS);
+		androidKeyStore.deleteEntry(ALIAS);
 
 		if (!androidKeyStore.containsAlias(ALIAS)) {
 			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(
