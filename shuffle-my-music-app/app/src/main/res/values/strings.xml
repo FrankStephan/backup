@@ -4,9 +4,13 @@
     <string name="settings">Einstellungen</string>
     <string name="accept">OK</string>
     <string name="cancel">Abbrechen</string>
+    <string name="smb_ip">IP</string>
     <string name="smb_name">Name</string>
     <string name="smb_password">Passwort</string>
     <string name="store_credentials_success">Anmeldedaten wurden erfolgreich gespeichert.</string>
     <string name="createShuffledList">Neue Zufallsliste erstellen</string>
     <string name="selectFavorites">Favoriten auswählen</string>
+    <string name="errorEmptySmbParameters">Alle Werte müssen angegeben werden.</string>
+    <string name="error">Fehler</string>
+
 </resources>
