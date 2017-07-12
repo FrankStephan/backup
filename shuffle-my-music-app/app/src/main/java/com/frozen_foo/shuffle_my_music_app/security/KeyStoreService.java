@@ -42,10 +42,6 @@ public class KeyStoreService {
 
 	private void createKeyPairIfNecessary(KeyStore androidKeyStore) throws KeyStoreException,
 			NoSuchProviderException, NoSuchAlgorithmException, InvalidAlgorithmParameterException {
-
-
-		androidKeyStore.deleteEntry(ALIAS);
-
 		if (!androidKeyStore.containsAlias(ALIAS)) {
 			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(
 					KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
@@ -56,16 +52,8 @@ public class KeyStoreService {
 							.setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
 							.setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_OAEP)
 							.build());
-			KeyPair keyPair = keyPairGenerator.generateKeyPair();
+			keyPairGenerator.generateKeyPair();
 		}
-	}
-
-	public KeyStore keyStore() {
-		return androidKeyStore;
-	}
-
-	public String alias() {
-		return ALIAS;
 	}
 
 	public PublicKey publicKey() throws UnrecoverableEntryException, NoSuchAlgorithmException,
