@@ -32,8 +32,8 @@ public class CryptoService {
 
     KeyStoreService keyStoreService;
 
-    public CryptoService(KeyStoreService keyStoreService) {
-        this.keyStoreService = keyStoreService;
+    public CryptoService() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException {
+        this.keyStoreService = new KeyStoreService();
     }
 
     public String encrypt(String original) throws UnrecoverableEntryException,

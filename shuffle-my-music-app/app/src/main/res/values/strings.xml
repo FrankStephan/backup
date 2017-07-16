@@ -12,5 +12,7 @@
     <string name="selectFavorites">Favoriten auswählen</string>
     <string name="errorEmptySmbParameters">Alle Werte müssen angegeben werden.</string>
     <string name="error">Fehler</string>
+    <string name="bye">Bye bye</string>
+    <string name="shuffleMyMusicDir">Shuffle My Music Verzeichnis</string>
 
 </resources>
