@@ -15,22 +15,13 @@ public class StoragePermissionService {
 	private static final int EXTERNAL_STORAGE_PERMISSION_REQUEST = 0;
 
 	public void requestExternalStorageAccess(Activity activity) {
-		if (ContextCompat.checkSelfPermission(activity,
-				Manifest.permission.READ_EXTERNAL_STORAGE)
-				!= PackageManager.PERMISSION_GRANTED) {
-			ActivityCompat.requestPermissions(activity,
-					new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-					EXTERNAL_STORAGE_PERMISSION_REQUEST);
-		}
+		ActivityCompat.requestPermissions(activity,
+				new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+				EXTERNAL_STORAGE_PERMISSION_REQUEST);
 	}
 
-	public boolean checkPermissionResult(int requestCode, String permissions[], int[]
-			grantResults) {
-		switch (requestCode) {
-			case EXTERNAL_STORAGE_PERMISSION_REQUEST:
-				return grantResults.length > 0 && grantResults[0] == PackageManager
-						.PERMISSION_GRANTED;
-			default: return false;
-		}
+	public boolean hasExternalStoragePermission(Activity activity) {
+		return ContextCompat.checkSelfPermission(activity,
+				Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
 	}
 }

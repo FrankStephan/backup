@@ -14,5 +14,6 @@
     <string name="error">Fehler</string>
     <string name="bye">Bye bye</string>
     <string name="shuffleMyMusicDir">Shuffle My Music Verzeichnis</string>
+    <string name="playPause">Abspielen</string>
 
 </resources>

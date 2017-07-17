@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.frozen_foo.shuffle_my_music_app.local.LocalDirectoryTask;
-import com.frozen_foo.shuffle_my_music_app.smb.RemoteDirectoryTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,39 +27,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         modelItems = new RowModel[5];
-        modelItems[0] = new RowModel("pizza", false);
-        modelItems[1] = new RowModel("burger", true);
-        modelItems[2] = new RowModel("olives", true);
-        modelItems[3] = new RowModel("orange", false);
-        modelItems[4] = new RowModel("tomato", true);
+        modelItems[0] = new RowModel("pizza", "pizza", false);
+        modelItems[1] = new RowModel("burger", "burger",true);
+        modelItems[2] = new RowModel("olives", "olives",true);
+        modelItems[3] = new RowModel("orange", "orange",false);
+        modelItems[4] = new RowModel("tomato", "tomato",true);
 
 
-		RowAdapter adapter = new RowAdapter(this, modelItems);
+		SelectableRowAdapter adapter = new SelectableRowAdapter(this, modelItems);
 		lv.setAdapter(adapter);
-	}
-
-
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater menuInflater = getMenuInflater();
-		menuInflater.inflate(R.menu.menubar, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.settings:
-				openSettings();
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-		}
-	}
-
-	private void openSettings() {
-		Intent intent = new Intent(this, SmbConnectionActivity.class);
-		startActivity(intent);
 	}
 }

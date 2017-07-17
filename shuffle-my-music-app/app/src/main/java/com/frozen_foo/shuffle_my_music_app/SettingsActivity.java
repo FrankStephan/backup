@@ -9,25 +9,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_app.security.CryptoService;
-import com.frozen_foo.shuffle_my_music_app.security.KeyStoreService;
 import com.frozen_foo.shuffle_my_music_app.settings.Settings;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsService;
+import com.frozen_foo.shuffle_my_music_app.shuffle_list_activity.ShuffleListActivity;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.cert.CertificateException;
-
-public class SmbConnectionActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_smb_connection);
+		setContentView(R.layout.activity_settings);
 		Settings settings = new SettingsService().readSettings(getApplicationContext());
 		try {
 			CryptoService cryptoService = new CryptoService();
@@ -81,7 +74,7 @@ public class SmbConnectionActivity extends AppCompatActivity {
 			}
 			new SettingsService().writeSettings(new Settings(encryptedIp, encryptedName,
 					encryptedPassword, encryptedShuffleMyMusicDir), getApplicationContext());
-			openMain();
+			openShuffleListActivity();
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.errorEmptySmbParameters).setTitle(R.string.error);
@@ -90,13 +83,13 @@ public class SmbConnectionActivity extends AppCompatActivity {
 		}
 	}
 
-	private void openMain() {
-		Intent intent = new Intent(this, MainActivity.class);
+	private void openShuffleListActivity() {
+		Intent intent = new Intent(this, ShuffleListActivity.class);
 		startActivity(intent);
 	}
 
 	public void cancel(View view) {
 		Toast.makeText(getApplicationContext(), R.string.bye, Toast.LENGTH_SHORT).show();
-		openMain();
+		openShuffleListActivity();
 	}
 }
