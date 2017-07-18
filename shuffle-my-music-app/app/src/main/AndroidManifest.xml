@@ -12,8 +12,8 @@
 
         <activity android:name=".MainActivity">
         </activity>
-        <activity android:name=".SmbConnectionActivity"/>
-        <activity android:name=".ShuffleListActivity">
+        <activity android:name=".SettingsActivity"/>
+        <activity android:name=".shuffle_list_activity.ShuffleListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

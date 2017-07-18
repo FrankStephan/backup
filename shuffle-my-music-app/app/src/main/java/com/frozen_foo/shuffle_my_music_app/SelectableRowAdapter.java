@@ -11,16 +11,14 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.frozen_foo.shuffle_my_music_app.R;
-
 /**
  * Created by Frank on 04.07.2017.
  */
 
-public class RowAdapter extends ArrayAdapter<RowModel> {
+public class SelectableRowAdapter extends ArrayAdapter<RowModel> {
 
-    public RowAdapter(@NonNull Context context, RowModel[] resource) {
-        super(context, R.layout.row, resource);
+    public SelectableRowAdapter(@NonNull Context context, RowModel[] resource) {
+        super(context, R.layout.selectable_row, resource);
     }
 
     @NonNull
@@ -28,7 +26,7 @@ public class RowAdapter extends ArrayAdapter<RowModel> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Context context = super.getContext();
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-        convertView = inflater.inflate(R.layout.row, parent, false);
+        convertView = inflater.inflate(R.layout.selectable_row, parent, false);
         TextView name = (TextView) convertView.findViewById(R.id.textView1);
         CheckBox cb = (CheckBox) convertView.findViewById(R.id.checkBox1);
         RowModel rowModel = (RowModel)getItem(position);
