@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,15 +18,16 @@ import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.RowModel;
 import com.frozen_foo.shuffle_my_music_app.SettingsActivity;
 import com.frozen_foo.shuffle_my_music_app.local.StoragePermissionService;
+import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayer;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class ShuffleListActivity extends AppCompatActivity {
 	private static String SHUFFLE_MY_MUSIC_FOLDER = "_shuffle-my-music";
-	private MediaPlayer mediaPlayer;
+	private ListPlayer listPlayer;
 	private File[] files;
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -55,7 +54,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 		startActivity(intent);
 	}
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,7 +64,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private void requestPermissionOrShowList() {
 		if (new StoragePermissionService().hasExternalStoragePermission(this)) {
-			list();
+			loadListAndPlayer();
 		} else {
 			new StoragePermissionService().requestExternalStorageAccess(this);
 		}
@@ -74,67 +72,59 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-			@NonNull int[] grantResults) {
+										   @NonNull int[] grantResults) {
 		if (new StoragePermissionService().hasExternalStoragePermission(this)) {
-			list();
+			loadListAndPlayer();
 		}
 	}
 
-	private void list() {
+	private void loadListAndPlayer() {
 		File shuffleMyMusicDir = new File(Environment.getExternalStorageDirectory(),
 				SHUFFLE_MY_MUSIC_FOLDER);
 		if (shuffleMyMusicDir.exists()) {
-
-			ListView shuffleList = (ListView) findViewById(R.id.shuffleList);
-
-			files = shuffleMyMusicDir.listFiles();
-			RowModel[] rows = new RowModel[files.length];
-			for (int i = 0; i < files.length; i++) {
-				rows[i] = new RowModel(files[i].getName(), files[i].getPath(), false);
-			}
-
-			RowAdapter adapter = new RowAdapter(this, rows);
-			shuffleList.setAdapter(adapter);
-
+			loadList(shuffleMyMusicDir);
+			loadPlayer();
 		}
+	}
+
+	private void loadList(File shuffleMyMusicDir) {
+		ListView shuffleList = (ListView) findViewById(R.id.shuffleList);
+
+		files = shuffleMyMusicDir.listFiles();
+		Arrays.sort(files);
+		RowModel[] rows = new RowModel[files.length];
+		for (int i = 0; i < files.length; i++) {
+			rows[i] = new RowModel(files[i].getName(), files[i].getPath(), false);
+		}
+
+		RowAdapter adapter = new RowAdapter(this, rows);
+		shuffleList.setAdapter(adapter);
+	}
+
+	private void loadPlayer() {
+		listPlayer = new ListPlayer(getApplication(), files, new MediaPlayer.OnErrorListener() {
+			@Override
+			public boolean onError(MediaPlayer mp, int what, int extra) {
+				Toast.makeText(getApplicationContext(), "MediaPlayer Error " + what + " " + extra,
+						Toast.LENGTH_LONG);
+				return false;
+			}
+		});
 	}
 
 	public void playPause(MenuItem menuItem) {
-		initMediaPlayerIfNeeded();
-
-		if (mediaPlayer.isPlaying()) {
+		if (listPlayer.isPlaying()) {
 			menuItem.setIcon(R.drawable.ic_play_arrow_black_24dp);
-			mediaPlayer.pause();
+			listPlayer.pause();
 		} else {
 			menuItem.setIcon(R.drawable.ic_pause_black_24dp);
-			mediaPlayer.start();
+			listPlayer.start();
 		}
 	}
 
-
-
-	private void initMediaPlayerIfNeeded() {
-		if (mediaPlayer == null) {
-			mediaPlayer = new MediaPlayer();
-			mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-			try {
-				mediaPlayer.setDataSource(getApplicationContext(), Uri.fromFile(files[0].getParentFile()));
-				mediaPlayer.prepare();
-			} catch (IOException e) {
-				Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG);
-				e.printStackTrace();
-			}
-		}
+	@Override
+	protected void onDestroy() {
+		listPlayer.release();
+		super.onDestroy();
 	}
-
-	private void startMediaPlayer(File[] files) {
-
-
-		mediaPlayer.start();
-
-		// AudioManager.ROUTE_BLUETOOTH_SCO;
-
-	}
-
-
 }
