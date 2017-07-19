@@ -1,9 +1,7 @@
 package com.frozen_foo.shuffle_my_music_app.shuffle_list_activity;
 
 import android.content.Intent;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -11,20 +9,26 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.RowModel;
 import com.frozen_foo.shuffle_my_music_app.SettingsActivity;
-import com.frozen_foo.shuffle_my_music_app.local.StoragePermissionService;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayer;
+import com.frozen_foo.shuffle_my_music_app.permission.PermissionService;
+import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
+import com.frozen_foo.shuffle_my_music_app.smb.RemoteDirectoryTask;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 
+import static com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest
+		.EXTERNAL_STORAGE_PERMISSION_REQUEST;
+
 public class ShuffleListActivity extends AppCompatActivity {
+
 	private static String SHUFFLE_MY_MUSIC_FOLDER = "_shuffle-my-music";
 	private ListPlayer listPlayer;
 	private File[] files;
@@ -59,22 +63,32 @@ public class ShuffleListActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shuffle_list);
 
-		requestPermissionOrShowList();
+		requestExternalStorageAccessOrShowList();
 	}
 
-	private void requestPermissionOrShowList() {
-		if (new StoragePermissionService().hasExternalStoragePermission(this)) {
+	private void requestExternalStorageAccessOrShowList() {
+		if (new PermissionService().hasPermission(this, EXTERNAL_STORAGE_PERMISSION_REQUEST)) {
 			loadListAndPlayer();
 		} else {
-			new StoragePermissionService().requestExternalStorageAccess(this);
+			new PermissionService().requestPermission(this, EXTERNAL_STORAGE_PERMISSION_REQUEST);
 		}
 	}
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
 										   @NonNull int[] grantResults) {
-		if (new StoragePermissionService().hasExternalStoragePermission(this)) {
-			loadListAndPlayer();
+		PermissionRequest permissionRequest = new PermissionService().forRequestCode(requestCode);
+		if (new PermissionService().hasPermission(this, permissionRequest)) {
+			switch (permissionRequest) {
+				case EXTERNAL_STORAGE_PERMISSION_REQUEST:
+					loadListAndPlayer();
+					break;
+				case INTERNET_PERMISSION_REQUEST:
+					createShuffleList();
+					break;
+				default:
+					break;
+			}
 		}
 	}
 
@@ -127,4 +141,17 @@ public class ShuffleListActivity extends AppCompatActivity {
 		listPlayer.release();
 		super.onDestroy();
 	}
+
+	public void createShuffleList(View view) {
+		if (new PermissionService().hasPermission(this, PermissionRequest.INTERNET_PERMISSION_REQUEST)) {
+			createShuffleList();
+		} else {
+			new PermissionService().requestPermission(this, PermissionRequest.INTERNET_PERMISSION_REQUEST);
+		}
+	}
+
+	private void createShuffleList() {
+		new RemoteDirectoryTask().execute(getApplicationContext());
+	}
+
 }

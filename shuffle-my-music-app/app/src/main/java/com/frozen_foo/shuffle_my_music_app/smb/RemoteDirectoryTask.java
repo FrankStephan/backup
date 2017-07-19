@@ -33,7 +33,7 @@ public class RemoteDirectoryTask extends AsyncTask<Context, Integer, String[]> {
 			String encryptedIp = settings.getIp();
 			String encryptedName = settings.getUsername();
 			String encryptedPassword = settings.getPassword();
-			String shuffleMyMusicDir = settings.getShuffleMyMusicDir();
+			String shuffleMyMusicDir = settings.getMusicDir();
 			if (StringUtils.isNoneEmpty(encryptedIp, encryptedName, encryptedPassword, shuffleMyMusicDir)) {
 				return new SmbAccess().list(cryptoService.decrypt
 								(encryptedIp), cryptoService.decrypt

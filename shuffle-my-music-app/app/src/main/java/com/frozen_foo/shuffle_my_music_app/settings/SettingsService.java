@@ -15,6 +15,7 @@ public class SettingsService {
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
 	private static final String SHUFFLE_MY_MUSIC_DIR = "shuffle_my_music_dir";
+	private static final String MUSIC_DIR = "music_dir";
 
 	public void writeSettings(Settings settings, Context context) {
 		SharedPreferences.Editor editor = context.getSharedPreferences(PREFERENCES_NAME, Context
@@ -23,6 +24,7 @@ public class SettingsService {
 		editor.putString(USERNAME, settings.getUsername());
 		editor.putString(PASSWORD, settings.getPassword());
 		editor.putString(SHUFFLE_MY_MUSIC_DIR, settings.getShuffleMyMusicDir());
+		editor.putString(MUSIC_DIR, settings.getMusicDir());
 		editor.commit();
 	}
 
@@ -32,6 +34,7 @@ public class SettingsService {
 		return new Settings(preferences.getString(IP, ""),
 				preferences.getString(USERNAME, ""),
 				preferences.getString(PASSWORD, ""),
-				preferences.getString(SHUFFLE_MY_MUSIC_DIR, ""));
+				preferences.getString(SHUFFLE_MY_MUSIC_DIR, ""),
+				preferences.getString(MUSIC_DIR, ""));
 	}
 }
