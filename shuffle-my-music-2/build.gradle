@@ -1,0 +1,15 @@
+apply plugin: 'eclipse'
+apply plugin: 'groovy'
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
+	testCompile 'junit:junit:4.12'
+}
+

@@ -2,10 +2,10 @@ package com.frozen_foo.shuffle_my_music_app.shuffle_list_activity;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,12 +13,14 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.frozen_foo.shuffle_my_music_2.Check;
+import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.RowModel;
 import com.frozen_foo.shuffle_my_music_app.SettingsActivity;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayer;
-import com.frozen_foo.shuffle_my_music_app.permission.PermissionService;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
+import com.frozen_foo.shuffle_my_music_app.permission.PermissionService;
 import com.frozen_foo.shuffle_my_music_app.smb.RemoteDirectoryTask;
 
 import java.io.File;
@@ -143,6 +145,8 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	public void createShuffleList(View view) {
+		String s = new Check().doSomething();
+
 		if (new PermissionService().hasPermission(this, PermissionRequest.INTERNET_PERMISSION_REQUEST)) {
 			createShuffleList();
 		} else {

@@ -73,7 +73,7 @@ public class SettingsActivity extends AppCompatActivity {
 				e.printStackTrace();
 			}
 			new SettingsService().writeSettings(new Settings(encryptedIp, encryptedName,
-					encryptedPassword, encryptedShuffleMyMusicDir), getApplicationContext());
+					encryptedPassword, encryptedShuffleMyMusicDir, "Ersetzen du musst!!"), getApplicationContext());
 			openShuffleListActivity();
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
