@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
 	<name>shuffle-my-music-2</name>
-	<comment>Project shuffle-my-music-2 created by Buildship.</comment>
-	<projects>
-	</projects>
+	<comment></comment>
+	<projects/>
+	<natures>
+		<nature>org.eclipse.jdt.groovy.core.groovyNature</nature>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+	</natures>
 	<buildSpec>
 		<buildCommand>
 			<name>org.eclipse.jdt.core.javabuilder</name>
-			<arguments>
-			</arguments>
-		</buildCommand>
-		<buildCommand>
-			<name>org.eclipse.buildship.core.gradleprojectbuilder</name>
-			<arguments>
-			</arguments>
+			<arguments/>
 		</buildCommand>
 	</buildSpec>
-	<natures>
-		<nature>org.eclipse.jdt.groovy.core.groovyNature</nature>
-		<nature>org.eclipse.buildship.core.gradleprojectnature</nature>
-		<nature>org.eclipse.jdt.core.javanature</nature>
-	</natures>
+	<linkedResources/>
 </projectDescription>

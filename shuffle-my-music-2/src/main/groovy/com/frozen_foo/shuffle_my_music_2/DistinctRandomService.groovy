@@ -15,6 +15,6 @@ class DistinctRandomService {
 				}
 			}
 		}
-		return randoms as int[]
+		return randoms.sort() as int[]
 	}
 }

@@ -19,4 +19,7 @@ class ShuffleMyMusicServiceTest extends GroovyTestCase {
 			new ShuffleMyMusicService().relativePathsOfRandomSongs(indexSize, null, numberOfSongs)
 		}
 	}
+
+	void testSelectsSongsFromIndex() {
+	}
 }
