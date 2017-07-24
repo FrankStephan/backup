@@ -39,19 +39,4 @@ class DistinctRandomServiceTest extends GroovyTestCase {
 			assert 1..5 == new DistinctRandomService().randoms(bound, randomCount)
 		}
 	}
-
-	void testIndicesAreSorted() {
-		int bound = 100
-		int randomCount = 5
-		MockFor random = new MockFor(Random.class)
-		Queue indexQueue = [2, 4, 5, 3, 1] as Queue
-
-		random.demand.nextInt(indexQueue.size()) {int _bound ->
-			assert bound == _bound
-			return indexQueue.poll()
-		}
-		random.use {
-			assert 1..5 == new DistinctRandomService().randoms(bound, randomCount)
-		}
-	}
 }
