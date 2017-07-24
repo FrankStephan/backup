@@ -15,5 +15,6 @@
     <string name="bye">Bye bye</string>
     <string name="shuffleMyMusicDir">Shuffle My Music Verzeichnis</string>
     <string name="playPause">Abspielen</string>
+    <string name="smb.music.dir">Musik Verzeichnis</string>
 
 </resources>

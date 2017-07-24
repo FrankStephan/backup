@@ -27,6 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
 			String encryptedIp = settings.getIp();
 			String encryptedName = settings.getUsername();
 			String encryptedShuffleMyMusicDir = settings.getShuffleMyMusicDir();
+			String encryptedMusicDir = settings.getMusicDir();
 
 			((TextView) findViewById(R.id.smbIpText)).setText(StringUtils.isNotEmpty(encryptedIp)
 					? cryptoService.decrypt(encryptedIp) : "");
@@ -35,6 +36,9 @@ public class SettingsActivity extends AppCompatActivity {
 			((TextView) findViewById(R.id.smbShuffleMyMusicText)).setText(StringUtils.isNotEmpty
 					(encryptedShuffleMyMusicDir) ? cryptoService.decrypt
 					(encryptedShuffleMyMusicDir) : "");
+			((TextView) findViewById(R.id.smbMusicDirText)).setText(StringUtils.isNotEmpty
+					(encryptedMusicDir) ? cryptoService.decrypt
+					(encryptedMusicDir) : "");
 
 		} catch (Exception e) {
 			Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG)
@@ -49,13 +53,16 @@ public class SettingsActivity extends AppCompatActivity {
 		CharSequence smbLoginPassword = ((TextView) findViewById(R.id.smbPasswordText)).getText();
 		CharSequence smbShuffleMyMusicDir = ((TextView) findViewById(R.id.smbShuffleMyMusicText))
 				.getText();
+		CharSequence smbMusicDir = ((TextView) findViewById(R.id.smbMusicDirText))
+				.getText();
 		;
 
-		if (StringUtils.isNoneEmpty(smbIp, smbLoginName, smbShuffleMyMusicDir)) {
+		if (StringUtils.isNoneEmpty(smbIp, smbLoginName, smbShuffleMyMusicDir, smbMusicDir)) {
 			String encryptedIp = null;
 			String encryptedName = null;
 			String encryptedPassword = null;
 			String encryptedShuffleMyMusicDir = null;
+			String encryptedMusicDir = null;
 			try {
 				CryptoService cryptoService = new CryptoService();
 				encryptedIp = cryptoService.encrypt(smbIp.toString());
@@ -65,6 +72,8 @@ public class SettingsActivity extends AppCompatActivity {
 						(getApplicationContext()).getPassword();
 				encryptedShuffleMyMusicDir = cryptoService.encrypt(smbShuffleMyMusicDir.toString
 						());
+				encryptedMusicDir = cryptoService.encrypt(smbMusicDir.toString
+						());
 				Toast.makeText(getApplicationContext(), R.string.store_credentials_success, Toast
 						.LENGTH_SHORT).show();
 			} catch (Exception e) {
@@ -73,7 +82,8 @@ public class SettingsActivity extends AppCompatActivity {
 				e.printStackTrace();
 			}
 			new SettingsService().writeSettings(new Settings(encryptedIp, encryptedName,
-					encryptedPassword, encryptedShuffleMyMusicDir, "Ersetzen du musst!!"), getApplicationContext());
+					encryptedPassword, encryptedShuffleMyMusicDir, encryptedMusicDir),
+					getApplicationContext());
 			openShuffleListActivity();
 		} else {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);

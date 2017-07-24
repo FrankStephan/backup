@@ -13,17 +13,18 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.frozen_foo.shuffle_my_music_2.Check;
 import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
+import com.frozen_foo.shuffle_my_music_app.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.RowModel;
 import com.frozen_foo.shuffle_my_music_app.SettingsActivity;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayer;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionService;
-import com.frozen_foo.shuffle_my_music_app.smb.RemoteDirectoryTask;
+import com.frozen_foo.shuffle_my_music_app.smb.IndexStreamTask;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Arrays;
 
 import static com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest
@@ -145,17 +146,45 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	public void createShuffleList(View view) {
-		String s = new Check().doSomething();
-
-		if (new PermissionService().hasPermission(this, PermissionRequest.INTERNET_PERMISSION_REQUEST)) {
+		if (new PermissionService().hasPermission(this, PermissionRequest
+				.INTERNET_PERMISSION_REQUEST)) {
 			createShuffleList();
 		} else {
-			new PermissionService().requestPermission(this, PermissionRequest.INTERNET_PERMISSION_REQUEST);
+			new PermissionService().requestPermission(this, PermissionRequest
+					.INTERNET_PERMISSION_REQUEST);
 		}
 	}
 
 	private void createShuffleList() {
-		new RemoteDirectoryTask().execute(getApplicationContext());
+		AsyncCallback<InputStream> updateList = new AsyncCallback<InputStream>() {
+			@Override
+			public void invoke(InputStream result) {
+				if (hasException()) {
+					Toast.makeText(getApplicationContext(), getException().getMessage(), Toast.LENGTH_LONG);
+				} else {
+
+					
+					String[] randomIndexEntries = randomIndexEntries(result);
+					fillRows(randomIndexEntries);
+				}
+			}
+		};
+
+		new IndexStreamTask(updateList).execute(getApplicationContext());
+	}
+
+	private String[] randomIndexEntries(InputStream indexStream) {
+		return new ShuffleMyMusicService().randomIndexEntries(indexStream, 10);
+	}
+
+	private void fillRows(String[] randomIndexEntries) {
+		RowModel[] rows = new RowModel[randomIndexEntries.length];
+		for (int i = 0; i < randomIndexEntries.length; i++) {
+			rows[i] = new RowModel(randomIndexEntries[i], randomIndexEntries[i], false);
+		}
+
+		RowAdapter adapter = new RowAdapter(this, rows);
+		((ListView) findViewById(R.id.shuffleList)).setAdapter(adapter);
 	}
 
 }

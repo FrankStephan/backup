@@ -42,21 +42,17 @@ import jcifs.smb.SmbSession;
 
 public class SmbAccess {
 
-	public String[] list(String ip, String username, String password, String path) throws
-			CertificateException,
-			NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException,
-			InvalidAlgorithmParameterException, UnrecoverableEntryException,
-			NoSuchPaddingException, InvalidKeyException, IOException {
-
+	public InputStream inputStream(String ip, String username, String password, String path) throws IOException {
 		final SmbFile smbFile = smbFile(ip, username, password, path);
-		return smbFile.list();
+		boolean b = smbFile.exists();
+
+		return smbFile.getInputStream();
 	}
 
 	@NonNull
 	private SmbFile smbFile(String ip, String username, String password, String path) throws MalformedURLException {
 		jcifs.Config.setProperty("jcifs.netbios.wins", ip);
 		NtlmPasswordAuthentication auth = new NtlmPasswordAuthentication(null, username, password);
-
 		return new SmbFile("smb://" + path, auth);
 	}
 
