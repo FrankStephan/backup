@@ -1,11 +1,16 @@
 apply plugin: 'eclipse'
 apply plugin: 'groovy'
+apply plugin: 'maven'
+
+group = 'com.frozen-foo'
+version = '1.0'
 
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 }
 
 dependencies {
@@ -14,4 +19,6 @@ dependencies {
 	compile group: 'jcifs', name: 'jcifs', version: '1.3.17'
 	testCompile 'junit:junit:4.12'
 }
+
+	
 
