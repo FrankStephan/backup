@@ -22,11 +22,11 @@ z.mp3
 		InputStream inputStream = new ByteArrayInputStream(indexFileContent.bytes)
 		def indexStream = new IndexStream(inputStream)
 		assert 3 == indexStream.indexSize()
-		assert 3 == indexStream.indexSize
+		assert 3 == indexStream.size
 		assert 3 == indexStream.indexSize()
 		indexStream.nextEntry()
 		assert 3 == indexStream.indexSize()
-		assert 3 == indexStream.indexSize
+		assert 3 == indexStream.size
 	}
 
 	void testIteratesOnStream() {
@@ -55,7 +55,7 @@ z.mp3
 		def indexStream = new IndexStream(inputStream)
 
 		indexStream.indexSize()
-		assert 0 == indexStream.entryIndex
+		assert 0 == indexStream.index
 	}
 
 	void testEntryIndex1() {
@@ -63,9 +63,9 @@ z.mp3
 		def indexStream = new IndexStream(inputStream)
 
 		indexStream.nextEntry()
-		assert 1 == indexStream.entryIndex
+		assert 1 == indexStream.index
 		indexStream.indexSize()
-		assert 1 == indexStream.entryIndex
+		assert 1 == indexStream.index
 	}
 
 	void testEntryIndex2() {
@@ -74,8 +74,8 @@ z.mp3
 
 		indexStream.indexSize()
 		indexStream.nextEntry()
-		assert 1 == indexStream.entryIndex
+		assert 1 == indexStream.index
 		indexStream.nextEntry()
-		assert 2 == indexStream.entryIndex
+		assert 2 == indexStream.index
 	}
 }

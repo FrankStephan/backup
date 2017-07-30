@@ -3,26 +3,30 @@ package com.frozen_foo.shuffle_my_music_app.smb;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
 import com.frozen_foo.shuffle_my_music_app.AsyncCallback;
-import com.frozen_foo.shuffle_my_music_app.security.CryptoService;
+import com.frozen_foo.shuffle_my_music_app.base.AbstractAsyncTask;
+import com.frozen_foo.shuffle_my_music_app.crypto.CryptoService;
 import com.frozen_foo.shuffle_my_music_app.settings.Settings;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsService;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.InputStream;
+
+import dalvik.system.DexClassLoader;
 
 /**
  * Created by Frank on 24.07.2017.
  */
 
-public class IndexStreamTask extends AsyncTask<Context, Void, InputStream> {
+public class IndexStreamTask extends AbstractAsyncTask<Context, InputStream> {
 
 	public static final String INDEX_FILE_NAME = "index.txt";
-	private AsyncCallback<InputStream> callback;
 
 	public IndexStreamTask(AsyncCallback<InputStream> callback) {
-		this.callback = callback;
+		super(callback);
 	}
 
 	@Override
@@ -35,10 +39,17 @@ public class IndexStreamTask extends AsyncTask<Context, Void, InputStream> {
 			String encryptedPassword = settings.getPassword();
 			String musicDir = settings.getMusicDir();
 			if (StringUtils.isNoneEmpty(encryptedIp, encryptedName, encryptedPassword, musicDir)) {
-				return new SmbAccess().inputStream(cryptoService.decrypt
+				InputStream inputStream = new SmbAccess().inputStream(cryptoService.decrypt
 								(encryptedIp), cryptoService.decrypt
 								(encryptedName), cryptoService.decrypt(encryptedPassword),
 						indexPath(cryptoService.decrypt(musicDir)));
+
+				String s = IOUtils.toString(inputStream, "UTF-8");
+
+//				Groovy compiler option: siehe Kapitel 7 in http://groovy-lang.org/groovyc.html
+
+				String[] strings = new ShuffleMyMusicService().randomIndexEntries(IOUtils.toInputStream(s, "UTF-8"), 2);
+				return inputStream;
 			} else {
 				callback.setException(new IllegalArgumentException("Settings fehlen."));
 				return null;
@@ -51,10 +62,5 @@ public class IndexStreamTask extends AsyncTask<Context, Void, InputStream> {
 
 	private String indexPath(String musicDir) {
 		return musicDir + INDEX_FILE_NAME;
-	}
-
-	@Override
-	protected void onPostExecute(InputStream inputStream) {
-		callback.invoke(inputStream);
 	}
 }

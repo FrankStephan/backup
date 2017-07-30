@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.shuffle_list_activity;
+package com.frozen_foo.shuffle_my_music_app.shuffle;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.frozen_foo.shuffle_my_music_app.R;

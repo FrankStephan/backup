@@ -17,9 +17,9 @@ class ShuffleMyMusicService {
 
 		List<String> indexEntries = []
 		while (!indexStream.empty()) {
-			if (nextIndex == indexStream.entryIndex) {
+			if (nextIndex == indexStream.getIndex()) {
 				indexEntries.add(indexStream.nextEntry())
-				if (q.empty) {
+				if (q.isEmpty()) {
 					break
 				} else {
 					nextIndex = q.poll()

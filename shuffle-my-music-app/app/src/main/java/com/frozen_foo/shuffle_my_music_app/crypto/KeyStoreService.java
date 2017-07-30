@@ -1,11 +1,10 @@
-package com.frozen_foo.shuffle_my_music_app.security;
+package com.frozen_foo.shuffle_my_music_app.crypto;
 
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
-import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.KeyStore;
 import java.security.KeyStoreException;

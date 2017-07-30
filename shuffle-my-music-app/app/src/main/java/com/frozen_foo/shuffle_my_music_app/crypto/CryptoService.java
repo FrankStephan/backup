@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.security;
+package com.frozen_foo.shuffle_my_music_app.crypto;
 
 import android.content.Context;
 import android.util.Base64;

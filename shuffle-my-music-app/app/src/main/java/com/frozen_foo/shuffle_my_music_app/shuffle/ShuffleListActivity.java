@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.shuffle_list_activity;
+package com.frozen_foo.shuffle_my_music_app.shuffle;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -24,8 +24,13 @@ import com.frozen_foo.shuffle_my_music_app.permission.PermissionService;
 import com.frozen_foo.shuffle_my_music_app.smb.IndexStreamTask;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.Arrays;
+
+import jcifs.smb.NtlmPasswordAuthentication;
+import jcifs.smb.SmbFile;
 
 import static com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest
 		.EXTERNAL_STORAGE_PERMISSION_REQUEST;
@@ -67,6 +72,17 @@ public class ShuffleListActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_shuffle_list);
 
 		requestExternalStorageAccessOrShowList();
+		new IndexStreamTask(new AsyncCallback<InputStream>() {
+			@Override
+			public void invoke(InputStream result) {
+				if (hasException()) {
+					Toast.makeText(getApplicationContext(), getException().getMessage(), Toast.LENGTH_LONG);
+				} else {
+					Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_LONG);
+				}
+			}
+		}).execute(getApplicationContext());
+
 	}
 
 	private void requestExternalStorageAccessOrShowList() {
@@ -155,26 +171,34 @@ public class ShuffleListActivity extends AppCompatActivity {
 		}
 	}
 
+
+
 	private void createShuffleList() {
-		AsyncCallback<InputStream> updateList = new AsyncCallback<InputStream>() {
+			new IndexStreamTask(new AsyncCallback<InputStream>() {
 			@Override
 			public void invoke(InputStream result) {
 				if (hasException()) {
 					Toast.makeText(getApplicationContext(), getException().getMessage(), Toast.LENGTH_LONG);
 				} else {
-
-					
-					String[] randomIndexEntries = randomIndexEntries(result);
-					fillRows(randomIndexEntries);
+					createRandomIndexEntries(result);
 				}
 			}
-		};
-
-		new IndexStreamTask(updateList).execute(getApplicationContext());
+		}).execute(getApplicationContext());
 	}
 
-	private String[] randomIndexEntries(InputStream indexStream) {
-		return new ShuffleMyMusicService().randomIndexEntries(indexStream, 10);
+	private void createRandomIndexEntries(InputStream indexStream) {
+		Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG);
+
+		new ShuffleListTask(new AsyncCallback<String[]>() {
+			@Override
+			public void invoke(String[] result) {
+				if (hasException()) {
+					Toast.makeText(getApplicationContext(), getException().getMessage(), Toast.LENGTH_LONG);
+				} else {
+					fillRows(result);
+				}
+			}
+		}).execute(indexStream);
 	}
 
 	private void fillRows(String[] randomIndexEntries) {
@@ -186,5 +210,4 @@ public class ShuffleListActivity extends AppCompatActivity {
 		RowAdapter adapter = new RowAdapter(this, rows);
 		((ListView) findViewById(R.id.shuffleList)).setAdapter(adapter);
 	}
-
 }

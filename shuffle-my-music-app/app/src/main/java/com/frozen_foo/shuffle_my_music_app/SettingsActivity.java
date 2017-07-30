@@ -8,10 +8,10 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.frozen_foo.shuffle_my_music_app.security.CryptoService;
+import com.frozen_foo.shuffle_my_music_app.crypto.CryptoService;
 import com.frozen_foo.shuffle_my_music_app.settings.Settings;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsService;
-import com.frozen_foo.shuffle_my_music_app.shuffle_list_activity.ShuffleListActivity;
+import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleListActivity;
 
 import org.apache.commons.lang3.StringUtils;
 
