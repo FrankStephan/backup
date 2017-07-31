@@ -18,25 +18,25 @@ class IndexStream {
 	}
 
 	String nextEntry() {
-		if (-1 == getSize())  {
+		if (-1 == size)  {
 			indexSize()
 		}
-		setIndex(getIndex() + 1)
+		index++
 		next()
 	}
 	
 	int indexSize() {
-		if (getSize() == -1) {
+		if (size == -1) {
 			String firstLine = next()
 			if (firstLine ==~ firstLineMatcher) {
 				int startTagIndex = firstLine.indexOf('>>Start')
 				String size = firstLine.substring(0, startTagIndex)
-				setSize(size as int)
+				this.size = size as int
 			} else {
-				setSize(-1)
+				size = -1
 			}
 		}
-		return getSize()
+		return size
 	}
 	
 	private String next() {
