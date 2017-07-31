@@ -43,12 +43,6 @@ public class IndexStreamTask extends AbstractAsyncTask<Context, InputStream> {
 								(encryptedIp), cryptoService.decrypt
 								(encryptedName), cryptoService.decrypt(encryptedPassword),
 						indexPath(cryptoService.decrypt(musicDir)));
-
-				String s = IOUtils.toString(inputStream, "UTF-8");
-
-//				Groovy compiler option: siehe Kapitel 7 in http://groovy-lang.org/groovyc.html
-
-				String[] strings = new ShuffleMyMusicService().randomIndexEntries(IOUtils.toInputStream(s, "UTF-8"), 2);
 				return inputStream;
 			} else {
 				callback.setException(new IllegalArgumentException("Settings fehlen."));

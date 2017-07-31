@@ -23,6 +23,8 @@ import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionService;
 import com.frozen_foo.shuffle_my_music_app.smb.IndexStreamTask;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -70,19 +72,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shuffle_list);
-
 		requestExternalStorageAccessOrShowList();
-		new IndexStreamTask(new AsyncCallback<InputStream>() {
-			@Override
-			public void invoke(InputStream result) {
-				if (hasException()) {
-					Toast.makeText(getApplicationContext(), getException().getMessage(), Toast.LENGTH_LONG);
-				} else {
-					Toast.makeText(getApplicationContext(), result.toString(), Toast.LENGTH_LONG);
-				}
-			}
-		}).execute(getApplicationContext());
-
 	}
 
 	private void requestExternalStorageAccessOrShowList() {
@@ -171,8 +161,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 		}
 	}
 
-
-
 	private void createShuffleList() {
 			new IndexStreamTask(new AsyncCallback<InputStream>() {
 			@Override
@@ -187,9 +175,13 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	private void createRandomIndexEntries(InputStream indexStream) {
-		Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG);
 
-		new ShuffleListTask(new AsyncCallback<String[]>() {
+		String[] strings = new ShuffleMyMusicService().randomIndexEntries(indexStream, 2);
+
+		Toast.makeText(getApplicationContext(), "Success", Toast.LENGTH_LONG);
+		fillRows(strings);
+
+/*		new ShuffleListTask(new AsyncCallback<String[]>() {
 			@Override
 			public void invoke(String[] result) {
 				if (hasException()) {
@@ -199,6 +191,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 				}
 			}
 		}).execute(indexStream);
+		*/
 	}
 
 	private void fillRows(String[] randomIndexEntries) {
