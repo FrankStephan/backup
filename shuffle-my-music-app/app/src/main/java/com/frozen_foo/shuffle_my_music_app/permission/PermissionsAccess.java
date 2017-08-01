@@ -9,7 +9,7 @@ import android.support.v4.content.ContextCompat;
  * Created by Frank on 19.07.2017.
  */
 
-public class PermissionService {
+public class PermissionsAccess {
 
 	public void requestPermission(Activity activity, PermissionRequest permissionRequest) {
 		ActivityCompat.requestPermissions(activity,

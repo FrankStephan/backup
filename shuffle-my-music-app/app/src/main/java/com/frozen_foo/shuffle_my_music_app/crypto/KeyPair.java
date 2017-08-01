@@ -19,13 +19,13 @@ import java.security.cert.CertificateException;
  * Created by Frank on 10.07.2017.
  */
 
-public class KeyStoreService {
+public class KeyPair {
 
 	private static final String ALIAS = "com.frozen_foo.shuffle_my_music_app.security.alias";
 
 	private KeyStore androidKeyStore;
 
-	public KeyStoreService() throws CertificateException, NoSuchAlgorithmException,
+	public KeyPair() throws CertificateException, NoSuchAlgorithmException,
 			KeyStoreException, IOException, NoSuchProviderException,
 			InvalidAlgorithmParameterException {
 		androidKeyStore = loadKeyStore();
@@ -57,13 +57,15 @@ public class KeyStoreService {
 
 	public PublicKey publicKey() throws UnrecoverableEntryException, NoSuchAlgorithmException,
 			KeyStoreException {
-		KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry)androidKeyStore.getEntry(ALIAS, null);
-       return privateKeyEntry.getCertificate().getPublicKey();
+		KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) androidKeyStore
+				.getEntry(ALIAS, null);
+		return privateKeyEntry.getCertificate().getPublicKey();
 	}
 
 	public PrivateKey privateKey() throws UnrecoverableEntryException, NoSuchAlgorithmException,
 			KeyStoreException {
-		KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry)androidKeyStore.getEntry(ALIAS, null);
+		KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) androidKeyStore
+				.getEntry(ALIAS, null);
 		return privateKeyEntry.getPrivateKey();
 	}
 }

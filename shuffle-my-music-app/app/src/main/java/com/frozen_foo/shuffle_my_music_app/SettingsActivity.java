@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.frozen_foo.shuffle_my_music_app.crypto.CryptoService;
+import com.frozen_foo.shuffle_my_music_app.crypto.Cryptifier;
 import com.frozen_foo.shuffle_my_music_app.settings.Settings;
-import com.frozen_foo.shuffle_my_music_app.settings.SettingsService;
+import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccess;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleListActivity;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,23 +21,23 @@ public class SettingsActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-		Settings settings = new SettingsService().readSettings(getApplicationContext());
+		Settings settings = new SettingsAccess().readSettings(getApplicationContext());
 		try {
-			CryptoService cryptoService = new CryptoService();
+			Cryptifier cryptifier = new Cryptifier();
 			String encryptedIp = settings.getIp();
 			String encryptedName = settings.getUsername();
 			String encryptedShuffleMyMusicDir = settings.getShuffleMyMusicDir();
 			String encryptedMusicDir = settings.getMusicDir();
 
 			((TextView) findViewById(R.id.smbIpText)).setText(StringUtils.isNotEmpty(encryptedIp)
-					? cryptoService.decrypt(encryptedIp) : "");
+					? cryptifier.decrypt(encryptedIp) : "");
 			((TextView) findViewById(R.id.smbNameText)).setText(StringUtils.isNotEmpty
-					(encryptedName) ? cryptoService.decrypt(encryptedName) : "");
+					(encryptedName) ? cryptifier.decrypt(encryptedName) : "");
 			((TextView) findViewById(R.id.smbShuffleMyMusicText)).setText(StringUtils.isNotEmpty
-					(encryptedShuffleMyMusicDir) ? cryptoService.decrypt
+					(encryptedShuffleMyMusicDir) ? cryptifier.decrypt
 					(encryptedShuffleMyMusicDir) : "");
 			((TextView) findViewById(R.id.smbMusicDirText)).setText(StringUtils.isNotEmpty
-					(encryptedMusicDir) ? cryptoService.decrypt
+					(encryptedMusicDir) ? cryptifier.decrypt
 					(encryptedMusicDir) : "");
 
 		} catch (Exception e) {
@@ -64,15 +64,15 @@ public class SettingsActivity extends AppCompatActivity {
 			String encryptedShuffleMyMusicDir = null;
 			String encryptedMusicDir = null;
 			try {
-				CryptoService cryptoService = new CryptoService();
-				encryptedIp = cryptoService.encrypt(smbIp.toString());
-				encryptedName = cryptoService.encrypt(smbLoginName.toString());
-				encryptedPassword = StringUtils.isNotEmpty(smbLoginPassword) ? cryptoService
-						.encrypt(smbLoginPassword.toString()) : new SettingsService().readSettings
+				Cryptifier cryptifier = new Cryptifier();
+				encryptedIp = cryptifier.encrypt(smbIp.toString());
+				encryptedName = cryptifier.encrypt(smbLoginName.toString());
+				encryptedPassword = StringUtils.isNotEmpty(smbLoginPassword) ? cryptifier
+						.encrypt(smbLoginPassword.toString()) : new SettingsAccess().readSettings
 						(getApplicationContext()).getPassword();
-				encryptedShuffleMyMusicDir = cryptoService.encrypt(smbShuffleMyMusicDir.toString
+				encryptedShuffleMyMusicDir = cryptifier.encrypt(smbShuffleMyMusicDir.toString
 						());
-				encryptedMusicDir = cryptoService.encrypt(smbMusicDir.toString
+				encryptedMusicDir = cryptifier.encrypt(smbMusicDir.toString
 						());
 				Toast.makeText(getApplicationContext(), R.string.store_credentials_success, Toast
 						.LENGTH_SHORT).show();
@@ -81,7 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
 						.LENGTH_LONG).show();
 				e.printStackTrace();
 			}
-			new SettingsService().writeSettings(new Settings(encryptedIp, encryptedName,
+			new SettingsAccess().writeSettings(new Settings(encryptedIp, encryptedName,
 					encryptedPassword, encryptedShuffleMyMusicDir, encryptedMusicDir),
 					getApplicationContext());
 			openShuffleListActivity();

@@ -14,25 +14,18 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
-import com.frozen_foo.shuffle_my_music_app.AsyncCallback;
+import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.RowModel;
 import com.frozen_foo.shuffle_my_music_app.SettingsActivity;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayer;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
-import com.frozen_foo.shuffle_my_music_app.permission.PermissionService;
+import com.frozen_foo.shuffle_my_music_app.permission.PermissionsAccess;
 import com.frozen_foo.shuffle_my_music_app.smb.IndexStreamTask;
 
-import org.apache.commons.io.IOUtils;
-
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.util.Arrays;
-
-import jcifs.smb.NtlmPasswordAuthentication;
-import jcifs.smb.SmbFile;
 
 import static com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest
 		.EXTERNAL_STORAGE_PERMISSION_REQUEST;
@@ -76,18 +69,18 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	private void requestExternalStorageAccessOrShowList() {
-		if (new PermissionService().hasPermission(this, EXTERNAL_STORAGE_PERMISSION_REQUEST)) {
+		if (new PermissionsAccess().hasPermission(this, EXTERNAL_STORAGE_PERMISSION_REQUEST)) {
 			loadListAndPlayer();
 		} else {
-			new PermissionService().requestPermission(this, EXTERNAL_STORAGE_PERMISSION_REQUEST);
+			new PermissionsAccess().requestPermission(this, EXTERNAL_STORAGE_PERMISSION_REQUEST);
 		}
 	}
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
 										   @NonNull int[] grantResults) {
-		PermissionRequest permissionRequest = new PermissionService().forRequestCode(requestCode);
-		if (new PermissionService().hasPermission(this, permissionRequest)) {
+		PermissionRequest permissionRequest = new PermissionsAccess().forRequestCode(requestCode);
+		if (new PermissionsAccess().hasPermission(this, permissionRequest)) {
 			switch (permissionRequest) {
 				case EXTERNAL_STORAGE_PERMISSION_REQUEST:
 					loadListAndPlayer();
@@ -152,11 +145,11 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	public void createShuffleList(View view) {
-		if (new PermissionService().hasPermission(this, PermissionRequest
+		if (new PermissionsAccess().hasPermission(this, PermissionRequest
 				.INTERNET_PERMISSION_REQUEST)) {
 			createShuffleList();
 		} else {
-			new PermissionService().requestPermission(this, PermissionRequest
+			new PermissionsAccess().requestPermission(this, PermissionRequest
 					.INTERNET_PERMISSION_REQUEST);
 		}
 	}

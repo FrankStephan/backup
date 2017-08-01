@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
  * Created by Frank on 12.07.2017.
  */
 
-public class SettingsService {
+public class SettingsAccess {
 
 	private static final String PREFERENCES_NAME = "prefs";
 

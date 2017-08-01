@@ -26,21 +26,21 @@ import javax.crypto.NoSuchPaddingException;
  * Created by Frank on 07.07.2017.
  */
 
-public class CryptoService {
+public class Cryptifier {
 
     private static final String CREDENTIALS_FILE = "credentials";
 
-    KeyStoreService keyStoreService;
+    KeyPair keyPair;
 
-    public CryptoService() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException {
-        this.keyStoreService = new KeyStoreService();
+    public Cryptifier() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException {
+        this.keyPair = new KeyPair();
     }
 
     public String encrypt(String original) throws UnrecoverableEntryException,
             NoSuchAlgorithmException, KeyStoreException, NoSuchProviderException,
             NoSuchPaddingException, InvalidKeyException, IOException {
         Cipher input = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
-        input.init(Cipher.ENCRYPT_MODE, keyStoreService.publicKey());
+        input.init(Cipher.ENCRYPT_MODE, keyPair.publicKey());
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         try (CipherOutputStream cipherOutputStream = new CipherOutputStream(outputStream, input)) {
             cipherOutputStream.write(original.getBytes("UTF-8"));
@@ -50,7 +50,7 @@ public class CryptoService {
 
     public String decrypt(String encodedString) throws KeyStoreException, UnrecoverableEntryException, NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, IOException, InvalidKeyException {
 		Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
-		cipher.init(Cipher.DECRYPT_MODE, keyStoreService.privateKey());
+		cipher.init(Cipher.DECRYPT_MODE, keyPair.privateKey());
 
         CipherInputStream cipherInputStream = new CipherInputStream(
                 new ByteArrayInputStream(Base64.decode(encodedString, Base64.DEFAULT)), cipher);

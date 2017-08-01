@@ -1,27 +1,22 @@
 package com.frozen_foo.shuffle_my_music_app.smb;
 
 import android.content.Context;
-import android.os.AsyncTask;
 
-import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
-import com.frozen_foo.shuffle_my_music_app.AsyncCallback;
-import com.frozen_foo.shuffle_my_music_app.base.AbstractAsyncTask;
-import com.frozen_foo.shuffle_my_music_app.crypto.CryptoService;
+import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
+import com.frozen_foo.shuffle_my_music_app.async.AbstractAsyncTask;
+import com.frozen_foo.shuffle_my_music_app.crypto.Cryptifier;
 import com.frozen_foo.shuffle_my_music_app.settings.Settings;
-import com.frozen_foo.shuffle_my_music_app.settings.SettingsService;
+import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccess;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.InputStream;
-
-import dalvik.system.DexClassLoader;
 
 /**
  * Created by Frank on 24.07.2017.
  */
 
-public class IndexStreamTask extends AbstractAsyncTask<Context, InputStream> {
+public class IndexStreamTask extends AbstractAsyncTask<Context, Void, InputStream> {
 
 	public static final String INDEX_FILE_NAME = "index.txt";
 
@@ -31,18 +26,18 @@ public class IndexStreamTask extends AbstractAsyncTask<Context, InputStream> {
 
 	@Override
 	protected InputStream doInBackground(Context... params) {
-		Settings settings = new SettingsService().readSettings(params[0]);
+		Settings settings = new SettingsAccess().readSettings(params[0]);
 		try {
-			CryptoService cryptoService = new CryptoService();
+			Cryptifier cryptifier = new Cryptifier();
 			String encryptedIp = settings.getIp();
 			String encryptedName = settings.getUsername();
 			String encryptedPassword = settings.getPassword();
 			String musicDir = settings.getMusicDir();
 			if (StringUtils.isNoneEmpty(encryptedIp, encryptedName, encryptedPassword, musicDir)) {
-				InputStream inputStream = new SmbAccess().inputStream(cryptoService.decrypt
-								(encryptedIp), cryptoService.decrypt
-								(encryptedName), cryptoService.decrypt(encryptedPassword),
-						indexPath(cryptoService.decrypt(musicDir)));
+				InputStream inputStream = new SmbAccess().inputStream(cryptifier.decrypt
+								(encryptedIp), cryptifier.decrypt
+								(encryptedName), cryptifier.decrypt(encryptedPassword),
+						indexPath(cryptifier.decrypt(musicDir)));
 				return inputStream;
 			} else {
 				callback.setException(new IllegalArgumentException("Settings fehlen."));
