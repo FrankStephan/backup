@@ -102,4 +102,20 @@ class ShuffleMyMusicServiceTest extends GroovyTestCase {
 			assert randoms.collect {int random -> String.valueOf(random)} == indexEntries
 		}
 	}
+
+	void testNumberOfSongsLargerThanIndex() {
+		String indexContent = ['3>>Start', 0..2, '<<End'].flatten().join(System.lineSeparator())
+		inputStream = new ByteArrayInputStream(indexContent.bytes)
+		indexSize = 3
+		randoms = [0, 1, 2, 3]
+		numberOfSongs = 4
+		MockFor disitinctRandomService = new MockFor(DistinctRandomService.class)
+		disitinctRandomService.demand.randoms(1) {int bound, int randomCount ->
+			return randoms
+		}
+
+		disitinctRandomService.use {
+			assert ['0', '1', '2']== new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
+		}
+	}
 }
