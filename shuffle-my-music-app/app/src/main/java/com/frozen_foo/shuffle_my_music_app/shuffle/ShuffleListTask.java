@@ -1,8 +1,8 @@
 package com.frozen_foo.shuffle_my_music_app.shuffle;
 
 import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
-import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.AbstractAsyncTask;
+import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 
 import java.io.InputStream;
 

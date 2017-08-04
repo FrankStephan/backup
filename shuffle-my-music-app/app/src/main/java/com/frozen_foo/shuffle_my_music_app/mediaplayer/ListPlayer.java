@@ -7,7 +7,6 @@ import android.net.Uri;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 /**
  * Created by Frank on 18.07.2017.
@@ -29,7 +28,7 @@ public class ListPlayer {
 		initCurrentPlayer();
 	}
 
-	private void initCurrentPlayer()  {
+	private void initCurrentPlayer() {
 		currentPlayer = new MediaPlayer();
 		currentPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
 		try {
@@ -43,7 +42,7 @@ public class ListPlayer {
 		currentPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 			@Override
 			public void onCompletion(MediaPlayer mp) {
-				startSongAtIndex(songIndex+1);
+				startSongAtIndex(songIndex + 1);
 			}
 		});
 	}
@@ -63,7 +62,7 @@ public class ListPlayer {
 	public void startSongAtIndex(int index) {
 		release();
 		songIndex = index;
-		if (songIndex<songs.length-1) {
+		if (songIndex < songs.length - 1) {
 			initCurrentPlayer();
 			start();
 		}

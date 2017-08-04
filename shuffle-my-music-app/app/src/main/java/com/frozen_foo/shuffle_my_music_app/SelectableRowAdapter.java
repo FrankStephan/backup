@@ -17,24 +17,25 @@ import android.widget.TextView;
 
 public class SelectableRowAdapter extends ArrayAdapter<RowModel> {
 
-    public SelectableRowAdapter(@NonNull Context context, RowModel[] resource) {
-        super(context, R.layout.selectable_row, resource);
-    }
+	public SelectableRowAdapter(@NonNull Context context, RowModel[] resource) {
+		super(context, R.layout.selectable_row, resource);
+	}
 
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Context context = super.getContext();
-        LayoutInflater inflater = ((Activity)context).getLayoutInflater();
-        convertView = inflater.inflate(R.layout.selectable_row, parent, false);
-        TextView name = (TextView) convertView.findViewById(R.id.textView1);
-        CheckBox cb = (CheckBox) convertView.findViewById(R.id.checkBox1);
-        RowModel rowModel = (RowModel)getItem(position);
-        name.setText(rowModel.getLabel());
-        if(rowModel.isChecked())
-            cb.setChecked(true);
-        else
-            cb.setChecked(false);
-        return convertView;
-    }
+	@NonNull
+	@Override
+	public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+		Context        context  = super.getContext();
+		LayoutInflater inflater = ((Activity) context).getLayoutInflater();
+		convertView = inflater.inflate(R.layout.selectable_row, parent, false);
+		TextView name     = (TextView) convertView.findViewById(R.id.textView1);
+		CheckBox cb       = (CheckBox) convertView.findViewById(R.id.checkBox1);
+		RowModel rowModel = (RowModel) getItem(position);
+		name.setText(rowModel.getLabel());
+		if (rowModel.isChecked()) {
+			cb.setChecked(true);
+		} else {
+			cb.setChecked(false);
+		}
+		return convertView;
+	}
 }

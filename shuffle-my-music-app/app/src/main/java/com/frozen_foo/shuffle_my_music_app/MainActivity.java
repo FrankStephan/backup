@@ -16,12 +16,12 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 		lv = (ListView) findViewById(R.id.listView1);
 
-        modelItems = new RowModel[5];
-        modelItems[0] = new RowModel("pizza", "pizza", false);
-        modelItems[1] = new RowModel("burger", "burger",true);
-        modelItems[2] = new RowModel("olives", "olives",true);
-        modelItems[3] = new RowModel("orange", "orange",false);
-        modelItems[4] = new RowModel("tomato", "tomato",true);
+		modelItems = new RowModel[5];
+		modelItems[0] = new RowModel("pizza", "pizza", false);
+		modelItems[1] = new RowModel("burger", "burger", true);
+		modelItems[2] = new RowModel("olives", "olives", true);
+		modelItems[3] = new RowModel("orange", "orange", false);
+		modelItems[4] = new RowModel("tomato", "tomato", true);
 
 
 		SelectableRowAdapter adapter = new SelectableRowAdapter(this, modelItems);

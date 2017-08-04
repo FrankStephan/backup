@@ -2,8 +2,8 @@ package com.frozen_foo.shuffle_my_music_app.smb;
 
 import android.content.Context;
 
-import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.AbstractAsyncTask;
+import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.crypto.Cryptifier;
 import com.frozen_foo.shuffle_my_music_app.settings.Settings;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccess;
@@ -28,16 +28,15 @@ public class IndexStreamTask extends AbstractAsyncTask<Context, Void, InputStrea
 	protected InputStream doInBackground(Context... params) {
 		Settings settings = new SettingsAccess().readSettings(params[0]);
 		try {
-			Cryptifier cryptifier = new Cryptifier();
-			String encryptedIp = settings.getIp();
-			String encryptedName = settings.getUsername();
-			String encryptedPassword = settings.getPassword();
-			String musicDir = settings.getMusicDir();
+			Cryptifier cryptifier        = new Cryptifier();
+			String     encryptedIp       = settings.getIp();
+			String     encryptedName     = settings.getUsername();
+			String     encryptedPassword = settings.getPassword();
+			String     musicDir          = settings.getMusicDir();
 			if (StringUtils.isNoneEmpty(encryptedIp, encryptedName, encryptedPassword, musicDir)) {
-				InputStream inputStream = new SmbAccess().inputStream(cryptifier.decrypt
-								(encryptedIp), cryptifier.decrypt
-								(encryptedName), cryptifier.decrypt(encryptedPassword),
-						indexPath(cryptifier.decrypt(musicDir)));
+				InputStream inputStream = new SmbAccess()
+						.inputStream(cryptifier.decrypt(encryptedIp), cryptifier.decrypt(encryptedName),
+								cryptifier.decrypt(encryptedPassword), indexPath(cryptifier.decrypt(musicDir)));
 				return inputStream;
 			} else {
 				callback.setException(new IllegalArgumentException("Settings fehlen."));

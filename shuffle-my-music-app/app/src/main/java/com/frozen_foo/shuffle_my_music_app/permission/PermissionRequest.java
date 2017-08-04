@@ -8,8 +8,9 @@ import android.Manifest;
 
 public enum PermissionRequest {
 
-	EXTERNAL_STORAGE_PERMISSION_REQUEST(Manifest.permission.READ_EXTERNAL_STORAGE),
-	INTERNET_PERMISSION_REQUEST(Manifest.permission.INTERNET);
+	READ_EXTERNAL_STORAGE_REQUEST(Manifest.permission.READ_EXTERNAL_STORAGE),
+	INTERNET_REQUEST(Manifest.permission.INTERNET),
+	WRITE_EXTERNAL_STORAGE_REQUEST(Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
 	public final String permission;
 

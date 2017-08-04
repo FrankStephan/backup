@@ -27,19 +27,19 @@ public class RowAdapter extends ArrayAdapter<RowModel> {
 	@NonNull
 	@Override
 	public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-		Context context = super.getContext();
-		LayoutInflater inflater = ((Activity)context).getLayoutInflater();
+		Context        context  = super.getContext();
+		LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 		convertView = inflater.inflate(R.layout.row, parent, false);
 		TextView name = (TextView) convertView.findViewById(R.id.textView1);
 
 
-	name.setOnTouchListener(new View.OnTouchListener() {
-		@Override
-		public boolean onTouch(View view, MotionEvent motionEvent) {
-			return true;
-		}
-	});
-		RowModel rowModel = (RowModel)getItem(position);
+		name.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View view, MotionEvent motionEvent) {
+				return true;
+			}
+		});
+		RowModel rowModel = (RowModel) getItem(position);
 		name.setText(rowModel.getLabel());
 		return convertView;
 	}

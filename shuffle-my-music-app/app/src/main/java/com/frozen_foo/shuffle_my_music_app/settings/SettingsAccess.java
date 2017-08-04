@@ -18,8 +18,7 @@ public class SettingsAccess {
 	private static final String MUSIC_DIR = "music_dir";
 
 	public void writeSettings(Settings settings, Context context) {
-		SharedPreferences.Editor editor = context.getSharedPreferences(PREFERENCES_NAME, Context
-				.MODE_PRIVATE).edit();
+		SharedPreferences.Editor editor = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE).edit();
 		editor.putString(IP, settings.getIp());
 		editor.putString(USERNAME, settings.getUsername());
 		editor.putString(PASSWORD, settings.getPassword());
@@ -29,12 +28,9 @@ public class SettingsAccess {
 	}
 
 	public Settings readSettings(Context context) {
-		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_NAME,
-				Context.MODE_PRIVATE);
-		return new Settings(preferences.getString(IP, ""),
-				preferences.getString(USERNAME, ""),
-				preferences.getString(PASSWORD, ""),
-				preferences.getString(SHUFFLE_MY_MUSIC_DIR, ""),
+		SharedPreferences preferences = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
+		return new Settings(preferences.getString(IP, ""), preferences.getString(USERNAME, ""),
+				preferences.getString(PASSWORD, ""), preferences.getString(SHUFFLE_MY_MUSIC_DIR, ""),
 				preferences.getString(MUSIC_DIR, ""));
 	}
 }

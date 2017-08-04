@@ -1,5 +1,7 @@
 package com.frozen_foo.shuffle_my_music_app.shuffle;
 
+import android.content.Context;
+
 /**
  * Created by Frank on 01.08.2017.
  */
@@ -7,4 +9,10 @@ package com.frozen_foo.shuffle_my_music_app.shuffle;
 public class NumberOfSongs {
 
 	public int value;
+	public Context contex;
+
+	public NumberOfSongs(int value, Context contex) {
+		this.value = value;
+		this.contex = contex;
+	}
 }

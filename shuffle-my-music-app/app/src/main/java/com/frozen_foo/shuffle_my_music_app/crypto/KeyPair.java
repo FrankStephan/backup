@@ -25,47 +25,38 @@ public class KeyPair {
 
 	private KeyStore androidKeyStore;
 
-	public KeyPair() throws CertificateException, NoSuchAlgorithmException,
-			KeyStoreException, IOException, NoSuchProviderException,
-			InvalidAlgorithmParameterException {
+	public KeyPair() throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException,
+			NoSuchProviderException, InvalidAlgorithmParameterException {
 		androidKeyStore = loadKeyStore();
 		createKeyPairIfNecessary(androidKeyStore);
 	}
 
-	private KeyStore loadKeyStore() throws KeyStoreException, CertificateException,
-			NoSuchAlgorithmException, IOException {
+	private KeyStore loadKeyStore() throws KeyStoreException, CertificateException, NoSuchAlgorithmException,
+			IOException {
 		KeyStore androidKeyStore = KeyStore.getInstance("AndroidKeyStore");
 		androidKeyStore.load(null);
 		return androidKeyStore;
 	}
 
-	private void createKeyPairIfNecessary(KeyStore androidKeyStore) throws KeyStoreException,
-			NoSuchProviderException, NoSuchAlgorithmException, InvalidAlgorithmParameterException {
+	private void createKeyPairIfNecessary(KeyStore androidKeyStore) throws KeyStoreException, NoSuchProviderException,
+			NoSuchAlgorithmException, InvalidAlgorithmParameterException {
 		if (!androidKeyStore.containsAlias(ALIAS)) {
-			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(
-					KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
-			keyPairGenerator.initialize(
-					new KeyGenParameterSpec.Builder(
-							ALIAS,
-							KeyProperties.PURPOSE_DECRYPT)
-							.setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
-							.setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_OAEP)
-							.build());
+			KeyPairGenerator keyPairGenerator =
+					KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
+			keyPairGenerator.initialize(new KeyGenParameterSpec.Builder(ALIAS, KeyProperties.PURPOSE_DECRYPT)
+					.setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
+					.setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_OAEP).build());
 			keyPairGenerator.generateKeyPair();
 		}
 	}
 
-	public PublicKey publicKey() throws UnrecoverableEntryException, NoSuchAlgorithmException,
-			KeyStoreException {
-		KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) androidKeyStore
-				.getEntry(ALIAS, null);
+	public PublicKey publicKey() throws UnrecoverableEntryException, NoSuchAlgorithmException, KeyStoreException {
+		KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) androidKeyStore.getEntry(ALIAS, null);
 		return privateKeyEntry.getCertificate().getPublicKey();
 	}
 
-	public PrivateKey privateKey() throws UnrecoverableEntryException, NoSuchAlgorithmException,
-			KeyStoreException {
-		KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) androidKeyStore
-				.getEntry(ALIAS, null);
+	public PrivateKey privateKey() throws UnrecoverableEntryException, NoSuchAlgorithmException, KeyStoreException {
+		KeyStore.PrivateKeyEntry privateKeyEntry = (KeyStore.PrivateKeyEntry) androidKeyStore.getEntry(ALIAS, null);
 		return privateKeyEntry.getPrivateKey();
 	}
 }

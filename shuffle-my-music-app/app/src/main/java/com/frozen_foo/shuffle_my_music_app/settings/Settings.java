@@ -28,7 +28,11 @@ public class Settings {
 		return password;
 	}
 
-	public String getShuffleMyMusicDir() { return shuffleMyMusicDir; }
+	public String getShuffleMyMusicDir() {
+		return shuffleMyMusicDir;
+	}
 
-	public String getMusicDir() { return musicDir; }
+	public String getMusicDir() {
+		return musicDir;
+	}
 }
