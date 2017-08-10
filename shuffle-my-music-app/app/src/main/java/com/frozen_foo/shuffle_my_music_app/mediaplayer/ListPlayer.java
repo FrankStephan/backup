@@ -5,6 +5,9 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -30,21 +33,23 @@ public class ListPlayer {
 
 	private void initCurrentPlayer() {
 		currentPlayer = new MediaPlayer();
-		currentPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-		try {
-			currentPlayer.setDataSource(context, Uri.fromFile(songs[songIndex]));
-			currentPlayer.prepare();
-		} catch (IOException e) {
-			onErrorListener.onError(currentPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, MediaPlayer.MEDIA_ERROR_IO);
-		}
-		currentPlayer.setOnErrorListener(onErrorListener);
-
-		currentPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-			@Override
-			public void onCompletion(MediaPlayer mp) {
-				startSongAtIndex(songIndex + 1);
+		if (!ArrayUtils.isEmpty(songs)) {
+			currentPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+			try {
+				currentPlayer.setDataSource(context, Uri.fromFile(songs[songIndex]));
+				currentPlayer.prepare();
+			} catch (IOException e) {
+				onErrorListener.onError(currentPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, MediaPlayer.MEDIA_ERROR_IO);
 			}
-		});
+			currentPlayer.setOnErrorListener(onErrorListener);
+
+			currentPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+				@Override
+				public void onCompletion(MediaPlayer mp) {
+					startSongAtIndex(songIndex + 1);
+				}
+			});
+		}
 	}
 
 	public boolean isPlaying() {

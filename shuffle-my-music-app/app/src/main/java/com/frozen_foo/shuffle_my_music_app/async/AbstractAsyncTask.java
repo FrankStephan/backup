@@ -1,6 +1,7 @@
 package com.frozen_foo.shuffle_my_music_app.async;
 
 import android.os.AsyncTask;
+import android.os.Handler;
 
 /**
  * Created by Frank on 25.07.2017.
@@ -24,7 +25,7 @@ public abstract class AbstractAsyncTask<Params, Progress, Result> extends AsyncT
 	protected void onProgressUpdate(Progress... values) {
 		super.onProgressUpdate(values);
 		if (progressMonitor != null) {
-			onProgressUpdate(values[0]);
+			progressMonitor.updateProgress(values[0]);
 		}
 	}
 

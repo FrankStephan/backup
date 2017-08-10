@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
+import com.frozen_foo.shuffle_my_music_app.list.RowModel;
+import com.frozen_foo.shuffle_my_music_app.list.SelectableRowAdapter;
+
 public class MainActivity extends AppCompatActivity {
 
 	ListView lv;

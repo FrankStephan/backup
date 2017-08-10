@@ -1,9 +1,7 @@
-package com.frozen_foo.shuffle_my_music_app.shuffle;
+package com.frozen_foo.shuffle_my_music_app.list;
 
 import android.os.Environment;
 import android.support.annotation.NonNull;
-
-import com.frozen_foo.shuffle_my_music_app.permission.PermissionsAccess;
 
 import org.apache.commons.io.FileUtils;
 
@@ -19,15 +17,18 @@ public class LocalDirectoryAccess {
 
 	private static String SHUFFLE_MY_MUSIC_FOLDER = "_shuffle-my-music";
 
-	public void copyToLocal(InputStream remoteSongStream, String fileName) throws IOException {
+	public void cleanLocalDir() throws IOException {
 		File shuffleMyMusicDir = localDir();
 		FileUtils.cleanDirectory(shuffleMyMusicDir);
-		//FileUtils.forceDelete(shuffleMyMusicDir);
+	}
+
+	public void copyToLocal(InputStream remoteSongStream, String fileName) throws IOException {
+		File shuffleMyMusicDir = localDir();
 		File localSong = new File(shuffleMyMusicDir, fileName);
 		FileUtils.copyInputStreamToFile(remoteSongStream, localSong);
 	}
 
-	File[] songs() {
+	public File[] songs() {
 		return localDir().listFiles();
 	}
 

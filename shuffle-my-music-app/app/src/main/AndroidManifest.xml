@@ -15,7 +15,7 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".SettingsActivity"/>
-        <activity android:name=".shuffle.ShuffleListActivity">
+        <activity android:name=".list.ShuffleListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

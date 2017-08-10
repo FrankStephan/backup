@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app;
+package com.frozen_foo.shuffle_my_music_app.list;
 
 /**
  * Created by Frank on 04.07.2017.
@@ -8,6 +8,7 @@ public class RowModel {
 
 	private String label;
 	private String path;
+	private boolean copying;
 	private boolean checked;
 
 	public RowModel(String label, String path, boolean checked) {
@@ -38,5 +39,13 @@ public class RowModel {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public boolean isCopying() {
+		return copying;
+	}
+
+	public void setCopying(final boolean copying) {
+		this.copying = copying;
 	}
 }

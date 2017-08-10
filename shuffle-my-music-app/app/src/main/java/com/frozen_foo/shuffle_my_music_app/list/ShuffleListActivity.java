@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.shuffle;
+package com.frozen_foo.shuffle_my_music_app.list;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,12 +9,14 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.SettingsActivity;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerController;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionsAccess;
+import com.frozen_foo.shuffle_my_music_app.list.create.CreateShuffleListController;
 
 import java.io.File;
 
@@ -22,7 +24,7 @@ import static com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest.R
 
 public class ShuffleListActivity extends AppCompatActivity {
 
-	public static final int NUMBER_OF_SONGS = 10;
+	public static final int NUMBER_OF_SONGS = 4;
 	private static String SHUFFLE_MY_MUSIC_FOLDER = "_shuffle-my-music";
 	private ListPlayerController listPlayerController;
 	private ShuffleListController shuffleListController;
@@ -80,7 +82,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 					loadListAndPlayer();
 					break;
 				case INTERNET_REQUEST:
-					shuffleListController.createShuffleList(NUMBER_OF_SONGS);
+					createShuffleList();
 					break;
 				default:
 					break;
@@ -105,10 +107,15 @@ public class ShuffleListActivity extends AppCompatActivity {
 	public void createShuffleList(View view) {
 		if (new PermissionsAccess().hasPermission(this, PermissionRequest.INTERNET_REQUEST,
 				PermissionRequest.WRITE_EXTERNAL_STORAGE_REQUEST)) {
-			shuffleListController.createShuffleList(NUMBER_OF_SONGS);
+			createShuffleList();
 		} else {
 			new PermissionsAccess().requestPermission(this, PermissionRequest.INTERNET_REQUEST,
 					PermissionRequest.WRITE_EXTERNAL_STORAGE_REQUEST);
 		}
+	}
+
+	private void createShuffleList() {
+		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		new CreateShuffleListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS);
 	}
 }

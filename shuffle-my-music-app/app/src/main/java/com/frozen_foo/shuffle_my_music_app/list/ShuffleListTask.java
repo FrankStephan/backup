@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.shuffle;
+package com.frozen_foo.shuffle_my_music_app.list;
 
 import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
 import com.frozen_foo.shuffle_my_music_app.async.AbstractAsyncTask;
