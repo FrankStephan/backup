@@ -81,8 +81,10 @@ class ShuffleMyMusicServiceTest extends GroovyTestCase {
 			return randoms
 		}
 
+
+
 		disitinctRandomService.use {
-			assert ['1', '3']== new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
+			assert indexEntries(['1', '3'])== new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
 		}
 	}
 
@@ -95,11 +97,10 @@ class ShuffleMyMusicServiceTest extends GroovyTestCase {
 		}
 
 		disitinctRandomService.use {
-			String[] indexEntries = new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
-			assert numberOfSongs == indexEntries.length
+			IndexEntry[] actualIndexEntries = new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
+			assert numberOfSongs == actualIndexEntries.length
 			Arrays.sort(randoms)
-			List<String> r =  randoms.collect {int random -> String.valueOf(random)}
-			assert randoms.collect {int random -> String.valueOf(random)} == indexEntries
+			assert indexEntries(randoms.collect {int random -> String.valueOf(random)}) == actualIndexEntries
 		}
 	}
 
@@ -115,7 +116,30 @@ class ShuffleMyMusicServiceTest extends GroovyTestCase {
 		}
 
 		disitinctRandomService.use {
-			assert ['0', '1', '2']== new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
+			assert indexEntries(['0', '1', '2'])== new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
 		}
+	}
+
+	void testIndexEntryValues() {
+		String indexContent = ['2>>Start', 'a/b/c.mp3', 'd.mp3', '<<End'].join(System.lineSeparator())
+		inputStream = new ByteArrayInputStream(indexContent.bytes)
+		randoms = [0, 1]
+		numberOfSongs = 2
+		MockFor disitinctRandomService = new MockFor(DistinctRandomService.class)
+		disitinctRandomService.demand.randoms(1) {int bound, int randomCount ->
+			return randoms
+		}
+
+		disitinctRandomService.use {
+			IndexEntry[] indexEntries = new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
+
+			IndexEntry entry1 = new IndexEntry(fileName: 'c.mp3', path: 'a/b/c.mp3')
+			IndexEntry entry2 = new IndexEntry(fileName: 'd.mp3', path: 'd.mp3')
+			assert [entry1, entry2]== indexEntries
+		}
+	}
+
+	private IndexEntry[] indexEntries(List<String> paths) {
+		return paths.collect { String it -> new IndexEntry(fileName: it, path: it) }
 	}
 }

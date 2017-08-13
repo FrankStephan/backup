@@ -2,7 +2,7 @@ package com.frozen_foo.shuffle_my_music_2
 
 class ShuffleMyMusicService {
 
-	String[] randomIndexEntries(InputStream indexInputStream, int numberOfSongs) {
+	IndexEntry[] randomIndexEntries(InputStream indexInputStream, int numberOfSongs) {
 		if (numberOfSongs < 1) {
 			return []
 		}
@@ -15,10 +15,10 @@ class ShuffleMyMusicService {
 
 		int nextIndex = q.poll()
 
-		List<String> indexEntries = []
+		List<String> paths = []
 		while (!indexStream.empty()) {
 			if (nextIndex == indexStream.getIndex()) {
-				indexEntries.add(indexStream.nextEntry())
+				paths.add(indexStream.nextEntry())
 				if (q.isEmpty()) {
 					break
 				} else {
@@ -28,6 +28,18 @@ class ShuffleMyMusicService {
 				indexStream.nextEntry()
 			}
 		}
-		return indexEntries
+		return paths.collect { String it ->  indexEntry(it)}
+	}
+
+	private IndexEntry indexEntry(String path) {
+		String fileName
+		int lastPathSeparator = path.lastIndexOf('/')
+		if (lastPathSeparator != -1) {
+			fileName = path.substring(lastPathSeparator+1, path.length())
+		} else {
+			fileName = path
+		}
+
+		new IndexEntry(fileName: fileName, path: path)
 	}
 }
