@@ -2,6 +2,7 @@ package com.frozen_foo.shuffle_my_music_app.list.create;
 
 import android.content.Context;
 
+import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
 import com.frozen_foo.shuffle_my_music_app.async.AbstractAsyncTask;
 import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
@@ -16,8 +17,13 @@ import com.frozen_foo.shuffle_my_music_app.list.create.progress.ShuffleProgress;
 import com.frozen_foo.shuffle_my_music_app.list.create.progress.DeterminedSongsStep;
 import com.frozen_foo.shuffle_my_music_app.list.create.progress.StartSongCopyStep;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.io.File;
 import java.io.InputStream;
+import java.util.Arrays;
 
 /**
  * Created by Frank on 01.08.2017.
@@ -45,8 +51,13 @@ public class Shuffler extends AbstractAsyncTask<NumberOfSongs, ShuffleProgress, 
 		publishProgress(PreparationStep.LOADING_INDEX);
 		InputStream indexStream          = loadIndex(context);
 		publishProgress(PreparationStep.SHUFFLING_INDEX);
-		String[]    shuffledIndexEntries = shuffleIndexEntries(indexStream, numberOfSongs);
-		publishProgress(new DeterminedSongsStep(shuffledIndexEntries));
+		IndexEntry[]    shuffledIndexEntries = shuffleIndexEntries(indexStream, numberOfSongs);
+		String[] fileNames = new String[shuffledIndexEntries.length];
+		for (int i = 0; i < shuffledIndexEntries.length; i++) {
+			fileNames[i] = shuffledIndexEntries[i].getFileName();
+		}
+
+		publishProgress(new DeterminedSongsStep(fileNames));
 		return copySongsToLocalDir(context, shuffledIndexEntries);
 	}
 
@@ -54,18 +65,18 @@ public class Shuffler extends AbstractAsyncTask<NumberOfSongs, ShuffleProgress, 
 		return new RemoteDirectoryAccess().indexStream(context);
 	}
 
-	private String[] shuffleIndexEntries(InputStream indexStream, int numberOfSongs) {
+	private IndexEntry[] shuffleIndexEntries(InputStream indexStream, int numberOfSongs) {
 		return new ShuffleMyMusicService().randomIndexEntries(indexStream, numberOfSongs);
 	}
 
-	private File[] copySongsToLocalDir(Context context, String[] shuffledIndexEntries) throws Exception {
+	private File[] copySongsToLocalDir(Context context, IndexEntry[] shuffledIndexEntries) throws Exception {
 		RemoteDirectoryAccess remoteDirectoryAccess = new RemoteDirectoryAccess();
 		LocalDirectoryAccess  localDirectoryAccess  = new LocalDirectoryAccess();
 		localDirectoryAccess.cleanLocalDir();
 		for (int i = 0; i < shuffledIndexEntries.length; i++) {
 			publishProgress(new StartSongCopyStep(i));
-			InputStream remoteSongStream = remoteDirectoryAccess.songStream(context, shuffledIndexEntries[i]);
-			localDirectoryAccess.copyToLocal(remoteSongStream, shuffledIndexEntries[i]);
+			InputStream remoteSongStream = remoteDirectoryAccess.songStream(context, shuffledIndexEntries[i].getPath());
+			localDirectoryAccess.copyToLocal(remoteSongStream, shuffledIndexEntries[i].getFileName());
 			publishProgress(new FinishedSongCopyStep(i));
 		}
 		publishProgress(new FinalizationStep());

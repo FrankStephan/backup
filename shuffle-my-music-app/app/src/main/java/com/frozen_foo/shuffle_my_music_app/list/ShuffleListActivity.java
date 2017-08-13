@@ -24,7 +24,7 @@ import static com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest.R
 
 public class ShuffleListActivity extends AppCompatActivity {
 
-	public static final int NUMBER_OF_SONGS = 4;
+	public static final int NUMBER_OF_SONGS = 10;
 	private static String SHUFFLE_MY_MUSIC_FOLDER = "_shuffle-my-music";
 	private ListPlayerController listPlayerController;
 	private ShuffleListController shuffleListController;

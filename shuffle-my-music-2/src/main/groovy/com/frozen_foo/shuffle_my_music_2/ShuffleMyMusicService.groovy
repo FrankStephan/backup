@@ -40,6 +40,6 @@ class ShuffleMyMusicService {
 			fileName = path
 		}
 
-		new IndexEntry(fileName: fileName, path: path)
+		new IndexEntry(fileName, path)
 	}
 }
