@@ -8,18 +8,21 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.Util;
 import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
-import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListRowAdapter;
 import com.frozen_foo.shuffle_my_music_app.main.RowModel;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.DeterminedSongsStep;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.FinishedSongCopyStep;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.PreparationStep;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.ShuffleProgress;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.StartSongCopyStep;
+import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListRowAdapter;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * Created by Frank on 05.08.2017.
@@ -51,10 +54,19 @@ public class CreateListController {
 				if (hasException()) {
 					Toast.makeText(context, getException().getMessage(), Toast.LENGTH_LONG).show();
 				} else {
-					fillRows(activity, Util.toFileNameList(result));
+					fillRows(activity, toFileNameList(result));
 				}
 			}
 		};
+	}
+
+	private String[] toFileNameList(File[] result) {
+		return (String[]) CollectionUtils.collect(Arrays.asList(result), new Transformer() {
+			@Override
+			public Object transform(Object input) {
+				return ((File) (input)).getName();
+			}
+		}).toArray(new String[result.length]);
 	}
 
 	private void setProgress(Activity activity, ProgressBar progressBar, ShuffleProgress shuffleProgress) {
