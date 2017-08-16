@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.list.create;
+package com.frozen_foo.shuffle_my_music_app.main.create_list;
 
 import android.content.Context;
 
@@ -7,40 +7,34 @@ import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
 import com.frozen_foo.shuffle_my_music_app.async.AbstractAsyncTask;
 import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
-import com.frozen_foo.shuffle_my_music_app.list.LocalDirectoryAccess;
-import com.frozen_foo.shuffle_my_music_app.list.NumberOfSongs;
-import com.frozen_foo.shuffle_my_music_app.list.RemoteDirectoryAccess;
-import com.frozen_foo.shuffle_my_music_app.list.create.progress.FinalizationStep;
-import com.frozen_foo.shuffle_my_music_app.list.create.progress.FinishedSongCopyStep;
-import com.frozen_foo.shuffle_my_music_app.list.create.progress.PreparationStep;
-import com.frozen_foo.shuffle_my_music_app.list.create.progress.ShuffleProgress;
-import com.frozen_foo.shuffle_my_music_app.list.create.progress.DeterminedSongsStep;
-import com.frozen_foo.shuffle_my_music_app.list.create.progress.StartSongCopyStep;
-
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-import org.apache.commons.lang3.ArrayUtils;
+import com.frozen_foo.shuffle_my_music_app.io.local.LocalDirectoryAccess;
+import com.frozen_foo.shuffle_my_music_app.io.remote.RemoteDirectoryAccess;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.FinalizationStep;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.FinishedSongCopyStep;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.PreparationStep;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.ShuffleProgress;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.DeterminedSongsStep;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.StartSongCopyStep;
 
 import java.io.File;
 import java.io.InputStream;
-import java.util.Arrays;
 
 /**
  * Created by Frank on 01.08.2017.
  */
 
-public class Shuffler extends AbstractAsyncTask<NumberOfSongs, ShuffleProgress, File[]> {
+public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProgress, File[]> {
 
 	public static final int NUMBER_OF_PREPARATION_STEPS = 2;
 
-	public Shuffler(AsyncCallback<File[]> callback, ProgressMonitor<ShuffleProgress> progressMonitor) {
+	public CreateListTask(AsyncCallback<File[]> callback, ProgressMonitor<ShuffleProgress> progressMonitor) {
 		super(callback, progressMonitor);
 	}
 
 	@Override
 	protected File[] doInBackground(NumberOfSongs... params) {
 		try {
-			return createNewShuffledList(params[0].contex, params[0].value);
+			return createNewShuffledList(params[0].context, params[0].value);
 		} catch (Exception e) {
 			callback.setException(e);
 			return new File[0];

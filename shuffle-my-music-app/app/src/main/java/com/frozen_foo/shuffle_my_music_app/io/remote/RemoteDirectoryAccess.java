@@ -1,11 +1,11 @@
-package com.frozen_foo.shuffle_my_music_app.list;
+package com.frozen_foo.shuffle_my_music_app.io.remote;
 
 import android.content.Context;
 
 import com.frozen_foo.shuffle_my_music_app.crypto.Cryptifier;
 import com.frozen_foo.shuffle_my_music_app.settings.Settings;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccess;
-import com.frozen_foo.shuffle_my_music_app.smb.SmbAccess;
+import com.frozen_foo.shuffle_my_music_app.io.remote.smb.SmbAccess;
 
 import org.apache.commons.lang3.StringUtils;
 

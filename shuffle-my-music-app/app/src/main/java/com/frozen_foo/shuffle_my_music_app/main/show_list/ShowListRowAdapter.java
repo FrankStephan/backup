@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.list;
+package com.frozen_foo.shuffle_my_music_app.main.show_list;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,20 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.list.RowModel;
+import com.frozen_foo.shuffle_my_music_app.main.RowModel;
 
 /**
- * Created by Frank on 04.07.2017.
+ * Created by Frank on 16.07.2017.
  */
 
-public class SelectableRowAdapter extends ArrayAdapter<RowModel> {
+public class ShowListRowAdapter extends ArrayAdapter<RowModel> {
 
-	public SelectableRowAdapter(@NonNull Context context, RowModel[] resource) {
-		super(context, R.layout.selectable_row, resource);
+	public ShowListRowAdapter(@NonNull Context context, RowModel[] rows) {
+		super(context, R.layout.row, rows);
 	}
 
 	@NonNull
@@ -29,16 +28,12 @@ public class SelectableRowAdapter extends ArrayAdapter<RowModel> {
 	public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 		Context        context  = super.getContext();
 		LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-		convertView = inflater.inflate(R.layout.selectable_row, parent, false);
+		convertView = inflater.inflate(R.layout.row, parent, false);
 		TextView name     = (TextView) convertView.findViewById(R.id.songNameText);
-		CheckBox cb       = (CheckBox) convertView.findViewById(R.id.checkBox1);
-		RowModel rowModel = (RowModel) getItem(position);
+		RowModel rowModel = getItem(position);
 		name.setText(rowModel.getLabel());
-		if (rowModel.isChecked()) {
-			cb.setChecked(true);
-		} else {
-			cb.setChecked(false);
-		}
 		return convertView;
 	}
+
+
 }

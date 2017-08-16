@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.list;
+package com.frozen_foo.shuffle_my_music_app.io.local;
 
 import android.os.Environment;
 import android.support.annotation.NonNull;

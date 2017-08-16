@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.smb;
+package com.frozen_foo.shuffle_my_music_app.io.remote.smb;
 
 import android.content.Context;
 

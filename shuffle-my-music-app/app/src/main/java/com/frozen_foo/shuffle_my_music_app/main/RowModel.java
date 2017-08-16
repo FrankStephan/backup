@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.list;
+package com.frozen_foo.shuffle_my_music_app.main;
 
 /**
  * Created by Frank on 04.07.2017.
@@ -9,12 +9,13 @@ public class RowModel {
 	private String label;
 	private String path;
 	private boolean copying;
-	private boolean checked;
 
-	public RowModel(String label, String path, boolean checked) {
+	private boolean favorite;
+
+	public RowModel(String label, String path, boolean favorite) {
 		this.label = label;
 		this.path = path;
-		this.checked = checked;
+		this.favorite = favorite;
 	}
 
 	public String getLabel() {
@@ -23,14 +24,6 @@ public class RowModel {
 
 	public void setLabel(String label) {
 		this.label = label;
-	}
-
-	public boolean isChecked() {
-		return checked;
-	}
-
-	public void setChecked(boolean checked) {
-		this.checked = checked;
 	}
 
 	public String getPath() {
@@ -47,5 +40,13 @@ public class RowModel {
 
 	public void setCopying(final boolean copying) {
 		this.copying = copying;
+	}
+
+	public boolean isFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(final boolean favorite) {
+		this.favorite = favorite;
 	}
 }

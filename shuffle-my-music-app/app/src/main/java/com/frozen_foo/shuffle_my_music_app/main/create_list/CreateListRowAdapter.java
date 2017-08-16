@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.list.create;
+package com.frozen_foo.shuffle_my_music_app.main.create_list;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,15 +12,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.list.RowModel;
+import com.frozen_foo.shuffle_my_music_app.main.RowModel;
 
 /**
  * Created by Frank on 05.08.2017.
  */
 
-public class ProgressRowAdapter extends ArrayAdapter<RowModel> {
+public class CreateListRowAdapter extends ArrayAdapter<RowModel> {
 
-	public ProgressRowAdapter(@NonNull Context context, RowModel[] rows) {
+	public CreateListRowAdapter(@NonNull Context context, RowModel[] rows) {
 		super(context, R.layout.loading_row, rows);
 	}
 

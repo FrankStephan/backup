@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app;
+package com.frozen_foo.shuffle_my_music_app.settings;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -8,10 +8,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.frozen_foo.shuffle_my_music_app.R;
+import com.frozen_foo.shuffle_my_music_app.main.ShuffleListActivity;
 import com.frozen_foo.shuffle_my_music_app.crypto.Cryptifier;
-import com.frozen_foo.shuffle_my_music_app.settings.Settings;
-import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccess;
-import com.frozen_foo.shuffle_my_music_app.list.ShuffleListActivity;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.list.create;
+package com.frozen_foo.shuffle_my_music_app.main.create_list;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,14 +11,13 @@ import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.Util;
 import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
-import com.frozen_foo.shuffle_my_music_app.list.NumberOfSongs;
-import com.frozen_foo.shuffle_my_music_app.list.RowAdapter;
-import com.frozen_foo.shuffle_my_music_app.list.RowModel;
-import com.frozen_foo.shuffle_my_music_app.list.create.progress.DeterminedSongsStep;
-import com.frozen_foo.shuffle_my_music_app.list.create.progress.FinishedSongCopyStep;
-import com.frozen_foo.shuffle_my_music_app.list.create.progress.PreparationStep;
-import com.frozen_foo.shuffle_my_music_app.list.create.progress.ShuffleProgress;
-import com.frozen_foo.shuffle_my_music_app.list.create.progress.StartSongCopyStep;
+import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListRowAdapter;
+import com.frozen_foo.shuffle_my_music_app.main.RowModel;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.DeterminedSongsStep;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.FinishedSongCopyStep;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.PreparationStep;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.ShuffleProgress;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.StartSongCopyStep;
 
 import java.io.File;
 
@@ -26,12 +25,12 @@ import java.io.File;
  * Created by Frank on 05.08.2017.
  */
 
-public class CreateShuffleListController {
+public class CreateListController {
 
 	public void createShuffleList(Context context, final Activity activity, ProgressBar progressBar, int numberOfSongs) {
 		progressBar.setMax(numberOfSongs + PreparationStep.values().length);
 		NumberOfSongs numberOfSongsContext = new NumberOfSongs(numberOfSongs, context);
-		new Shuffler(inflateListCallback(context, activity), progressBarUpdater(activity, progressBar)).execute(numberOfSongsContext);
+		new CreateListTask(inflateListCallback(context, activity), progressBarUpdater(activity, progressBar)).execute(numberOfSongsContext);
 	}
 
 	@NonNull
@@ -85,8 +84,8 @@ public class CreateShuffleListController {
 	}
 
 	private void showPreparation(Activity activity, String text) {
-		RowModel[] rows    = new RowModel[]{new RowModel(text, null, false)};
-		RowAdapter adapter = new RowAdapter(activity, rows);
+		RowModel[]         rows    = new RowModel[]{new RowModel(text, null, false)};
+		ShowListRowAdapter adapter = new ShowListRowAdapter(activity, rows);
 		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
 	}
 
@@ -96,13 +95,13 @@ public class CreateShuffleListController {
 			rows[i] = new RowModel(randomIndexEntries[i], randomIndexEntries[i], false);
 		}
 
-		ProgressRowAdapter adapter = new ProgressRowAdapter(activity, rows);
+		CreateListRowAdapter adapter = new CreateListRowAdapter(activity, rows);
 		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
 	}
 
 	private void updateCopyProgress(Activity activity, int index, boolean copying) {
-		ProgressRowAdapter adapter  =
-				(ProgressRowAdapter) ((ListView) activity.findViewById(R.id.shuffleList)).getAdapter();
+		CreateListRowAdapter adapter  =
+				(CreateListRowAdapter) ((ListView) activity.findViewById(R.id.shuffleList)).getAdapter();
 		RowModel    rowModel = adapter.getItem(index);
 		rowModel.setCopying(copying);
 		adapter.notifyDataSetChanged();

@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.list;
+package com.frozen_foo.shuffle_my_music_app.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +12,12 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.SettingsActivity;
+import com.frozen_foo.shuffle_my_music_app.settings.SettingsActivity;
+import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListController;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerController;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionsAccess;
-import com.frozen_foo.shuffle_my_music_app.list.create.CreateShuffleListController;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.CreateListController;
 
 import java.io.File;
 
@@ -27,7 +28,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	public static final int NUMBER_OF_SONGS = 10;
 	private static String SHUFFLE_MY_MUSIC_FOLDER = "_shuffle-my-music";
 	private ListPlayerController listPlayerController;
-	private ShuffleListController shuffleListController;
+	private ShowListController showListController;
 	private File[] songs;
 
 	@Override
@@ -60,7 +61,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shuffle_list);
 		listPlayerController = new ListPlayerController(getApplication(), getApplicationContext());
-		shuffleListController = new ShuffleListController(this, getApplicationContext());
+		showListController = new ShowListController(this, getApplicationContext());
 		requestExternalStorageAccessOrShowList();
 	}
 
@@ -93,7 +94,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	private void loadListAndPlayer() {
 		File shuffleMyMusicDir = new File(Environment.getExternalStorageDirectory(), SHUFFLE_MY_MUSIC_FOLDER);
 		if (shuffleMyMusicDir.exists()) {
-			songs = shuffleListController.loadAndInflateList(shuffleMyMusicDir);
+			songs = showListController.loadAndInflateList(shuffleMyMusicDir);
 			listPlayerController.loadPlayer(songs);
 		}
 	}
@@ -116,6 +117,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private void createShuffleList() {
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-		new CreateShuffleListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS);
+		new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS);
 	}
 }
