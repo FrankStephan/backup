@@ -20,7 +20,7 @@ import com.frozen_foo.shuffle_my_music_app.main.RowModel;
 public class ShowListRowAdapter extends ArrayAdapter<RowModel> {
 
 	public ShowListRowAdapter(@NonNull Context context, RowModel[] rows) {
-		super(context, R.layout.row, rows);
+		super(context, R.layout.show_list_row, rows);
 	}
 
 	@NonNull
@@ -28,7 +28,7 @@ public class ShowListRowAdapter extends ArrayAdapter<RowModel> {
 	public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 		Context        context  = super.getContext();
 		LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-		convertView = inflater.inflate(R.layout.row, parent, false);
+		convertView = inflater.inflate(R.layout.show_list_row, parent, false);
 		TextView name     = (TextView) convertView.findViewById(R.id.songNameText);
 		RowModel rowModel = getItem(position);
 		name.setText(rowModel.getLabel());

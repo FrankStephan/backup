@@ -21,7 +21,7 @@ import com.frozen_foo.shuffle_my_music_app.main.RowModel;
 public class SelectableRowAdapter extends ArrayAdapter<RowModel> {
 
 	public SelectableRowAdapter(@NonNull Context context, RowModel[] resource) {
-		super(context, R.layout.selectable_row, resource);
+		super(context, R.layout.select_favorite_row, resource);
 	}
 
 	@NonNull
@@ -29,7 +29,7 @@ public class SelectableRowAdapter extends ArrayAdapter<RowModel> {
 	public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 		Context        context  = super.getContext();
 		LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-		convertView = inflater.inflate(R.layout.selectable_row, parent, false);
+		convertView = inflater.inflate(R.layout.select_favorite_row, parent, false);
 		TextView name     = (TextView) convertView.findViewById(R.id.songNameText);
 		CheckBox cb       = (CheckBox) convertView.findViewById(R.id.checkBox1);
 		RowModel rowModel = getItem(position);

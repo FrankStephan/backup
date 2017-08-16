@@ -21,7 +21,7 @@ import com.frozen_foo.shuffle_my_music_app.main.RowModel;
 public class CreateListRowAdapter extends ArrayAdapter<RowModel> {
 
 	public CreateListRowAdapter(@NonNull Context context, RowModel[] rows) {
-		super(context, R.layout.loading_row, rows);
+		super(context, R.layout.create_list_row, rows);
 	}
 
 	@NonNull
@@ -29,7 +29,7 @@ public class CreateListRowAdapter extends ArrayAdapter<RowModel> {
 	public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 		Context        context  = super.getContext();
 		LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-		convertView = inflater.inflate(R.layout.loading_row, parent, false);
+		convertView = inflater.inflate(R.layout.create_list_row, parent, false);
 		RowModel rowModel     = getItem(position);
 		TextView songNameText = (TextView) convertView.findViewById(R.id.songNameText);
 		songNameText.setText(rowModel.getLabel());
