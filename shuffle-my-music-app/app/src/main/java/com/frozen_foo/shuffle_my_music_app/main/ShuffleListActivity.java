@@ -1,5 +1,7 @@
 package com.frozen_foo.shuffle_my_music_app.main;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -9,12 +11,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.ToggleButton;
 
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.CreateListController;
+import com.frozen_foo.shuffle_my_music_app.main.select_favorites.SelectFavoritesController;
 import com.frozen_foo.shuffle_my_music_app.main.select_favorites.SelectableRowAdapter;
 import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListController;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerController;
@@ -106,6 +112,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	public void createShuffleList(View view) {
+
 		if (new PermissionsAccess().hasPermission(this, PermissionRequest.INTERNET_REQUEST,
 				PermissionRequest.WRITE_EXTERNAL_STORAGE_REQUEST)) {
 			createShuffleList();
@@ -115,27 +122,26 @@ public class ShuffleListActivity extends AppCompatActivity {
 		}
 	}
 
+/*	private void confirmCreateShuffleList() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setCancelable(true);
+		builder.setMessage(R.string.confirmCreateShuffleList);
+		--> Thread wird nicht angehalten
+		builder.show();
+
+	}*/
+
 	private void createShuffleList() {
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS);
 	}
 
-	public void selectFavorites(View view) {
-		ListView    shuffleList = (ListView) findViewById(R.id.shuffleList);
-		ListAdapter adapter  = shuffleList.getAdapter();
-		RowModel[]  rows     = rowsFrom(adapter);
-		shuffleList.setAdapter(new SelectableRowAdapter(this, rows));
+	public void selectAddFavorites(View view) {
+		final ListView shuffleList = (ListView) findViewById(R.id.shuffleList);
+		final ToggleButton selectAddFavoritesButton = (ToggleButton) findViewById(R.id.selectAddFavoritesButton);
+		SelectFavoritesController selectFavoritesController = new SelectFavoritesController();
+		selectFavoritesController.selectAddFavorites(this, shuffleList, (ToggleButton) view);
 	}
 
-	private RowModel[] rowsFrom(final ListAdapter adapter) {
-		RowModel[] rows = new RowModel[adapter.getCount()];
-		for (int i = 0; i < rows.length; i++) {
-			rows[i] = (RowModel) adapter.getItem(i);
-		}
-		return rows;
-	}
 
-	public void addToFavorites() {
-
-	}
 }

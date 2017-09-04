@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="vertical">
@@ -47,16 +48,18 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="1"
+            android:enabled="false"
             android:onClick="createShuffleList"
             android:text="@string/createShuffledList"/>
 
-        <Button
-            android:id="@+id/selectFavoritesButton"
+        <ToggleButton
+            android:id="@+id/selectAddFavoritesButton"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:onClick="selectFavorites"
-            android:text="@string/selectFavorites"/>
+            android:onClick="selectAddFavorites"
+            android:textOff="@string/selectFavorites"
+            android:textOn="@string/addToFavorites"/>
     </LinearLayout>
 
 </LinearLayout>

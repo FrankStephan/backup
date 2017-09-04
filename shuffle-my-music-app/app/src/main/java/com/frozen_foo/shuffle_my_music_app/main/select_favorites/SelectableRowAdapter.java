@@ -20,6 +20,8 @@ import com.frozen_foo.shuffle_my_music_app.main.RowModel;
 
 public class SelectableRowAdapter extends ArrayAdapter<RowModel> {
 
+
+
 	public SelectableRowAdapter(@NonNull Context context, RowModel[] resource) {
 		super(context, R.layout.select_favorite_row, resource);
 	}
@@ -30,15 +32,25 @@ public class SelectableRowAdapter extends ArrayAdapter<RowModel> {
 		Context        context  = super.getContext();
 		LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 		convertView = inflater.inflate(R.layout.select_favorite_row, parent, false);
-		TextView name     = (TextView) convertView.findViewById(R.id.songNameText);
-		CheckBox cb       = (CheckBox) convertView.findViewById(R.id.checkBox1);
 		RowModel rowModel = getItem(position);
+
+		TextView name     = (TextView) convertView.findViewById(R.id.songNameText);
 		name.setText(rowModel.getLabel());
-		if (rowModel.isFavorite()) {
-			cb.setChecked(true);
-		} else {
-			cb.setChecked(false);
-		}
+
+		CheckBox cb       = (CheckBox) convertView.findViewById(R.id.checkBox1);
+
+		bind(cb, rowModel);
 		return convertView;
+	}
+
+	private void bind(final CheckBox view, final RowModel model) {
+		view.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				model.setFavorite(view.isChecked());
+				notifyDataSetChanged();
+			}
+		});
+		view.setChecked(model.isFavorite());
 	}
 }
