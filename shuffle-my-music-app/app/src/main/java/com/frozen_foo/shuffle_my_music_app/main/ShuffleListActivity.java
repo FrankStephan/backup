@@ -1,8 +1,8 @@
 package com.frozen_foo.shuffle_my_music_app.main;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
@@ -11,9 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ToggleButton;
@@ -21,7 +19,6 @@ import android.widget.ToggleButton;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.CreateListController;
 import com.frozen_foo.shuffle_my_music_app.main.select_favorites.SelectFavoritesController;
-import com.frozen_foo.shuffle_my_music_app.main.select_favorites.SelectableRowAdapter;
 import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListController;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerController;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
@@ -37,6 +34,18 @@ public class ShuffleListActivity extends AppCompatActivity {
 	public static final int NUMBER_OF_SONGS = 10;
 	private static String SHUFFLE_MY_MUSIC_FOLDER = "_shuffle-my-music";
 	private ListPlayerController listPlayerController;
+
+	private ListView list() {
+		return (ListView) findViewById(R.id.shuffleList);
+	}
+
+	private Button button1() {
+		return (Button) findViewById(R.id.createShuffleListButton);
+	}
+
+	private ToggleButton button2() {
+		return (ToggleButton) findViewById(R.id.selectAddFavoritesButton);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -111,16 +120,31 @@ public class ShuffleListActivity extends AppCompatActivity {
 		super.onDestroy();
 	}
 
-	public void createShuffleList(View view) {
-
-		if (new PermissionsAccess().hasPermission(this, PermissionRequest.INTERNET_REQUEST,
-				PermissionRequest.WRITE_EXTERNAL_STORAGE_REQUEST)) {
-			createShuffleList();
-		} else {
-			new PermissionsAccess().requestPermission(this, PermissionRequest.INTERNET_REQUEST,
-					PermissionRequest.WRITE_EXTERNAL_STORAGE_REQUEST);
-		}
+	private Mode mode() {
+		ToggleButton selectAddFavoritesButton = button2();
+		return selectAddFavoritesButton.isChecked() ? Mode.SELECT_FAVORITES : Mode.SHOW_LIST;
 	}
+
+	public void pressButton1(View view) {
+
+		switch (mode()) {
+			case SHOW_LIST:
+				if (new PermissionsAccess().hasPermission(this, PermissionRequest.INTERNET_REQUEST,
+						PermissionRequest.WRITE_EXTERNAL_STORAGE_REQUEST)) {
+					createShuffleList();
+				} else {
+					new PermissionsAccess().requestPermission(this, PermissionRequest.INTERNET_REQUEST,
+							PermissionRequest.WRITE_EXTERNAL_STORAGE_REQUEST);
+				}
+				break;
+			case SELECT_FAVORITES:
+				new SelectFavoritesController().cancelFavoritesSelection(this, list(), button2());
+				break;
+		}
+
+	}
+
+
 
 /*	private void confirmCreateShuffleList() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -133,15 +157,25 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private void createShuffleList() {
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-		new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS);
+		// new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS);
 	}
 
-	public void selectAddFavorites(View view) {
-		final ListView shuffleList = (ListView) findViewById(R.id.shuffleList);
-		final ToggleButton selectAddFavoritesButton = (ToggleButton) findViewById(R.id.selectAddFavoritesButton);
-		SelectFavoritesController selectFavoritesController = new SelectFavoritesController();
-		selectFavoritesController.selectAddFavorites(this, shuffleList, (ToggleButton) view);
+	public void pressButton2(View view) {
+		final ListView     shuffleList              = list();
+		final ToggleButton selectAddFavoritesButton = button2();
+		Mode               mode                     = mode();
+		new SelectFavoritesController().selectAddFavorites(this, shuffleList, selectAddFavoritesButton, mode);
+		switch (mode) {
+			case SHOW_LIST:
+				button1().setText(R.string.createShuffledList);
+				button1().setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorAccent)));
+				break;
+			case SELECT_FAVORITES:
+				button1().setText(R.string.cancel);
+				button1().setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+				break;
+		}
+
+
 	}
-
-
 }

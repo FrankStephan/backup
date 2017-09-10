@@ -6,7 +6,9 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ToggleButton;
 
+import com.frozen_foo.shuffle_my_music_app.main.Mode;
 import com.frozen_foo.shuffle_my_music_app.main.RowModel;
+import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListRowAdapter;
 
 /**
  * Created by Frank on 24.08.2017.
@@ -21,19 +23,15 @@ public class SelectFavoritesController {
 		}
 	};
 
-	public void selectAddFavorites(Activity activity, ListView shuffleList, ToggleButton selectAddFavoritesButton) {
-		Mode mode = detectMode(selectAddFavoritesButton);
+	public void selectAddFavorites(Activity activity, ListView shuffleList, ToggleButton selectAddFavoritesButton, Mode mode) {
 		switch (mode) {
-			case SELECT:
+			case SELECT_FAVORITES:
 				startFavoritesSelection(activity, shuffleList, selectAddFavoritesButton);
 				break;
-			case ADD:
+			case SHOW_LIST:
+				addFavorites();
 				break;
 		}
-	}
-
-	private Mode detectMode(ToggleButton selectAddFavoritesButton) {
-		return selectAddFavoritesButton.isChecked() ? Mode.SELECT : Mode.ADD;
 	}
 
 	private void startFavoritesSelection(Activity activity, ListView shuffleList, ToggleButton selectAddFavoritesButton) {
@@ -72,11 +70,14 @@ public class SelectFavoritesController {
 		return rows;
 	}
 
-	public boolean isFavoritesSelectionActivated(ToggleButton selectAddFavoritesButton) {
-		return Mode.SELECT == detectMode(selectAddFavoritesButton);
+	private void addFavorites() {
+
 	}
 
-	private enum Mode {
-		SELECT, ADD
+	public void cancelFavoritesSelection(Activity activity, ListView shuffleList, ToggleButton selectAddFavoritesButton) {
+		final ListAdapter adapter = shuffleList.getAdapter();
+		RowModel[]        rows    = rowsFrom(adapter);
+		ShowListRowAdapter showListRowAdapter = new ShowListRowAdapter(activity, rows);
+		shuffleList.setAdapter(showListRowAdapter);
 	}
 }
