@@ -11,7 +11,6 @@ class CreateIndexServiceTest extends GroovyTestCase {
 
 	Path testPath = Paths.get(this.getClass().getSimpleName())
 	Path mediaLibraryPath = testPath.resolve('mediaLibrary')
-	Path targetPath = testPath.resolve('shuffle-my-music')
 
 	void setUp() {
 		super.setUp()
