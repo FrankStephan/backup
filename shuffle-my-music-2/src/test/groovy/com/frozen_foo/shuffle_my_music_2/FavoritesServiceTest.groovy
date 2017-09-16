@@ -113,14 +113,12 @@ class FavoritesServiceTest extends GroovyTestCase {
 		assert [favorite1, favorite2, favorite4, favorite5]== favorites
 	}
 
-	void testContainsRelativePaths() {
-		IndexEntry favorite1 = new IndexEntry(fileName: 'song1.mp3', path: 'dir1\\song1.mp3')
-		notYetImplemented()
-	}
-
 	void testHandlesUTF8() {
-		IndexEntry favorite1 = new IndexEntry(fileName: 'song1.mp3', path: 'dir1\\äöß??_.mp3')
-		notYetImplemented()
+		IndexEntry favorite1 = new IndexEntry(fileName: 'äöß??_.mp3', path: 'dir1\\äöß??_.mp3')
+		newFavorites = [favorite1]
+		invokeAdd()
+		invokeLoad()
+		assert favorites == newFavorites
 	}
 
 	private IndexEntry[] invokeAdd() {
