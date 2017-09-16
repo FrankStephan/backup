@@ -2,6 +2,7 @@ package com.frozen_foo.shuffle_my_music_app.main;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,7 +18,6 @@ import android.widget.ProgressBar;
 import android.widget.ToggleButton;
 
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.main.create_list.CreateListController;
 import com.frozen_foo.shuffle_my_music_app.main.select_favorites.SelectFavoritesController;
 import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListController;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerController;
@@ -109,7 +109,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	private void loadListAndPlayer() {
 		File shuffleMyMusicDir = new File(Environment.getExternalStorageDirectory(), SHUFFLE_MY_MUSIC_FOLDER);
 		if (shuffleMyMusicDir.exists()) {
-			File[] songs = new ShowListController(this, getApplicationContext()).loadAndInflateList(shuffleMyMusicDir);
+			File[] songs = new ShowListController().loadAndInflateList(this, shuffleMyMusicDir);
 			listPlayerController.loadPlayer(songs);
 		}
 	}
@@ -126,8 +126,8 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	public void pressButton1(View view) {
-
-		switch (mode()) {
+		Mode mode = mode();
+		switch (mode) {
 			case SHOW_LIST:
 				if (new PermissionsAccess().hasPermission(this, PermissionRequest.INTERNET_REQUEST,
 						PermissionRequest.WRITE_EXTERNAL_STORAGE_REQUEST)) {
@@ -138,7 +138,11 @@ public class ShuffleListActivity extends AppCompatActivity {
 				}
 				break;
 			case SELECT_FAVORITES:
-				new SelectFavoritesController().cancelFavoritesSelection(this, list(), button2());
+				button1().setText(R.string.createShuffledList);
+				button1().setBackgroundTintList(ColorStateList.valueOf(Color.LTGRAY));
+				button2().setChecked(false);
+				button2().setEnabled(true);
+				new SelectFavoritesController().cancelFavoritesSelection(this, list());
 				break;
 		}
 
@@ -161,21 +165,26 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	public void pressButton2(View view) {
-		final ListView     shuffleList              = list();
-		final ToggleButton selectAddFavoritesButton = button2();
-		Mode               mode                     = mode();
-		new SelectFavoritesController().selectAddFavorites(this, shuffleList, selectAddFavoritesButton, mode);
+		final ListView     shuffleList = list();
+		final ToggleButton button2     = button2();
+		Mode               mode        = mode();
 		switch (mode) {
 			case SHOW_LIST:
 				button1().setText(R.string.createShuffledList);
-				button1().setBackgroundTintList(ColorStateList.valueOf(getColor(R.color.colorAccent)));
+				button1().setBackgroundTintList(ColorStateList.valueOf(Color.LTGRAY));
+				new SelectFavoritesController().addFavorites(this, shuffleList);
 				break;
 			case SELECT_FAVORITES:
 				button1().setText(R.string.cancel);
 				button1().setBackgroundTintList(ColorStateList.valueOf(Color.RED));
+				final SelectFavoritesController selectFavoritesController = new SelectFavoritesController();
+				selectFavoritesController.selectFavorites(this, shuffleList, new DataSetObserver() {
+					@Override
+					public void onChanged() {
+						button2.setEnabled(selectFavoritesController.atLeastOneSelected(shuffleList));
+					}
+				});
 				break;
 		}
-
-
 	}
 }

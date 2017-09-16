@@ -15,16 +15,8 @@ import java.util.Arrays;
  */
 
 public class ShowListController {
-	
-	private Activity activity;
-	private Context context;
 
-	public ShowListController(final Activity activity, final Context context) {
-		this.activity = activity;
-		this.context = context;
-	}
-
-	public File[] loadAndInflateList(File shuffleMyMusicDir) {
+	public File[] loadAndInflateList(Activity activity, File shuffleMyMusicDir) {
 		ListView shuffleList = (ListView) activity.findViewById(R.id.shuffleList);
 
 		File[] songs = shuffleMyMusicDir.listFiles();

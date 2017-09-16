@@ -23,36 +23,32 @@ import java.io.InputStream;
  * Created by Frank on 01.08.2017.
  */
 
-public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProgress, File[]> {
+public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProgress, IndexEntry[]> {
 
 	public static final int NUMBER_OF_PREPARATION_STEPS = 2;
 
-	public CreateListTask(AsyncCallback<File[]> callback, ProgressMonitor<ShuffleProgress> progressMonitor) {
+	public CreateListTask(AsyncCallback<IndexEntry[]> callback, ProgressMonitor<ShuffleProgress> progressMonitor) {
 		super(callback, progressMonitor);
 	}
 
 	@Override
-	protected File[] doInBackground(NumberOfSongs... params) {
+	protected IndexEntry[] doInBackground(NumberOfSongs... params) {
 		try {
 			return createNewShuffledList(params[0].context, params[0].value);
 		} catch (Exception e) {
 			callback.setException(e);
-			return new File[0];
+			return new IndexEntry[0];
 		}
 	}
 
-	private File[] createNewShuffledList(Context context, int numberOfSongs) throws Exception {
+	private IndexEntry[] createNewShuffledList(Context context, int numberOfSongs) throws Exception {
 		publishProgress(PreparationStep.LOADING_INDEX);
 		InputStream indexStream          = loadIndex(context);
 		publishProgress(PreparationStep.SHUFFLING_INDEX);
 		IndexEntry[]    shuffledIndexEntries = shuffleIndexEntries(indexStream, numberOfSongs);
-		String[] fileNames = new String[shuffledIndexEntries.length];
-		for (int i = 0; i < shuffledIndexEntries.length; i++) {
-			fileNames[i] = shuffledIndexEntries[i].getFileName();
-		}
-
-		publishProgress(new DeterminedSongsStep(fileNames));
-		return copySongsToLocalDir(context, shuffledIndexEntries);
+		publishProgress(new DeterminedSongsStep(shuffledIndexEntries));
+		copySongsToLocalDir(context, shuffledIndexEntries);
+		return shuffledIndexEntries;
 	}
 
 	private InputStream loadIndex(Context context) throws Exception {
