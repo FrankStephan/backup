@@ -36,7 +36,7 @@ class FavoritesService {
         favoritesFile.withWriter('UTF-8') { favoritesFileWriter ->
             new MarkupBuilder(favoritesFileWriter).favorites(timestamp: new Date().getDateTimeString()) {
                 for (IndexEntry favorite : favorites) {
-                    song(title: favorite.fileName, favorite.path)
+                    song(title: favorite.getFileName(), favorite.getPath())
                 }
             }
         }
