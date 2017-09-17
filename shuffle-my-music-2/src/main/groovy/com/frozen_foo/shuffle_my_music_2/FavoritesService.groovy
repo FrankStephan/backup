@@ -12,7 +12,7 @@ class FavoritesService {
     }
 
     private File createOrGetFile(String targetDirPath) {
-        File favoritesFile = new File(targetDirPath, 'favorites.xml').absoluteFile
+        File favoritesFile = new File(targetDirPath, 'favorites.xml').getAbsoluteFile()
         if (!favoritesFile.exists()) {
             new File(targetDirPath).mkdirs()
             favoritesFile.createNewFile()
