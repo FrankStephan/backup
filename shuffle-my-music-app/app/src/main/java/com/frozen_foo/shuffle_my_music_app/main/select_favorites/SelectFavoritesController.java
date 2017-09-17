@@ -4,11 +4,25 @@ import android.app.Activity;
 import android.database.DataSetObserver;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ToggleButton;
+import android.widget.Toast;
 
-import com.frozen_foo.shuffle_my_music_app.main.Mode;
+import com.frozen_foo.shuffle_my_music_2.FavoritesService;
+import com.frozen_foo.shuffle_my_music_2.IndexEntry;
+import com.frozen_foo.shuffle_my_music_app.io.local.LocalDirectoryAccess;
+import com.frozen_foo.shuffle_my_music_app.main.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.main.RowModel;
 import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListRowAdapter;
+
+import org.apache.commons.lang3.ArrayUtils;
+import org.xml.sax.SAXException;
+
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import groovy.util.XmlSlurper;
 
 /**
  * Created by Frank on 24.08.2017.
@@ -45,8 +59,29 @@ public class SelectFavoritesController {
 
 	public void addFavorites(Activity activity, ListView shuffleList) {
 		doCancel(activity, shuffleList);
+		String         localDirPath      = new LocalDirectoryAccess().localDir().getAbsolutePath();
+		RowModel[]     rowModels         = rowsFrom(shuffleList.getAdapter());
+		List<RowModel> selectedRowModels = new LinkedList<>();
+		for (RowModel rowModel : rowModels) {
+			if (rowModel.isFavorite()) {
+				selectedRowModels.add(rowModel);
+			}
+		}
 
-
+		IndexEntry[] indexEntries = new IndexEntryRowModelConverter()
+				.toIndexEntries(selectedRowModels.toArray(new RowModel[selectedRowModels.size()]));
+		try {
+			new XmlSlurper().parseText("<test></test>");
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		}
+		IndexEntry[] addedIndexEntries = new FavoritesService().addFavorites(localDirPath, indexEntries);
+		Toast.makeText(activity.getApplicationContext(), ArrayUtils.toString(addedIndexEntries), Toast.LENGTH_LONG)
+				.show();
 	}
 
 	public void cancelFavoritesSelection(Activity activity, ListView shuffleList) {

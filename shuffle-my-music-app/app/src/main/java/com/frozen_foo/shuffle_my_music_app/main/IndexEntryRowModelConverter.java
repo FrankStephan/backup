@@ -8,7 +8,7 @@ import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 
 public class IndexEntryRowModelConverter {
 
-	public RowModel toRowModel(IndexEntry indexEntry) {
+	private RowModel toRowModel(IndexEntry indexEntry) {
 		return new RowModel(indexEntry.getFileName(), indexEntry.getPath(), false);
 	}
 
@@ -20,9 +20,16 @@ public class IndexEntryRowModelConverter {
 		return rowModels;
 	}
 
-	public IndexEntry toIndexEntry(RowModel rowModel) {
+	private IndexEntry toIndexEntry(RowModel rowModel) {
 		return new IndexEntry(rowModel.getLabel(), rowModel.getPath());
 	}
 
+	public IndexEntry[] toIndexEntries(RowModel[] rowModels) {
+		IndexEntry[] indexEntries = new IndexEntry[rowModels.length];
+		for (int i = 0; i < indexEntries.length; i++) {
+			indexEntries[i] = toIndexEntry(rowModels[i]);
+		}
+		return indexEntries;
+	}
 
 }
