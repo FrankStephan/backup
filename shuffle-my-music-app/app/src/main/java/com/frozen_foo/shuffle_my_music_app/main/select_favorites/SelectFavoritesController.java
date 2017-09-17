@@ -16,44 +16,17 @@ import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListRowAdapter;
 
 public class SelectFavoritesController {
 
-	private DataSetObserver checkBoxObserver = new DataSetObserver() {
-		@Override
-		public void onChanged() {
-
-		}
-	};
-
-	public void selectAddFavorites(Activity activity, ListView shuffleList, ToggleButton selectAddFavoritesButton, Mode mode) {
-		switch (mode) {
-			case SELECT_FAVORITES:
-				startFavoritesSelection(activity, shuffleList, selectAddFavoritesButton);
-				break;
-			case SHOW_LIST:
-				addFavorites();
-				break;
-		}
-	}
-
-	private void startFavoritesSelection(Activity activity, ListView shuffleList, ToggleButton selectAddFavoritesButton) {
-		selectAddFavoritesButton.setEnabled(false);
+	public void selectFavorites(Activity activity, ListView shuffleList, DataSetObserver selectionChangeObserver) {
 		final ListAdapter          adapter              = shuffleList.getAdapter();
 		RowModel[]                 rows                 = rowsFrom(adapter);
 		final SelectableRowAdapter selectableRowAdapter = new SelectableRowAdapter(activity, rows);
-		observeFavoritesChanges(selectableRowAdapter, selectAddFavoritesButton);
+		selectableRowAdapter.registerDataSetObserver(selectionChangeObserver);
 		shuffleList.setAdapter(selectableRowAdapter);
+		selectableRowAdapter.notifyDataSetChanged();
 	}
 
-	private void observeFavoritesChanges(final SelectableRowAdapter selectableRowAdapter, final ToggleButton selectAddFavoritesButton) {
-		selectableRowAdapter.registerDataSetObserver(new DataSetObserver() {
-			@Override
-			public void onChanged() {
-				selectAddFavoritesButton.setEnabled(atLeastOneSelected(selectableRowAdapter));
-			}
-		});
-	}
-
-	private boolean atLeastOneSelected(SelectableRowAdapter selectableRowAdapter) {
-		RowModel[] rows = rowsFrom(selectableRowAdapter);
+	public boolean atLeastOneSelected(ListView shuffleList) {
+		RowModel[] rows = rowsFrom(shuffleList.getAdapter());
 		for (RowModel row : rows) {
 			if (row.isFavorite()) {
 				return true;
@@ -70,13 +43,20 @@ public class SelectFavoritesController {
 		return rows;
 	}
 
-	private void addFavorites() {
+	public void addFavorites(Activity activity, ListView shuffleList) {
+		doCancel(activity, shuffleList);
+
 
 	}
 
-	public void cancelFavoritesSelection(Activity activity, ListView shuffleList, ToggleButton selectAddFavoritesButton) {
-		final ListAdapter adapter = shuffleList.getAdapter();
-		RowModel[]        rows    = rowsFrom(adapter);
+	public void cancelFavoritesSelection(Activity activity, ListView shuffleList) {
+		doCancel(activity, shuffleList);
+	}
+
+	private void doCancel(final Activity activity, final ListView shuffleList) {
+		final SelectableRowAdapter adapter = (SelectableRowAdapter) shuffleList.getAdapter();
+		RowModel[]                 rows    = rowsFrom(adapter);
+		adapter.release();
 		ShowListRowAdapter showListRowAdapter = new ShowListRowAdapter(activity, rows);
 		shuffleList.setAdapter(showListRowAdapter);
 	}

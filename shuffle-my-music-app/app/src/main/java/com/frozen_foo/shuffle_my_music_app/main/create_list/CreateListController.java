@@ -7,9 +7,11 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
+import com.frozen_foo.shuffle_my_music_app.main.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.main.RowModel;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.DeterminedSongsStep;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.FinishedSongCopyStep;
@@ -47,26 +49,17 @@ public class CreateListController {
 	}
 
 	@NonNull
-	private AsyncCallback<File[]> inflateListCallback(final Context context, final Activity activity) {
-		return new AsyncCallback<File[]>() {
+	private AsyncCallback<IndexEntry[]> inflateListCallback(final Context context, final Activity activity) {
+		return new AsyncCallback<IndexEntry[]>() {
 			@Override
-			public void invoke(File[] result) {
+			public void invoke(IndexEntry[] result) {
 				if (hasException()) {
 					Toast.makeText(context, getException().getMessage(), Toast.LENGTH_LONG).show();
 				} else {
-					fillRows(activity, toFileNameList(result));
+					fillRows(activity, result);
 				}
 			}
 		};
-	}
-
-	private String[] toFileNameList(File[] result) {
-		return (String[]) CollectionUtils.collect(Arrays.asList(result), new Transformer() {
-			@Override
-			public Object transform(Object input) {
-				return ((File) (input)).getName();
-			}
-		}).toArray(new String[result.length]);
 	}
 
 	private void setProgress(Activity activity, ProgressBar progressBar, ShuffleProgress shuffleProgress) {
@@ -101,12 +94,8 @@ public class CreateListController {
 		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
 	}
 
-	private void fillRows(final Activity activity, String[] randomIndexEntries) {
-		RowModel[] rows = new RowModel[randomIndexEntries.length];
-		for (int i = 0; i < randomIndexEntries.length; i++) {
-			rows[i] = new RowModel(randomIndexEntries[i], randomIndexEntries[i], false);
-		}
-
+	private void fillRows(final Activity activity, IndexEntry[] randomIndexEntries) {
+		RowModel[] rows = new IndexEntryRowModelConverter().toRowModels(randomIndexEntries);
 		CreateListRowAdapter adapter = new CreateListRowAdapter(activity, rows);
 		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
 	}
