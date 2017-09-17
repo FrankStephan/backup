@@ -1,10 +1,5 @@
 package com.frozen_foo.shuffle_my_music_2
 
-import groovy.xml.MarkupBuilder
-import groovy.xml.MarkupBuilderHelper
-
-import static org.junit.Assert.*
-
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -134,6 +129,4 @@ class FavoritesServiceTest extends GroovyTestCase {
 		testPath.deleteDir()
 		super.tearDown()
 	}
-
-
 }
