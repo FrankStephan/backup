@@ -1,14 +1,8 @@
 package com.frozen_foo.shuffle_my_music_2
 
-import groovy.transform.EqualsAndHashCode
-import groovy.transform.ToString
-import groovy.transform.TupleConstructor
+import groovy.transform.Canonical
 
-
-
-@EqualsAndHashCode
-@ToString(includePackage = false)
-@TupleConstructor
+@Canonical
 class IndexEntry {
 
 	String fileName

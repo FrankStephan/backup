@@ -80,6 +80,7 @@ public class SelectFavoritesController {
 			e.printStackTrace();
 		}
 		IndexEntry[] addedIndexEntries = new FavoritesService().addFavorites(localDirPath, indexEntries);
+
 		Toast.makeText(activity.getApplicationContext(), ArrayUtils.toString(addedIndexEntries), Toast.LENGTH_LONG)
 				.show();
 	}
