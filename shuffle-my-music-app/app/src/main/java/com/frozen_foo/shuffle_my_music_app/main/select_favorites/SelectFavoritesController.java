@@ -70,15 +70,7 @@ public class SelectFavoritesController {
 
 		IndexEntry[] indexEntries = new IndexEntryRowModelConverter()
 				.toIndexEntries(selectedRowModels.toArray(new RowModel[selectedRowModels.size()]));
-		try {
-			new XmlSlurper().parseText("<test></test>");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		}
+
 		IndexEntry[] addedIndexEntries = new FavoritesService().addFavorites(localDirPath, indexEntries);
 
 		Toast.makeText(activity.getApplicationContext(), ArrayUtils.toString(addedIndexEntries), Toast.LENGTH_LONG)

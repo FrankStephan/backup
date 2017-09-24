@@ -2,9 +2,12 @@ package com.frozen_foo.shuffle_my_music_app.main.show_list;
 
 import android.app.Activity;
 import android.content.Context;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
+import com.frozen_foo.shuffle_my_music_app.main.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.main.RowModel;
 
 import java.io.File;
@@ -16,19 +19,23 @@ import java.util.Arrays;
 
 public class ShowListController {
 
-	public File[] loadAndInflateList(Activity activity, File shuffleMyMusicDir) {
-		ListView shuffleList = (ListView) activity.findViewById(R.id.shuffleList);
-
-		File[] songs = shuffleMyMusicDir.listFiles();
-		Arrays.sort(songs);
-		RowModel[] rows = new RowModel[songs.length];
-		for (int i = 0; i < songs.length; i++) {
-			rows[i] = new RowModel(songs[i].getName(), songs[i].getPath(), false);
-		}
-
+	public IndexEntry[] loadAndInflateList(Activity activity, ListView shuffleList) {
+		RowModel[] rows = rowsFrom(shuffleList.getAdapter());
 		ShowListRowAdapter adapter = new ShowListRowAdapter(activity, rows);
 		shuffleList.setAdapter(adapter);
-		return songs;
+		return new IndexEntryRowModelConverter().toIndexEntries(rows);
+	}
+
+	private RowModel[] rowsFrom(final ListAdapter adapter) {
+		if (adapter != null) {
+			RowModel[] rows = new RowModel[adapter.getCount()];
+			for (int i = 0; i < rows.length; i++) {
+				rows[i] = (RowModel) adapter.getItem(i);
+			}
+			return rows;
+		} else {
+			return new RowModel[0];
+		}
 	}
 
 

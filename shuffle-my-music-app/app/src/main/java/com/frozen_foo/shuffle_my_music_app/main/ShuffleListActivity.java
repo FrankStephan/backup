@@ -5,7 +5,6 @@ import android.content.res.ColorStateList;
 import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -17,7 +16,9 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ToggleButton;
 
+import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.CreateListController;
 import com.frozen_foo.shuffle_my_music_app.main.select_favorites.SelectFavoritesController;
 import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListController;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerController;
@@ -107,11 +108,8 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	private void loadListAndPlayer() {
-		File shuffleMyMusicDir = new File(Environment.getExternalStorageDirectory(), SHUFFLE_MY_MUSIC_FOLDER);
-		if (shuffleMyMusicDir.exists()) {
-			File[] songs = new ShowListController().loadAndInflateList(this, shuffleMyMusicDir);
-			listPlayerController.loadPlayer(songs);
-		}
+		IndexEntry[] songs = new ShowListController().loadAndInflateList(this, list());
+		listPlayerController.loadPlayer();
 	}
 
 	@Override
@@ -161,7 +159,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private void createShuffleList() {
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-		// new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS);
+		new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS);
 	}
 
 	public void pressButton2(View view) {
