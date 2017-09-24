@@ -2,6 +2,7 @@ package com.frozen_foo.shuffle_my_music_2
 
 import groovy.xml.MarkupBuilder
 
+
 class FavoritesService {
 
 	IndexEntry[] addFavorites(String targetDirPath, IndexEntry[] newFavorites) {
@@ -32,7 +33,9 @@ class FavoritesService {
 
 	private String writeFavoritesToFile(File favoritesFile, List<IndexEntry> favorites) {
 		favoritesFile.withWriter('UTF-8') { favoritesFileWriter ->
-			new MarkupBuilder(favoritesFileWriter).favorites(timestamp: new Date().getDateTimeString()) {
+			def markupBuilder = new MarkupBuilder(favoritesFileWriter)
+			markupBuilder.getMkp().xmlDeclaration([version: '1.0', encoding: 'UTF-8'])
+			markupBuilder.favorites(xmlns: 'http://frozen-foo.com/', timestamp: new Date().getDateTimeString()) {
 				for (IndexEntry favorite : favorites) {
 					song(title: favorite.getFileName(), favorite.getPath())
 				}
