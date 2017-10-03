@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_2
+package com.frozen_foo.shuffle_my_music_2.impl
 
 
 class DistinctRandomService {

@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_2
+package com.frozen_foo.shuffle_my_music_2.impl
 
 import static org.junit.Assert.*
 
@@ -6,6 +6,7 @@ import java.nio.charset.Charset
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+
 
 class CreateIndexServiceTest extends GroovyTestCase {
 

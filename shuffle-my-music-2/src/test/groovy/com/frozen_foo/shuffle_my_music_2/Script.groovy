@@ -2,6 +2,8 @@ package com.frozen_foo.shuffle_my_music_2
 
 import java.nio.file.Paths
 
+import com.frozen_foo.shuffle_my_music_2.impl.CreateIndexService;
+
 long millis = System.currentTimeMillis()
 
 String mediaLibraryPath = 'X:/Media/Musik'

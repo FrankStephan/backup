@@ -1,8 +1,10 @@
-package com.frozen_foo.shuffle_my_music_2
+package com.frozen_foo.shuffle_my_music_2.impl
 
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
+
+import com.frozen_foo.shuffle_my_music_2.IndexEntry
 
 class FavoritesServiceTest extends GroovyTestCase {
 
@@ -26,7 +28,7 @@ class FavoritesServiceTest extends GroovyTestCase {
 		assert Files.exists(favoritesFilePath)
 	}
 
-	void testResolvesAbsolutePathForFavoritesFile() {
+	void testResolvesAbsolutePathForFile() {
 		assert !Files.exists(favoritesFilePath)
 		invokeAdd()
 		assert Files.exists(favoritesFilePath.toAbsolutePath())

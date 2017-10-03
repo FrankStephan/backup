@@ -1,10 +1,11 @@
-package com.frozen_foo.shuffle_my_music_2
+package com.frozen_foo.shuffle_my_music_2.impl
 
-import static org.junit.Assert.*
 import groovy.mock.interceptor.MockFor
 import groovy.mock.interceptor.StubFor
 
-class ShuffleMyMusicServiceTest extends GroovyTestCase {
+import com.frozen_foo.shuffle_my_music_2.IndexEntry
+
+class IndexEntriesServiceTest extends GroovyTestCase {
 
 	int indexSize = 100
 	int numberOfSongs = 10
@@ -34,7 +35,7 @@ class ShuffleMyMusicServiceTest extends GroovyTestCase {
 			empty(1) { return true }
 		}
 		indexStream.use {
-			new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
+			new IndexEntriesService().randomIndexEntries(inputStream, numberOfSongs)
 		}
 	}
 
@@ -43,7 +44,7 @@ class ShuffleMyMusicServiceTest extends GroovyTestCase {
 		indexStream.demand.indexSize(1) { return indexSize }
 		indexStream.demand.empty(1) { return true }
 		indexStream.use {
-			new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
+			new IndexEntriesService().randomIndexEntries(inputStream, numberOfSongs)
 		}
 	}
 
@@ -60,14 +61,14 @@ class ShuffleMyMusicServiceTest extends GroovyTestCase {
 
 		indexStream.use {
 			disitinctRandomService.use {
-				new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
+				new IndexEntriesService().randomIndexEntries(inputStream, numberOfSongs)
 			}
 		}
 	}
 
 	void testNothingIfNumberOfSongsIsZero() {
 		numberOfSongs = 0
-		assert[]== new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
+		assert[]== new IndexEntriesService().randomIndexEntries(inputStream, numberOfSongs)
 	}
 
 	void testSkipIndexOutOfRange() {
@@ -84,7 +85,7 @@ class ShuffleMyMusicServiceTest extends GroovyTestCase {
 
 
 		disitinctRandomService.use {
-			assert indexEntries(['1', '3'])== new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
+			assert indexEntries(['1', '3'])== new IndexEntriesService().randomIndexEntries(inputStream, numberOfSongs)
 		}
 	}
 
@@ -97,7 +98,7 @@ class ShuffleMyMusicServiceTest extends GroovyTestCase {
 		}
 
 		disitinctRandomService.use {
-			IndexEntry[] actualIndexEntries = new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
+			IndexEntry[] actualIndexEntries = new IndexEntriesService().randomIndexEntries(inputStream, numberOfSongs)
 			assert numberOfSongs == actualIndexEntries.length
 			Arrays.sort(randoms)
 			assert indexEntries(randoms.collect {int random -> String.valueOf(random)}) == actualIndexEntries
@@ -116,7 +117,7 @@ class ShuffleMyMusicServiceTest extends GroovyTestCase {
 		}
 
 		disitinctRandomService.use {
-			assert indexEntries(['0', '1', '2'])== new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
+			assert indexEntries(['0', '1', '2'])== new IndexEntriesService().randomIndexEntries(inputStream, numberOfSongs)
 		}
 	}
 
@@ -131,7 +132,7 @@ class ShuffleMyMusicServiceTest extends GroovyTestCase {
 		}
 
 		disitinctRandomService.use {
-			IndexEntry[] indexEntries = new ShuffleMyMusicService().randomIndexEntries(inputStream, numberOfSongs)
+			IndexEntry[] indexEntries = new IndexEntriesService().randomIndexEntries(inputStream, numberOfSongs)
 
 			IndexEntry entry1 = new IndexEntry(fileName: 'c.mp3', path: 'a/b/c.mp3')
 			IndexEntry entry2 = new IndexEntry(fileName: 'd.mp3', path: 'd.mp3')

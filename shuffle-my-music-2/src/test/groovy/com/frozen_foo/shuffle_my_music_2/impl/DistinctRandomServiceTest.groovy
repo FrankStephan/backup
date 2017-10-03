@@ -1,6 +1,8 @@
-package com.frozen_foo.shuffle_my_music_2
+package com.frozen_foo.shuffle_my_music_2.impl
 
 import static org.junit.Assert.*
+
+
 import groovy.mock.interceptor.MockFor
 
 class DistinctRandomServiceTest extends GroovyTestCase {

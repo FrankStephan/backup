@@ -1,6 +1,8 @@
-package com.frozen_foo.shuffle_my_music_2
+package com.frozen_foo.shuffle_my_music_2.impl
 
 import groovy.xml.MarkupBuilder
+
+import com.frozen_foo.shuffle_my_music_2.IndexEntry
 
 
 class FavoritesService {
@@ -48,7 +50,7 @@ class FavoritesService {
 		return readFavoritesFromFile(favoritesFile)
 	}
 
-	private Object readFavoritesFromFile(File favoritesFile) {
+	private IndexEntry[] readFavoritesFromFile(File favoritesFile) {
 		String xmlString = favoritesFile.getText('UTF-8')
 		if (!xmlString.isEmpty()) {
 			def favoritesXml = new XmlSlurper().parseText(xmlString)
