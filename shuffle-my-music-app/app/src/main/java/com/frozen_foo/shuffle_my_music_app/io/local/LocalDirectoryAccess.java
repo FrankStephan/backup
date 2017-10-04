@@ -20,7 +20,9 @@ public class LocalDirectoryAccess {
 
 	public void cleanLocalDir() throws IOException {
 		File shuffleMyMusicDir = localDir();
-		FileUtils.cleanDirectory(shuffleMyMusicDir);
+		if (shuffleMyMusicDir.exists()) {
+			FileUtils.cleanDirectory(shuffleMyMusicDir);
+		}
 	}
 
 	public void copyToLocal(InputStream source, String fileName) throws IOException {

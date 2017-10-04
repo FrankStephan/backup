@@ -6,6 +6,6 @@ package com.frozen_foo.shuffle_my_music_app.main.create_list.progress;
 
 public enum PreparationStep implements ShuffleProgress  {
 
-	LOADING_INDEX, SHUFFLING_INDEX
+	SAVING_FAVORITES, LOADING_INDEX, SHUFFLING_INDEX
 
 }

@@ -1,6 +1,7 @@
 package com.frozen_foo.shuffle_my_music_app.main;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
+import com.frozen_foo.shuffle_my_music_app.main.RowModel;
 
 /**
  * Created by Frank on 16.09.2017.

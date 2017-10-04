@@ -20,12 +20,6 @@ import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.ShuffleProg
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.StartSongCopyStep;
 import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListRowAdapter;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.Transformer;
-
-import java.io.File;
-import java.util.Arrays;
-
 /**
  * Created by Frank on 05.08.2017.
  */
@@ -66,13 +60,16 @@ public class CreateListController {
 		if (shuffleProgress instanceof PreparationStep) {
 			PreparationStep preparationStep = (PreparationStep) shuffleProgress;
 			switch (preparationStep) {
+				case SAVING_FAVORITES:
+					showPreparation(activity, activity.getString(R.string.saveFavorites));
+					progressBar.setProgress(0);
 				case LOADING_INDEX:
 					showPreparation(activity, activity.getString(R.string.indexLoading));
-					progressBar.setProgress(0);
+					progressBar.setProgress(1);
 					break;
 				case SHUFFLING_INDEX:
 					showPreparation(activity, activity.getString(R.string.determineRandomSongs));
-					progressBar.incrementProgressBy(1);
+					progressBar.incrementProgressBy(2);
 					break;
 			}
 		} else {

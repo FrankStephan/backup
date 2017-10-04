@@ -33,7 +33,6 @@ import static com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest.R
 public class ShuffleListActivity extends AppCompatActivity {
 
 	public static final int NUMBER_OF_SONGS = 10;
-	private static String SHUFFLE_MY_MUSIC_FOLDER = "_shuffle-my-music";
 	private ListPlayerController listPlayerController;
 
 	private ListView list() {
@@ -108,7 +107,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	private void loadListAndPlayer() {
-		IndexEntry[] songs = new ShowListController().loadAndInflateList(this, list());
+		new ShowListController().loadAndInflateList(this, list());
 		listPlayerController.loadPlayer();
 	}
 
@@ -140,13 +139,11 @@ public class ShuffleListActivity extends AppCompatActivity {
 				button1().setBackgroundTintList(ColorStateList.valueOf(Color.LTGRAY));
 				button2().setChecked(false);
 				button2().setEnabled(true);
-				new SelectFavoritesController().cancelFavoritesSelection(this, list());
+				cancelFavoritesSelection();
 				break;
 		}
 
 	}
-
-
 
 /*	private void confirmCreateShuffleList() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -157,10 +154,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	}*/
 
-	private void createShuffleList() {
-		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-		new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS);
-	}
+
 
 	public void pressButton2(View view) {
 		final ListView     shuffleList = list();
@@ -170,19 +164,36 @@ public class ShuffleListActivity extends AppCompatActivity {
 			case SHOW_LIST:
 				button1().setText(R.string.createShuffledList);
 				button1().setBackgroundTintList(ColorStateList.valueOf(Color.LTGRAY));
-				new SelectFavoritesController().addFavorites(this, shuffleList);
+				addSelectedFavorites(shuffleList);
 				break;
 			case SELECT_FAVORITES:
 				button1().setText(R.string.cancel);
 				button1().setBackgroundTintList(ColorStateList.valueOf(Color.RED));
-				final SelectFavoritesController selectFavoritesController = new SelectFavoritesController();
-				selectFavoritesController.selectFavorites(this, shuffleList, new DataSetObserver() {
-					@Override
-					public void onChanged() {
-						button2.setEnabled(selectFavoritesController.atLeastOneSelected(shuffleList));
-					}
-				});
+				selectFavorites(shuffleList, button2);
 				break;
 		}
+	}
+
+	private void createShuffleList() {
+		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS);
+	}
+
+	private void selectFavorites(final ListView shuffleList, final ToggleButton button2) {
+		final SelectFavoritesController selectFavoritesController = new SelectFavoritesController();
+		selectFavoritesController.selectFavorites(this, shuffleList, new DataSetObserver() {
+			@Override
+			public void onChanged() {
+				button2.setEnabled(selectFavoritesController.atLeastOneSelected(shuffleList));
+			}
+		});
+	}
+
+	private void addSelectedFavorites(final ListView shuffleList) {
+		new SelectFavoritesController().addFavorites(this, shuffleList);
+	}
+
+	private void cancelFavoritesSelection() {
+		new SelectFavoritesController().cancelFavoritesSelection(this, list());
 	}
 }

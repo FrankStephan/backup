@@ -20,5 +20,6 @@
     <string name="determineRandomSongs">Ermittle Zufallstitel</string>
     <string name="addToFavorites">Zu Favoriten hinzufügen</string>
     <string name="confirmCreateShuffleList">Neue Zufallsliste erstellen?</string>
+    <string name="saveFavorites">Speichere Favoriten</string>
 
 </resources>

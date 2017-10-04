@@ -6,23 +6,17 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.frozen_foo.shuffle_my_music_2.FavoritesService;
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
+import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
 import com.frozen_foo.shuffle_my_music_app.io.local.LocalDirectoryAccess;
-import com.frozen_foo.shuffle_my_music_app.main.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.main.RowModel;
 import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListRowAdapter;
+import com.frozen_foo.shuffle_my_music_app.main.IndexEntryRowModelConverter;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.xml.sax.SAXException;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import groovy.util.XmlSlurper;
 
 /**
  * Created by Frank on 24.08.2017.
@@ -71,7 +65,7 @@ public class SelectFavoritesController {
 		IndexEntry[] indexEntries = new IndexEntryRowModelConverter()
 				.toIndexEntries(selectedRowModels.toArray(new RowModel[selectedRowModels.size()]));
 
-		IndexEntry[] addedIndexEntries = new FavoritesService().addFavorites(localDirPath, indexEntries);
+		IndexEntry[] addedIndexEntries = new ShuffleMyMusicService().addFavorites(localDirPath, indexEntries);
 
 		Toast.makeText(activity.getApplicationContext(), ArrayUtils.toString(addedIndexEntries), Toast.LENGTH_LONG)
 				.show();

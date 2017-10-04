@@ -25,8 +25,6 @@ import java.io.InputStream;
 
 public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProgress, IndexEntry[]> {
 
-	public static final int NUMBER_OF_PREPARATION_STEPS = 2;
-
 	public CreateListTask(AsyncCallback<IndexEntry[]> callback, ProgressMonitor<ShuffleProgress> progressMonitor) {
 		super(callback, progressMonitor);
 	}
@@ -42,6 +40,8 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 	}
 
 	private IndexEntry[] createNewShuffledList(Context context, int numberOfSongs) throws Exception {
+		publishProgress(PreparationStep.SAVING_FAVORITES);
+		joinAndSaveFavoritesToRemote();
 		publishProgress(PreparationStep.LOADING_INDEX);
 		InputStream indexStream          = loadIndex(context);
 		publishProgress(PreparationStep.SHUFFLING_INDEX);
@@ -49,6 +49,10 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 		publishProgress(new DeterminedSongsStep(shuffledIndexEntries));
 		copySongsToLocalDir(context, shuffledIndexEntries);
 		return shuffledIndexEntries;
+	}
+
+	private void joinAndSaveFavoritesToRemote() {
+
 	}
 
 	private InputStream loadIndex(Context context) throws Exception {
@@ -63,6 +67,9 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 		RemoteDirectoryAccess remoteDirectoryAccess = new RemoteDirectoryAccess();
 		LocalDirectoryAccess  localDirectoryAccess  = new LocalDirectoryAccess();
 		localDirectoryAccess.cleanLocalDir();
+
+		createLocalIndex(shuffledIndexEntries);
+
 		for (int i = 0; i < shuffledIndexEntries.length; i++) {
 			publishProgress(new StartSongCopyStep(i));
 			InputStream remoteSongStream = remoteDirectoryAccess.songStream(context, shuffledIndexEntries[i].getPath());
@@ -71,5 +78,10 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 		}
 		publishProgress(new FinalizationStep());
 		return localDirectoryAccess.songs();
+	}
+
+	private void createLocalIndex(IndexEntry[] shuffledIndexEntries) {
+		LocalDirectoryAccess  localDirectoryAccess  = new LocalDirectoryAccess();
+		new ShuffleMyMusicService().createSongsFile(localDirectoryAccess.localDir().getPath(), shuffledIndexEntries);
 	}
 }
