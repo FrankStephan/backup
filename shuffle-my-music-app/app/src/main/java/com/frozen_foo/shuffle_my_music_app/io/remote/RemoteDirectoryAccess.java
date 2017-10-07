@@ -2,6 +2,7 @@ package com.frozen_foo.shuffle_my_music_app.io.remote;
 
 import android.content.Context;
 
+import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
 import com.frozen_foo.shuffle_my_music_app.crypto.Cryptifier;
 import com.frozen_foo.shuffle_my_music_app.settings.Settings;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccess;
@@ -11,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyStoreException;
@@ -41,7 +43,13 @@ public class RemoteDirectoryAccess {
 		return stream(context, indexEntry);
 	}
 
-	private InputStream stream(Context context, String subPath) throws CertificateException, NoSuchAlgorithmException,
+	public OutputStream favoritesStream(Context context) {
+		Settings decryptedSettings = decryptedSettings(context);
+		Open stream to favorites file -> get path from lib
+		return new SmbAccess().outputStream(decryptedSettings.getIp(), decryptedSettings.getUsername(), decryptedSettings.getPassword())
+	}
+
+	private Settings decryptedSettings(Context context) throws CertificateException, NoSuchAlgorithmException,
 			KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException,
 			UnrecoverableEntryException, NoSuchPaddingException, InvalidKeyException {
 		Settings settings          = new SettingsAccess().readSettings(context);
@@ -55,8 +63,28 @@ public class RemoteDirectoryAccess {
 			String     username   = cryptifier.decrypt(encryptedName);
 			String     password   = cryptifier.decrypt(encryptedPassword);
 			String     musicDir   = cryptifier.decrypt(encryptedMusicDir);
+			return new Settings(ip, username, password, null, musicDir);
+		} else {
+			throw new IllegalArgumentException("Bitte Settings ausfüllen.");
+		}
+	}
 
-			String      path        = concat(musicDir, subPath);
+	private InputStream stream(Context context, String subPath) throws CertificateException, NoSuchAlgorithmException,
+			KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException,
+			UnrecoverableEntryException, NoSuchPaddingException, InvalidKeyException {
+		Settings settings          = new SettingsAccess().readSettings(context);
+		String   encryptedIp       = settings.getIp();
+		String   encryptedName     = settings.getUsername();
+		String   encryptedPassword = settings.getPassword();
+		String   encryptedMusicDir = settings.getMusicDir();
+		if (StringUtils.isNoneEmpty(encryptedIp, encryptedName, encryptedPassword, encryptedMusicDir)) {
+				Cryptifier cryptifier = new Cryptifier();
+				String     ip         = cryptifier.decrypt(encryptedIp);
+				String     username   = cryptifier.decrypt(encryptedName);
+				String     password   = cryptifier.decrypt(encryptedPassword);
+				String     musicDir   = cryptifier.decrypt(encryptedMusicDir);
+
+				String      path        = concat(musicDir, subPath);
 			InputStream inputStream = new SmbAccess().inputStream(ip, username, password, path);
 			return inputStream;
 		} else {

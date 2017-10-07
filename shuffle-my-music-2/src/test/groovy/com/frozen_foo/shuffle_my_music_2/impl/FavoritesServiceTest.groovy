@@ -118,6 +118,22 @@ class FavoritesServiceTest extends GroovyTestCase {
 		assert favorites == newFavorites
 	}
 
+	void testResolvesFavoritesFilePath() {
+		assert favoritesFilePath.toAbsolutePath().toString() == new FavoritesService().resolveFavoritesFilePath(testPath.toString())
+	}
+
+	void testLoadsEntriesFromStream() {
+		IndexEntry favorite1 = new IndexEntry(fileName: 'song1.mp3', path: 'dir1/song1.mp3')
+
+		newFavorites = [favorite1]
+		invokeAdd()
+
+		Path favoritesFilePath = Paths.get(new FavoritesService().resolveFavoritesFilePath(testPath.toString()))
+		favoritesFilePath.toFile().withInputStream {InputStream stream ->
+			assert newFavorites == new FavoritesService().loadFavorites(stream)
+		}
+	}
+
 	private IndexEntry[] invokeAdd() {
 		return new FavoritesService().addFavorites(testPath.toString(), newFavorites)
 	}

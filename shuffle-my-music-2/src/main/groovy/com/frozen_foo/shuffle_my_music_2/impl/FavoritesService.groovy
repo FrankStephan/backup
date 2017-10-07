@@ -7,6 +7,10 @@ import com.frozen_foo.shuffle_my_music_2.IndexEntry
 
 class FavoritesService {
 
+	String resolveFavoritesFilePath(String targetDirPath) {
+		return createOrGetFile(targetDirPath)
+	}
+
 	IndexEntry[] addFavorites(String targetDirPath, IndexEntry[] newFavorites) {
 		File favoritesFile = createOrGetFile(targetDirPath)
 		List<IndexEntry> favorites = calculateResultingFavorites(favoritesFile, newFavorites)
@@ -50,6 +54,18 @@ class FavoritesService {
 		return readFavoritesFromFile(favoritesFile)
 	}
 
+	IndexEntry[] loadFavorites(InputStream stream) {
+		// Impl
+	}
+
+	IndexEntry[] join(IndexEntry[] newFavorites, IndexEntry[] favorites) {
+		// Write tests
+	}
+
+	void writeFavorites(IndexEntry[] favorites, OutputStream stream) {
+		// Write tests
+	}
+
 	private IndexEntry[] readFavoritesFromFile(File favoritesFile) {
 		String xmlString = favoritesFile.getText('UTF-8')
 		if (!xmlString.isEmpty()) {
@@ -65,5 +81,8 @@ class FavoritesService {
 		} else {
 			return []
 		}
+	}
+
+	void joinFavorites(InputStream favorites, IndexEntry[] newFavorites, OutputStream favoritesFileStream) {
 	}
 }

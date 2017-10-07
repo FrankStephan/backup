@@ -52,7 +52,7 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 	}
 
 	private void joinAndSaveFavoritesToRemote() {
-
+		GET IN-STREAM / JOIN WITH NEW FAVORITES / WRITE TO OUT-STREAM
 	}
 
 	private InputStream loadIndex(Context context) throws Exception {
@@ -63,7 +63,7 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 		return new ShuffleMyMusicService().randomIndexEntries(indexStream, numberOfSongs);
 	}
 
-	private File[] copySongsToLocalDir(Context context, IndexEntry[] shuffledIndexEntries) throws Exception {
+	private void copySongsToLocalDir(Context context, IndexEntry[] shuffledIndexEntries) throws Exception {
 		RemoteDirectoryAccess remoteDirectoryAccess = new RemoteDirectoryAccess();
 		LocalDirectoryAccess  localDirectoryAccess  = new LocalDirectoryAccess();
 		localDirectoryAccess.cleanLocalDir();
@@ -77,7 +77,6 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 			publishProgress(new FinishedSongCopyStep(i));
 		}
 		publishProgress(new FinalizationStep());
-		return localDirectoryAccess.songs();
 	}
 
 	private void createLocalIndex(IndexEntry[] shuffledIndexEntries) {
