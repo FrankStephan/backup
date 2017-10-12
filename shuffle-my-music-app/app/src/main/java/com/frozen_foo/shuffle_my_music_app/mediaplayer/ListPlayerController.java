@@ -1,6 +1,5 @@
 package com.frozen_foo.shuffle_my_music_app.mediaplayer;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.media.MediaPlayer;
@@ -9,8 +8,6 @@ import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.io.local.LocalDirectoryAccess;
-
-import java.io.File;
 
 /**
  * Created by Frank on 04.08.2017.

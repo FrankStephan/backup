@@ -13,7 +13,7 @@ class LocalSongsServiceTest extends GroovyTestCase {
 	Path testPath
 	Path songsFilePath
 
-	IndexEntry[] songs
+	List<IndexEntry> songs
 
 	@Override
 	protected void setUp() {

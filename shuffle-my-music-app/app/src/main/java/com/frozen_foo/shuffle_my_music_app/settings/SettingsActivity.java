@@ -9,8 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.main.ShuffleListActivity;
 import com.frozen_foo.shuffle_my_music_app.crypto.Cryptifier;
+import com.frozen_foo.shuffle_my_music_app.main.ShuffleListActivity;
 
 import org.apache.commons.lang3.StringUtils;
 

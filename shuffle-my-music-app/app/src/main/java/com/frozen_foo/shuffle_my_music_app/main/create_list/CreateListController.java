@@ -20,6 +20,8 @@ import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.ShuffleProg
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.StartSongCopyStep;
 import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListRowAdapter;
 
+import java.util.List;
+
 /**
  * Created by Frank on 05.08.2017.
  */
@@ -43,10 +45,10 @@ public class CreateListController {
 	}
 
 	@NonNull
-	private AsyncCallback<IndexEntry[]> inflateListCallback(final Context context, final Activity activity) {
-		return new AsyncCallback<IndexEntry[]>() {
+	private AsyncCallback<List<IndexEntry>> inflateListCallback(final Context context, final Activity activity) {
+		return new AsyncCallback<List<IndexEntry>>() {
 			@Override
-			public void invoke(IndexEntry[] result) {
+			public void invoke(List<IndexEntry> result) {
 				if (hasException()) {
 					Toast.makeText(context, getException().getMessage(), Toast.LENGTH_LONG).show();
 				} else {
@@ -91,7 +93,7 @@ public class CreateListController {
 		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
 	}
 
-	private void fillRows(final Activity activity, IndexEntry[] randomIndexEntries) {
+	private void fillRows(final Activity activity, List<IndexEntry> randomIndexEntries) {
 		RowModel[] rows = new IndexEntryRowModelConverter().toRowModels(randomIndexEntries);
 		CreateListRowAdapter adapter = new CreateListRowAdapter(activity, rows);
 		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);

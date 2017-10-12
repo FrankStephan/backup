@@ -12,9 +12,9 @@ class FavoritesServiceTest extends GroovyTestCase {
 	Path testPath
 	Path favoritesFilePath
 
-	IndexEntry[] newFavorites
+	List<IndexEntry> newFavorites
 
-	IndexEntry[] favorites
+	List<IndexEntry> favorites
 
 	@Override
 	protected void setUp() {

@@ -5,7 +5,7 @@ import com.frozen_foo.shuffle_my_music_2.IndexEntry
 
 class FavoritesService extends AbstractFavoritesService {
 
-	IndexEntry[] addFavorites(String targetDirPath, IndexEntry[] newFavorites) {
+	IndexEntry[] addFavorites(String targetDirPath, List<IndexEntry> newFavorites) {
 		File favoritesFile = createOrGetFile(targetDirPath)
 		List<IndexEntry> favorites = calculateResultingFavorites(favoritesFile, newFavorites)
 		favoritesFile.withWriter('UTF-8') { favoritesFileWriter ->
@@ -14,7 +14,7 @@ class FavoritesService extends AbstractFavoritesService {
 		return favorites
 	}
 
-	private List<IndexEntry> calculateResultingFavorites(File favoritesFile, IndexEntry[] newFavorites) {
+	private List<IndexEntry> calculateResultingFavorites(File favoritesFile, List<IndexEntry> newFavorites) {
 		List<IndexEntry> favorites = readFavoritesFromFile(favoritesFile) as List
 		newFavorites.each { IndexEntry it -> favorites << it }
 		removeDuplicates(favorites)
@@ -24,12 +24,12 @@ class FavoritesService extends AbstractFavoritesService {
 		favorites.unique()
 	}
 
-	IndexEntry[] loadFavorites(String targetDirPath) {
+	List<IndexEntry> loadFavorites(String targetDirPath) {
 		File favoritesFile = createOrGetFile(targetDirPath)
 		return readFavoritesFromFile(favoritesFile)
 	}
 
-	private IndexEntry[] readFavoritesFromFile(File favoritesFile) {
+	private List<IndexEntry> readFavoritesFromFile(File favoritesFile) {
 		String xmlString = favoritesFile.getText('UTF-8')
 		if (!xmlString.isEmpty()) {
 			def favoritesXml = new XmlSlurper().parseText(xmlString)

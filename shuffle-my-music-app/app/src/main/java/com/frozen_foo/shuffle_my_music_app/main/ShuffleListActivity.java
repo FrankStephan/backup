@@ -16,7 +16,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ToggleButton;
 
-import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.CreateListController;
 import com.frozen_foo.shuffle_my_music_app.main.select_favorites.SelectFavoritesController;
@@ -25,8 +24,6 @@ import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerController;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionsAccess;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsActivity;
-
-import java.io.File;
 
 import static com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest.READ_EXTERNAL_STORAGE_REQUEST;
 

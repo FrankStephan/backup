@@ -9,78 +9,85 @@ import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
 import com.frozen_foo.shuffle_my_music_app.io.local.LocalDirectoryAccess;
 import com.frozen_foo.shuffle_my_music_app.io.remote.RemoteDirectoryAccess;
+import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.DeterminedSongsStep;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.FinalizationStep;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.FinishedSongCopyStep;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.PreparationStep;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.ShuffleProgress;
-import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.DeterminedSongsStep;
 import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.StartSongCopyStep;
 
-import java.io.File;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Frank on 01.08.2017.
  */
 
-public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProgress, IndexEntry[]> {
+public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProgress, List<IndexEntry>> {
 
-	public CreateListTask(AsyncCallback<IndexEntry[]> callback, ProgressMonitor<ShuffleProgress> progressMonitor) {
+	public CreateListTask(AsyncCallback<List<IndexEntry>> callback, ProgressMonitor<ShuffleProgress> progressMonitor) {
 		super(callback, progressMonitor);
 	}
 
 	@Override
-	protected IndexEntry[] doInBackground(NumberOfSongs... params) {
+	protected List<IndexEntry> doInBackground(NumberOfSongs... params) {
 		try {
 			return createNewShuffledList(params[0].context, params[0].value);
 		} catch (Exception e) {
 			callback.setException(e);
-			return new IndexEntry[0];
+			return Collections.emptyList();
 		}
 	}
 
-	private IndexEntry[] createNewShuffledList(Context context, int numberOfSongs) throws Exception {
+	private List<IndexEntry> createNewShuffledList(Context context, int numberOfSongs) throws Exception {
 		publishProgress(PreparationStep.SAVING_FAVORITES);
-		joinAndSaveFavoritesToRemote();
+		joinAndSaveFavoritesToRemote(context);
 		publishProgress(PreparationStep.LOADING_INDEX);
-		InputStream indexStream          = loadIndex(context);
+		InputStream indexStream = loadIndex(context);
 		publishProgress(PreparationStep.SHUFFLING_INDEX);
-		IndexEntry[]    shuffledIndexEntries = shuffleIndexEntries(indexStream, numberOfSongs);
+		List<IndexEntry> shuffledIndexEntries = shuffleIndexEntries(indexStream, numberOfSongs);
 		publishProgress(new DeterminedSongsStep(shuffledIndexEntries));
 		copySongsToLocalDir(context, shuffledIndexEntries);
 		return shuffledIndexEntries;
 	}
 
-	private void joinAndSaveFavoritesToRemote() {
-		GET IN-STREAM / JOIN WITH NEW FAVORITES / WRITE TO OUT-STREAM
+	private void joinAndSaveFavoritesToRemote(Context context) {
+		String localDirPath = new LocalDirectoryAccess().localDir().getPath();
+		List<IndexEntry> favorites =
+				new ShuffleMyMusicService().loadFavorites(localDirPath);
+		List<IndexEntry> newFavorites =
+				new ShuffleMyMusicService().loadFavorites(new LocalDirectoryAccess().localSongsDir().getPath());
+		List<IndexEntry> resultingFavorites = new ShuffleMyMusicService().join(newFavorites, favorites);
+		new ShuffleMyMusicService().addFavorites(localDirPath, resultingFavorites);
 	}
 
 	private InputStream loadIndex(Context context) throws Exception {
 		return new RemoteDirectoryAccess().indexStream(context);
 	}
 
-	private IndexEntry[] shuffleIndexEntries(InputStream indexStream, int numberOfSongs) {
+	private List<IndexEntry> shuffleIndexEntries(InputStream indexStream, int numberOfSongs) {
 		return new ShuffleMyMusicService().randomIndexEntries(indexStream, numberOfSongs);
 	}
 
-	private void copySongsToLocalDir(Context context, IndexEntry[] shuffledIndexEntries) throws Exception {
+	private void copySongsToLocalDir(Context context, List<IndexEntry> shuffledIndexEntries) throws Exception {
 		RemoteDirectoryAccess remoteDirectoryAccess = new RemoteDirectoryAccess();
 		LocalDirectoryAccess  localDirectoryAccess  = new LocalDirectoryAccess();
 		localDirectoryAccess.cleanLocalDir();
 
 		createLocalIndex(shuffledIndexEntries);
 
-		for (int i = 0; i < shuffledIndexEntries.length; i++) {
+		for (int i = 0; i < shuffledIndexEntries.size(); i++) {
 			publishProgress(new StartSongCopyStep(i));
-			InputStream remoteSongStream = remoteDirectoryAccess.songStream(context, shuffledIndexEntries[i].getPath());
-			localDirectoryAccess.copyToLocal(remoteSongStream, shuffledIndexEntries[i].getFileName());
+			InputStream remoteSongStream = remoteDirectoryAccess.songStream(context, shuffledIndexEntries.get(i).getPath());
+			localDirectoryAccess.copyToLocal(remoteSongStream, shuffledIndexEntries.get(i).getFileName());
 			publishProgress(new FinishedSongCopyStep(i));
 		}
 		publishProgress(new FinalizationStep());
 	}
 
-	private void createLocalIndex(IndexEntry[] shuffledIndexEntries) {
-		LocalDirectoryAccess  localDirectoryAccess  = new LocalDirectoryAccess();
-		new ShuffleMyMusicService().createSongsFile(localDirectoryAccess.localDir().getPath(), shuffledIndexEntries);
+	private void createLocalIndex(List<IndexEntry> shuffledIndexEntries) {
+		LocalDirectoryAccess localDirectoryAccess = new LocalDirectoryAccess();
+		new ShuffleMyMusicService().createSongsFile(localDirectoryAccess.localSongsDir().getPath(), shuffledIndexEntries);
 	}
 }

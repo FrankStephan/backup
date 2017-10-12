@@ -27,7 +27,7 @@ class FavoritesCollectionServiceTest extends GroovyTestCase {
 	void testLoadsEntriesFromStream() {
 		IndexEntry favorite1 = new IndexEntry(fileName: 'song1.mp3', path: 'dir1/song1.mp3')
 
-		new FavoritesService().addFavorites(testPath.toString(), [favorite1] as IndexEntry[])
+		new FavoritesService().addFavorites(testPath.toString(), [favorite1])
 
 		Path favoritesFilePath = Paths.get(new FavoritesCollectionService().resolveFavoritesFilePath(testPath.toString()))
 		favoritesFilePath.toFile().withInputStream { InputStream stream ->

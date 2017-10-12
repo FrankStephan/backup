@@ -1,7 +1,6 @@
 package com.frozen_foo.shuffle_my_music_app.io.local;
 
 import android.os.Environment;
-import android.os.storage.StorageManager;
 import android.support.annotation.NonNull;
 
 import org.apache.commons.io.FileUtils;
@@ -16,27 +15,36 @@ import java.io.InputStream;
 
 public class LocalDirectoryAccess {
 
-	private static String SHUFFLE_MY_MUSIC_FOLDER = "_shuffle-my-music";
+	private static String SHUFFLE_MY_MUSIC_DIR = "_shuffle-my-music";
+	private static String SHUFFLE_MY_MUSIC_SONGS_DIR = "songs";
+
 
 	public void cleanLocalDir() throws IOException {
-		File shuffleMyMusicDir = localDir();
+		File shuffleMyMusicDir = localSongsDir();
 		if (shuffleMyMusicDir.exists()) {
 			FileUtils.cleanDirectory(shuffleMyMusicDir);
 		}
 	}
 
 	public void copyToLocal(InputStream source, String fileName) throws IOException {
-		File shuffleMyMusicDir = localDir();
+		File shuffleMyMusicDir = localSongsDir();
 		File localFile = new File(shuffleMyMusicDir, fileName);
 		FileUtils.copyInputStreamToFile(source, localFile);
 	}
 
 	public File[] songs() {
-		return localDir().listFiles();
+		return localSongsDir().listFiles();
 	}
 
 	@NonNull
 	public File localDir() {
-		return new File(Environment.getExternalStorageDirectory(), SHUFFLE_MY_MUSIC_FOLDER);
+		return new File(Environment.getExternalStorageDirectory(), SHUFFLE_MY_MUSIC_DIR);
 	}
+
+	@NonNull
+	public File localSongsDir() {
+		return new File(localDir(), SHUFFLE_MY_MUSIC_SONGS_DIR);
+	}
+
+
 }

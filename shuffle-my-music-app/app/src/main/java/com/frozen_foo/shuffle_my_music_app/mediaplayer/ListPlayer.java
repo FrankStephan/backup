@@ -5,7 +5,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.File;

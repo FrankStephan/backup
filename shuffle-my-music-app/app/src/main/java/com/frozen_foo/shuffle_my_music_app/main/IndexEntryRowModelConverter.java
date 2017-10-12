@@ -1,7 +1,11 @@
 package com.frozen_foo.shuffle_my_music_app.main;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
-import com.frozen_foo.shuffle_my_music_app.main.RowModel;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.Transformer;
+
+import java.util.List;
 
 /**
  * Created by Frank on 16.09.2017.
@@ -13,10 +17,10 @@ public class IndexEntryRowModelConverter {
 		return new RowModel(indexEntry.getFileName(), indexEntry.getPath(), false);
 	}
 
-	public RowModel[] toRowModels(IndexEntry[] indexEntries) {
-		RowModel[] rowModels = new RowModel[indexEntries.length];
+	public RowModel[] toRowModels(List<IndexEntry> indexEntries) {
+		RowModel[] rowModels = new RowModel[indexEntries.size()];
 		for (int i = 0; i < rowModels.length; i++) {
-			rowModels[i] = toRowModel(indexEntries[i]);
+			rowModels[i] = toRowModel(indexEntries.get(i));
 		}
 		return rowModels;
 	}
@@ -25,12 +29,12 @@ public class IndexEntryRowModelConverter {
 		return new IndexEntry(rowModel.getLabel(), rowModel.getPath());
 	}
 
-	public IndexEntry[] toIndexEntries(RowModel[] rowModels) {
-		IndexEntry[] indexEntries = new IndexEntry[rowModels.length];
-		for (int i = 0; i < indexEntries.length; i++) {
-			indexEntries[i] = toIndexEntry(rowModels[i]);
-		}
-		return indexEntries;
+	public List<IndexEntry> toIndexEntries(List<RowModel> rowModels) {
+		return (List<IndexEntry>) CollectionUtils.collect(rowModels, new Transformer() {
+			@Override
+			public Object transform(final Object input) {
+				return toIndexEntry((RowModel) input);
+			}
+		});
 	}
-
 }

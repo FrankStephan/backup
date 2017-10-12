@@ -1,7 +1,6 @@
 package com.frozen_foo.shuffle_my_music_app.async;
 
 import android.os.AsyncTask;
-import android.os.Handler;
 
 /**
  * Created by Frank on 25.07.2017.

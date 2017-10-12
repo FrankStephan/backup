@@ -9,9 +9,9 @@ import android.widget.Toast;
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
 import com.frozen_foo.shuffle_my_music_app.io.local.LocalDirectoryAccess;
+import com.frozen_foo.shuffle_my_music_app.main.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.main.RowModel;
 import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListRowAdapter;
-import com.frozen_foo.shuffle_my_music_app.main.IndexEntryRowModelConverter;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -53,7 +53,7 @@ public class SelectFavoritesController {
 
 	public void addFavorites(Activity activity, ListView shuffleList) {
 		doCancel(activity, shuffleList);
-		String         localDirPath      = new LocalDirectoryAccess().localDir().getAbsolutePath();
+		String         localDirPath      = new LocalDirectoryAccess().localSongsDir().getAbsolutePath();
 		RowModel[]     rowModels         = rowsFrom(shuffleList.getAdapter());
 		List<RowModel> selectedRowModels = new LinkedList<>();
 		for (RowModel rowModel : rowModels) {
@@ -62,10 +62,9 @@ public class SelectFavoritesController {
 			}
 		}
 
-		IndexEntry[] indexEntries = new IndexEntryRowModelConverter()
-				.toIndexEntries(selectedRowModels.toArray(new RowModel[selectedRowModels.size()]));
+		List<IndexEntry> indexEntries = new IndexEntryRowModelConverter().toIndexEntries(selectedRowModels);
 
-		IndexEntry[] addedIndexEntries = new ShuffleMyMusicService().addFavorites(localDirPath, indexEntries);
+		List<IndexEntry> addedIndexEntries = new ShuffleMyMusicService().addFavorites(localDirPath, indexEntries);
 
 		Toast.makeText(activity.getApplicationContext(), ArrayUtils.toString(addedIndexEntries), Toast.LENGTH_LONG)
 				.show();

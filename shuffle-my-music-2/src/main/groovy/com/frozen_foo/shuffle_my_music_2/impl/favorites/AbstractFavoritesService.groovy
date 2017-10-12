@@ -15,12 +15,13 @@ abstract class AbstractFavoritesService {
 		return favoritesFile
 	}
 
-	protected extractFavorites(groovy.util.slurpersupport.GPathResult favoritesXml) {
-		IndexEntry[] favorites = new IndexEntry[favoritesXml.song.size()]
-		favoritesXml.song.eachWithIndex { def song, int i ->
-			favorites[i] = new IndexEntry()
-			favorites[i].setFileName(song.@title.text())
-			favorites[i].setPath(song.text())
+	protected List<IndexEntry> extractFavorites(groovy.util.slurpersupport.GPathResult favoritesXml) {
+		def favorites = []
+		favoritesXml.song.each { def song ->
+			IndexEntry indexEntry = new IndexEntry()
+			indexEntry.setFileName(song.@title.text())
+			indexEntry.setPath(song.text())
+			favorites.add(indexEntry)
 		}
 		return favorites
 	}
