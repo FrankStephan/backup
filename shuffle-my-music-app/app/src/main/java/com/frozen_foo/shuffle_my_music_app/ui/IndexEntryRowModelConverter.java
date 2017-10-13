@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.main;
+package com.frozen_foo.shuffle_my_music_app.ui;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 

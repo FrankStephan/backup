@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.main;
+package com.frozen_foo.shuffle_my_music_app.ui;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -17,9 +17,9 @@ import android.widget.ProgressBar;
 import android.widget.ToggleButton;
 
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.main.create_list.CreateListController;
-import com.frozen_foo.shuffle_my_music_app.main.select_favorites.SelectFavoritesController;
-import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListController;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.CreateListController;
+import com.frozen_foo.shuffle_my_music_app.ui.select_favorites.SelectFavoritesController;
+import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListController;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerController;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionsAccess;

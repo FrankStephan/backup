@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.main.create_list;
+package com.frozen_foo.shuffle_my_music_app.ui.create_list;
 
 import android.content.Context;
 

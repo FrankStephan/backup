@@ -32,10 +32,6 @@ public class LocalDirectoryAccess {
 		FileUtils.copyInputStreamToFile(source, localFile);
 	}
 
-	public File[] songs() {
-		return localSongsDir().listFiles();
-	}
-
 	@NonNull
 	public File localDir() {
 		return new File(Environment.getExternalStorageDirectory(), SHUFFLE_MY_MUSIC_DIR);

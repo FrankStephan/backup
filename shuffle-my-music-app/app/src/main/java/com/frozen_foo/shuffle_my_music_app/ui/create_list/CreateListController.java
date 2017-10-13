@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.main.create_list;
+package com.frozen_foo.shuffle_my_music_app.ui.create_list;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,14 +11,14 @@ import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
-import com.frozen_foo.shuffle_my_music_app.main.IndexEntryRowModelConverter;
-import com.frozen_foo.shuffle_my_music_app.main.RowModel;
-import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.DeterminedSongsStep;
-import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.FinishedSongCopyStep;
-import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.PreparationStep;
-import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.ShuffleProgress;
-import com.frozen_foo.shuffle_my_music_app.main.create_list.progress.StartSongCopyStep;
-import com.frozen_foo.shuffle_my_music_app.main.show_list.ShowListRowAdapter;
+import com.frozen_foo.shuffle_my_music_app.ui.IndexEntryRowModelConverter;
+import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.DeterminedSongsStep;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinishedSongCopyStep;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.PreparationStep;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.ShuffleProgress;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.StartSongCopyStep;
+import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListRowAdapter;
 
 import java.util.List;
 

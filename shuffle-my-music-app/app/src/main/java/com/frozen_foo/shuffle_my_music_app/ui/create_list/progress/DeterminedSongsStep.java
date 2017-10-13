@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.main.create_list.progress;
+package com.frozen_foo.shuffle_my_music_app.ui.create_list.progress;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 

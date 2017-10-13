@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.main.create_list;
+package com.frozen_foo.shuffle_my_music_app.ui.create_list;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.main.RowModel;
+import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
 
 /**
  * Created by Frank on 05.08.2017.

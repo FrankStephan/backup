@@ -5,10 +5,14 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 
+import com.frozen_foo.shuffle_my_music_2.IndexEntry;
+import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
+
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Frank on 18.07.2017.
@@ -23,11 +27,19 @@ public class ListPlayer {
 	private MediaPlayer currentPlayer;
 	private int songIndex = 0;
 
-	public ListPlayer(Context contex, final File[] songs, MediaPlayer.OnErrorListener onErrorListener) {
-		this.context = contex;
-		this.songs = songs;
+	public ListPlayer(Context context, MediaPlayer.OnErrorListener onErrorListener) {
+		this.context = context;
 		this.onErrorListener = onErrorListener;
+		loadSongs();
 		initCurrentPlayer();
+	}
+
+	private void loadSongs() {
+		List<IndexEntry> indexEntries = new ShuffleAccess().getLocalIndex();
+		songs = new File[indexEntries.size()];
+		for (int i = 0; i < songs.length; i++) {
+			songs[i] = new ShuffleAccess().resolveLocalSong(indexEntries.get(i));
+		}
 	}
 
 	private void initCurrentPlayer() {

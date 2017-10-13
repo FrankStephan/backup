@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.io.local.LocalDirectoryAccess;
 
@@ -27,7 +28,8 @@ public class ListPlayerController {
 
 	public void loadPlayer() {
 		release();
-		listPlayer = new ListPlayer(application, new LocalDirectoryAccess().songs(), new MediaPlayer.OnErrorListener() {
+
+		listPlayer = new ListPlayer(application, new MediaPlayer.OnErrorListener() {
 			@Override
 			public boolean onError(MediaPlayer mp, int what, int extra) {
 				Toast.makeText(context, "MediaPlayer Error " + what + " " + extra, Toast.LENGTH_LONG);

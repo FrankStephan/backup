@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.main.select_favorites;
+package com.frozen_foo.shuffle_my_music_app.ui.select_favorites;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,7 +13,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.main.RowModel;
+import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
 
 import java.util.LinkedList;
 import java.util.List;
