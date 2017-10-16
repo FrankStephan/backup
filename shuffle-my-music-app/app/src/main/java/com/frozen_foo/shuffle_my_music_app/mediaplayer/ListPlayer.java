@@ -62,7 +62,9 @@ public class ListPlayer {
 	}
 
 	public void release() {
-		currentPlayer.release();
+		if (currentPlayer != null) {
+			currentPlayer.release();
+		}
 	}
 
 	private void init() {
