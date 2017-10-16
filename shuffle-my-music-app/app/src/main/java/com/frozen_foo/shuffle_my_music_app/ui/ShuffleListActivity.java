@@ -11,9 +11,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.frozen_foo.shuffle_my_music_app.R;
@@ -48,6 +50,8 @@ public class ShuffleListActivity extends AppCompatActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menubar, menu);
+		Object o = menu.findItem(R.id.play_pause);
+		listPlayerController.initPlayer(getApplicationContext(), list(), menu.findItem(R.id.play_pause));
 		return true;
 	}
 
@@ -58,7 +62,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 				openSettings();
 				return true;
 			case R.id.play_pause:
-				listPlayerController.playPause(item);
+				listPlayerController.playPause();
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -73,7 +77,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shuffle_list);
-		listPlayerController = new ListPlayerController(getApplication(), getApplicationContext());
+		listPlayerController = new ListPlayerController();
 		requestExternalStorageAccessOrShowList();
 	}
 
@@ -102,10 +106,8 @@ public class ShuffleListActivity extends AppCompatActivity {
 			}
 		}
 	}
-
 	private void loadListAndPlayer() {
 		new ShowListController().loadAndInflateList(this, list());
-		listPlayerController.loadPlayer();
 	}
 
 	@Override

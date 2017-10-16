@@ -21,17 +21,55 @@ import java.util.List;
 public class ListPlayer {
 
 	private File[] songs;
-	private MediaPlayer.OnErrorListener onErrorListener;
+	private ListPlayerListener listPlayerListener;
 	private Context context;
 
 	private MediaPlayer currentPlayer;
 	private int songIndex = 0;
 
-	public ListPlayer(Context context, MediaPlayer.OnErrorListener onErrorListener) {
+	public ListPlayer(Context context, ListPlayerListener listPlayerListener) {
 		this.context = context;
-		this.onErrorListener = onErrorListener;
-		loadSongs();
-		initCurrentPlayer();
+		this.listPlayerListener = listPlayerListener;
+	}
+
+	public boolean isPlaying() {
+		return currentPlayer != null && currentPlayer.isPlaying();
+	}
+
+	public void start() {
+		init();
+		currentPlayer.start();
+		listPlayerListener.onStart();
+	}
+
+	public void pause() {
+		init();
+		currentPlayer.pause();
+		listPlayerListener.onPause();
+	}
+
+	public void startSongAtIndex(int index) {
+		if (currentPlayer == null) {
+			loadSongs();
+		} else {
+			release();
+		}
+		if (index < songs.length) {
+			songIndex = index;
+			initCurrentPlayer();
+			start();
+		}
+	}
+
+	public void release() {
+		currentPlayer.release();
+	}
+
+	private void init() {
+		if (currentPlayer == null) {
+			loadSongs();
+			initCurrentPlayer();
+		}
 	}
 
 	private void loadSongs() {
@@ -50,9 +88,9 @@ public class ListPlayer {
 				currentPlayer.setDataSource(context, Uri.fromFile(songs[songIndex]));
 				currentPlayer.prepare();
 			} catch (IOException e) {
-				onErrorListener.onError(currentPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, MediaPlayer.MEDIA_ERROR_IO);
+				listPlayerListener.onError(currentPlayer, MediaPlayer.MEDIA_ERROR_UNKNOWN, MediaPlayer.MEDIA_ERROR_IO);
 			}
-			currentPlayer.setOnErrorListener(onErrorListener);
+			currentPlayer.setOnErrorListener(listPlayerListener);
 
 			currentPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
 				@Override
@@ -61,30 +99,5 @@ public class ListPlayer {
 				}
 			});
 		}
-	}
-
-	public boolean isPlaying() {
-		return currentPlayer.isPlaying();
-	}
-
-	public void start() {
-		currentPlayer.start();
-	}
-
-	public void pause() {
-		currentPlayer.pause();
-	}
-
-	public void startSongAtIndex(int index) {
-		release();
-		songIndex = index;
-		if (songIndex < songs.length - 1) {
-			initCurrentPlayer();
-			start();
-		}
-	}
-
-	public void release() {
-		currentPlayer.release();
 	}
 }
