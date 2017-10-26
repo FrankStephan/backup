@@ -174,6 +174,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	private void createShuffleList() {
+		listPlayerController.release();
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS);
 	}

@@ -64,6 +64,9 @@ public class ListPlayerController {
 
 	public void release() {
 		if (listPlayer != null) {
+			if (listPlayer.isPlaying()) {
+				listPlayer.pause();
+			}
 			listPlayer.release();
 		}
 	}
