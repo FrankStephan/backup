@@ -6,10 +6,6 @@ import com.frozen_foo.shuffle_my_music_2.IndexEntry
 
 class FavoritesCollectionService extends AbstractFavoritesService {
 
-	String resolveFavoritesFilePath(String targetDirPath) {
-		return createOrGetFile(targetDirPath)
-	}
-
 	List<IndexEntry> loadFavorites(InputStream stream) {
 		try {
 			def favoritesXml = new XmlSlurper().parse(stream)

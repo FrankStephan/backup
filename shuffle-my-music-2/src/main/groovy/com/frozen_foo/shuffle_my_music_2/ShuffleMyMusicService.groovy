@@ -22,10 +22,6 @@ class ShuffleMyMusicService {
 		new FavoritesService().loadFavorites(targetDirPath)
 	}
 
-	String resolveFavoritesFilePath(String targetDirPath) {
-		new FavoritesCollectionService().resolveFavoritesFilePath(targetDirPath)
-	}
-
 	List<IndexEntry> loadFavorites(InputStream stream) {
 		new FavoritesCollectionService().loadFavorites(stream)
 	}
