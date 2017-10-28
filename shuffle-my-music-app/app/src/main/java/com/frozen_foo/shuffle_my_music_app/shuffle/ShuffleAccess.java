@@ -11,6 +11,7 @@ import com.frozen_foo.shuffle_my_music_app.io.remote.RemoteDirectoryAccess;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyStoreException;
@@ -66,24 +67,37 @@ public class ShuffleAccess {
 	}
 
 	public void addFavoritesToLocalCollection() {
-		String           localDirPath = new LocalDirectoryAccess().localDir().getPath();
-		List<IndexEntry> favorites    = new ShuffleMyMusicService().loadFavorites(localDirPath);
-		List<IndexEntry> newFavorites =
-				new ShuffleMyMusicService().loadFavorites(localSongsDirPath());
+		String           localDirPath       = new LocalDirectoryAccess().localDir().getPath();
+		List<IndexEntry> favorites          = new ShuffleMyMusicService().loadFavorites(localDirPath);
+		List<IndexEntry> newFavorites       = new ShuffleMyMusicService().loadFavorites(localSongsDirPath());
 		List<IndexEntry> resultingFavorites = new ShuffleMyMusicService().join(newFavorites, favorites);
 		new ShuffleMyMusicService().addFavorites(localDirPath, resultingFavorites);
 	}
 
 
+	public void backupFavoritesCollectionToRemote(Context context) throws IOException, CertificateException,
+			NoSuchAlgorithmException, InvalidKeyException, UnrecoverableEntryException,
+			InvalidAlgorithmParameterException, NoSuchPaddingException, KeyStoreException, NoSuchProviderException {
+		String           localDirPath             = new LocalDirectoryAccess().localDir().getPath();
+		List<IndexEntry> localFavoritesCollection = new ShuffleMyMusicService().loadFavorites(localDirPath);
 
-	public void backupFavoritesCollectionToRemote() {
+		List<IndexEntry> resultingFavorites;
+		try (InputStream favoritesFileInStream = new RemoteDirectoryAccess().favoritesFileInStream(context)) {
+			List<IndexEntry> remoteFavoritesCollection =
+					new ShuffleMyMusicService().loadFavorites(favoritesFileInStream);
+			resultingFavorites = new ShuffleMyMusicService().join(localFavoritesCollection, remoteFavoritesCollection);
+		}
 
+		if (null != resultingFavorites) {
+			try (OutputStream favoritesFileOutStream = new RemoteDirectoryAccess().favoritesFileOutStream(context)) {
+				new ShuffleMyMusicService().writeFavorites(resultingFavorites, favoritesFileOutStream);
+			}
+		}
 	}
 
 	public File resolveLocalSong(IndexEntry indexEntry) {
 		return new File(new LocalDirectoryAccess().localSongsDir(), indexEntry.getFileName());
 	}
-
 
 
 	@NonNull

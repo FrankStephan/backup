@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyStoreException;
@@ -28,33 +29,32 @@ import javax.crypto.NoSuchPaddingException;
 public class RemoteDirectoryAccess {
 
 	public static final String INDEX_FILE_NAME = "index.txt";
+	public static final String FAVORITES_FILE_NAME = "favorites.xml";
 
 	public InputStream indexStream(Context context) throws CertificateException, NoSuchAlgorithmException,
 			KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException,
 			UnrecoverableEntryException, NoSuchPaddingException, InvalidKeyException {
-		return stream(context, INDEX_FILE_NAME);
+		return inStream(context, INDEX_FILE_NAME);
 	}
 
 	public InputStream songStream(Context context, String indexEntry) throws IOException, CertificateException,
 			NoSuchAlgorithmException, InvalidKeyException, UnrecoverableEntryException,
 			InvalidAlgorithmParameterException, NoSuchPaddingException, NoSuchProviderException, KeyStoreException {
-		return stream(context, indexEntry);
+		return inStream(context, indexEntry);
 	}
-/*
+
+	public InputStream favoritesFileInStream(Context context) throws IOException, CertificateException,
+			NoSuchAlgorithmException, InvalidKeyException, UnrecoverableEntryException,
+			InvalidAlgorithmParameterException, NoSuchPaddingException, NoSuchProviderException, KeyStoreException {
+		return inStream(context, FAVORITES_FILE_NAME);
+	}
+
 	public OutputStream favoritesFileOutStream(Context context) throws IOException, CertificateException,
 			NoSuchAlgorithmException, InvalidKeyException, UnrecoverableEntryException,
 			InvalidAlgorithmParameterException, NoSuchPaddingException, NoSuchProviderException, KeyStoreException {
-		Settings decryptedSettings = decryptedSettings(context);
-
-		return new SmbAccess()
-				.outputStream(decryptedSettings.getIp(), decryptedSettings.getUsername(),
-						decryptedSettings.getPassword())
+		return outStream(context, FAVORITES_FILE_NAME);
 	}
 
-	public InputStream favoritesFileInStream(Context context) {
-
-	}
-*/
 	private Settings decryptedSettings(Context context) throws CertificateException, NoSuchAlgorithmException,
 			KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException,
 			UnrecoverableEntryException, NoSuchPaddingException, InvalidKeyException {
@@ -75,27 +75,24 @@ public class RemoteDirectoryAccess {
 		}
 	}
 
-	private InputStream stream(Context context, String subPath) throws CertificateException, NoSuchAlgorithmException,
+	private InputStream inStream(Context context, String subPath) throws CertificateException, NoSuchAlgorithmException,
 			KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException,
 			UnrecoverableEntryException, NoSuchPaddingException, InvalidKeyException {
-		Settings settings          = new SettingsAccess().readSettings(context);
-		String   encryptedIp       = settings.getIp();
-		String   encryptedName     = settings.getUsername();
-		String   encryptedPassword = settings.getPassword();
-		String   encryptedMusicDir = settings.getMusicDir();
-		if (StringUtils.isNoneEmpty(encryptedIp, encryptedName, encryptedPassword, encryptedMusicDir)) {
-			Cryptifier cryptifier = new Cryptifier();
-			String     ip         = cryptifier.decrypt(encryptedIp);
-			String     username   = cryptifier.decrypt(encryptedName);
-			String     password   = cryptifier.decrypt(encryptedPassword);
-			String     musicDir   = cryptifier.decrypt(encryptedMusicDir);
+		Settings decryptedSettings = decryptedSettings(context);
+		String   path              = concat(decryptedSettings.getMusicDir(), subPath);
 
-			String      path        = concat(musicDir, subPath);
-			InputStream inputStream = new SmbAccess().inputStream(ip, username, password, path);
-			return inputStream;
-		} else {
-			throw new IllegalArgumentException("Bitte Settings ausfüllen.");
-		}
+
+		return new SmbAccess().inputStream(decryptedSettings.getIp(), decryptedSettings.getUsername(),
+				decryptedSettings.getPassword(), path);
+	}
+
+	private OutputStream outStream(Context context, String subPath) throws CertificateException, NoSuchAlgorithmException,
+			KeyStoreException, NoSuchProviderException, InvalidAlgorithmParameterException, IOException,
+			UnrecoverableEntryException, NoSuchPaddingException, InvalidKeyException {
+		Settings decryptedSettings = decryptedSettings(context);
+		String   path              = concat(decryptedSettings.getMusicDir(), subPath);
+		return new SmbAccess().outputStream(decryptedSettings.getIp(), decryptedSettings.getUsername(),
+				decryptedSettings.getPassword(), path);
 	}
 
 	private String concat(String pathSegment1, String pathSegment2) {

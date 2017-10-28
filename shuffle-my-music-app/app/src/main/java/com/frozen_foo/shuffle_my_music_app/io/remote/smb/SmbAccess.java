@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 
 import jcifs.smb.NtlmPasswordAuthentication;
+import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 
 /**
@@ -27,10 +28,15 @@ public class SmbAccess {
 	}
 
 	@NonNull
-	private SmbFile smbFile(String ip, String username, String password, String path) throws MalformedURLException {
+	private SmbFile smbFile(String ip, String username, String password, String path) throws MalformedURLException,
+			SmbException {
 		jcifs.Config.setProperty("jcifs.netbios.wins", ip);
 		NtlmPasswordAuthentication auth = new NtlmPasswordAuthentication(null, username, password);
-		return new SmbFile("smb://" + path, auth);
+		SmbFile                    smbFile = new SmbFile("smb://" + path, auth);
+		if (!smbFile.exists()) {
+			smbFile.createNewFile();
+		}
+		return smbFile;
 	}
 
 
