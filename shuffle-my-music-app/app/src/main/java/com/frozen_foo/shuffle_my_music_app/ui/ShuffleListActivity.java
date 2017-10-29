@@ -176,7 +176,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	private void createShuffleList() {
 		listPlayerController.release();
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-		new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS);
+		new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS, false);
 	}
 
 	private void selectFavorites(final ListView shuffleList, final ToggleButton button2) {
@@ -195,5 +195,11 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private void cancelFavoritesSelection() {
 		new SelectFavoritesController().cancelFavoritesSelection(this, list());
+	}
+
+	public void reload(View view) {
+		listPlayerController.release();
+		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS, true);
 	}
 }

@@ -28,9 +28,10 @@ import java.util.List;
 
 public class CreateListController {
 
-	public void createShuffleList(Context context, final Activity activity, ProgressBar progressBar, int numberOfSongs) {
+	public void createShuffleList(Context context, final Activity activity, ProgressBar progressBar, int numberOfSongs, boolean useExistingList) {
 		progressBar.setMax(numberOfSongs + PreparationStep.values().length);
-		NumberOfSongs numberOfSongsContext = new NumberOfSongs(numberOfSongs, context);
+		progressBar.setProgress(0);
+		NumberOfSongs numberOfSongsContext = new NumberOfSongs(numberOfSongs, context, useExistingList);
 		new CreateListTask(inflateListCallback(context, activity), progressBarUpdater(activity, progressBar)).execute(numberOfSongsContext);
 	}
 

@@ -10,9 +10,11 @@ public class NumberOfSongs {
 
 	public int value;
 	public Context context;
+	public boolean useExistingList;
 
-	public NumberOfSongs(int value, Context context) {
+	public NumberOfSongs(int value, Context context, boolean useExistingList) {
 		this.value = value;
 		this.context = context;
+		this.useExistingList = useExistingList;
 	}
 }

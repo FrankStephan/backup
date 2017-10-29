@@ -41,25 +41,35 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 	@Override
 	protected List<IndexEntry> doInBackground(NumberOfSongs... params) {
 		try {
-			return createNewShuffledList(params[0].context, params[0].value);
+			return createNewShuffledList(params[0].context, params[0].value, params[0].useExistingList);
 		} catch (Exception e) {
 			callback.setException(e);
 			return Collections.emptyList();
 		}
 	}
 
-	private List<IndexEntry> createNewShuffledList(Context context, int numberOfSongs) throws Exception {
-		publishProgress(PreparationStep.SAVING_FAVORITES);
-		saveAndBackupFavorites(context);
+	private List<IndexEntry> createNewShuffledList(Context context, int numberOfSongs, boolean useExistingList) throws Exception {
+		List<IndexEntry> shuffledIndexEntries;
+		if (useExistingList) {
+			publishProgress(PreparationStep.SAVING_FAVORITES);
+			publishProgress(PreparationStep.LOADING_INDEX);
+			publishProgress(PreparationStep.SHUFFLING_INDEX);
+			shuffledIndexEntries = new ShuffleAccess().getLocalIndex();
+			publishProgress(new DeterminedSongsStep(shuffledIndexEntries));
+			copySongsToLocalDir(context, shuffledIndexEntries);
+		} else {
+			publishProgress(PreparationStep.SAVING_FAVORITES);
+			saveAndBackupFavorites(context);
 
-		publishProgress(PreparationStep.LOADING_INDEX);
-		InputStream indexStream = loadIndex(context);
+			publishProgress(PreparationStep.LOADING_INDEX);
+			InputStream indexStream = loadIndex(context);
 
-		publishProgress(PreparationStep.SHUFFLING_INDEX);
-		List<IndexEntry> shuffledIndexEntries = shuffleIndexEntries(indexStream, numberOfSongs);
+			publishProgress(PreparationStep.SHUFFLING_INDEX);
+			shuffledIndexEntries = shuffleIndexEntries(indexStream, numberOfSongs);
 
-		publishProgress(new DeterminedSongsStep(shuffledIndexEntries));
-		copySongsToLocalDir(context, shuffledIndexEntries);
+			publishProgress(new DeterminedSongsStep(shuffledIndexEntries));
+			copySongsToLocalDir(context, shuffledIndexEntries);
+		}
 
 		return shuffledIndexEntries;
 	}
