@@ -18,7 +18,7 @@ public class ListPlayerController {
 
 	private ListPlayer listPlayer;
 
-	public void initPlayer(final Context context, ListView shuffleList, final MenuItem playItem) {
+	public void initPlayer(final Context context, ListView shuffleList, final MenuItem playItem, final ListPlayerControllerListener listPlayerControllerListener) {
 		release();
 
 		listPlayer = new ListPlayer(context, new ListPlayerListener() {
@@ -37,6 +37,11 @@ public class ListPlayerController {
 			public boolean onError(MediaPlayer mp, int what, int extra) {
 				Toast.makeText(context, "MediaPlayer Error " + what + " " + extra, Toast.LENGTH_LONG);
 				return false;
+			}
+
+			@Override
+			public void playingSongChanged(final int index) {
+				listPlayerControllerListener.playingSongChanged(index);
 			}
 		});
 

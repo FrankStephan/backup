@@ -11,14 +11,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.frozen_foo.shuffle_my_music_app.R;
+import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerControllerListener;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.CreateListController;
 import com.frozen_foo.shuffle_my_music_app.ui.select_favorites.SelectFavoritesController;
 import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListController;
@@ -51,8 +50,18 @@ public class ShuffleListActivity extends AppCompatActivity {
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menubar, menu);
 		Object o = menu.findItem(R.id.play_pause);
-		listPlayerController.initPlayer(getApplicationContext(), list(), menu.findItem(R.id.play_pause));
+		listPlayerController.initPlayer(getApplicationContext(), list(), menu.findItem(R.id.play_pause), markPlayingSongListener());
 		return true;
+	}
+
+	private ListPlayerControllerListener markPlayingSongListener() {
+		return new ListPlayerControllerListener() {
+
+			@Override
+			public void playingSongChanged(final int index) {
+				new ShowListController().markAsPlayingSong(list(), index);
+			}
+		};
 	}
 
 	@Override
@@ -83,7 +92,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private void requestExternalStorageAccessOrShowList() {
 		if (new PermissionsAccess().hasPermission(this, READ_EXTERNAL_STORAGE_REQUEST)) {
-			loadListAndPlayer();
+			loadList();
 		} else {
 			new PermissionsAccess().requestPermission(this, READ_EXTERNAL_STORAGE_REQUEST);
 		}
@@ -96,7 +105,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 		if (new PermissionsAccess().hasPermission(this, permissionRequest)) {
 			switch (permissionRequest) {
 				case READ_EXTERNAL_STORAGE_REQUEST:
-					loadListAndPlayer();
+					loadList();
 					break;
 				case INTERNET_REQUEST:
 					createShuffleList();
@@ -106,7 +115,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 			}
 		}
 	}
-	private void loadListAndPlayer() {
+	private void loadList() {
 		new ShowListController().loadAndInflateList(this, list());
 	}
 

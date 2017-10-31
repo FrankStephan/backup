@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.frozen_foo.shuffle_my_music_app.R;
@@ -32,6 +33,10 @@ public class ShowListRowAdapter extends ArrayAdapter<RowModel> {
 		TextView name     = (TextView) convertView.findViewById(R.id.songNameText);
 		RowModel rowModel = getItem(position);
 		name.setText(rowModel.getLabel());
+
+		ImageView playingIcon = (ImageView) convertView.findViewById(R.id.playingIcon);
+		playingIcon.setVisibility(rowModel.isPlaying() ? View.VISIBLE : View.INVISIBLE);
+
 		return convertView;
 	}
 

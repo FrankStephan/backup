@@ -10,6 +10,7 @@ import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
 import com.frozen_foo.shuffle_my_music_app.io.local.LocalDirectoryAccess;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
+import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 import com.frozen_foo.shuffle_my_music_app.ui.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
 import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListRowAdapter;
@@ -25,7 +26,7 @@ import java.util.List;
  * Created by Frank on 24.08.2017.
  */
 
-public class SelectFavoritesController {
+public class SelectFavoritesController extends AbstractListController {
 
 	public void selectFavorites(Activity activity, ListView shuffleList, DataSetObserver selectionChangeObserver) {
 		final ListAdapter          adapter              = shuffleList.getAdapter();
@@ -44,14 +45,6 @@ public class SelectFavoritesController {
 			}
 		}
 		return false;
-	}
-
-	private RowModel[] rowsFrom(final ListAdapter adapter) {
-		RowModel[] rows = new RowModel[adapter.getCount()];
-		for (int i = 0; i < rows.length; i++) {
-			rows[i] = (RowModel) adapter.getItem(i);
-		}
-		return rows;
 	}
 
 	public void addFavorites(Activity activity, ListView shuffleList) {

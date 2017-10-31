@@ -9,8 +9,8 @@ public class RowModel {
 	private String label;
 	private String path;
 	private boolean copying;
-
 	private boolean favorite;
+	private boolean playing;
 
 	public RowModel(String label, String path, boolean favorite) {
 		this.label = label;
@@ -48,5 +48,13 @@ public class RowModel {
 
 	public void setFavorite(final boolean favorite) {
 		this.favorite = favorite;
+	}
+
+	public boolean isPlaying() {
+		return playing;
+	}
+
+	public void setPlaying(final boolean playing) {
+		this.playing = playing;
 	}
 }

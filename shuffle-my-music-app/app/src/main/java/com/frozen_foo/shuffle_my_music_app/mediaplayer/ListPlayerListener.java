@@ -6,7 +6,7 @@ import android.media.MediaPlayer;
  * Created by Frank on 14.10.2017.
  */
 
-public interface ListPlayerListener extends MediaPlayer.OnErrorListener {
+public interface ListPlayerListener extends MediaPlayer.OnErrorListener, ListPlayerControllerListener {
 
 	void onStart();
 	void onPause();

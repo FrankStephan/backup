@@ -70,6 +70,7 @@ public class ListPlayer {
 				initCurrentPlayer();
 				start();
 			}
+
 		}
 	}
 
@@ -78,6 +79,7 @@ public class ListPlayer {
 			currentPlayer.stop();
 			currentPlayer.release();
 			currentPlayer = null;
+			listPlayerListener.playingSongChanged(ListPlayerControllerListener.NO_SONG);
 			audioManager.abandonAudioFocus(onAudioFocusChangeListener);
 		}
 	}
@@ -132,6 +134,7 @@ public class ListPlayer {
 					startSongAtIndex(songIndex + 1);
 				}
 			});
+			listPlayerListener.playingSongChanged(songIndex);
 		}
 	}
 }
