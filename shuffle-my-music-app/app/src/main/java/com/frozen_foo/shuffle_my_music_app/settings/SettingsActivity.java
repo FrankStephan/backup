@@ -50,7 +50,6 @@ public class SettingsActivity extends AppCompatActivity {
 		CharSequence smbLoginPassword     = ((TextView) findViewById(R.id.smbPasswordText)).getText();
 		CharSequence smbShuffleMyMusicDir = ((TextView) findViewById(R.id.smbShuffleMyMusicText)).getText();
 		CharSequence smbMusicDir          = ((TextView) findViewById(R.id.smbMusicDirText)).getText();
-		;
 
 		if (StringUtils.isNoneEmpty(smbIp, smbLoginName, smbMusicDir)) {
 			String encryptedIp                = null;
