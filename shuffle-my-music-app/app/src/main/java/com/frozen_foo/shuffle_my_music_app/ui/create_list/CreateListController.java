@@ -67,6 +67,7 @@ public class CreateListController extends AbstractListController {
 				case SAVING_FAVORITES:
 					showPreparation(activity, activity.getString(R.string.saveFavorites));
 					progressBar.setProgress(0);
+					break;
 				case LOADING_INDEX:
 					showPreparation(activity, activity.getString(R.string.indexLoading));
 					progressBar.setProgress(1);
