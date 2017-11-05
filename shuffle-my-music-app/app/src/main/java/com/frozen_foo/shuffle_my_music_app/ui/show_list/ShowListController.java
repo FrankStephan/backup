@@ -6,6 +6,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
+import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 import com.frozen_foo.shuffle_my_music_app.ui.IndexEntryRowModelConverter;
@@ -20,7 +21,12 @@ import java.util.List;
 public class ShowListController extends AbstractListController {
 
 	public void loadAndInflateList(Activity activity, ListView shuffleList) {
-		List<IndexEntry>   indexEntries = new ShuffleAccess().getLocalIndex();
+		List<IndexEntry>   indexEntries = null;
+		try {
+			indexEntries = new ShuffleAccess().getLocalIndex(activity.getApplicationContext());
+		} catch (SettingsAccessException e) {
+			alertException(activity.getApplicationContext(), e);
+		}
 		RowModel[]         rows         = new IndexEntryRowModelConverter().toRowModels(indexEntries);
 		ShowListRowAdapter adapter      = new ShowListRowAdapter(activity, rows);
 		shuffleList.setAdapter(adapter);

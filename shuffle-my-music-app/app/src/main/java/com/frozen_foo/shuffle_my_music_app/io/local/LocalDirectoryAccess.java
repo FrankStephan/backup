@@ -1,7 +1,11 @@
 package com.frozen_foo.shuffle_my_music_app.io.local;
 
+import android.content.Context;
 import android.os.Environment;
 import android.support.annotation.NonNull;
+
+import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccess;
+import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 
 import org.apache.commons.io.FileUtils;
 
@@ -15,31 +19,32 @@ import java.io.InputStream;
 
 public class LocalDirectoryAccess {
 
-	private static String SHUFFLE_MY_MUSIC_DIR = "_shuffle-my-music";
+
 	private static String SHUFFLE_MY_MUSIC_SONGS_DIR = "songs";
 
 
-	public void cleanLocalDir() throws IOException {
-		File shuffleMyMusicDir = localSongsDir();
+	public void cleanLocalDir(final Context context) throws IOException, SettingsAccessException {
+		File shuffleMyMusicDir = localSongsDir(context);
 		if (shuffleMyMusicDir.exists()) {
 			FileUtils.cleanDirectory(shuffleMyMusicDir);
 		}
 	}
 
-	public void copyToLocal(InputStream source, String fileName) throws IOException {
-		File shuffleMyMusicDir = localSongsDir();
+	public void copyToLocal(InputStream source, String fileName, final Context context) throws IOException,
+			SettingsAccessException {
+		File shuffleMyMusicDir = localSongsDir(context);
 		File localFile = new File(shuffleMyMusicDir, fileName);
 		FileUtils.copyInputStreamToFile(source, localFile);
 	}
 
 	@NonNull
-	public File localDir() {
-		return new File(Environment.getExternalStorageDirectory(), SHUFFLE_MY_MUSIC_DIR);
+	public File localDir(Context context) throws SettingsAccessException {
+		return new File(Environment.getExternalStorageDirectory(), new SettingsAccess().readSettings(context).getLocalDir());
 	}
 
 	@NonNull
-	public File localSongsDir() {
-		return new File(localDir(), SHUFFLE_MY_MUSIC_SONGS_DIR);
+	public File localSongsDir(final Context context) throws SettingsAccessException {
+		return new File(localDir(context), SHUFFLE_MY_MUSIC_SONGS_DIR);
 	}
 
 

@@ -9,10 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.crypto.Cryptifier;
 import com.frozen_foo.shuffle_my_music_app.ui.ShuffleListActivity;
-
-import org.apache.commons.lang3.StringUtils;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -20,67 +17,48 @@ public class SettingsActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
-		Settings settings = new SettingsAccess().readSettings(getApplicationContext());
+		Settings settings = null;
 		try {
-			Cryptifier cryptifier                 = new Cryptifier();
-			String     encryptedIp                = settings.getIp();
-			String     encryptedName              = settings.getUsername();
-			String     encryptedShuffleMyMusicDir = settings.getShuffleMyMusicDir();
-			String     encryptedMusicDir          = settings.getMusicDir();
-
-			((TextView) findViewById(R.id.smbIpText))
-					.setText(StringUtils.isNotEmpty(encryptedIp) ? cryptifier.decrypt(encryptedIp) : "");
-			((TextView) findViewById(R.id.smbNameText))
-					.setText(StringUtils.isNotEmpty(encryptedName) ? cryptifier.decrypt(encryptedName) : "");
-			((TextView) findViewById(R.id.smbShuffleMyMusicText)).setText(
-					StringUtils.isNotEmpty(encryptedShuffleMyMusicDir) ?
-							cryptifier.decrypt(encryptedShuffleMyMusicDir) : "");
-			((TextView) findViewById(R.id.smbMusicDirText))
-					.setText(StringUtils.isNotEmpty(encryptedMusicDir) ? cryptifier.decrypt(encryptedMusicDir) : "");
-
-		} catch (Exception e) {
-			Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+			settings = new SettingsAccess().readSettings(getApplicationContext());
+		} catch (SettingsAccessException e) {
+			Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+			// Replace by log4j
 			e.printStackTrace();
+		}
+
+		if (null != settings) {
+			((TextView) findViewById(R.id.smbIpText)).setText(settings.getIp());
+			((TextView) findViewById(R.id.smbNameText)).setText(settings.getUsername());
+			((TextView) findViewById(R.id.smbLocalDirText)).setText(settings.getLocalDir());
+			((TextView) findViewById(R.id.smbRemoteDirText)).setText(settings.getRemoteDir());
 		}
 	}
 
 	public void submitCredentials(View view) {
-		CharSequence smbIp                = ((TextView) findViewById(R.id.smbIpText)).getText();
-		CharSequence smbLoginName         = ((TextView) findViewById(R.id.smbNameText)).getText();
-		CharSequence smbLoginPassword     = ((TextView) findViewById(R.id.smbPasswordText)).getText();
-		CharSequence smbShuffleMyMusicDir = ((TextView) findViewById(R.id.smbShuffleMyMusicText)).getText();
-		CharSequence smbMusicDir          = ((TextView) findViewById(R.id.smbMusicDirText)).getText();
+		CharSequence smbIp            = ((TextView) findViewById(R.id.smbIpText)).getText();
+		CharSequence smbLoginName     = ((TextView) findViewById(R.id.smbNameText)).getText();
+		CharSequence smbLoginPassword = ((TextView) findViewById(R.id.smbPasswordText)).getText();
+		CharSequence smbLocalDir      = ((TextView) findViewById(R.id.smbLocalDirText)).getText();
+		CharSequence smbRemoteDir     = ((TextView) findViewById(R.id.smbRemoteDirText)).getText();
 
-		if (StringUtils.isNoneEmpty(smbIp, smbLoginName, smbMusicDir)) {
-			String encryptedIp                = null;
-			String encryptedName              = null;
-			String encryptedPassword          = null;
-			String encryptedShuffleMyMusicDir = null;
-			String encryptedMusicDir          = null;
-			try {
-				Cryptifier cryptifier = new Cryptifier();
-				encryptedIp = cryptifier.encrypt(smbIp.toString());
-				encryptedName = cryptifier.encrypt(smbLoginName.toString());
-				encryptedPassword =
-						StringUtils.isNotEmpty(smbLoginPassword) ? cryptifier.encrypt(smbLoginPassword.toString()) :
-								new SettingsAccess().readSettings(getApplicationContext()).getPassword();
-				encryptedShuffleMyMusicDir = cryptifier.encrypt(smbShuffleMyMusicDir.toString());
-				encryptedMusicDir = cryptifier.encrypt(smbMusicDir.toString());
-				Toast.makeText(getApplicationContext(), R.string.store_credentials_success, Toast.LENGTH_SHORT).show();
-			} catch (Exception e) {
-				Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-				e.printStackTrace();
-			}
-			new SettingsAccess().writeSettings(
-					new Settings(encryptedIp, encryptedName, encryptedPassword, encryptedShuffleMyMusicDir,
-							encryptedMusicDir), getApplicationContext());
-			openShuffleListActivity();
-		} else {
+		try {
+			new SettingsAccess().writeSettings(smbIp.toString(), smbLoginName.toString(), smbLoginPassword.toString(),
+					smbLocalDir.toString(), smbRemoteDir.toString(), getApplicationContext());
+		} catch (MissingSettingsException e) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.errorEmptySmbParameters).setTitle(R.string.error);
 			AlertDialog dialog = builder.create();
 			dialog.show();
+			// Replace by log4j
+			e.printStackTrace();
+		} catch (SettingsAccessException e) {
+			Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+			// Replace by log4j
+			e.printStackTrace();
 		}
+
+		Toast.makeText(getApplicationContext(), R.string.store_credentials_success, Toast.LENGTH_SHORT).show();
+		openShuffleListActivity();
 	}
 
 	private void openShuffleListActivity() {

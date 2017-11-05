@@ -54,7 +54,7 @@
         android:text="@string/shuffleMyMusicDir"/>
 
     <EditText
-        android:id="@+id/smbShuffleMyMusicText"
+        android:id="@+id/smbLocalDirText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -68,7 +68,7 @@
         android:text="@string/smb.music.dir"/>
 
     <EditText
-        android:id="@+id/smbMusicDirText"
+        android:id="@+id/smbRemoteDirText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"

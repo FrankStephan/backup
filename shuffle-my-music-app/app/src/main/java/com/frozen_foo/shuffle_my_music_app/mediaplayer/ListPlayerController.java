@@ -1,5 +1,6 @@
 package com.frozen_foo.shuffle_my_music_app.mediaplayer;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.view.MenuItem;
@@ -9,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_app.R;
+import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 
 /**
  * Created by Frank on 04.08.2017.
@@ -35,13 +37,21 @@ public class ListPlayerController {
 
 			@Override
 			public boolean onError(MediaPlayer mp, int what, int extra) {
-				Toast.makeText(context, "MediaPlayer Error " + what + " " + extra, Toast.LENGTH_LONG);
+				Toast.makeText(context, "MediaPlayer Error " + what + " " + extra, Toast.LENGTH_LONG).show();
 				return false;
 			}
 
 			@Override
 			public void playingSongChanged(final int index) {
 				listPlayerControllerListener.playingSongChanged(index);
+			}
+
+			@Override
+			public void loadingSongsFailed(final SettingsAccessException e) {
+				AlertDialog.Builder builder = new AlertDialog.Builder(context);
+				builder.setMessage(e.getMessage()).setTitle(R.string.error);
+				AlertDialog dialog = builder.create();
+				dialog.show();
 			}
 		});
 

@@ -7,17 +7,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
-import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
-import com.frozen_foo.shuffle_my_music_app.io.local.LocalDirectoryAccess;
+import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 import com.frozen_foo.shuffle_my_music_app.ui.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
 import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListRowAdapter;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -59,7 +56,12 @@ public class SelectFavoritesController extends AbstractListController {
 		}
 
 		List<IndexEntry> indexEntries = new IndexEntryRowModelConverter().toIndexEntries(selectedRowModels);
-		List<IndexEntry> addedIndexEntries = new ShuffleAccess().markAsFavorites(indexEntries);
+		List<IndexEntry> addedIndexEntries = null;
+		try {
+			addedIndexEntries = new ShuffleAccess().markAsFavorites(activity.getApplicationContext(), indexEntries);
+		} catch (SettingsAccessException e) {
+			alertException(activity.getApplicationContext(), e);
+		}
 		Toast.makeText(activity.getApplicationContext(), ArrayUtils.toString(addedIndexEntries), Toast.LENGTH_LONG)
 				.show();
 	}

@@ -52,7 +52,7 @@ public class CreateListController extends AbstractListController {
 			@Override
 			public void invoke(List<IndexEntry> result) {
 				if (hasException()) {
-					Toast.makeText(context, getException().getMessage(), Toast.LENGTH_LONG).show();
+					alertException(context, getException());
 				} else {
 					fillRows(activity, result);
 				}

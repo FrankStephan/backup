@@ -6,6 +6,7 @@ import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.async.AbstractAsyncTask;
 import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
+import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.DeterminedSongsStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinalizationStep;
@@ -42,19 +43,23 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 	protected List<IndexEntry> doInBackground(NumberOfSongs... params) {
 		try {
 			return createNewShuffledList(params[0].context, params[0].value, params[0].useExistingList);
-		} catch (Exception e) {
+		} catch (SettingsAccessException e) {
+			callback.setException(e);
+			return Collections.emptyList();
+		} catch (IOException e) {
 			callback.setException(e);
 			return Collections.emptyList();
 		}
 	}
 
-	private List<IndexEntry> createNewShuffledList(Context context, int numberOfSongs, boolean useExistingList) throws Exception {
+	private List<IndexEntry> createNewShuffledList(Context context, int numberOfSongs, boolean useExistingList) throws
+			IOException, SettingsAccessException {
 		List<IndexEntry> shuffledIndexEntries;
 		if (useExistingList) {
 			publishProgress(PreparationStep.SAVING_FAVORITES);
 			publishProgress(PreparationStep.LOADING_INDEX);
 			publishProgress(PreparationStep.SHUFFLING_INDEX);
-			shuffledIndexEntries = new ShuffleAccess().getLocalIndex();
+			shuffledIndexEntries = new ShuffleAccess().getLocalIndex(context);
 			publishProgress(new DeterminedSongsStep(shuffledIndexEntries));
 			copySongsToLocalDir(context, shuffledIndexEntries);
 		} else {
@@ -74,14 +79,12 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 		return shuffledIndexEntries;
 	}
 
-	private void saveAndBackupFavorites(final Context context) throws IOException, CertificateException,
-			NoSuchAlgorithmException, InvalidKeyException, UnrecoverableEntryException,
-			InvalidAlgorithmParameterException, NoSuchPaddingException, NoSuchProviderException, KeyStoreException {
-		shuffleAccess().addFavoritesToLocalCollection();
+	private void saveAndBackupFavorites(final Context context) throws SettingsAccessException, IOException {
+		shuffleAccess().addFavoritesToLocalCollection(context);
 		shuffleAccess().backupFavoritesCollectionToRemote(context);
 	}
 
-	private InputStream loadIndex(Context context) throws Exception {
+	private InputStream loadIndex(Context context) throws SettingsAccessException, IOException {
 		return shuffleAccess().loadIndexFromRemote(context);
 	}
 
@@ -89,9 +92,10 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 		return shuffleAccess().shuffleIndexEntries(indexStream, numberOfSongs);
 	}
 
-	private void copySongsToLocalDir(Context context, List<IndexEntry> shuffledIndexEntries) throws Exception {
-		shuffleAccess().cleanLocalData();
-		shuffleAccess().createLocalIndex(shuffledIndexEntries);
+	private void copySongsToLocalDir(Context context, List<IndexEntry> shuffledIndexEntries) throws IOException,
+			SettingsAccessException {
+		shuffleAccess().cleanLocalData(context);
+		shuffleAccess().createLocalIndex(context, shuffledIndexEntries);
 
 		for (int i = 0; i < shuffledIndexEntries.size(); i++) {
 			publishProgress(new StartSongCopyStep(i));

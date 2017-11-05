@@ -7,21 +7,13 @@ import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
 import com.frozen_foo.shuffle_my_music_app.io.local.LocalDirectoryAccess;
 import com.frozen_foo.shuffle_my_music_app.io.remote.RemoteDirectoryAccess;
+import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.UnrecoverableEntryException;
-import java.security.cert.CertificateException;
 import java.util.List;
-
-import javax.crypto.NoSuchPaddingException;
 
 /**
  * Created by Frank on 13.10.2017.
@@ -29,13 +21,11 @@ import javax.crypto.NoSuchPaddingException;
 
 public class ShuffleAccess {
 
-	public void cleanLocalData() throws IOException {
-		new LocalDirectoryAccess().cleanLocalDir();
+	public void cleanLocalData(final Context context) throws SettingsAccessException, IOException {
+		new LocalDirectoryAccess().cleanLocalDir(context);
 	}
 
-	public InputStream loadIndexFromRemote(Context context) throws IOException, CertificateException,
-			NoSuchAlgorithmException, InvalidKeyException, UnrecoverableEntryException,
-			InvalidAlgorithmParameterException, NoSuchPaddingException, NoSuchProviderException, KeyStoreException {
+	public InputStream loadIndexFromRemote(Context context) throws SettingsAccessException, IOException {
 		return new RemoteDirectoryAccess().indexStream(context);
 	}
 
@@ -43,42 +33,41 @@ public class ShuffleAccess {
 		return new ShuffleMyMusicService().randomIndexEntries(indexStream, numberOfSongs);
 	}
 
-	public void createLocalIndex(List<IndexEntry> shuffledIndexEntries) throws IOException {
-		String localDirPath = localSongsDirPath();
+	public void createLocalIndex(Context context, List<IndexEntry> shuffledIndexEntries) throws IOException,
+			SettingsAccessException {
+		String localDirPath = localSongsDirPath(context);
 		new ShuffleMyMusicService().createSongsFile(localDirPath, shuffledIndexEntries);
 	}
 
 
-	public List<IndexEntry> getLocalIndex() {
-		String localDirPath = localSongsDirPath();
+	public List<IndexEntry> getLocalIndex(Context context) throws SettingsAccessException {
+		String localDirPath = localSongsDirPath(context);
 		return new ShuffleMyMusicService().loadSongsFile(localDirPath);
 	}
 
-	public void copySongFromRemoteToLocal(Context context, IndexEntry indexEntry) throws IOException,
-			CertificateException, InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchPaddingException,
-			UnrecoverableEntryException, NoSuchProviderException, InvalidKeyException, KeyStoreException {
+	public void copySongFromRemoteToLocal(Context context, IndexEntry indexEntry) throws SettingsAccessException,
+			IOException {
 		InputStream remoteSongStream = new RemoteDirectoryAccess().songStream(context, indexEntry.getPath());
-		new LocalDirectoryAccess().copyToLocal(remoteSongStream, indexEntry.getFileName());
+		new LocalDirectoryAccess().copyToLocal(remoteSongStream, indexEntry.getFileName(), context);
 	}
 
-	public List<IndexEntry> markAsFavorites(List<IndexEntry> indexEntries) {
-		String localDirPath = localSongsDirPath();
+	public List<IndexEntry> markAsFavorites(Context context, List<IndexEntry> indexEntries) throws
+			SettingsAccessException {
+		String localDirPath = localSongsDirPath(context);
 		return new ShuffleMyMusicService().addFavorites(localDirPath, indexEntries);
 	}
 
-	public void addFavoritesToLocalCollection() {
-		String           localDirPath       = new LocalDirectoryAccess().localDir().getPath();
+	public void addFavoritesToLocalCollection(Context context) throws SettingsAccessException {
+		String           localDirPath       = new LocalDirectoryAccess().localDir(context).getPath();
 		List<IndexEntry> favorites          = new ShuffleMyMusicService().loadFavorites(localDirPath);
-		List<IndexEntry> newFavorites       = new ShuffleMyMusicService().loadFavorites(localSongsDirPath());
+		List<IndexEntry> newFavorites       = new ShuffleMyMusicService().loadFavorites(localSongsDirPath(context));
 		List<IndexEntry> resultingFavorites = new ShuffleMyMusicService().join(newFavorites, favorites);
 		new ShuffleMyMusicService().addFavorites(localDirPath, resultingFavorites);
 	}
 
 
-	public void backupFavoritesCollectionToRemote(Context context) throws IOException, CertificateException,
-			NoSuchAlgorithmException, InvalidKeyException, UnrecoverableEntryException,
-			InvalidAlgorithmParameterException, NoSuchPaddingException, KeyStoreException, NoSuchProviderException {
-		String           localDirPath             = new LocalDirectoryAccess().localDir().getPath();
+	public void backupFavoritesCollectionToRemote(Context context) throws SettingsAccessException, IOException {
+		String           localDirPath             = new LocalDirectoryAccess().localDir(context).getPath();
 		List<IndexEntry> localFavoritesCollection = new ShuffleMyMusicService().loadFavorites(localDirPath);
 
 		List<IndexEntry> resultingFavorites;
@@ -95,13 +84,13 @@ public class ShuffleAccess {
 		}
 	}
 
-	public File resolveLocalSong(IndexEntry indexEntry) {
-		return new File(new LocalDirectoryAccess().localSongsDir(), indexEntry.getFileName());
+	public File resolveLocalSong(Context context, IndexEntry indexEntry) throws SettingsAccessException {
+		return new File(new LocalDirectoryAccess().localSongsDir(context), indexEntry.getFileName());
 	}
 
 
 	@NonNull
-	private String localSongsDirPath() {
-		return new LocalDirectoryAccess().localSongsDir().getPath();
+	private String localSongsDirPath(Context context) throws SettingsAccessException {
+		return new LocalDirectoryAccess().localSongsDir(context).getPath();
 	}
 }

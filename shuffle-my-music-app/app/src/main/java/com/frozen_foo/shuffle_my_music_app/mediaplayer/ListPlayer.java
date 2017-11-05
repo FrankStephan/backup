@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Handler;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
+import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -117,10 +118,19 @@ public class ListPlayer {
 	}
 
 	private void loadSongs() {
-		List<IndexEntry> indexEntries = new ShuffleAccess().getLocalIndex();
+		List<IndexEntry> indexEntries = null;
+		try {
+			indexEntries = new ShuffleAccess().getLocalIndex(context);
+		} catch (SettingsAccessException e) {
+			listPlayerListener.loadingSongsFailed(e);
+		}
 		songs = new File[indexEntries.size()];
 		for (int i = 0; i < songs.length; i++) {
-			songs[i] = new ShuffleAccess().resolveLocalSong(indexEntries.get(i));
+			try {
+				songs[i] = new ShuffleAccess().resolveLocalSong(context, indexEntries.get(i));
+			} catch (SettingsAccessException e) {
+				listPlayerListener.loadingSongsFailed(e);
+			}
 		}
 	}
 
