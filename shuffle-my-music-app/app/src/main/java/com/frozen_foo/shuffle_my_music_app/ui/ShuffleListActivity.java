@@ -1,5 +1,6 @@
 package com.frozen_foo.shuffle_my_music_app.ui;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.DataSetObserver;
@@ -18,6 +19,8 @@ import android.widget.ToggleButton;
 
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerControllerListener;
+import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccess;
+import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.CreateListController;
 import com.frozen_foo.shuffle_my_music_app.ui.select_favorites.SelectFavoritesController;
 import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListController;
@@ -85,6 +88,16 @@ public class ShuffleListActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		try {
+			new SettingsAccess().preloadSettings(getApplicationContext());
+		} catch (SettingsAccessException e) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext()).setTitle(e.getClass().getSimpleName())
+					.setMessage(e.getCause().getMessage());
+			AlertDialog         dialog  = builder.create();
+			dialog.show();
+			// Replace by log4j
+			e.printStackTrace();
+		}
 		setContentView(R.layout.activity_shuffle_list);
 		listPlayerController = new ListPlayerController();
 		requestExternalStorageAccessOrShowList();

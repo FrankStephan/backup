@@ -25,13 +25,26 @@ public class SettingsAccess {
 
 	private static String DEFAULT_LOCAL_DIR = "_shuffle-my-music";
 
+
+	private SettingsCache cache;
+
+	public SettingsAccess() {
+		cache = new SettingsCache();
+	}
+
+	public void preloadSettings(Context context) throws SettingsAccessException {
+		readSettings(context);
+	}
+
 	public void writeSettings(String ip, String username, String password, String localDir, String remoteDir, Context context) throws
 			MissingSettingsException, SettingsAccessException {
 		if (StringUtils.isNoneEmpty(ip, username, remoteDir)) {
 			String   newPassword = StringUtils.defaultIfEmpty(password, readSettings(context).getPassword());
 			String   newLocalDir = StringUtils.defaultIfEmpty(localDir, DEFAULT_LOCAL_DIR);
-			Settings settings    = encrypt(ip, username, newPassword, newLocalDir, remoteDir);
-			new SettingsIO().writeSettings(settings, context);
+			Settings encryptedSettings    = encrypt(ip, username, newPassword, newLocalDir, remoteDir);
+			new SettingsIO().writeSettings(encryptedSettings, context);
+			cache.setSettings(encryptedSettings);
+			cache.setValid(true);
 		} else {
 			throw new MissingSettingsException();
 		}
@@ -64,9 +77,15 @@ public class SettingsAccess {
 		}
 	}
 
-
 	public Settings readSettings(Context context) throws SettingsAccessException {
-		Settings encryptedSettings = new SettingsIO().readSettings(context);
+		Settings encryptedSettings;
+		if (cache.isValid()) {
+			encryptedSettings = cache.getSettings();
+		} else {
+			encryptedSettings = new SettingsIO().readSettings(context);
+			cache.setSettings(encryptedSettings);
+			cache.setValid(true);
+		}
 		return decrypt(encryptedSettings.getIp(), encryptedSettings.getUsername(), encryptedSettings.getPassword(),
 				encryptedSettings.getLocalDir(), encryptedSettings.getRemoteDir());
 	}
