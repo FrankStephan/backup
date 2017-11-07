@@ -1,6 +1,5 @@
 package com.frozen_foo.shuffle_my_music_app.ui;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.DataSetObserver;
@@ -18,16 +17,14 @@ import android.widget.ProgressBar;
 import android.widget.ToggleButton;
 
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerControllerListener;
-import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccess;
-import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.CreateListController;
-import com.frozen_foo.shuffle_my_music_app.ui.select_favorites.SelectFavoritesController;
-import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListController;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerController;
+import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerControllerListener;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionsAccess;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsActivity;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.CreateListController;
+import com.frozen_foo.shuffle_my_music_app.ui.select_favorites.SelectFavoritesController;
+import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListController;
 
 import static com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest.READ_EXTERNAL_STORAGE_REQUEST;
 
@@ -53,7 +50,8 @@ public class ShuffleListActivity extends AppCompatActivity {
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menubar, menu);
 		Object o = menu.findItem(R.id.play_pause);
-		listPlayerController.initPlayer(getApplicationContext(), list(), menu.findItem(R.id.play_pause), markPlayingSongListener());
+		listPlayerController
+				.initPlayer(getApplicationContext(), list(), menu.findItem(R.id.play_pause), markPlayingSongListener());
 		return true;
 	}
 
@@ -88,7 +86,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		try {
+	/*	try {
 			new SettingsAccess().preloadSettings(getApplicationContext());
 		} catch (SettingsAccessException e) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext()).setTitle(e.getClass().getSimpleName())
@@ -97,7 +95,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 			dialog.show();
 			// Replace by log4j
 			e.printStackTrace();
-		}
+		}*/
 		setContentView(R.layout.activity_shuffle_list);
 		listPlayerController = new ListPlayerController();
 		requestExternalStorageAccessOrShowList();
@@ -128,6 +126,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 			}
 		}
 	}
+
 	private void loadList() {
 		new ShowListController().loadAndInflateList(this, list());
 	}
@@ -176,7 +175,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}*/
 
 
-
 	public void pressButton2(View view) {
 		final ListView     shuffleList = list();
 		final ToggleButton button2     = button2();
@@ -198,7 +196,8 @@ public class ShuffleListActivity extends AppCompatActivity {
 	private void createShuffleList() {
 		listPlayerController.release();
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-		new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS, false);
+		new CreateListController()
+				.createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS, false);
 		listPlayerController.reloadSongs();
 	}
 

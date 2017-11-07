@@ -37,7 +37,7 @@ public class LocalDirectoryAccess {
 
 	@NonNull
 	public File localDir(Context context) throws SettingsAccessException {
-		return new File(Environment.getExternalStorageDirectory(), new SettingsAccess().readSettings(context).getLocalDir());
+		return new File(Environment.getExternalStorageDirectory(), new SettingsAccess().readLocalDir(context));
 	}
 
 	@NonNull

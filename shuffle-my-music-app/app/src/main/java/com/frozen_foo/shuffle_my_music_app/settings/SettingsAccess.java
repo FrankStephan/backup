@@ -32,10 +32,6 @@ public class SettingsAccess {
 		cache = new SettingsCache();
 	}
 
-	public void preloadSettings(Context context) throws SettingsAccessException {
-		readSettings(context);
-	}
-
 	public void writeSettings(String ip, String username, String password, String localDir, String remoteDir, Context context) throws
 			MissingSettingsException, SettingsAccessException {
 		if (StringUtils.isNoneEmpty(ip, username, remoteDir)) {
@@ -55,7 +51,7 @@ public class SettingsAccess {
 		try {
 			Cryptifier cryptifier = new Cryptifier();
 			return new Settings(cryptifier.encrypt(ip), cryptifier.encrypt(username), cryptifier.encrypt(password),
-					cryptifier.encrypt(localDir), cryptifier.encrypt(remoteDir));
+					localDir, remoteDir);
 		} catch (CertificateException e) {
 			throw new SettingsAccessException(e);
 		} catch (NoSuchAlgorithmException e) {
@@ -77,6 +73,14 @@ public class SettingsAccess {
 		}
 	}
 
+	public String readLocalDir(Context context) {
+		if (cache.isValid()) {
+			return cache.getSettings().getLocalDir();
+		} else {
+			return new SettingsIO().readSettings(context).getLocalDir();
+		}
+	}
+
 	public Settings readSettings(Context context) throws SettingsAccessException {
 		Settings encryptedSettings;
 		if (cache.isValid()) {
@@ -93,7 +97,7 @@ public class SettingsAccess {
 	private Settings decrypt(String ip, String username, String password, String localDir, String remoteDir) throws
 			SettingsAccessException {
 		return new Settings(decryptString(ip), decryptString(username), decryptString(password),
-				decryptString(localDir), decryptString(remoteDir));
+				localDir, remoteDir);
 	}
 
 	private String decryptString(String encryptedString) throws SettingsAccessException {
