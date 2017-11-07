@@ -59,7 +59,6 @@ public class ListPlayer {
 	}
 
 	public void startSongAtIndex(int index) {
-		loadSongs();
 		if (index < songs.length) {
 			songIndex = index;
 			if (currentPlayer == null) {
@@ -71,7 +70,6 @@ public class ListPlayer {
 				initCurrentPlayer();
 				start();
 			}
-
 		}
 	}
 
@@ -80,6 +78,7 @@ public class ListPlayer {
 			currentPlayer.stop();
 			currentPlayer.release();
 			currentPlayer = null;
+			songs = null;
 			listPlayerListener.playingSongChanged(ListPlayerControllerListener.NO_SONG);
 			audioManager.abandonAudioFocus(onAudioFocusChangeListener);
 		}
@@ -111,27 +110,23 @@ public class ListPlayer {
 					}
 				}
 			};
-
-			loadSongs();
 			initCurrentPlayer();
 		}
 	}
 
-	private void loadSongs() {
+	public void loadSongs() {
 		List<IndexEntry> indexEntries = null;
 		try {
 			indexEntries = new ShuffleAccess().getLocalIndex(context);
 		} catch (SettingsAccessException e) {
 			listPlayerListener.loadingSongsFailed(e);
 		}
-		songs = new File[indexEntries.size()];
-		for (int i = 0; i < songs.length; i++) {
-			try {
-				songs[i] = new ShuffleAccess().resolveLocalSong(context, indexEntries.get(i));
-			} catch (SettingsAccessException e) {
-				listPlayerListener.loadingSongsFailed(e);
-			}
+		try {
+			songs = new ShuffleAccess().resolveLocalSongs(context, indexEntries);
+		} catch (SettingsAccessException e) {
+			listPlayerListener.loadingSongsFailed(e);
 		}
+
 	}
 
 	private void initCurrentPlayer() {

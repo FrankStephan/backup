@@ -84,10 +84,14 @@ public class ShuffleAccess {
 		}
 	}
 
-	public File resolveLocalSong(Context context, IndexEntry indexEntry) throws SettingsAccessException {
-		return new File(new LocalDirectoryAccess().localSongsDir(context), indexEntry.getFileName());
+	public File[] resolveLocalSongs(Context context, List<IndexEntry> indexEntries) throws SettingsAccessException {
+		File localSongsDir = new LocalDirectoryAccess().localSongsDir(context);
+		File[] localSongs = new File[indexEntries.size()];
+		for (int i = 0; i < localSongs.length; i++) {
+			localSongs[i] = new File(localSongsDir, indexEntries.get(i).getFileName());
+		}
+		return localSongs;
 	}
-
 
 	@NonNull
 	private String localSongsDirPath(Context context) throws SettingsAccessException {

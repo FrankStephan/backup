@@ -11,12 +11,13 @@ import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
+import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 
 /**
  * Created by Frank on 04.08.2017.
  */
 
-public class ListPlayerController {
+public class ListPlayerController extends AbstractListController {
 
 	private ListPlayer listPlayer;
 
@@ -48,12 +49,11 @@ public class ListPlayerController {
 
 			@Override
 			public void loadingSongsFailed(final SettingsAccessException e) {
-				AlertDialog.Builder builder = new AlertDialog.Builder(context);
-				builder.setMessage(e.getMessage()).setTitle(R.string.error);
-				AlertDialog dialog = builder.create();
-				dialog.show();
+				alertException(context, e);
 			}
 		});
+
+		reloadSongs();
 
 		addItemSelectionListener(shuffleList);
 	}
@@ -84,5 +84,9 @@ public class ListPlayerController {
 			}
 			listPlayer.release();
 		}
+	}
+
+	public void reloadSongs() {
+		listPlayer.loadSongs();
 	}
 }

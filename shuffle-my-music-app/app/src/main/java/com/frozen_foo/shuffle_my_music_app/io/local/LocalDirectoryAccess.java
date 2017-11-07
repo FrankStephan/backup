@@ -19,9 +19,7 @@ import java.io.InputStream;
 
 public class LocalDirectoryAccess {
 
-
 	private static String SHUFFLE_MY_MUSIC_SONGS_DIR = "songs";
-
 
 	public void cleanLocalDir(final Context context) throws IOException, SettingsAccessException {
 		File shuffleMyMusicDir = localSongsDir(context);
@@ -46,6 +44,4 @@ public class LocalDirectoryAccess {
 	public File localSongsDir(final Context context) throws SettingsAccessException {
 		return new File(localDir(context), SHUFFLE_MY_MUSIC_SONGS_DIR);
 	}
-
-
 }

@@ -199,6 +199,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 		listPlayerController.release();
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS, false);
+		listPlayerController.reloadSongs();
 	}
 
 	private void selectFavorites(final ListView shuffleList, final ToggleButton button2) {
