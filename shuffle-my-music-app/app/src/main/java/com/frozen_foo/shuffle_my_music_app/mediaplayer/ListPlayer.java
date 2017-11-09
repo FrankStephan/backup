@@ -21,7 +21,7 @@ import java.util.List;
 
 public class ListPlayer {
 
-	AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener;
+	private AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener;
 	private File[] songs;
 	private ListPlayerListener listPlayerListener;
 	private Context context;

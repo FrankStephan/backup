@@ -17,17 +17,8 @@ import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.StartSongCopy
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.UnrecoverableEntryException;
-import java.security.cert.CertificateException;
 import java.util.Collections;
 import java.util.List;
-
-import javax.crypto.NoSuchPaddingException;
 
 /**
  * Created by Frank on 01.08.2017.
