@@ -68,7 +68,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 			@Override
 			public void playingSongChanged(final int index) {
-				new ShowListController().markAsPlayingSong(list(), index);
+				new ShowListController().markAsPlayingSong(ShuffleListActivity.this, list(), index);
 			}
 		};
 	}
@@ -209,6 +209,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 				new ListCreationListener() {
 					@Override
 					public void onComplete() {
+						listPlayerController.reloadSongs();
 						button1().setEnabled(true);
 					}
 				});

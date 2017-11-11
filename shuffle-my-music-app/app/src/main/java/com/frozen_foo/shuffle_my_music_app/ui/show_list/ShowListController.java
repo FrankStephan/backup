@@ -30,14 +30,19 @@ public class ShowListController extends AbstractListController {
 		RowModel[]         rows         = new IndexEntryRowModelConverter().toRowModels(indexEntries);
 		ShowListRowAdapter adapter      = new ShowListRowAdapter(activity, rows);
 		shuffleList.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
 	}
 
-	public void markAsPlayingSong(ListView shuffleList, int index) {
-		ShowListRowAdapter adapter = (ShowListRowAdapter) shuffleList.getAdapter();
-		RowModel[]  rows    = rowsFrom(adapter);
+	public void markAsPlayingSong(Activity activity, ListView shuffleList, int index) {
+		ListAdapter       adapter = shuffleList.getAdapter();
+		if (! (adapter instanceof  ShowListRowAdapter)) {
+			loadAndInflateList(activity, shuffleList);
+		}
+		adapter = shuffleList.getAdapter();
+		RowModel[]         rows     = rowsFrom(adapter);
 		for (int i = 0; i < rows.length; i++) {
 			rows[i].setPlaying(i == index);
 		}
-		adapter.notifyDataSetChanged();
+		((ShowListRowAdapter)adapter).notifyDataSetChanged();
 	}
 }

@@ -79,6 +79,7 @@ public class ListPlayer {
 			currentPlayer.release();
 			currentPlayer = null;
 			songs = null;
+			songIndex = 0;
 			listPlayerListener.playingSongChanged(ListPlayerControllerListener.NO_SONG);
 			audioManager.abandonAudioFocus(onAudioFocusChangeListener);
 		}
