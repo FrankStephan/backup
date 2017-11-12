@@ -55,6 +55,63 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_shuffle_list);
+		listPlayerController = new ListPlayerController();
+		requestExternalStorageAccessOrShowList();
+	}
+
+	private void requestExternalStorageAccessOrShowList() {
+		if (new PermissionsAccess().hasPermission(this, READ_EXTERNAL_STORAGE_REQUEST)) {
+			loadList();
+		} else {
+			new PermissionsAccess().requestPermission(this, READ_EXTERNAL_STORAGE_REQUEST);
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+										   @NonNull int[] grantResults) {
+		PermissionRequest permissionRequest = new PermissionsAccess().forRequestCode(requestCode);
+		if (new PermissionsAccess().hasPermission(this, permissionRequest)) {
+			switch (permissionRequest) {
+				case READ_EXTERNAL_STORAGE_REQUEST:
+					loadList();
+					break;
+				case INTERNET_REQUEST:
+					confirmCreateShuffleList();
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	private void loadList() {
+		new ShowListController().loadAndInflateList(this, list());
+	}
+
+	private void confirmCreateShuffleList() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.confirmCreateShuffleList);
+		builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
+				createShuffleList(false);
+			}
+		});
+		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
+				// Do nothing
+			}
+		});
+
+		builder.create().show();
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menubar, menu);
@@ -96,38 +153,10 @@ public class ShuffleListActivity extends AppCompatActivity {
 		listPlayerController.playPause();
 	}
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_shuffle_list);
-		listPlayerController = new ListPlayerController();
-		requestExternalStorageAccessOrShowList();
-	}
-
-	private void requestExternalStorageAccessOrShowList() {
-		if (new PermissionsAccess().hasPermission(this, READ_EXTERNAL_STORAGE_REQUEST)) {
-			loadList();
-		} else {
-			new PermissionsAccess().requestPermission(this, READ_EXTERNAL_STORAGE_REQUEST);
-		}
-	}
-
-	@Override
-	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-										   @NonNull int[] grantResults) {
-		PermissionRequest permissionRequest = new PermissionsAccess().forRequestCode(requestCode);
-		if (new PermissionsAccess().hasPermission(this, permissionRequest)) {
-			switch (permissionRequest) {
-				case READ_EXTERNAL_STORAGE_REQUEST:
-					loadList();
-					break;
-				case INTERNET_REQUEST:
-					confirmCreateShuffleList();
-					break;
-				default:
-					break;
-			}
-		}
+	public void reload(View view) {
+		listPlayerController.release();
+		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		createShuffleList(true);
 	}
 
 	@Override
@@ -148,21 +177,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 		} else {
 			return true;
 		}
-	}
-
-	private void loadList() {
-		new ShowListController().loadAndInflateList(this, list());
-	}
-
-	@Override
-	protected void onDestroy() {
-		listPlayerController.release();
-		super.onDestroy();
-	}
-
-	private Mode mode() {
-		ToggleButton selectAddFavoritesButton = button2();
-		return selectAddFavoritesButton.isChecked() ? Mode.SELECT_FAVORITES : Mode.SHOW_LIST;
 	}
 
 	public void pressButton1(View view) {
@@ -187,26 +201,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 		}
 	}
 
-	private void confirmCreateShuffleList() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(R.string.confirmCreateShuffleList);
-		builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(final DialogInterface dialog, final int which) {
-				createShuffleList(false);
-			}
-		});
-		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(final DialogInterface dialog, final int which) {
-				// Do nothing
-			}
-		});
-
-		builder.create().show();
-	}
-
-
 	public void pressButton2(View view) {
 		final ListView     shuffleList = list();
 		final ToggleButton button2     = button2();
@@ -223,6 +217,11 @@ public class ShuffleListActivity extends AppCompatActivity {
 				selectFavorites(shuffleList, button2);
 				break;
 		}
+	}
+
+	private Mode mode() {
+		ToggleButton selectAddFavoritesButton = button2();
+		return selectAddFavoritesButton.isChecked() ? Mode.SELECT_FAVORITES : Mode.SHOW_LIST;
 	}
 
 	private void createShuffleList(boolean useExistingList) {
@@ -258,9 +257,9 @@ public class ShuffleListActivity extends AppCompatActivity {
 		new SelectFavoritesController().cancelFavoritesSelection(this, list());
 	}
 
-	public void reload(View view) {
+	@Override
+	protected void onDestroy() {
 		listPlayerController.release();
-		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-		createShuffleList(true);
+		super.onDestroy();
 	}
 }
