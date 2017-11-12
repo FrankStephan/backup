@@ -1,8 +1,8 @@
 package com.frozen_foo.shuffle_my_music_app.mediaplayer;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,7 +21,8 @@ public class ListPlayerController extends AbstractListController {
 
 	private ListPlayer listPlayer;
 
-	public void initPlayer(final Context context, ListView shuffleList, final MenuItem playItem, final ListPlayerControllerListener listPlayerControllerListener) {
+	public void initPlayer(final Context context, ListView shuffleList, final MenuItem playItem,
+						   final ListPlayerControllerListener listPlayerControllerListener) {
 		release();
 
 		listPlayer = new ListPlayer(context, new ListPlayerListener() {
@@ -74,6 +75,45 @@ public class ListPlayerController extends AbstractListController {
 			} else {
 				listPlayer.start();
 			}
+		}
+	}
+
+	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
+		if (listPlayer != null) {
+			switch (keyCode) {
+				case KeyEvent.KEYCODE_MEDIA_PLAY:
+				case KeyEvent.KEYCODE_MEDIA_PAUSE:
+				case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+					playPause();
+					return true;
+				case KeyEvent.KEYCODE_MEDIA_NEXT:
+					listPlayer.nextSong();
+					return true;
+				case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+					listPlayer.previousSong();
+					return true;
+				default:
+					return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
+	public boolean onKeyUp(final int keyCode, final KeyEvent event) {
+		if (listPlayer != null) {
+			switch (keyCode) {
+				case KeyEvent.KEYCODE_MEDIA_PLAY:
+				case KeyEvent.KEYCODE_MEDIA_PAUSE:
+				case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+				case KeyEvent.KEYCODE_MEDIA_NEXT:
+				case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+					return true;
+				default:
+					return false;
+			}
+		} else {
+			return false;
 		}
 	}
 

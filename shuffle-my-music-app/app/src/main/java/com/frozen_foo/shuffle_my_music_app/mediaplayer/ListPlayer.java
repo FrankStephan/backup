@@ -59,7 +59,7 @@ public class ListPlayer {
 	}
 
 	public void startSongAtIndex(int index) {
-		if (index < songs.length) {
+		if (index >= 0 && index < songs.length) {
 			songIndex = index;
 			if (currentPlayer == null) {
 				init();
@@ -71,6 +71,14 @@ public class ListPlayer {
 				start();
 			}
 		}
+	}
+
+	public void nextSong() {
+		startSongAtIndex(songIndex + 1);
+	}
+
+	public void previousSong() {
+		startSongAtIndex(songIndex - 1);
 	}
 
 	public void release() {

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -80,7 +81,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 				openSettings();
 				return true;
 			case R.id.play_pause:
-				listPlayerController.playPause();
+				playPause();
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -89,6 +90,10 @@ public class ShuffleListActivity extends AppCompatActivity {
 	private void openSettings() {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
+	}
+
+	private void playPause() {
+		listPlayerController.playPause();
 	}
 
 	@Override
@@ -122,6 +127,26 @@ public class ShuffleListActivity extends AppCompatActivity {
 				default:
 					break;
 			}
+		}
+	}
+
+	@Override
+	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
+		boolean isConsumed = listPlayerController.onKeyDown(keyCode, event);
+		if (!isConsumed) {
+			return super.onKeyDown(keyCode, event);
+		} else {
+			return true;
+		}
+	}
+
+	@Override
+	public boolean onKeyUp(final int keyCode, final KeyEvent event) {
+		boolean isConsumed = listPlayerController.onKeyUp(keyCode, event);
+		if (!isConsumed) {
+			return super.onKeyUp(keyCode, event);
+		} else {
+			return true;
 		}
 	}
 
@@ -160,7 +185,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 				cancelFavoritesSelection();
 				break;
 		}
-
 	}
 
 	private void confirmCreateShuffleList() {
@@ -205,14 +229,15 @@ public class ShuffleListActivity extends AppCompatActivity {
 		button1().setEnabled(false);
 		listPlayerController.release();
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-		new CreateListController().createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS, useExistingList,
-				new ListCreationListener() {
-					@Override
-					public void onComplete() {
-						listPlayerController.reloadSongs();
-						button1().setEnabled(true);
-					}
-				});
+		new CreateListController()
+				.createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS, useExistingList,
+						new ListCreationListener() {
+							@Override
+							public void onComplete() {
+								listPlayerController.reloadSongs();
+								button1().setEnabled(true);
+							}
+						});
 	}
 
 	private void selectFavorites(final ListView shuffleList, final ToggleButton button2) {
