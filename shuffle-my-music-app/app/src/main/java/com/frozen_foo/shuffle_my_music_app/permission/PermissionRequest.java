@@ -14,7 +14,7 @@ public enum PermissionRequest {
 
 	public final String permission;
 
-	private PermissionRequest(String permission) {
+	PermissionRequest(String permission) {
 		this.permission = permission;
 	}
 }
