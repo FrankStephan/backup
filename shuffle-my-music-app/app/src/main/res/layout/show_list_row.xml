@@ -17,6 +17,17 @@
         android:text="TextView"
         android:textColor="@android:color/white"/>
 
+    <TextView
+        android:id="@+id/durationText"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hapticFeedbackEnabled="true"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="TextView"
+        android:textColor="@android:color/white"
+        android:textStyle="italic"/>
+
     <ImageView
         android:id="@+id/playingIcon"
         android:layout_width="24dp"
