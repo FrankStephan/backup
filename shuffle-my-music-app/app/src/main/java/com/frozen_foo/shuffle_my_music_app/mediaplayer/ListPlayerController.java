@@ -129,4 +129,8 @@ public class ListPlayerController extends AbstractListController {
 	public void reloadSongs() {
 		listPlayer.loadSongs();
 	}
+
+	public int[] getDurations() {
+		return listPlayer.getDurations();
+	}
 }

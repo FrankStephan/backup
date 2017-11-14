@@ -135,7 +135,20 @@ public class ListPlayer {
 		} catch (SettingsAccessException e) {
 			listPlayerListener.loadingSongsFailed(e);
 		}
+	}
 
+	public int[] getDurations() {
+		if (!ArrayUtils.isEmpty(songs)) {
+			int[] durations = new int[songs.length];
+			for (int i = 0; i < durations.length; i++) {
+				MediaPlayer mediaPlayer = MediaPlayer.create(context, Uri.fromFile(songs[i]));
+				durations[i] = mediaPlayer.getDuration();
+				mediaPlayer.release();
+			}
+			return durations;
+		} else {
+			return new int[0];
+		}
 	}
 
 	private void initCurrentPlayer() {

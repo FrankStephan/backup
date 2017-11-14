@@ -11,6 +11,7 @@ public class RowModel {
 	private boolean copying;
 	private boolean favorite;
 	private boolean playing;
+	private String duration;
 
 	public RowModel(String label, String path, boolean favorite) {
 		this.label = label;
@@ -56,5 +57,13 @@ public class RowModel {
 
 	public void setPlaying(final boolean playing) {
 		this.playing = playing;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(final String duration) {
+		this.duration = duration;
 	}
 }

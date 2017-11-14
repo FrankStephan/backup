@@ -32,13 +32,11 @@ public class ShowListRowAdapter extends ArrayAdapter<RowModel> {
 		convertView = inflater.inflate(R.layout.show_list_row, parent, false);
 		TextView name     = (TextView) convertView.findViewById(R.id.songNameText);
 		RowModel rowModel = getItem(position);
-		name.setText(rowModel.getLabel());
+		name.setText(rowModel.getLabel() + " - " + rowModel.getDuration());
 
 		ImageView playingIcon = (ImageView) convertView.findViewById(R.id.playingIcon);
 		playingIcon.setVisibility(rowModel.isPlaying() ? View.VISIBLE : View.INVISIBLE);
 
 		return convertView;
 	}
-
-
 }

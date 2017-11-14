@@ -58,13 +58,11 @@ public class ShuffleListActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shuffle_list);
-		listPlayerController = new ListPlayerController();
-		requestExternalStorageAccessOrShowList();
 	}
 
-	private void requestExternalStorageAccessOrShowList() {
+	private void loadList() {
 		if (new PermissionsAccess().hasPermission(this, READ_EXTERNAL_STORAGE_REQUEST)) {
-			loadList();
+			_loadList();
 		} else {
 			new PermissionsAccess().requestPermission(this, READ_EXTERNAL_STORAGE_REQUEST);
 		}
@@ -77,7 +75,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 		if (new PermissionsAccess().hasPermission(this, permissionRequest)) {
 			switch (permissionRequest) {
 				case READ_EXTERNAL_STORAGE_REQUEST:
-					loadList();
+					_loadList();
 					break;
 				case INTERNET_REQUEST:
 					confirmCreateShuffleList();
@@ -88,8 +86,9 @@ public class ShuffleListActivity extends AppCompatActivity {
 		}
 	}
 
-	private void loadList() {
-		new ShowListController().loadAndInflateList(this, list());
+	private void _loadList() {
+		int[] durations = listPlayerController.getDurations();
+		new ShowListController().loadAndInflateList(this, list(), durations);
 	}
 
 	private void confirmCreateShuffleList() {
@@ -116,8 +115,10 @@ public class ShuffleListActivity extends AppCompatActivity {
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menubar, menu);
 		Object o = menu.findItem(R.id.play_pause);
+		listPlayerController = new ListPlayerController();
 		listPlayerController
 				.initPlayer(getApplicationContext(), list(), menu.findItem(R.id.play_pause), markPlayingSongListener());
+		loadList();
 		return true;
 	}
 
