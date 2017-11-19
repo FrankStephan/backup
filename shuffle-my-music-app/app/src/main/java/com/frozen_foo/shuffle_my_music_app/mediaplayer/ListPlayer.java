@@ -141,9 +141,12 @@ public class ListPlayer {
 		if (!ArrayUtils.isEmpty(songs)) {
 			int[] durations = new int[songs.length];
 			for (int i = 0; i < durations.length; i++) {
-				MediaPlayer mediaPlayer = MediaPlayer.create(context, Uri.fromFile(songs[i]));
-				durations[i] = mediaPlayer.getDuration();
-				mediaPlayer.release();
+				File        song        = songs[i];
+				if (song.exists()) {
+					MediaPlayer mediaPlayer = MediaPlayer.create(context, Uri.fromFile(song));
+					durations[i] = mediaPlayer.getDuration();
+					mediaPlayer.release();
+				}
 			}
 			return durations;
 		} else {
