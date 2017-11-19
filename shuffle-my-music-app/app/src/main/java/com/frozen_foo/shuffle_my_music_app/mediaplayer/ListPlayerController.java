@@ -89,13 +89,9 @@ public class ListPlayerController extends AbstractListController {
 					playPause();
 					return true;
 				case KeyEvent.KEYCODE_MEDIA_NEXT:
-				case KeyEvent.KEYCODE_MEDIA_SKIP_FORWARD:
-				case KeyEvent.KEYCODE_MEDIA_STEP_FORWARD:
 					listPlayer.nextSong();
 					return true;
 				case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-				case KeyEvent.KEYCODE_MEDIA_SKIP_BACKWARD:
-				case KeyEvent.KEYCODE_MEDIA_STEP_BACKWARD:
 					listPlayer.previousSong();
 					return true;
 				default:
@@ -113,11 +109,7 @@ public class ListPlayerController extends AbstractListController {
 				case KeyEvent.KEYCODE_MEDIA_PAUSE:
 				case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
 				case KeyEvent.KEYCODE_MEDIA_NEXT:
-				case KeyEvent.KEYCODE_MEDIA_SKIP_FORWARD:
-				case KeyEvent.KEYCODE_MEDIA_STEP_FORWARD:
 				case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-				case KeyEvent.KEYCODE_MEDIA_SKIP_BACKWARD:
-				case KeyEvent.KEYCODE_MEDIA_STEP_BACKWARD:
 					return true;
 				default:
 					return false;
