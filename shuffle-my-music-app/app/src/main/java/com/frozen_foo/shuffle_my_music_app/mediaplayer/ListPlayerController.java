@@ -2,6 +2,7 @@ package com.frozen_foo.shuffle_my_music_app.mediaplayer;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.os.Parcel;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,6 +80,7 @@ public class ListPlayerController extends AbstractListController {
 	}
 
 	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
+
 		if (listPlayer != null) {
 			switch (keyCode) {
 				case KeyEvent.KEYCODE_MEDIA_PLAY:
@@ -87,9 +89,13 @@ public class ListPlayerController extends AbstractListController {
 					playPause();
 					return true;
 				case KeyEvent.KEYCODE_MEDIA_NEXT:
+				case KeyEvent.KEYCODE_MEDIA_SKIP_FORWARD:
+				case KeyEvent.KEYCODE_MEDIA_STEP_FORWARD:
 					listPlayer.nextSong();
 					return true;
 				case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+				case KeyEvent.KEYCODE_MEDIA_SKIP_BACKWARD:
+				case KeyEvent.KEYCODE_MEDIA_STEP_BACKWARD:
 					listPlayer.previousSong();
 					return true;
 				default:
@@ -107,7 +113,11 @@ public class ListPlayerController extends AbstractListController {
 				case KeyEvent.KEYCODE_MEDIA_PAUSE:
 				case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
 				case KeyEvent.KEYCODE_MEDIA_NEXT:
+				case KeyEvent.KEYCODE_MEDIA_SKIP_FORWARD:
+				case KeyEvent.KEYCODE_MEDIA_STEP_FORWARD:
 				case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+				case KeyEvent.KEYCODE_MEDIA_SKIP_BACKWARD:
+				case KeyEvent.KEYCODE_MEDIA_STEP_BACKWARD:
 					return true;
 				default:
 					return false;

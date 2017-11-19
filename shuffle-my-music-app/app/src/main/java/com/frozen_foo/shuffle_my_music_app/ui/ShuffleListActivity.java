@@ -22,6 +22,7 @@ import android.widget.ToggleButton;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerController;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerControllerListener;
+import com.frozen_foo.shuffle_my_music_app.mediaplayer.Logger;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionsAccess;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsActivity;
@@ -58,56 +59,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shuffle_list);
-	}
-
-	private void loadList() {
-		if (new PermissionsAccess().hasPermission(this, READ_EXTERNAL_STORAGE_REQUEST)) {
-			_loadList();
-		} else {
-			new PermissionsAccess().requestPermission(this, READ_EXTERNAL_STORAGE_REQUEST);
-		}
-	}
-
-	@Override
-	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-										   @NonNull int[] grantResults) {
-		PermissionRequest permissionRequest = new PermissionsAccess().forRequestCode(requestCode);
-		if (new PermissionsAccess().hasPermission(this, permissionRequest)) {
-			switch (permissionRequest) {
-				case READ_EXTERNAL_STORAGE_REQUEST:
-					_loadList();
-					break;
-				case INTERNET_REQUEST:
-					confirmCreateShuffleList();
-					break;
-				default:
-					break;
-			}
-		}
-	}
-
-	private void _loadList() {
-		int[] durations = listPlayerController.getDurations();
-		new ShowListController().loadAndInflateList(this, list(), durations);
-	}
-
-	private void confirmCreateShuffleList() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(R.string.confirmCreateShuffleList);
-		builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(final DialogInterface dialog, final int which) {
-				createShuffleList(false);
-			}
-		});
-		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(final DialogInterface dialog, final int which) {
-				// Do nothing
-			}
-		});
-
-		builder.create().show();
 	}
 
 	@Override
@@ -154,6 +105,58 @@ public class ShuffleListActivity extends AppCompatActivity {
 		listPlayerController.playPause();
 	}
 
+	private void loadList() {
+		if (new PermissionsAccess().hasPermission(this, READ_EXTERNAL_STORAGE_REQUEST)) {
+			_loadList();
+		} else {
+			new PermissionsAccess().requestPermission(this, READ_EXTERNAL_STORAGE_REQUEST);
+		}
+	}
+
+	private void _loadList() {
+		int[] durations = listPlayerController.getDurations();
+		new ShowListController().loadAndInflateList(this, list(), durations);
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+										   @NonNull int[] grantResults) {
+		PermissionRequest permissionRequest = new PermissionsAccess().forRequestCode(requestCode);
+		if (new PermissionsAccess().hasPermission(this, permissionRequest)) {
+			switch (permissionRequest) {
+				case READ_EXTERNAL_STORAGE_REQUEST:
+					_loadList();
+					break;
+				case INTERNET_REQUEST:
+					confirmCreateShuffleList();
+					break;
+				default:
+					break;
+			}
+		}
+	}
+
+	private void confirmCreateShuffleList() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.confirmCreateShuffleList);
+		builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
+				createShuffleList(false);
+			}
+		});
+		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(final DialogInterface dialog, final int which) {
+				// Do nothing
+			}
+		});
+
+		builder.create().show();
+	}
+
+
+
 	public void reload(View view) {
 		listPlayerController.release();
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -163,6 +166,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	@Override
 	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
 		boolean isConsumed = listPlayerController.onKeyDown(keyCode, event);
+		Logger.logEvent(getApplicationContext(), event, isConsumed);
 		if (!isConsumed) {
 			return super.onKeyDown(keyCode, event);
 		} else {
@@ -173,6 +177,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	@Override
 	public boolean onKeyUp(final int keyCode, final KeyEvent event) {
 		boolean isConsumed = listPlayerController.onKeyUp(keyCode, event);
+		Logger.logEvent(getApplicationContext(), event, isConsumed);
 		if (!isConsumed) {
 			return super.onKeyUp(keyCode, event);
 		} else {
