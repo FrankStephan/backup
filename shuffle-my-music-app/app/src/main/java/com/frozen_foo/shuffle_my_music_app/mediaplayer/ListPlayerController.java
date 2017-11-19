@@ -79,7 +79,7 @@ public class ListPlayerController extends AbstractListController {
 		}
 	}
 
-	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
+	public boolean onKeyUp(final int keyCode, final KeyEvent event) {
 
 		if (listPlayer != null) {
 			switch (keyCode) {
@@ -106,7 +106,7 @@ public class ListPlayerController extends AbstractListController {
 		}
 	}
 
-	public boolean onKeyUp(final int keyCode, final KeyEvent event) {
+	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
 		if (listPlayer != null) {
 			switch (keyCode) {
 				case KeyEvent.KEYCODE_MEDIA_PLAY:
