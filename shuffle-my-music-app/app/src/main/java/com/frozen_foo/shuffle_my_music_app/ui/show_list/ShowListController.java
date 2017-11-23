@@ -1,6 +1,7 @@
 package com.frozen_foo.shuffle_my_music_app.ui.show_list;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -12,9 +13,9 @@ import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 import com.frozen_foo.shuffle_my_music_app.ui.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -30,25 +31,27 @@ public class ShowListController extends AbstractListController {
 	}
 
 	public void loadAndInflateList(Activity activity, ListView shuffleList, final int[] durations) {
-		List<IndexEntry>   indexEntries = null;
-		try {
-			indexEntries = new ShuffleAccess().getLocalIndex(activity.getApplicationContext());
-		} catch (SettingsAccessException e) {
-			alertException(activity.getApplicationContext(), e);
-		}
-		RowModel[]         rows         = new IndexEntryRowModelConverter().toRowModels(indexEntries);
-		for (int i = 0; i < durations.length; i++) {
-			rows[i].setDuration(timeFormat().format(new Date(durations[i])));
-		}
-		ShowListRowAdapter adapter      = new ShowListRowAdapter(activity, rows);
+		Context          context = activity.getApplicationContext();
+		List<IndexEntry> indexEntries = localIndex(context);
+		RowModel[] rows = new IndexEntryRowModelConverter().toRowModels(indexEntries);
+
+		setDuration(durations, rows);
+
+		ShowListRowAdapter adapter = new ShowListRowAdapter(activity, rows);
 		shuffleList.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 	}
 
+	private void setDuration(final int[] durations, final RowModel[] rows) {
+		for (int i = 0; i < durations.length; i++) {
+			rows[i].setDuration(timeFormat().format(new Date(durations[i])));
+		}
+	}
+
 	public void markAsPlayingSong(Activity activity, ListView shuffleList, int index) {
-		ListAdapter       adapter = shuffleList.getAdapter();
-		RowModel[] rows = rowsFrom(adapter);
-		if (! (adapter instanceof  ShowListRowAdapter)) {
+		ListAdapter adapter = shuffleList.getAdapter();
+		RowModel[]  rows    = rowsFrom(adapter);
+		if (!(adapter instanceof ShowListRowAdapter)) {
 			int[] durations = extractDurations(activity, rows);
 			loadAndInflateList(activity, shuffleList, durations);
 		}
@@ -56,7 +59,7 @@ public class ShowListController extends AbstractListController {
 		for (int i = 0; i < rows.length; i++) {
 			rows[i].setPlaying(i == index);
 		}
-		((ShowListRowAdapter)adapter).notifyDataSetChanged();
+		((ShowListRowAdapter) adapter).notifyDataSetChanged();
 	}
 
 	private int[] extractDurations(final Activity activity, final RowModel[] rows) {

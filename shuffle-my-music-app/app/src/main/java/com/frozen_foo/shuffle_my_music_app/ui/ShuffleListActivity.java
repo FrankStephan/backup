@@ -215,7 +215,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 			case SHOW_LIST:
 				button1().setText(R.string.createShuffledList);
 				button1().setBackgroundTintList(ColorStateList.valueOf(Color.LTGRAY));
-				addSelectedFavorites(shuffleList);
+				markSelectedFavorites(shuffleList);
 				break;
 			case SELECT_FAVORITES:
 				button1().setText(R.string.cancel);
@@ -255,8 +255,8 @@ public class ShuffleListActivity extends AppCompatActivity {
 		});
 	}
 
-	private void addSelectedFavorites(final ListView shuffleList) {
-		new SelectFavoritesController().addFavorites(this, shuffleList);
+	private void markSelectedFavorites(final ListView shuffleList) {
+		new SelectFavoritesController().markSelectedFavorites(this, shuffleList);
 	}
 
 	private void cancelFavoritesSelection() {

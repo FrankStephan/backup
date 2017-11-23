@@ -57,10 +57,14 @@ public class ShuffleAccess {
 		return new ShuffleMyMusicService().addFavorites(localDirPath, indexEntries);
 	}
 
+	public List<IndexEntry> getMarkedFavorites(Context context) throws SettingsAccessException {
+		return new ShuffleMyMusicService().loadFavorites(localSongsDirPath(context));
+	}
+
 	public void addFavoritesToLocalCollection(Context context) throws SettingsAccessException {
 		String           localDirPath       = new LocalDirectoryAccess().localDir(context).getPath();
 		List<IndexEntry> favorites          = new ShuffleMyMusicService().loadFavorites(localDirPath);
-		List<IndexEntry> newFavorites       = new ShuffleMyMusicService().loadFavorites(localSongsDirPath(context));
+		List<IndexEntry> newFavorites       = getMarkedFavorites(context);
 		List<IndexEntry> resultingFavorites = new ShuffleMyMusicService().join(newFavorites, favorites);
 		new ShuffleMyMusicService().addFavorites(localDirPath, resultingFavorites);
 	}

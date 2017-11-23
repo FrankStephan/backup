@@ -1,6 +1,7 @@
 package com.frozen_foo.shuffle_my_music_app.ui.select_favorites;
 
 import android.app.Activity;
+import android.content.Context;
 import android.database.DataSetObserver;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -16,6 +17,7 @@ import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListRowAdapter;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,12 +28,33 @@ import java.util.List;
 public class SelectFavoritesController extends AbstractListController {
 
 	public void selectFavorites(Activity activity, ListView shuffleList, DataSetObserver selectionChangeObserver) {
-		final ListAdapter          adapter              = shuffleList.getAdapter();
-		RowModel[]                 rows                 = rowsFrom(adapter);
-		final SelectableRowAdapter selectableRowAdapter = new SelectableRowAdapter(activity, rows);
+		Context          context = activity.getApplicationContext();
+		List<IndexEntry> indexEntries = localIndex(context);
+		RowModel[] rows = new IndexEntryRowModelConverter().toRowModels(indexEntries);
+
+		List<IndexEntry> markedFavorites = markedFavorites(context);
+		checkFavorites(indexEntries, markedFavorites, rows);
+
+		SelectableRowAdapter selectableRowAdapter = new SelectableRowAdapter(activity, rows);
 		selectableRowAdapter.registerDataSetObserver(selectionChangeObserver);
 		shuffleList.setAdapter(selectableRowAdapter);
 		selectableRowAdapter.notifyDataSetChanged();
+	}
+
+	private List<IndexEntry> markedFavorites(Context context) {
+		try {
+			return new ShuffleAccess().getMarkedFavorites(context);
+		} catch (SettingsAccessException e) {
+			alertException(context, e);
+			return Collections.emptyList();
+		}
+	}
+
+	private void checkFavorites(final List<IndexEntry> indexEntries, final List<IndexEntry> markedFavorites,
+								final RowModel[] rows) {
+		for (int i = 0; i < rows.length; i++) {
+			rows[i].setFavorite(markedFavorites.contains(indexEntries.get(i)));
+		}
 	}
 
 	public boolean atLeastOneSelected(ListView shuffleList) {
@@ -44,7 +67,7 @@ public class SelectFavoritesController extends AbstractListController {
 		return false;
 	}
 
-	public void addFavorites(Activity activity, ListView shuffleList) {
+	public void markSelectedFavorites(Activity activity, ListView shuffleList) {
 		doCancel(activity, shuffleList);
 
 		RowModel[]     rowModels         = rowsFrom(shuffleList.getAdapter());

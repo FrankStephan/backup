@@ -4,7 +4,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.widget.ListAdapter;
 
+import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
+import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
+
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by Frank on 31.10.2017.
@@ -27,5 +32,14 @@ public abstract class AbstractListController {
 		dialog.show();
 		// Replace by log4j
 		e.printStackTrace();
+	}
+
+	protected List<IndexEntry> localIndex(Context context) {
+		try {
+			return new ShuffleAccess().getLocalIndex(context);
+		} catch (SettingsAccessException e) {
+			alertException(context, e);
+			return Collections.emptyList();
+		}
 	}
 }
