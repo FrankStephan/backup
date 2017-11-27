@@ -25,13 +25,13 @@ class FavoritesServiceTest extends GroovyTestCase {
 	void testCreatesNewFileIfNotExisting() {
 		favoritesFilePath = favoritesFilePath.toAbsolutePath()
 		assert !Files.exists(favoritesFilePath)
-		invokeAdd()
+		invokeSave(true)
 		assert Files.exists(favoritesFilePath)
 	}
 
 	void testResolvesAbsolutePathForFile() {
 		assert !Files.exists(favoritesFilePath)
-		invokeAdd()
+		invokeSave(true)
 		assert Files.exists(favoritesFilePath.toAbsolutePath())
 	}
 
@@ -39,7 +39,7 @@ class FavoritesServiceTest extends GroovyTestCase {
 		IndexEntry favorite1 = new IndexEntry(fileName: 'song1.mp3', path: 'dir1/song1.mp3')
 
 		newFavorites = [favorite1]
-		invokeAdd()
+		invokeSave(true)
 
 		invokeLoad()
 		assert [favorite1]== favorites
@@ -50,10 +50,10 @@ class FavoritesServiceTest extends GroovyTestCase {
 		IndexEntry favorite2 = new IndexEntry(fileName: 'song2.mp3', path: 'dir2/song2.mp3')
 
 		newFavorites = [favorite1]
-		invokeAdd()
+		invokeSave(true)
 
 		newFavorites = [favorite2]
-		invokeAdd()
+		invokeSave(true)
 
 		invokeLoad()
 		assert [favorite1, favorite2]== favorites
@@ -64,7 +64,7 @@ class FavoritesServiceTest extends GroovyTestCase {
 		IndexEntry favorite2 = new IndexEntry(fileName: 'song2.mp3', path: 'dir2/song2.mp3')
 
 		newFavorites = [favorite1, favorite2]
-		invokeAdd()
+		invokeSave(true)
 
 		invokeLoad()
 		assert [favorite1, favorite2]== favorites
@@ -77,10 +77,10 @@ class FavoritesServiceTest extends GroovyTestCase {
 		IndexEntry favorite4 = new IndexEntry(fileName: 'song4.mp3', path: 'dir4/song4.mp3')
 
 		newFavorites = [favorite1, favorite2]
-		invokeAdd()
+		invokeSave(true)
 
 		newFavorites = [favorite3, favorite4]
-		invokeAdd()
+		invokeSave(true)
 
 		invokeLoad()
 		assert [favorite1, favorite2, favorite3, favorite4]== favorites
@@ -91,7 +91,7 @@ class FavoritesServiceTest extends GroovyTestCase {
 		IndexEntry favorite2 = new IndexEntry(fileName: 'song2.mp3', path: 'dir2/song2.mp3')
 
 		newFavorites = [favorite1, favorite2]
-		assert invokeAdd() == newFavorites
+		assert invokeSave(true) == newFavorites
 	}
 
 	void testSkipsDuplicates() {
@@ -102,25 +102,58 @@ class FavoritesServiceTest extends GroovyTestCase {
 		IndexEntry favorite5 = new IndexEntry(fileName: 'song9.mp3', path: 'dir1/song1.mp3')
 
 		newFavorites = [favorite1, favorite2, favorite3]
-		invokeAdd()
+		invokeSave(true)
 
 		newFavorites = [favorite3, favorite4, favorite5]
-		invokeAdd()
+		invokeSave(true)
 
 		invokeLoad()
 		assert [favorite1, favorite2, favorite4, favorite5]== favorites
 	}
 
+	void testReturnsOverridenFavorites() {
+		IndexEntry favorite1 = new IndexEntry(fileName: 'song1.mp3', path: 'dir1/song1.mp3')
+		IndexEntry favorite2 = new IndexEntry(fileName: 'song2.mp3', path: 'dir2/song2.mp3')
+
+		newFavorites = [favorite1, favorite2]
+		assert invokeSave(false) == newFavorites
+	}
+
+	void testLoadsOverridenFavorites() {
+		IndexEntry favorite1 = new IndexEntry(fileName: 'song1.mp3', path: 'dir1/song1.mp3')
+		IndexEntry favorite2 = new IndexEntry(fileName: 'song2.mp3', path: 'dir2/song2.mp3')
+
+		newFavorites = [favorite1, favorite2]
+		invokeSave(false)
+		invokeLoad()
+
+		assert newFavorites == favorites
+	}
+
+	void testOverridesPreviousFavorites() {
+		IndexEntry favorite1 = new IndexEntry(fileName: 'song1.mp3', path: 'dir1/song1.mp3')
+		IndexEntry favorite2 = new IndexEntry(fileName: 'song2.mp3', path: 'dir2/song2.mp3')
+		newFavorites = [favorite1, favorite2]
+		invokeSave(false)
+
+		IndexEntry favorite3 = new IndexEntry(fileName: 'song3.mp3', path: 'dir3/song3.mp3')
+		newFavorites = [favorite2, favorite3]
+		invokeSave(false)
+
+		invokeLoad()
+		assert newFavorites == favorites
+	}
+
 	void testHandlesUTF8() {
 		IndexEntry favorite1 = new IndexEntry(fileName: 'äöß??_.mp3', path: 'dir1\\äöß??_.mp3')
 		newFavorites = [favorite1]
-		invokeAdd()
+		invokeSave(true)
 		invokeLoad()
 		assert favorites == newFavorites
 	}
 
-	private IndexEntry[] invokeAdd() {
-		return new FavoritesService().addFavorites(testPath.toString(), newFavorites)
+	private IndexEntry[] invokeSave(boolean append) {
+		return new FavoritesService().saveFavorites(testPath.toString(), newFavorites, append)
 	}
 
 	private void invokeLoad() {

@@ -5,9 +5,14 @@ import com.frozen_foo.shuffle_my_music_2.IndexEntry
 
 class FavoritesService extends AbstractFavoritesService {
 
-	IndexEntry[] addFavorites(String targetDirPath, List<IndexEntry> newFavorites) {
+	IndexEntry[] saveFavorites(String targetDirPath, List<IndexEntry> newFavorites, boolean append) {
 		File favoritesFile = createOrGetFile(targetDirPath)
-		List<IndexEntry> favorites = calculateResultingFavorites(favoritesFile, newFavorites)
+		List<IndexEntry> favorites
+		if (append) {
+			favorites = calculateResultingFavorites(favoritesFile, newFavorites)
+		} else {
+			favorites = newFavorites
+		}
 		favoritesFile.withWriter('UTF-8') { favoritesFileWriter ->
 			writeFavorites(favoritesFileWriter, favorites)
 		}

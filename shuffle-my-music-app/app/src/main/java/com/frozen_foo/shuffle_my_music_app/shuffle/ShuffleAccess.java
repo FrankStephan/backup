@@ -39,7 +39,6 @@ public class ShuffleAccess {
 		new ShuffleMyMusicService().createSongsFile(localDirPath, shuffledIndexEntries);
 	}
 
-
 	public List<IndexEntry> getLocalIndex(Context context) throws SettingsAccessException {
 		String localDirPath = localSongsDirPath(context);
 		return new ShuffleMyMusicService().loadSongsFile(localDirPath);
@@ -54,21 +53,20 @@ public class ShuffleAccess {
 	public List<IndexEntry> markAsFavorites(Context context, List<IndexEntry> indexEntries) throws
 			SettingsAccessException {
 		String localDirPath = localSongsDirPath(context);
-		return new ShuffleMyMusicService().addFavorites(localDirPath, indexEntries);
+		return new ShuffleMyMusicService().saveFavorites(localDirPath, indexEntries, false);
 	}
 
-	public List<IndexEntry> getMarkedFavorites(Context context) throws SettingsAccessException {
+	public List<IndexEntry> loadMarkedFavorites(Context context) throws SettingsAccessException {
 		return new ShuffleMyMusicService().loadFavorites(localSongsDirPath(context));
 	}
 
 	public void addFavoritesToLocalCollection(Context context) throws SettingsAccessException {
 		String           localDirPath       = new LocalDirectoryAccess().localDir(context).getPath();
 		List<IndexEntry> favorites          = new ShuffleMyMusicService().loadFavorites(localDirPath);
-		List<IndexEntry> newFavorites       = getMarkedFavorites(context);
+		List<IndexEntry> newFavorites       = loadMarkedFavorites(context);
 		List<IndexEntry> resultingFavorites = new ShuffleMyMusicService().join(newFavorites, favorites);
-		new ShuffleMyMusicService().addFavorites(localDirPath, resultingFavorites);
+		new ShuffleMyMusicService().saveFavorites(localDirPath, resultingFavorites, true);
 	}
-
 
 	public void backupFavoritesCollectionToRemote(Context context) throws SettingsAccessException, IOException {
 		String           localDirPath             = new LocalDirectoryAccess().localDir(context).getPath();

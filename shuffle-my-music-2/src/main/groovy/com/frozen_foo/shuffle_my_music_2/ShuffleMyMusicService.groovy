@@ -1,6 +1,3 @@
-
-
-
 package com.frozen_foo.shuffle_my_music_2
 
 import com.frozen_foo.shuffle_my_music_2.impl.IndexEntriesService
@@ -14,8 +11,8 @@ class ShuffleMyMusicService {
 		new IndexEntriesService().randomIndexEntries(indexFileInputStream, numberOfSongs)
 	}
 
-	List<IndexEntry> addFavorites(String targetDirPath, List<IndexEntry> newFavorites) {
-		new FavoritesService().addFavorites(targetDirPath, newFavorites)
+	List<IndexEntry> saveFavorites(String targetDirPath, List<IndexEntry> newFavorites, boolean append) {
+		new FavoritesService().saveFavorites(targetDirPath, newFavorites, append)
 	}
 
 	List<IndexEntry> loadFavorites(String targetDirPath) {

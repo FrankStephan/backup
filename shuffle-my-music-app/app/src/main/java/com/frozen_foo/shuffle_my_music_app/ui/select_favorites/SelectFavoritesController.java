@@ -3,7 +3,6 @@ package com.frozen_foo.shuffle_my_music_app.ui.select_favorites;
 import android.app.Activity;
 import android.content.Context;
 import android.database.DataSetObserver;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,7 +31,7 @@ public class SelectFavoritesController extends AbstractListController {
 		List<IndexEntry> indexEntries = localIndex(context);
 		RowModel[] rows = new IndexEntryRowModelConverter().toRowModels(indexEntries);
 
-		List<IndexEntry> markedFavorites = markedFavorites(context);
+		List<IndexEntry> markedFavorites = loadMarkedFavorites(context);
 		checkFavorites(indexEntries, markedFavorites, rows);
 
 		SelectableRowAdapter selectableRowAdapter = new SelectableRowAdapter(activity, rows);
@@ -41,9 +40,9 @@ public class SelectFavoritesController extends AbstractListController {
 		selectableRowAdapter.notifyDataSetChanged();
 	}
 
-	private List<IndexEntry> markedFavorites(Context context) {
+	private List<IndexEntry> loadMarkedFavorites(Context context) {
 		try {
-			return new ShuffleAccess().getMarkedFavorites(context);
+			return new ShuffleAccess().loadMarkedFavorites(context);
 		} catch (SettingsAccessException e) {
 			alertException(context, e);
 			return Collections.emptyList();
