@@ -247,12 +247,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private void selectFavorites(final ListView shuffleList, final ToggleButton button2) {
 		final SelectFavoritesController selectFavoritesController = new SelectFavoritesController();
-		selectFavoritesController.selectFavorites(this, shuffleList, new DataSetObserver() {
-			@Override
-			public void onChanged() {
-				button2.setEnabled(selectFavoritesController.atLeastOneSelected(shuffleList));
-			}
-		});
+		selectFavoritesController.selectFavorites(this, shuffleList);
 	}
 
 	private void markSelectedFavorites(final ListView shuffleList) {

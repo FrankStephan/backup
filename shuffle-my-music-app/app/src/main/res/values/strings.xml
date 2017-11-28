@@ -18,7 +18,7 @@
     <string name="smb.music.dir">Remote Verzeichnis</string>
     <string name="indexLoading">Lade Indexdatei</string>
     <string name="determineRandomSongs">Ermittle Zufallstitel</string>
-    <string name="addToFavorites">Favoriten speichern</string>
+    <string name="addToFavorites">Als Favoriten markieren</string>
     <string name="confirmCreateShuffleList">Neue Zufallsliste erstellen?</string>
     <string name="saveFavorites">Speichere Favoriten</string>
 

@@ -26,7 +26,7 @@ import java.util.List;
 
 public class SelectFavoritesController extends AbstractListController {
 
-	public void selectFavorites(Activity activity, ListView shuffleList, DataSetObserver selectionChangeObserver) {
+	public void selectFavorites(Activity activity, ListView shuffleList) {
 		Context          context = activity.getApplicationContext();
 		List<IndexEntry> indexEntries = localIndex(context);
 		RowModel[] rows = new IndexEntryRowModelConverter().toRowModels(indexEntries);
@@ -35,9 +35,7 @@ public class SelectFavoritesController extends AbstractListController {
 		checkFavorites(indexEntries, markedFavorites, rows);
 
 		SelectableRowAdapter selectableRowAdapter = new SelectableRowAdapter(activity, rows);
-		selectableRowAdapter.registerDataSetObserver(selectionChangeObserver);
 		shuffleList.setAdapter(selectableRowAdapter);
-		selectableRowAdapter.notifyDataSetChanged();
 	}
 
 	private List<IndexEntry> loadMarkedFavorites(Context context) {
@@ -95,7 +93,6 @@ public class SelectFavoritesController extends AbstractListController {
 	private void doCancel(final Activity activity, final ListView shuffleList) {
 		final SelectableRowAdapter adapter = (SelectableRowAdapter) shuffleList.getAdapter();
 		RowModel[]                 rows    = rowsFrom(adapter);
-		adapter.release();
 		ShowListRowAdapter showListRowAdapter = new ShowListRowAdapter(activity, rows);
 		shuffleList.setAdapter(showListRowAdapter);
 	}

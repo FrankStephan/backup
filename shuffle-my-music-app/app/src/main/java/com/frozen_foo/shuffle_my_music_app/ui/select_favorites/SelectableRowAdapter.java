@@ -24,8 +24,6 @@ import java.util.List;
 
 public class SelectableRowAdapter extends ArrayAdapter<RowModel> {
 
-	private final List<DataSetObserver> dataSetObservers = new LinkedList<>();
-
 	public SelectableRowAdapter(@NonNull Context context, RowModel[] resource) {
 		super(context, R.layout.select_favorite_row, resource);
 	}
@@ -56,23 +54,5 @@ public class SelectableRowAdapter extends ArrayAdapter<RowModel> {
 			}
 		});
 		view.setChecked(model.isFavorite());
-	}
-
-	@Override
-	public void registerDataSetObserver(final DataSetObserver observer) {
-		super.registerDataSetObserver(observer);
-		dataSetObservers.add(observer);
-	}
-
-	@Override
-	public void unregisterDataSetObserver(final DataSetObserver observer) {
-		super.unregisterDataSetObserver(observer);
-		dataSetObservers.remove(observer);
-	}
-
-	public void release() {
-		for (DataSetObserver dataSetObserver : dataSetObservers) {
-			unregisterDataSetObserver(dataSetObserver);
-		}
 	}
 }
