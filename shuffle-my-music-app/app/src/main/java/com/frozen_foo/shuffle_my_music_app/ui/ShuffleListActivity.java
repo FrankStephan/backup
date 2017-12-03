@@ -3,7 +3,6 @@ package com.frozen_foo.shuffle_my_music_app.ui;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
-import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.ToggleButton;
 
@@ -34,8 +34,6 @@ import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListController;
 import static com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest.READ_EXTERNAL_STORAGE_REQUEST;
 
 public class ShuffleListActivity extends AppCompatActivity {
-
-	public static final int NUMBER_OF_SONGS = 10;
 
 	private ListPlayerController listPlayerController;
 
@@ -138,11 +136,14 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private void confirmCreateShuffleList() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		final NumberPicker numberPicker = new NumberPicker(this);
+
 		builder.setTitle(R.string.confirmCreateShuffleList);
 		builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
-				createShuffleList(false);
+				createShuffleList(false, numberPicker.getValue());
 			}
 		});
 		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -152,15 +153,19 @@ public class ShuffleListActivity extends AppCompatActivity {
 			}
 		});
 
+		numberPicker.setMinValue(1);
+		numberPicker.setMaxValue(100);
+		numberPicker.setValue(10);
+
+		builder.setView(numberPicker);
 		builder.create().show();
 	}
-
-
 
 	public void reload(View view) {
 		listPlayerController.release();
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-		createShuffleList(true);
+		int numberOfSongs = list().getAdapter().getCount();
+		createShuffleList(true, numberOfSongs);
 	}
 
 	@Override
@@ -230,12 +235,12 @@ public class ShuffleListActivity extends AppCompatActivity {
 		return selectAddFavoritesButton.isChecked() ? Mode.SELECT_FAVORITES : Mode.SHOW_LIST;
 	}
 
-	private void createShuffleList(boolean useExistingList) {
+	private void createShuffleList(boolean useExistingList, final int numberOfSongs) {
 		button1().setEnabled(false);
 		listPlayerController.release();
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		new CreateListController()
-				.createShuffleList(getApplicationContext(), this, progressBar, NUMBER_OF_SONGS, useExistingList,
+				.createShuffleList(getApplicationContext(), this, progressBar, numberOfSongs, useExistingList,
 						new ListCreationListener() {
 							@Override
 							public void onComplete() {
