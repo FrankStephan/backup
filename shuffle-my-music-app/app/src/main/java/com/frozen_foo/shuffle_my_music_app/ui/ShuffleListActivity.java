@@ -246,6 +246,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 							public void onComplete() {
 								listPlayerController.reloadSongs();
 								button1().setEnabled(true);
+								_loadList();
 							}
 						});
 	}

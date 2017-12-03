@@ -35,37 +35,36 @@ public class CreateListController extends AbstractListController {
 		progressBar.setProgress(0);
 		NumberOfSongs createListParams =
 				new NumberOfSongs(numberOfSongs, context, useExistingList);
-		new CreateListTask(inflateListCallback(context, activity),
-				progressBarUpdater(activity, progressBar, listCreationListener)).execute(createListParams);
+		new CreateListTask(inflateListCallback(context, activity, listCreationListener),
+				progressBarUpdater(activity, progressBar)).execute(createListParams);
 	}
 
 	@NonNull
-	private ProgressMonitor<ShuffleProgress> progressBarUpdater(final Activity activity, final ProgressBar progressBar,
-																final ListCreationListener listCreationListener) {
+	private ProgressMonitor<ShuffleProgress> progressBarUpdater(final Activity activity, final ProgressBar progressBar) {
 		return new ProgressMonitor<ShuffleProgress>() {
 			@Override
 			public void updateProgress(final ShuffleProgress shuffleProgress) {
-				setProgress(activity, progressBar, shuffleProgress, listCreationListener);
+				setProgress(activity, progressBar, shuffleProgress);
 			}
 		};
 	}
 
 	@NonNull
-	private AsyncCallback<List<IndexEntry>> inflateListCallback(final Context context, final Activity activity) {
+	private AsyncCallback<List<IndexEntry>> inflateListCallback(final Context context, final Activity activity,
+																final ListCreationListener listCreationListener) {
 		return new AsyncCallback<List<IndexEntry>>() {
 			@Override
 			public void invoke(List<IndexEntry> result) {
 				if (hasException()) {
 					alertException(context, getException());
 				} else {
-					fillRows(activity, result);
+					listCreationListener.onComplete();
 				}
 			}
 		};
 	}
 
-	private void setProgress(Activity activity, ProgressBar progressBar, ShuffleProgress shuffleProgress,
-							 final ListCreationListener listCreationListener) {
+	private void setProgress(Activity activity, ProgressBar progressBar, ShuffleProgress shuffleProgress) {
 		if (shuffleProgress instanceof PreparationStep) {
 			PreparationStep preparationStep = (PreparationStep) shuffleProgress;
 			switch (preparationStep) {
@@ -93,7 +92,6 @@ public class CreateListController extends AbstractListController {
 				progressBar.incrementProgressBy(1);
 			} else if (shuffleProgress instanceof FinalizationStep) {
 				progressBar.setProgress(0);
-				listCreationListener.onComplete();
 			}
 		}
 	}
