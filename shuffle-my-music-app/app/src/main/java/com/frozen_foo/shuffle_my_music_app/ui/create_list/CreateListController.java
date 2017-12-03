@@ -92,6 +92,7 @@ public class CreateListController extends AbstractListController {
 				updateCopyProgress(activity, ((FinishedSongCopyStep) shuffleProgress).getIndex(), false);
 				progressBar.incrementProgressBy(1);
 			} else if (shuffleProgress instanceof FinalizationStep) {
+				progressBar.setProgress(0);
 				listCreationListener.onComplete();
 			}
 		}
