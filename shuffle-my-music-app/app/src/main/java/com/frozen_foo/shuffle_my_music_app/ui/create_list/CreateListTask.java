@@ -6,6 +6,7 @@ import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.async.AbstractAsyncTask;
 import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
+import com.frozen_foo.shuffle_my_music_app.mediaplayer.Logger;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.DeterminedSongsStep;
@@ -35,9 +36,11 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 		try {
 			return createNewShuffledList(params[0].context, params[0].value, params[0].useExistingList);
 		} catch (SettingsAccessException e) {
+			Logger.logException(e);
 			callback.setException(e);
 			return Collections.emptyList();
 		} catch (IOException e) {
+			Logger.logException(e);
 			callback.setException(e);
 			return Collections.emptyList();
 		}

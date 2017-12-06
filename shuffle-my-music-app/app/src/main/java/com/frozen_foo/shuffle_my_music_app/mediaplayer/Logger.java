@@ -10,7 +10,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -22,7 +21,7 @@ public class Logger {
 
 	static File LOG;
 
-	public static void logEvent(Context context, KeyEvent keyEvent, boolean consumed) {
+	private static void initLog(final Context context) {
 		if (null == LOG) {
 			File localDir = null;
 			try {
@@ -37,45 +36,52 @@ public class Logger {
 				e.printStackTrace();
 			}
 		}
+	}
 
+	private static void appendToLog(final String logStatement) {
 		try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(LOG, true))) {
-			bufferedWriter.write(toString(keyEvent, consumed));
+			bufferedWriter.write(logStatement);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	static String toString(KeyEvent keyEvent, boolean consumed) {
-		synchronized (Logger.class) {
-			StringBuilder buffer = new StringBuilder();
-			buffer.append(DateFormat.getTimeInstance().format(new Date(keyEvent.getEventTime())));
-			buffer.append(", ");
-
-			buffer.append("action:");
-			buffer.append(actionToString(keyEvent.getAction()));
-			buffer.append(", ");
-
-			buffer.append("device");
-			buffer.append(keyEvent.getDevice().getName());
-			buffer.append(", ");
-
-			buffer.append("source:");
-			buffer.append(keyEvent.getSource());
-			buffer.append(", ");
-
-			buffer.append("keyCode:");
-			buffer.append(KeyEvent.keyCodeToString(keyEvent.getKeyCode()));
-			buffer.append(", ");
-
-			buffer.append("consumed:");
-			buffer.append(consumed);
-			buffer.append(System.lineSeparator());
-
-			return buffer.toString();
-		}
+	public static synchronized void logEvent(Context context, KeyEvent keyEvent, boolean consumed) {
+		initLog(context);
+		String logStatement = toString(keyEvent, consumed);
+		appendToLog(logStatement);
 	}
 
-	public static String actionToString(int action) {
+	static String toString(KeyEvent keyEvent, boolean consumed) {
+
+		StringBuilder buffer = new StringBuilder();
+		buffer.append(DateFormat.getTimeInstance().format(new Date(keyEvent.getEventTime())));
+		buffer.append(", ");
+
+		buffer.append("action:");
+		buffer.append(actionToString(keyEvent.getAction()));
+		buffer.append(", ");
+
+		buffer.append("device");
+		buffer.append(keyEvent.getDevice().getName());
+		buffer.append(", ");
+
+		buffer.append("source:");
+		buffer.append(keyEvent.getSource());
+		buffer.append(", ");
+
+		buffer.append("keyCode:");
+		buffer.append(KeyEvent.keyCodeToString(keyEvent.getKeyCode()));
+		buffer.append(", ");
+
+		buffer.append("consumed:");
+		buffer.append(consumed);
+		buffer.append(System.lineSeparator());
+
+		return buffer.toString();
+	}
+
+	private static String actionToString(int action) {
 		switch (action) {
 			case KeyEvent.ACTION_DOWN:
 				return "ACTION_DOWN";
@@ -86,5 +92,9 @@ public class Logger {
 			default:
 				return Integer.toString(action);
 		}
+	}
+
+	public static synchronized void logException(Exception e) {
+		appendToLog(e.getMessage() + System.lineSeparator());
 	}
 }

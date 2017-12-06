@@ -171,7 +171,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 	@Override
 	public boolean onKeyDown(final int keyCode, final KeyEvent event) {
 		boolean isConsumed = listPlayerController.onKeyDown(keyCode, event);
-		Logger.logEvent(getApplicationContext(), event, isConsumed);
 		if (!isConsumed) {
 			return super.onKeyDown(keyCode, event);
 		} else {
@@ -182,7 +181,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 	@Override
 	public boolean onKeyUp(final int keyCode, final KeyEvent event) {
 		boolean isConsumed = listPlayerController.onKeyUp(keyCode, event);
-		Logger.logEvent(getApplicationContext(), event, isConsumed);
 		if (!isConsumed) {
 			return super.onKeyUp(keyCode, event);
 		} else {
