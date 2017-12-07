@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.mediaplayer;
+package com.frozen_foo.shuffle_my_music_app;
 
 import android.content.Context;
 import android.view.KeyEvent;
