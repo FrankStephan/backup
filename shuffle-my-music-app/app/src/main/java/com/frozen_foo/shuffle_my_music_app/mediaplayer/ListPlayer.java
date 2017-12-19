@@ -1,6 +1,8 @@
 package com.frozen_foo.shuffle_my_music_app.mediaplayer;
 
 import android.content.Context;
+import android.media.AudioDeviceCallback;
+import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -22,12 +24,14 @@ import java.util.List;
 public class ListPlayer {
 
 	private AudioManager.OnAudioFocusChangeListener onAudioFocusChangeListener;
+	private AudioDeviceCallback audioDeviceCallback;
 	private File[] songs;
 	private ListPlayerListener listPlayerListener;
 	private Context context;
 	private AudioManager audioManager;
 	private MediaPlayer currentPlayer;
 	private int songIndex = 0;
+
 
 	public ListPlayer(Context context, ListPlayerListener listPlayerListener) {
 		this.context = context;
@@ -90,6 +94,7 @@ public class ListPlayer {
 			songIndex = 0;
 			listPlayerListener.playingSongChanged(ListPlayerControllerListener.NO_SONG);
 			audioManager.abandonAudioFocus(onAudioFocusChangeListener);
+			audioManager.unregisterAudioDeviceCallback(audioDeviceCallback);
 		}
 	}
 
@@ -119,6 +124,15 @@ public class ListPlayer {
 					}
 				}
 			};
+
+			audioDeviceCallback = new AudioDeviceCallback() {
+				@Override
+				public void onAudioDevicesRemoved(final AudioDeviceInfo[] removedDevices) {
+					pause();
+				}
+			};
+			audioManager.registerAudioDeviceCallback(audioDeviceCallback, null);
+
 			initCurrentPlayer();
 		}
 	}
@@ -141,7 +155,7 @@ public class ListPlayer {
 		if (!ArrayUtils.isEmpty(songs)) {
 			int[] durations = new int[songs.length];
 			for (int i = 0; i < durations.length; i++) {
-				File        song        = songs[i];
+				File song = songs[i];
 				if (song.exists()) {
 					MediaPlayer mediaPlayer = MediaPlayer.create(context, Uri.fromFile(song));
 					durations[i] = mediaPlayer.getDuration();
