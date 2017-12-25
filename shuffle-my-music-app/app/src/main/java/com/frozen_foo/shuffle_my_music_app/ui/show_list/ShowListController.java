@@ -7,6 +7,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
+import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
@@ -35,16 +36,21 @@ public class ShowListController extends AbstractListController {
 		List<IndexEntry> indexEntries = localIndex(context);
 		RowModel[] rows = new IndexEntryRowModelConverter().toRowModels(indexEntries);
 
-		setDuration(durations, rows);
+		setDuration(activity, durations, rows);
 
 		ShowListRowAdapter adapter = new ShowListRowAdapter(activity, rows);
 		shuffleList.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 	}
 
-	private void setDuration(final int[] durations, final RowModel[] rows) {
+	private void setDuration(Activity activity, final int[] durations, final RowModel[] rows) {
 		for (int i = 0; i < durations.length; i++) {
-			rows[i].setDuration(timeFormat().format(new Date(durations[i])));
+			int duration = durations[i];
+			if (duration >= 0) {
+				rows[i].setDuration(timeFormat().format(new Date(duration)));
+			} else {
+				rows[i].setDuration(activity.getString(R.string.file_corrupted));
+			}
 		}
 	}
 

@@ -158,8 +158,13 @@ public class ListPlayer {
 				File song = songs[i];
 				if (song.exists()) {
 					MediaPlayer mediaPlayer = MediaPlayer.create(context, Uri.fromFile(song));
-					durations[i] = mediaPlayer.getDuration();
-					mediaPlayer.release();
+					if (mediaPlayer != null) {
+						durations[i] = mediaPlayer.getDuration();
+						mediaPlayer.release();
+					} else {
+						// Song file seems to be corrupted
+						durations[i] = -1;
+					}
 				}
 			}
 			return durations;
