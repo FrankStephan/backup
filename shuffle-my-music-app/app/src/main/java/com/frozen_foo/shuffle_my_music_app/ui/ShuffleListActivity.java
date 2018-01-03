@@ -65,7 +65,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 		Object o = menu.findItem(R.id.play_pause);
 		listPlayerController = new ListPlayerController();
 		listPlayerController
-				.initPlayer(getApplicationContext(), list(), menu.findItem(R.id.play_pause), markPlayingSongListener());
+				.initPlayer(this, list(), menu.findItem(R.id.play_pause), markPlayingSongListener());
 		loadList();
 		return true;
 	}
@@ -237,7 +237,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 		listPlayerController.release();
 		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		new CreateListController()
-				.createShuffleList(getApplicationContext(), this, progressBar, numberOfSongs, useExistingList,
+				.createShuffleList(this, progressBar, numberOfSongs, useExistingList,
 						new ListCreationListener() {
 							@Override
 							public void onComplete() {

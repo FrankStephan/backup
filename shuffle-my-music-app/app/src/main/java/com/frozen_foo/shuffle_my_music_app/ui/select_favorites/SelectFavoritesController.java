@@ -28,21 +28,21 @@ public class SelectFavoritesController extends AbstractListController {
 
 	public void selectFavorites(Activity activity, ListView shuffleList) {
 		Context          context = activity.getApplicationContext();
-		List<IndexEntry> indexEntries = localIndex(context);
+		List<IndexEntry> indexEntries = localIndex(activity);
 		RowModel[] rows = new IndexEntryRowModelConverter().toRowModels(indexEntries);
 
-		List<IndexEntry> markedFavorites = loadMarkedFavorites(context);
+		List<IndexEntry> markedFavorites = loadMarkedFavorites(activity);
 		checkFavorites(indexEntries, markedFavorites, rows);
 
 		SelectableRowAdapter selectableRowAdapter = new SelectableRowAdapter(activity, rows);
 		shuffleList.setAdapter(selectableRowAdapter);
 	}
 
-	private List<IndexEntry> loadMarkedFavorites(Context context) {
+	private List<IndexEntry> loadMarkedFavorites(Activity activity) {
 		try {
-			return new ShuffleAccess().loadMarkedFavorites(context);
+			return new ShuffleAccess().loadMarkedFavorites(activity);
 		} catch (SettingsAccessException e) {
-			alertException(context, e);
+			alertException(activity, e);
 			return Collections.emptyList();
 		}
 	}
@@ -80,7 +80,7 @@ public class SelectFavoritesController extends AbstractListController {
 		try {
 			addedIndexEntries = new ShuffleAccess().markAsFavorites(activity.getApplicationContext(), indexEntries);
 		} catch (SettingsAccessException e) {
-			alertException(activity.getApplicationContext(), e);
+			alertException(activity, e);
 		}
 		Toast.makeText(activity.getApplicationContext(), ArrayUtils.toString(addedIndexEntries), Toast.LENGTH_LONG)
 				.show();

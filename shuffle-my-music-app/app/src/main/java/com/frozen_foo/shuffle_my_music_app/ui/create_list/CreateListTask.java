@@ -33,14 +33,15 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 
 	@Override
 	protected List<IndexEntry> doInBackground(NumberOfSongs... params) {
+		Context context = params[0].context;
 		try {
-			return createNewShuffledList(params[0].context, params[0].value, params[0].useExistingList);
+			return createNewShuffledList(context, params[0].value, params[0].useExistingList);
 		} catch (SettingsAccessException e) {
-			Logger.logException(e);
+			Logger.logException(context, e);
 			callback.setException(e);
 			return Collections.emptyList();
 		} catch (IOException e) {
-			Logger.logException(e);
+			Logger.logException(context, e);
 			callback.setException(e);
 			return Collections.emptyList();
 		}

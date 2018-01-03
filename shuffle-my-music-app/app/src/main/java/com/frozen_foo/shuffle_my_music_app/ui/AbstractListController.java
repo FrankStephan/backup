@@ -1,10 +1,12 @@
 package com.frozen_foo.shuffle_my_music_app.ui;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.widget.ListAdapter;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
+import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 
@@ -25,20 +27,21 @@ public abstract class AbstractListController {
 		return rows;
 	}
 
-	protected void alertException(Context context, Exception e) {
-		AlertDialog.Builder builder = new AlertDialog.Builder(context).setTitle(e.getClass().getSimpleName())
-				.setMessage(e.getCause().getMessage());
+	protected void alertException(Activity activity, Exception e) {
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity).setTitle(e.getClass().getSimpleName())
+				.setMessage(e.getMessage());
+
 		AlertDialog         dialog  = builder.create();
 		dialog.show();
 		// Replace by log4j
 		e.printStackTrace();
 	}
 
-	protected List<IndexEntry> localIndex(Context context) {
+	protected List<IndexEntry> localIndex(Activity activity) {
 		try {
-			return new ShuffleAccess().getLocalIndex(context);
+			return new ShuffleAccess().getLocalIndex(activity);
 		} catch (SettingsAccessException e) {
-			alertException(context, e);
+			alertException(activity, e);
 			return Collections.emptyList();
 		}
 	}

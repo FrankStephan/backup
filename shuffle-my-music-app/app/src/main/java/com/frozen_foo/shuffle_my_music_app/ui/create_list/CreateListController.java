@@ -29,13 +29,13 @@ import java.util.List;
 
 public class CreateListController extends AbstractListController {
 
-	public void createShuffleList(Context context, final Activity activity, ProgressBar progressBar, int numberOfSongs,
+	public void createShuffleList(final Activity activity, ProgressBar progressBar, int numberOfSongs,
 								  boolean useExistingList, ListCreationListener listCreationListener) {
 		progressBar.setMax(numberOfSongs + PreparationStep.values().length);
 		progressBar.setProgress(0);
 		NumberOfSongs createListParams =
-				new NumberOfSongs(numberOfSongs, context, useExistingList);
-		new CreateListTask(inflateListCallback(context, activity, listCreationListener),
+				new NumberOfSongs(numberOfSongs, activity, useExistingList);
+		new CreateListTask(inflateListCallback(activity, listCreationListener),
 				progressBarUpdater(activity, progressBar)).execute(createListParams);
 	}
 
@@ -50,13 +50,13 @@ public class CreateListController extends AbstractListController {
 	}
 
 	@NonNull
-	private AsyncCallback<List<IndexEntry>> inflateListCallback(final Context context, final Activity activity,
+	private AsyncCallback<List<IndexEntry>> inflateListCallback(final Activity activity,
 																final ListCreationListener listCreationListener) {
 		return new AsyncCallback<List<IndexEntry>>() {
 			@Override
 			public void invoke(List<IndexEntry> result) {
 				if (hasException()) {
-					alertException(context, getException());
+					alertException(activity, getException());
 				} else {
 					listCreationListener.onComplete();
 				}

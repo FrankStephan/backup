@@ -1,6 +1,7 @@
 package com.frozen_foo.shuffle_my_music_app;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.KeyEvent;
 
 import com.frozen_foo.shuffle_my_music_app.io.local.LocalDirectoryAccess;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -39,8 +41,10 @@ public class Logger {
 	}
 
 	private static void appendToLog(final String logStatement) {
+		Log.i(Logger.class.getSimpleName(), logStatement);
 		try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(LOG, true))) {
-			bufferedWriter.write(logStatement);
+			String dateString = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS").format(new Date());
+			bufferedWriter.write("[" + dateString + "] " + logStatement);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -94,7 +98,9 @@ public class Logger {
 		}
 	}
 
-	public static synchronized void logException(Exception e) {
+	public static synchronized void logException(Context context, Exception e) {
+		initLog(context);
+		e.printStackTrace();
 		appendToLog(e.getMessage() + System.lineSeparator());
 	}
 }

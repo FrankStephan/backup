@@ -1,5 +1,6 @@
 package com.frozen_foo.shuffle_my_music_app.mediaplayer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Parcel;
@@ -22,11 +23,11 @@ public class ListPlayerController extends AbstractListController {
 
 	private ListPlayer listPlayer;
 
-	public void initPlayer(final Context context, ListView shuffleList, final MenuItem playItem,
+	public void initPlayer(final Activity activity, ListView shuffleList, final MenuItem playItem,
 						   final ListPlayerControllerListener listPlayerControllerListener) {
 		release();
 
-		listPlayer = new ListPlayer(context, new ListPlayerListener() {
+		listPlayer = new ListPlayer(activity, new ListPlayerListener() {
 
 			@Override
 			public void onStart() {
@@ -40,7 +41,7 @@ public class ListPlayerController extends AbstractListController {
 
 			@Override
 			public boolean onError(MediaPlayer mp, int what, int extra) {
-				Toast.makeText(context, "MediaPlayer Error " + what + " " + extra, Toast.LENGTH_LONG).show();
+				Toast.makeText(activity, "MediaPlayer Error " + what + " " + extra, Toast.LENGTH_LONG).show();
 				return false;
 			}
 
@@ -51,7 +52,7 @@ public class ListPlayerController extends AbstractListController {
 
 			@Override
 			public void loadingSongsFailed(final SettingsAccessException e) {
-				alertException(context, e);
+				alertException(activity, e);
 			}
 		});
 

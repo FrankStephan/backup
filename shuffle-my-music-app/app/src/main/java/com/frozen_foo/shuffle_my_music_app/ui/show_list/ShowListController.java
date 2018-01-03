@@ -33,7 +33,7 @@ public class ShowListController extends AbstractListController {
 
 	public void loadAndInflateList(Activity activity, ListView shuffleList, final int[] durations) {
 		Context          context = activity.getApplicationContext();
-		List<IndexEntry> indexEntries = localIndex(context);
+		List<IndexEntry> indexEntries = localIndex(activity);
 		RowModel[] rows = new IndexEntryRowModelConverter().toRowModels(indexEntries);
 
 		setDuration(activity, durations, rows);
@@ -75,7 +75,7 @@ public class ShowListController extends AbstractListController {
 			try {
 				date = timeFormat().parse(rows[i].getDuration());
 			} catch (ParseException e) {
-				alertException(activity.getApplicationContext(), e);
+				alertException(activity, e);
 			}
 			durations[i] = (int) date.getTime();
 		}
