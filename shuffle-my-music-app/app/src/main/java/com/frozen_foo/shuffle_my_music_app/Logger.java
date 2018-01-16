@@ -103,4 +103,13 @@ public class Logger {
 		e.printStackTrace();
 		appendToLog(e.getMessage() + System.lineSeparator());
 	}
+
+	/**
+	 * Created by Frank on 04.01.2018.
+	 */
+
+	public static class VolumeMaxController {
+
+
+	}
 }

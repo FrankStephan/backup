@@ -17,6 +17,9 @@ import org.apache.commons.lang3.ArrayUtils;
 import java.io.File;
 import java.util.List;
 
+import static android.media.AudioManager.FLAG_SHOW_UI;
+import static android.media.AudioManager.STREAM_MUSIC;
+
 /**
  * Created by Frank on 18.07.2017.
  */
@@ -53,7 +56,7 @@ public class ListPlayer {
 
 	private int requestAudioFocus() {
 		return audioManager
-				.requestAudioFocus(onAudioFocusChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+				.requestAudioFocus(onAudioFocusChangeListener, STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
 	}
 
 	public void pause() {
@@ -186,4 +189,11 @@ public class ListPlayer {
 			listPlayerListener.playingSongChanged(songIndex);
 		}
 	}
+
+	public void volumeMax() {
+		audioManager = context.getSystemService(AudioManager.class);
+		audioManager.setStreamVolume(STREAM_MUSIC, audioManager.getStreamMaxVolume(STREAM_MUSIC), FLAG_SHOW_UI);
+	}
+
+
 }

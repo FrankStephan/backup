@@ -8,10 +8,15 @@
         android:checked="false"
         android:icon="@drawable/ic_play_arrow_black_24dp"
         android:title="@string/playPause"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/volume_max"
+        android:checkable="false"
+        android:title="@string/v_max"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/settings"
         android:icon="@drawable/ic_settings_black_24dp"
         android:title="@string/settings"
-        app:showAsAction="always" />
+        app:showAsAction="never"/>
 </menu>

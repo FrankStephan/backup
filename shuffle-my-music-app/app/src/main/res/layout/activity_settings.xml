@@ -92,7 +92,7 @@
             android:layout_weight="1"
             android:backgroundTint="@android:color/holo_green_light"
             android:onClick="submitCredentials"
-            android:text="@string/accept" />
+            android:text="@string/accept"/>
 
         <Button
             android:id="@+id/button4"

@@ -135,4 +135,14 @@ public class ListPlayerController extends AbstractListController {
 	public int[] getDurations() {
 		return listPlayer.getDurations();
 	}
+
+	public void setVolumeMax(boolean volumeMax) {
+		if (true == volumeMax) {
+			if (listPlayer != null) {
+				listPlayer.volumeMax();
+			}
+		} else {
+
+		}
+	}
 }

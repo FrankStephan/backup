@@ -29,12 +29,14 @@ import com.frozen_foo.shuffle_my_music_app.ui.create_list.CreateListController;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.ListCreationListener;
 import com.frozen_foo.shuffle_my_music_app.ui.select_favorites.SelectFavoritesController;
 import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListController;
+import com.frozen_foo.shuffle_my_music_app.volume.VolumeMaxController;
 
 import static com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest.READ_EXTERNAL_STORAGE_REQUEST;
 
 public class ShuffleListActivity extends AppCompatActivity {
 
 	private ListPlayerController listPlayerController;
+	private VolumeMaxController volumeMaxController;
 
 	private ListView list() {
 		return (ListView) findViewById(R.id.shuffleList);
@@ -52,6 +54,10 @@ public class ShuffleListActivity extends AppCompatActivity {
 		return findViewById(R.id.reloadButton);
 	}
 
+	private ProgressBar progressBar() {
+		return (ProgressBar) findViewById(R.id.progressBar);
+	}
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -66,6 +72,9 @@ public class ShuffleListActivity extends AppCompatActivity {
 		listPlayerController = new ListPlayerController();
 		listPlayerController
 				.initPlayer(this, list(), menu.findItem(R.id.play_pause), markPlayingSongListener());
+		volumeMaxController = new VolumeMaxController();
+		volumeMaxController.init(this, menu.findItem(R.id.volume_max), progressBar());
+
 		loadList();
 		return true;
 	}
@@ -88,6 +97,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 				return true;
 			case R.id.play_pause:
 				playPause();
+				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -100,6 +110,11 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private void playPause() {
 		listPlayerController.playPause();
+	}
+
+	public void volumeMax(View view) {
+		boolean selected = ((ToggleButton) view).isChecked();
+		listPlayerController.setVolumeMax(selected);
 	}
 
 	private void loadList() {
@@ -162,7 +177,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	public void reload(View view) {
 		listPlayerController.release();
-		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		int numberOfSongs = list().getAdapter().getCount();
 		createShuffleList(true, numberOfSongs);
 	}
@@ -235,7 +249,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	private void createShuffleList(boolean useExistingList, final int numberOfSongs) {
 		button1().setEnabled(false);
 		listPlayerController.release();
-		ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		ProgressBar progressBar = progressBar();
 		new CreateListController()
 				.createShuffleList(this, progressBar, numberOfSongs, useExistingList,
 						new ListCreationListener() {
@@ -264,6 +278,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	@Override
 	protected void onDestroy() {
 		listPlayerController.release();
+		volumeMaxController.release(this);
 		super.onDestroy();
 	}
 }

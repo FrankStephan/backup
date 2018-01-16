@@ -22,5 +22,7 @@
     <string name="confirmCreateShuffleList">Neue Zufallsliste erstellen?</string>
     <string name="saveFavorites">Speichere Favoriten</string>
     <string name="file_corrupted">!! Datei beschädigt !!</string>
+    <string name="v_max">Vol-\nMax</string>
+    <string name="touch_longer_notification">Button länger gedrückt halten, um Lautstärke auf maximal zu setzen.</string>
 
 </resources>

@@ -33,4 +33,10 @@ public abstract class AbstractAsyncTask<Params, Progress, Result> extends AsyncT
 		super.onPostExecute(result);
 		callback.invoke(result);
 	}
+
+
+	@Override
+	protected void onCancelled(Result result) {
+		callback.invoke(result);
+	}
 }
