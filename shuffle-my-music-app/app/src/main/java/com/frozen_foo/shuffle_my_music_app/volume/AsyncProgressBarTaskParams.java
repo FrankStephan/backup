@@ -19,4 +19,14 @@ public class AsyncProgressBarTaskParams {
 		this.updateIntervalMillis = updateIntervalMillis;
 	}
 
+	public void setProgress(int progress) {
+		progressBar.setProgress(progress, true);
+	}
+
+	public int getProgress() {
+		int progress = progressBar.getProgress();
+		return progress;
+	}
+
+
 }

@@ -19,8 +19,6 @@ import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 
 public class VolumeMaxController {
 
-
-
 	public static final int MIN_TOUCH_TIME_MILLIS = 1000;
 	public static final int UPDATE_INTERVAL_MILLIS = 100;
 	private VolumeChangeObserver volumeChangeObserver;

@@ -1,5 +1,7 @@
 package com.frozen_foo.shuffle_my_music_app.volume;
 
+import android.widget.ProgressBar;
+
 import com.frozen_foo.shuffle_my_music_app.async.AbstractAsyncTask;
 import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 
@@ -9,7 +11,7 @@ import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 
 public class AsyncProgressBarTask extends AbstractAsyncTask<AsyncProgressBarTaskParams, Void, Boolean> {
 
-
+	private AsyncProgressBarTaskParams p;
 
 	public AsyncProgressBarTask(final AsyncCallback<Boolean> callback) {
 		super(callback);
@@ -19,10 +21,10 @@ public class AsyncProgressBarTask extends AbstractAsyncTask<AsyncProgressBarTask
 	protected Boolean doInBackground(AsyncProgressBarTaskParams... params) {
 		AsyncProgressBarTaskParams p = params[0];
 		p.progressBar.setMax(p.minTouchTimeMillis);
-		p.progressBar.setProgress(0);
+		p.setProgress(0);
 
-		while (!isCancelled() && p.progressBar.getProgress() < p.minTouchTimeMillis) {
-			p.progressBar.setProgress(p.progressBar.getProgress() + p.updateIntervalMillis, true);
+		while (!isCancelled() && p.getProgress() < p.minTouchTimeMillis) {
+			p.setProgress(p.getProgress() + p.updateIntervalMillis);
 			try {
 				Thread.sleep(p.updateIntervalMillis);
 			} catch (InterruptedException e) {
@@ -30,15 +32,10 @@ public class AsyncProgressBarTask extends AbstractAsyncTask<AsyncProgressBarTask
 			}
 		}
 
-		p.progressBar.setProgress(0);
+		p.setProgress(0);
 
 		boolean b = completedSuccessfully();
 		return b;
-	}
-
-	@Override
-	protected void onCancelled() {
-		super.onCancelled();
 	}
 
 	private boolean completedSuccessfully() {
