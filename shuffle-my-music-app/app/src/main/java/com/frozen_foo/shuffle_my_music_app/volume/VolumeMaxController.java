@@ -2,6 +2,8 @@ package com.frozen_foo.shuffle_my_music_app.volume;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.media.AudioDeviceCallback;
+import android.media.AudioDeviceInfo;
 import android.media.AudioManager;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -23,15 +25,18 @@ public class VolumeMaxController {
 	public static final int UPDATE_INTERVAL_MILLIS = 100;
 	private VolumeChangeObserver volumeChangeObserver;
 	private TouchEventHandler touchEventHandler;
+	private AudioDeviceCallback audioDeviceCallback;
 
 	@SuppressLint("ClickableViewAccessibility")
 	public void init(final Activity activity, MenuItem menuItem, final ProgressBar progressBar) {
 		TextView textView = initWidget(activity, menuItem, progressBar);
-		registerVolumeChangeListener(activity, textView);
+		observeVolumeChange(activity, textView);
+		observeDeviceDisconnection(activity);
 	}
 
 	public void release(Activity activity) {
-		unregisterVolumeChangeListener(activity);
+		stopObserveVolumeChange(activity);
+		stopObserveDeviceDisconnection(activity);
 	}
 
 	private TextView initWidget(final Activity activity, final MenuItem menuItem, final ProgressBar progressBar) {
@@ -110,7 +115,7 @@ public class VolumeMaxController {
 		textView.setTextColor(activity.getResources().getColor(textColor, activity.getTheme()));
 	}
 
-	private void registerVolumeChangeListener(final Activity activity, final TextView textView) {
+	private void observeVolumeChange(final Activity activity, final TextView textView) {
 		volumeChangeObserver = new VolumeChangeObserver(new Handler(), audioManager(activity), new VolumeChangeListener() {
 			@Override
 			public void volumeChanged() {
@@ -122,8 +127,22 @@ public class VolumeMaxController {
 				.registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, volumeChangeObserver);
 	}
 
-	private void unregisterVolumeChangeListener(Activity activity) {
+	private void stopObserveVolumeChange(Activity activity) {
 		activity.getContentResolver().unregisterContentObserver(volumeChangeObserver);
+	}
+
+	private void observeDeviceDisconnection(final Activity activity) {
+		audioDeviceCallback = new AudioDeviceCallback() {
+			@Override
+			public void onAudioDevicesRemoved(final AudioDeviceInfo[] removedDevices) {
+				decreaseVolumeToNormal(activity);
+			}
+		};
+		audioManager(activity).registerAudioDeviceCallback(audioDeviceCallback, null);
+	}
+	
+	private void stopObserveDeviceDisconnection(final Activity activity) {
+		audioManager(activity).unregisterAudioDeviceCallback(audioDeviceCallback);
 	}
 
 }
