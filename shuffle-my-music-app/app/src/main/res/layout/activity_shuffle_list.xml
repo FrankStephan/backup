@@ -15,7 +15,7 @@
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="326dp"
             android:layout_height="match_parent"
-            />
+            android:progressTint="@android:color/holo_blue_dark"/>
 
         <ImageButton
             android:id="@+id/reloadButton"

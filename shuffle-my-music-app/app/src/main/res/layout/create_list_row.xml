@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/songNameText"
-        android:layout_width="0dp"
+        android:layout_width="343dp"
         android:layout_height="40dp"
         android:layout_weight="1"
         android:paddingLeft="10dp"
@@ -16,9 +16,10 @@
 
     <ProgressBar
         android:id="@+id/copyProgress"
-        style="?android:attr/progressBarStyle"
+        style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginTop="10dp"
-        android:indeterminate="true"/>
+        android:indeterminate="true"
+        android:indeterminateTint="@android:color/background_light"/>
 </LinearLayout>
