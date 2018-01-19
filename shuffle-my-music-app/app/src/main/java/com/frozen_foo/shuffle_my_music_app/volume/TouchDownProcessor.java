@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 public class TouchDownProcessor {
 
 	public boolean process(int action) {
-		if (MotionEvent.ACTION_DOWN == action) {
+		if (MotionEvent.ACTION_UP == action) {
 			return true;
 		} else {
 			return false;
