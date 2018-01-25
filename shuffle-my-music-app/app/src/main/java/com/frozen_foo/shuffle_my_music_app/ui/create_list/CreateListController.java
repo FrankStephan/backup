@@ -11,6 +11,7 @@ import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
+import com.frozen_foo.shuffle_my_music_app.ui.GenericRowAdapter;
 import com.frozen_foo.shuffle_my_music_app.ui.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.DeterminedSongsStep;
@@ -103,14 +104,14 @@ public class CreateListController extends AbstractListController {
 	}
 
 	private void fillRows(final Activity activity, List<IndexEntry> randomIndexEntries) {
-		RowModel[]           rows    = new IndexEntryRowModelConverter().toRowModels(randomIndexEntries);
-		CreateListRowAdapter adapter = new CreateListRowAdapter(activity, rows);
+		RowModel[]        rows    = new IndexEntryRowModelConverter().toRowModels(randomIndexEntries);
+		GenericRowAdapter adapter = new GenericRowAdapter(activity, rows);
 		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
 	}
 
 	private void updateCopyProgress(Activity activity, int index, boolean copying) {
-		CreateListRowAdapter adapter =
-				(CreateListRowAdapter) ((ListView) activity.findViewById(R.id.shuffleList)).getAdapter();
+		GenericRowAdapter adapter =
+				(GenericRowAdapter) ((ListView) activity.findViewById(R.id.shuffleList)).getAdapter();
 		RowModel rowModel = adapter.getItem(index);
 		rowModel.setCopying(copying);
 		adapter.notifyDataSetChanged();

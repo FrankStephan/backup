@@ -8,15 +8,13 @@ import android.widget.ListView;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
-import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
+import com.frozen_foo.shuffle_my_music_app.ui.GenericRowAdapter;
 import com.frozen_foo.shuffle_my_music_app.ui.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +36,7 @@ public class ShowListController extends AbstractListController {
 
 		setDuration(activity, durations, rows);
 
-		ShowListRowAdapter adapter = new ShowListRowAdapter(activity, rows);
+		GenericRowAdapter adapter = new GenericRowAdapter(activity, rows);
 		shuffleList.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 	}
@@ -55,17 +53,12 @@ public class ShowListController extends AbstractListController {
 	}
 
 	public void markAsPlayingSong(Activity activity, ListView shuffleList, int index) {
-		ListAdapter adapter = shuffleList.getAdapter();
-		RowModel[]  rows    = rowsFrom(adapter);
-		if (!(adapter instanceof ShowListRowAdapter)) {
-			int[] durations = extractDurations(activity, rows);
-			loadAndInflateList(activity, shuffleList, durations);
+		GenericRowAdapter adapter = (GenericRowAdapter) shuffleList.getAdapter();
+		for (int i = 0; i < adapter.getCount(); i++) {
+			adapter.getItem(i).setPlaying(i == index);
 		}
-		adapter = shuffleList.getAdapter();
-		for (int i = 0; i < rows.length; i++) {
-			rows[i].setPlaying(i == index);
-		}
-		((ShowListRowAdapter) adapter).notifyDataSetChanged();
+
+		adapter.notifyDataSetChanged();
 	}
 
 	private int[] extractDurations(final Activity activity, final RowModel[] rows) {

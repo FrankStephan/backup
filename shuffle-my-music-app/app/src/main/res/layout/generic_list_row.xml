@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:buttonTint="@android:color/white"
+        android:text=""/>
+
+    <TextView
+        android:id="@+id/songNameText"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="TextView"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/durationText"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:hapticFeedbackEnabled="true"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:text="TextView"
+        android:textColor="@android:color/white"
+        android:textStyle="italic"/>
+
+    <ImageView
+        android:id="@+id/playingIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="3dp"
+        android:paddingTop="10dp"
+        app:srcCompat="@drawable/ic_play_arrow_black_24dp"/>
+
+    <ProgressBar
+        android:id="@+id/copyProgress"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="10dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@android:color/background_light"/>
+</LinearLayout>

@@ -37,6 +37,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private ListPlayerController listPlayerController;
 	private VolumeMaxController volumeMaxController;
+	private Mode mode = Mode.SHOW_LIST;
 
 	private ListView list() {
 		return (ListView) findViewById(R.id.shuffleList);
@@ -70,8 +71,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 		menuInflater.inflate(R.menu.menubar, menu);
 		Object o = menu.findItem(R.id.play_pause);
 		listPlayerController = new ListPlayerController();
-		listPlayerController
-				.initPlayer(this, list(), menu.findItem(R.id.play_pause), markPlayingSongListener());
+		listPlayerController.initPlayer(this, list(), menu.findItem(R.id.play_pause), markPlayingSongListener());
 		volumeMaxController = new VolumeMaxController();
 		volumeMaxController.init(this, menu.findItem(R.id.volume_max), progressBar());
 
@@ -202,8 +202,11 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	public void pressButton1(View view) {
-		Mode mode = mode();
 		switch (mode) {
+			case CREATE_LIST:
+				// Should not happen, cause button is disabled
+				// So do nothing - new list is being created already
+				break;
 			case SHOW_LIST:
 				if (new PermissionsAccess().hasPermission(this, PermissionRequest.INTERNET_REQUEST,
 						PermissionRequest.WRITE_EXTERNAL_STORAGE_REQUEST)) {
@@ -226,7 +229,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 	public void pressButton2(View view) {
 		final ListView     shuffleList = list();
 		final ToggleButton button2     = button2();
-		Mode               mode        = mode();
 		switch (mode) {
 			case SHOW_LIST:
 				button1().setText(R.string.createShuffledList);
@@ -241,38 +243,45 @@ public class ShuffleListActivity extends AppCompatActivity {
 		}
 	}
 
-	private Mode mode() {
-		ToggleButton selectAddFavoritesButton = button2();
-		return selectAddFavoritesButton.isChecked() ? Mode.SELECT_FAVORITES : Mode.SHOW_LIST;
-	}
-
 	private void createShuffleList(boolean useExistingList, final int numberOfSongs) {
 		button1().setEnabled(false);
 		listPlayerController.release();
 		ProgressBar progressBar = progressBar();
+		changeMode(Mode.CREATE_LIST);
 		new CreateListController()
-				.createShuffleList(this, progressBar, numberOfSongs, useExistingList,
-						new ListCreationListener() {
-							@Override
-							public void onComplete() {
-								listPlayerController.reloadSongs();
-								button1().setEnabled(true);
-								_loadList();
-							}
-						});
+				.createShuffleList(this, progressBar, numberOfSongs, useExistingList, new ListCreationListener() {
+					@Override
+					public void onComplete() {
+						changeMode(Mode.SHOW_LIST);
+						listPlayerController.reloadSongs();
+						button1().setEnabled(true);
+						_loadList();
+					}
+				});
 	}
 
 	private void selectFavorites(final ListView shuffleList, final ToggleButton button2) {
 		final SelectFavoritesController selectFavoritesController = new SelectFavoritesController();
 		selectFavoritesController.selectFavorites(this, shuffleList);
+		changeMode(Mode.SELECT_FAVORITES);
 	}
 
 	private void markSelectedFavorites(final ListView shuffleList) {
 		new SelectFavoritesController().markSelectedFavorites(this, shuffleList);
+		changeMode(Mode.SHOW_LIST);
 	}
 
 	private void cancelFavoritesSelection() {
 		new SelectFavoritesController().cancelFavoritesSelection(this, list());
+		changeMode(Mode.SHOW_LIST);
+	}
+
+	private void changeMode(Mode mode) {
+		this.mode = mode;
+	}
+
+	private Mode getMode() {
+		return mode;
 	}
 
 	@Override
