@@ -26,8 +26,6 @@ public class GenericRowAdapter extends ArrayAdapter<RowModel> {
 	public GenericRowAdapter(@NonNull Context context, RowModel[] rows) {
 		super(context, R.layout.generic_list_row, rows);
 
-
-
 	}
 
 	public boolean isShowFavoritesSelection() {

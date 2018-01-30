@@ -231,14 +231,14 @@ public class ShuffleListActivity extends AppCompatActivity {
 		final ToggleButton button2     = button2();
 		switch (mode) {
 			case SHOW_LIST:
-				button1().setText(R.string.createShuffledList);
-				button1().setBackgroundTintList(ColorStateList.valueOf(Color.LTGRAY));
-				markSelectedFavorites(shuffleList);
-				break;
-			case SELECT_FAVORITES:
 				button1().setText(R.string.cancel);
 				button1().setBackgroundTintList(ColorStateList.valueOf(Color.RED));
 				selectFavorites(shuffleList, button2);
+				break;
+			case SELECT_FAVORITES:
+				button1().setText(R.string.createShuffledList);
+				button1().setBackgroundTintList(ColorStateList.valueOf(Color.LTGRAY));
+				markSelectedFavorites(shuffleList);
 				break;
 		}
 	}
