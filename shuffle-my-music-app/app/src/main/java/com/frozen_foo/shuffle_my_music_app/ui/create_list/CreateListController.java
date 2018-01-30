@@ -1,6 +1,7 @@
 package com.frozen_foo.shuffle_my_music_app.ui.create_list;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -19,6 +20,7 @@ import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinishedSongC
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.PreparationStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.ShuffleProgress;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.StartSongCopyStep;
+import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListRowAdapter;
 
 import java.util.List;
 
@@ -97,7 +99,7 @@ public class CreateListController extends AbstractListController {
 
 	private void showPreparation(Activity activity, String text) {
 		RowModel[]         rows    = new RowModel[]{new RowModel(text, null, false)};
-		GenericRowAdapter adapter = new GenericRowAdapter(activity, rows);
+		ShowListRowAdapter adapter = new ShowListRowAdapter(activity, rows);
 		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
 	}
 

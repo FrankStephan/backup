@@ -2,6 +2,7 @@ package com.frozen_foo.shuffle_my_music_app.ui.select_favorites;
 
 import android.app.Activity;
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -9,9 +10,9 @@ import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
-import com.frozen_foo.shuffle_my_music_app.ui.GenericRowAdapter;
 import com.frozen_foo.shuffle_my_music_app.ui.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
+import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListRowAdapter;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -33,10 +34,8 @@ public class SelectFavoritesController extends AbstractListController {
 		List<IndexEntry> markedFavorites = loadMarkedFavorites(activity);
 		checkFavorites(indexEntries, markedFavorites, rows);
 
-		GenericRowAdapter adapter = new GenericRowAdapter(activity, rows);
-		adapter.setShowFavoritesSelection(true);
-		shuffleList.setAdapter(adapter);
-		adapter.notifyDataSetChanged();
+		SelectableRowAdapter selectableRowAdapter = new SelectableRowAdapter(activity, rows);
+		shuffleList.setAdapter(selectableRowAdapter);
 	}
 
 	private List<IndexEntry> loadMarkedFavorites(Activity activity) {
@@ -92,8 +91,9 @@ public class SelectFavoritesController extends AbstractListController {
 	}
 
 	private void doCancel(final Activity activity, final ListView shuffleList) {
-		final GenericRowAdapter adapter = (GenericRowAdapter) shuffleList.getAdapter();
-		adapter.setShowFavoritesSelection(false);
-		adapter.notifyDataSetChanged();
+		final SelectableRowAdapter adapter = (SelectableRowAdapter) shuffleList.getAdapter();
+		RowModel[]                 rows    = rowsFrom(adapter);
+		ShowListRowAdapter showListRowAdapter = new ShowListRowAdapter(activity, rows);
+		shuffleList.setAdapter(showListRowAdapter);
 	}
 }
