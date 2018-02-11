@@ -24,5 +24,6 @@
     <string name="file_corrupted">!! Datei beschädigt !!</string>
     <string name="v_max">Vol-\nMax</string>
     <string name="touch_longer_notification">Button länger gedrückt halten, um Lautstärke auf maximal zu setzen.</string>
+    <string name="copying_title">Kopiere Titel</string>
 
 </resources>

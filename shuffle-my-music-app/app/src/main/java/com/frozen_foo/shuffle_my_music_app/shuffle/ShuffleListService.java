@@ -2,22 +2,38 @@ package com.frozen_foo.shuffle_my_music_app.shuffle;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.NotificationCompat;
 
+import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
+import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
+import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
 import com.frozen_foo.shuffle_my_music_app.ui.ShuffleListActivity;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.NumberOfSongs;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinalizationStep;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.PreparationStep;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.ShuffleProgress;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.StartSongCopyStep;
+
+import java.util.List;
 
 public class ShuffleListService extends IntentService {
 
-	private static final String ACTION_CREATE_NEW_SHUFFLE_LIST = "com.frozen_foo.myapplication.action.CREATE_NEW_SHUFFLE_LIST";
+	public static final String ACTION_CREATE_NEW_SHUFFLE_LIST = "com.frozen_foo.myapplication.action.CREATE_NEW_SHUFFLE_LIST";
 	private static final String ACTION_RELOAD_SHUFFLE_LIST = "com.frozen_foo.myapplication.action.RELOAD_SHUFFLE_LIST";
 
 	private static final String NUMBER_OF_SONGS = "com.frozen_foo.myapplication.extra.NUMBER_OF_SONGS";
+	public static final String SHUFFLE_PROGRESS = "com.frozen_foo.myapplication.extra.SHUFFLE_PROGRESS";
 	public static final int DEFAULT_NUMBER_OF_SONGS = 10;
 	public static final int NOTIFICATION_ID = 1;
+
+	private LocalBroadcastManager broadcaster;
+
 
 	public ShuffleListService() {
 		super("ShuffleListService");
@@ -36,20 +52,37 @@ public class ShuffleListService extends IntentService {
 		context.startService(intent);
 	}
 
+	public static ShuffleProgress extractProgress(Intent intent) {
+		return (ShuffleProgress) intent.getSerializableExtra(ShuffleListService.SHUFFLE_PROGRESS);
+	}
+
+	private static void putProgress(ShuffleProgress shuffleProgress, Intent intent) {
+		intent.putExtra(SHUFFLE_PROGRESS, shuffleProgress);
+	}
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		broadcaster = LocalBroadcastManager.getInstance(this);
+
 		Intent notificationIntent = new Intent(this, ShuffleListActivity.class);
 
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
 				notificationIntent, 0);
 
-		Notification notification = new NotificationCompat.Builder(this)
-				.setContentTitle("My Awesome App")
-				.setContentText("Doing some work...")
-				.setContentIntent(pendingIntent).build();
-
+		Notification notification = buildNotification("");
 		startForeground(NOTIFICATION_ID, notification);
+	}
+
+	private Notification buildNotification(String contextText) {
+		Intent notificationIntent = new Intent(this, ShuffleListActivity.class);
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+				notificationIntent, 0);
+		return new NotificationCompat.Builder(this)
+				.setSmallIcon(R.drawable.ic_shuffle_white_24dp)
+				.setContentTitle(getString(R.string.app_name))
+				.setContentText(contextText)
+				.setContentIntent(pendingIntent).build();
 	}
 
 	@Override
@@ -58,23 +91,77 @@ public class ShuffleListService extends IntentService {
 			final String action = intent.getAction();
 			if (ACTION_CREATE_NEW_SHUFFLE_LIST.equals(action)) {
 				int numberOfSongs = intent.getIntExtra(NUMBER_OF_SONGS, DEFAULT_NUMBER_OF_SONGS);
-				createNewShuffleList(numberOfSongs);
+				createNewShuffleList(numberOfSongs, intent);
 			} else if (ACTION_RELOAD_SHUFFLE_LIST.equals(action)) {
 				reloadShuffleList();
 			}
 
-			// stopForeground(true);
+			stopForeground(true);
 			stopSelf();
 		}
 	}
 
-	/**
-	 * Handle action Foo in the provided background thread with the provided
-	 * parameters.
-	 */
-	private void createNewShuffleList(int numberOfSongs) {
-		// TODO: Handle action Foo
-		throw new UnsupportedOperationException("Not yet implemented");
+	private void createNewShuffleList(final int numberOfSongs, final Intent intent) {
+		startShuffleListProcess(new NumberOfSongs(numberOfSongs, this, false), intent);
+	}
+
+	private void startShuffleListProcess(final NumberOfSongs numberOfSongs, final Intent intent) {
+		new ShuffleListProcess(new AsyncCallback<List<IndexEntry>>() {
+			@Override
+			public void invoke(final List<IndexEntry> indexEntries) {
+
+			}
+		}, new ProgressMonitor<ShuffleProgress>() {
+			@Override
+			public void updateProgress(final ShuffleProgress shuffleProgress) {
+				notifyProgressUpdate(shuffleProgress, numberOfSongs);
+				putProgress(shuffleProgress, intent);
+				broadcaster.sendBroadcastSync(intent);
+			}
+		}).start(numberOfSongs);
+	}
+
+	private void notifyProgressUpdate(final ShuffleProgress shuffleProgress, final NumberOfSongs numberOfSongs) {
+		if (shuffleProgress instanceof PreparationStep) {
+			PreparationStep preparationStep = (PreparationStep) shuffleProgress;
+			switch (preparationStep) {
+				case SAVING_FAVORITES:
+					notify(getString(R.string.saveFavorites));
+					break;
+				case LOADING_INDEX:
+					notify(getString(R.string.indexLoading));
+					break;
+				case SHUFFLING_INDEX:
+					notify(getString(R.string.determineRandomSongs));
+					break;
+			}
+		} else {
+			if (shuffleProgress instanceof StartSongCopyStep) {
+				String notificationMessage = new StringBuilder()
+				.append(getString(R.string.copying_title))
+				.append(" ")
+				.append(((StartSongCopyStep) shuffleProgress).getIndex())
+				.append("/")
+				.append(numberOfSongs.value)
+				.toString();
+				notify(notificationMessage);
+			} else if (shuffleProgress instanceof FinalizationStep) {
+				notificationManager().cancel(NOTIFICATION_ID);
+			}
+		}
+	}
+
+	private void notify(String contextText) {
+		notificationManager().notify(NOTIFICATION_ID, buildNotification(contextText));
+	}
+
+	private void notify(Notification notification) {
+		notificationManager().notify(NOTIFICATION_ID, notification);
+	}
+
+	private NotificationManager notificationManager() {
+		return getSystemService(NotificationManager.class);
+
 	}
 
 	/**

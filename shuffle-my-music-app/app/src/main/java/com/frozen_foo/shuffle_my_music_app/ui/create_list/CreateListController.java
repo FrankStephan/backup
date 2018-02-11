@@ -1,14 +1,21 @@
 package com.frozen_foo.shuffle_my_music_app.ui.create_list;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
-import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
+import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleListService;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 import com.frozen_foo.shuffle_my_music_app.ui.GenericRowAdapter;
 import com.frozen_foo.shuffle_my_music_app.ui.IndexEntryRowModelConverter;
@@ -32,20 +39,8 @@ public class CreateListController extends AbstractListController {
 								  boolean useExistingList, ListCreationListener listCreationListener) {
 		progressBar.setMax(numberOfSongs + PreparationStep.values().length);
 		progressBar.setProgress(0);
-		NumberOfSongs createListParams =
-				new NumberOfSongs(numberOfSongs, activity, useExistingList);
-		new CreateListTask(inflateListCallback(activity, listCreationListener),
-				progressBarUpdater(activity, progressBar)).execute(createListParams);
-	}
-
-	@NonNull
-	private ProgressMonitor<ShuffleProgress> progressBarUpdater(final Activity activity, final ProgressBar progressBar) {
-		return new ProgressMonitor<ShuffleProgress>() {
-			@Override
-			public void updateProgress(final ShuffleProgress shuffleProgress) {
-				setProgress(activity, progressBar, shuffleProgress);
-			}
-		};
+		NumberOfSongs createListParams = new NumberOfSongs(numberOfSongs, activity, useExistingList);
+		ShuffleListService.createNewShuffleList(activity, numberOfSongs);
 	}
 
 	@NonNull
@@ -63,32 +58,49 @@ public class CreateListController extends AbstractListController {
 		};
 	}
 
-	private void setProgress(Activity activity, ProgressBar progressBar, ShuffleProgress shuffleProgress) {
+	public BroadcastReceiver createProgressUpdater(final Activity activity, final ProgressBar progressBar) {
+		return new BroadcastReceiver() {
+			@Override
+			public void onReceive(final Context context, final Intent intent) {
+				final ShuffleProgress shuffleProgress = ShuffleListService.extractProgress(intent);
+				Handler               handler         = new Handler(Looper.getMainLooper());
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						new CreateListController().updateProgress(activity, progressBar, shuffleProgress);
+					}
+				});
+			}
+		};
+	}
+
+	private void updateProgress(Activity activity, ProgressBar progressBar, ShuffleProgress shuffleProgress) {
 		if (shuffleProgress instanceof PreparationStep) {
 			PreparationStep preparationStep = (PreparationStep) shuffleProgress;
 			switch (preparationStep) {
 				case SAVING_FAVORITES:
+					progressBar.setProgress(1);
 					showPreparation(activity, activity.getString(R.string.saveFavorites));
-					progressBar.setProgress(0);
 					break;
 				case LOADING_INDEX:
+					progressBar.setProgress(2);
 					showPreparation(activity, activity.getString(R.string.indexLoading));
-					progressBar.setProgress(1);
 					break;
 				case SHUFFLING_INDEX:
+					progressBar.setProgress(3);
 					showPreparation(activity, activity.getString(R.string.determineRandomSongs));
-					progressBar.incrementProgressBy(2);
 					break;
 			}
 		} else {
 			if (shuffleProgress instanceof DeterminedSongsStep) {
+				progressBar.setProgress(4);
 				fillRows(activity, ((DeterminedSongsStep) shuffleProgress).getSongs());
-				progressBar.incrementProgressBy(1);
 			} else if (shuffleProgress instanceof StartSongCopyStep) {
-				updateCopyProgress(activity, ((StartSongCopyStep) shuffleProgress).getIndex(), true);
+				int index = ((StartSongCopyStep) shuffleProgress).getIndex();
+				updateCopyProgress(activity, index, true);
+				progressBar.setProgress(PreparationStep.values().length + index);
 			} else if (shuffleProgress instanceof FinishedSongCopyStep) {
 				updateCopyProgress(activity, ((FinishedSongCopyStep) shuffleProgress).getIndex(), false);
-				progressBar.incrementProgressBy(1);
 			} else if (shuffleProgress instanceof FinalizationStep) {
 				progressBar.setProgress(0);
 			}
@@ -96,7 +108,7 @@ public class CreateListController extends AbstractListController {
 	}
 
 	private void showPreparation(Activity activity, String text) {
-		RowModel[]         rows    = new RowModel[]{new RowModel(text, null, false)};
+		RowModel[]        rows    = new RowModel[]{new RowModel(text, null, false)};
 		GenericRowAdapter adapter = new GenericRowAdapter(activity, rows);
 		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
 	}
@@ -113,5 +125,14 @@ public class CreateListController extends AbstractListController {
 		RowModel rowModel = adapter.getItem(index);
 		rowModel.setCopying(copying);
 		adapter.notifyDataSetChanged();
+	}
+
+	public void registerProgressUpdater(Activity activity, BroadcastReceiver progressUpdater) {
+		LocalBroadcastManager.getInstance(activity)
+				.registerReceiver(progressUpdater, new IntentFilter(ShuffleListService.ACTION_CREATE_NEW_SHUFFLE_LIST));
+	}
+
+	public void unregisterProgressUpdater(Activity activity, BroadcastReceiver progressUpdater) {
+		LocalBroadcastManager.getInstance(activity).unregisterReceiver(progressUpdater);
 	}
 }

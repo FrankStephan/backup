@@ -1,11 +1,17 @@
 package com.frozen_foo.shuffle_my_music_app.ui;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
@@ -25,8 +31,10 @@ import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerControllerListe
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionsAccess;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsActivity;
+import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleListService;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.CreateListController;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.ListCreationListener;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.ShuffleProgress;
 import com.frozen_foo.shuffle_my_music_app.ui.select_favorites.SelectFavoritesController;
 import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListController;
 import com.frozen_foo.shuffle_my_music_app.volume.VolumeMaxController;
@@ -38,6 +46,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 	private ListPlayerController listPlayerController;
 	private VolumeMaxController volumeMaxController;
 	private Mode mode = Mode.SHOW_LIST;
+	private BroadcastReceiver progressUpdater;
 
 	private ListView list() {
 		return (ListView) findViewById(R.id.shuffleList);
@@ -63,6 +72,20 @@ public class ShuffleListActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shuffle_list);
+		CreateListController createListController = new CreateListController();
+		progressUpdater = new CreateListController().createProgressUpdater(this, progressBar());
+	}
+
+	@Override
+	protected void onStart() {
+		super.onStart();
+		new CreateListController().registerProgressUpdater(this, progressUpdater);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		new CreateListController().unregisterProgressUpdater(this, progressUpdater);
 	}
 
 	@Override

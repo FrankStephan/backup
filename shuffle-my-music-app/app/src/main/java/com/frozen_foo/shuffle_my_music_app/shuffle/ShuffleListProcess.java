@@ -1,14 +1,13 @@
-package com.frozen_foo.shuffle_my_music_app.ui.create_list;
+package com.frozen_foo.shuffle_my_music_app.shuffle;
 
 import android.content.Context;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
-import com.frozen_foo.shuffle_my_music_app.async.AbstractAsyncTask;
+import com.frozen_foo.shuffle_my_music_app.Logger;
 import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
-import com.frozen_foo.shuffle_my_music_app.Logger;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
-import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.NumberOfSongs;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.DeterminedSongsStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinalizationStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinishedSongCopyStep;
@@ -18,32 +17,33 @@ import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.StartSongCopy
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Frank on 01.08.2017.
  */
 
-public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProgress, List<IndexEntry>> {
+public class ShuffleListProcess {
 
-	public CreateListTask(AsyncCallback<List<IndexEntry>> callback, ProgressMonitor<ShuffleProgress> progressMonitor) {
-		super(callback, progressMonitor);
+	AsyncCallback<List<IndexEntry>> callback;
+	ProgressMonitor<ShuffleProgress> progressMonitor;
+
+	public ShuffleListProcess(AsyncCallback<List<IndexEntry>> callback, ProgressMonitor<ShuffleProgress> progressMonitor) {
+		this.callback = callback;
+		this.progressMonitor = progressMonitor;
 	}
 
-	@Override
-	protected List<IndexEntry> doInBackground(NumberOfSongs... params) {
-		Context context = params[0].context;
+	public void start(NumberOfSongs numberOfSongs) {
 		try {
-			return createNewShuffledList(context, params[0].value, params[0].useExistingList);
+			List<IndexEntry> shuffledList =
+					createNewShuffledList(numberOfSongs.context, numberOfSongs.value, numberOfSongs.useExistingList);
+			callback.invoke(shuffledList);
 		} catch (SettingsAccessException e) {
-			Logger.logException(context, e);
+			Logger.logException(numberOfSongs.context, e);
 			callback.setException(e);
-			return Collections.emptyList();
 		} catch (IOException e) {
-			Logger.logException(context, e);
+			Logger.logException(numberOfSongs.context, e);
 			callback.setException(e);
-			return Collections.emptyList();
 		}
 	}
 
@@ -74,6 +74,12 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 		return shuffledIndexEntries;
 	}
 
+	private void publishProgress(final ShuffleProgress shuffleProgress) {
+		if (progressMonitor != null) {
+			progressMonitor.updateProgress(shuffleProgress);
+		}
+	}
+
 	private void saveAndBackupFavorites(final Context context) throws SettingsAccessException, IOException {
 		shuffleAccess().addFavoritesToLocalCollection(context);
 		shuffleAccess().backupFavoritesCollectionToRemote(context);
@@ -99,9 +105,8 @@ public class CreateListTask extends AbstractAsyncTask<NumberOfSongs, ShuffleProg
 		}
 		publishProgress(new FinalizationStep());
 	}
-	
+
 	private ShuffleAccess shuffleAccess() {
 		return new ShuffleAccess();
 	}
-
 }
