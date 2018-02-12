@@ -24,14 +24,13 @@ import java.util.List;
 
 public class ShuffleListService extends IntentService {
 
-	public static final String ACTION_CREATE_NEW_SHUFFLE_LIST = "com.frozen_foo.myapplication.action.CREATE_NEW_SHUFFLE_LIST";
-	private static final String ACTION_RELOAD_SHUFFLE_LIST = "com.frozen_foo.myapplication.action.RELOAD_SHUFFLE_LIST";
-
-	private static final String NUMBER_OF_SONGS = "com.frozen_foo.myapplication.extra.NUMBER_OF_SONGS";
+	public static final String ACTION_CREATE_NEW_SHUFFLE_LIST =
+			"com.frozen_foo.myapplication.action.CREATE_NEW_SHUFFLE_LIST";
 	public static final String SHUFFLE_PROGRESS = "com.frozen_foo.myapplication.extra.SHUFFLE_PROGRESS";
 	public static final int DEFAULT_NUMBER_OF_SONGS = 10;
 	public static final int NOTIFICATION_ID = 1;
-
+	private static final String ACTION_RELOAD_SHUFFLE_LIST = "com.frozen_foo.myapplication.action.RELOAD_SHUFFLE_LIST";
+	private static final String NUMBER_OF_SONGS = "com.frozen_foo.myapplication.extra.NUMBER_OF_SONGS";
 	private LocalBroadcastManager broadcaster;
 
 
@@ -40,15 +39,17 @@ public class ShuffleListService extends IntentService {
 	}
 
 	public static void createNewShuffleList(Context context, int numberOfSongs) {
-		Intent intent = new Intent(context, ShuffleListService.class);
-		intent.setAction(ACTION_CREATE_NEW_SHUFFLE_LIST);
-		intent.putExtra(NUMBER_OF_SONGS, numberOfSongs);
-		context.startService(intent);
+		startService(context, numberOfSongs, ACTION_CREATE_NEW_SHUFFLE_LIST);
 	}
 
-	public static void reloadShuffleList(Context context) {
+	public static void reloadShuffleList(Context context, int numberOfSongs) {
+		startService(context, numberOfSongs, ACTION_RELOAD_SHUFFLE_LIST);
+	}
+
+	private static void startService(final Context context, final int numberOfSongs, final String action) {
 		Intent intent = new Intent(context, ShuffleListService.class);
-		intent.setAction(ACTION_RELOAD_SHUFFLE_LIST);
+		intent.setAction(action);
+		putNumberOfSongs(numberOfSongs, intent);
 		context.startService(intent);
 	}
 
@@ -60,6 +61,14 @@ public class ShuffleListService extends IntentService {
 		intent.putExtra(SHUFFLE_PROGRESS, shuffleProgress);
 	}
 
+	public static int extractNumberOfSongs(final Intent intent) {
+		return intent.getIntExtra(NUMBER_OF_SONGS, DEFAULT_NUMBER_OF_SONGS);
+	}
+
+	private static void putNumberOfSongs(int numberOfSongs, Intent intent) {
+		intent.putExtra(NUMBER_OF_SONGS, numberOfSongs);
+	}
+
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -67,8 +76,7 @@ public class ShuffleListService extends IntentService {
 
 		Intent notificationIntent = new Intent(this, ShuffleListActivity.class);
 
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-				notificationIntent, 0);
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
 		Notification notification = buildNotification("");
 		startForeground(NOTIFICATION_ID, notification);
@@ -76,24 +84,21 @@ public class ShuffleListService extends IntentService {
 
 	private Notification buildNotification(String contextText) {
 		Intent notificationIntent = new Intent(this, ShuffleListActivity.class);
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-				notificationIntent, 0);
-		return new NotificationCompat.Builder(this)
-				.setSmallIcon(R.drawable.ic_shuffle_white_24dp)
-				.setContentTitle(getString(R.string.app_name))
-				.setContentText(contextText)
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
+		return new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_shuffle_white_24dp)
+				.setContentTitle(getString(R.string.app_name)).setContentText(contextText)
 				.setContentIntent(pendingIntent).build();
 	}
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		if (intent != null) {
-			final String action = intent.getAction();
+			final String action        = intent.getAction();
+			int          numberOfSongs = intent.getIntExtra(NUMBER_OF_SONGS, DEFAULT_NUMBER_OF_SONGS);
 			if (ACTION_CREATE_NEW_SHUFFLE_LIST.equals(action)) {
-				int numberOfSongs = intent.getIntExtra(NUMBER_OF_SONGS, DEFAULT_NUMBER_OF_SONGS);
 				createNewShuffleList(numberOfSongs, intent);
 			} else if (ACTION_RELOAD_SHUFFLE_LIST.equals(action)) {
-				reloadShuffleList();
+				reloadShuffleList(numberOfSongs, intent);
 			}
 
 			stopForeground(true);
@@ -137,13 +142,9 @@ public class ShuffleListService extends IntentService {
 			}
 		} else {
 			if (shuffleProgress instanceof StartSongCopyStep) {
-				String notificationMessage = new StringBuilder()
-				.append(getString(R.string.copying_title))
-				.append(" ")
-				.append(((StartSongCopyStep) shuffleProgress).getIndex())
-				.append("/")
-				.append(numberOfSongs.value)
-				.toString();
+				String notificationMessage = new StringBuilder().append(getString(R.string.copying_title)).append(" ")
+						.append(((StartSongCopyStep) shuffleProgress).getIndex() + 1).append("/")
+						.append(numberOfSongs.value).toString();
 				notify(notificationMessage);
 			} else if (shuffleProgress instanceof FinalizationStep) {
 				notificationManager().cancel(NOTIFICATION_ID);
@@ -161,15 +162,11 @@ public class ShuffleListService extends IntentService {
 
 	private NotificationManager notificationManager() {
 		return getSystemService(NotificationManager.class);
-
 	}
 
-	/**
-	 * Handle action Baz in the provided background thread with the provided
-	 * parameters.
-	 */
-	private void reloadShuffleList() {
-		// TODO: Handle action Baz
-		throw new UnsupportedOperationException("Not yet implemented");
+	private void reloadShuffleList(final int numberOfSongs, final Intent intent) {
+		startShuffleListProcess(new NumberOfSongs(numberOfSongs, this, true), intent);
 	}
+
+
 }

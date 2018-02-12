@@ -37,10 +37,13 @@ public class CreateListController extends AbstractListController {
 
 	public void createShuffleList(final Activity activity, ProgressBar progressBar, int numberOfSongs,
 								  boolean useExistingList, ListCreationListener listCreationListener) {
-		progressBar.setMax(numberOfSongs + PreparationStep.values().length);
 		progressBar.setProgress(0);
 		NumberOfSongs createListParams = new NumberOfSongs(numberOfSongs, activity, useExistingList);
-		ShuffleListService.createNewShuffleList(activity, numberOfSongs);
+		if (useExistingList) {
+			ShuffleListService.reloadShuffleList(activity, numberOfSongs);
+		} else {
+			ShuffleListService.createNewShuffleList(activity, numberOfSongs);
+		}
 	}
 
 	@NonNull
@@ -67,14 +70,17 @@ public class CreateListController extends AbstractListController {
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
-						new CreateListController().updateProgress(activity, progressBar, shuffleProgress);
+						new CreateListController().updateProgress(activity, progressBar, shuffleProgress, intent);
 					}
 				});
 			}
 		};
 	}
 
-	private void updateProgress(Activity activity, ProgressBar progressBar, ShuffleProgress shuffleProgress) {
+	private void updateProgress(Activity activity, ProgressBar progressBar, ShuffleProgress shuffleProgress,
+								final Intent intent) {
+		int numberOfSongs = ShuffleListService.extractNumberOfSongs(intent);
+		progressBar.setMax(numberOfSongs + PreparationStep.values().length);
 		if (shuffleProgress instanceof PreparationStep) {
 			PreparationStep preparationStep = (PreparationStep) shuffleProgress;
 			switch (preparationStep) {
@@ -97,11 +103,11 @@ public class CreateListController extends AbstractListController {
 				fillRows(activity, ((DeterminedSongsStep) shuffleProgress).getSongs());
 			} else if (shuffleProgress instanceof StartSongCopyStep) {
 				int index = ((StartSongCopyStep) shuffleProgress).getIndex();
-				updateCopyProgress(activity, index, true);
+				updateCopyProgress(activity, index);
 				progressBar.setProgress(PreparationStep.values().length + index);
 			} else if (shuffleProgress instanceof FinishedSongCopyStep) {
-				updateCopyProgress(activity, ((FinishedSongCopyStep) shuffleProgress).getIndex(), false);
 			} else if (shuffleProgress instanceof FinalizationStep) {
+				updateCopyProgress(activity, -1);
 				progressBar.setProgress(0);
 			}
 		}
@@ -119,11 +125,13 @@ public class CreateListController extends AbstractListController {
 		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
 	}
 
-	private void updateCopyProgress(Activity activity, int index, boolean copying) {
+	private void updateCopyProgress(Activity activity, int index) {
 		GenericRowAdapter adapter =
 				(GenericRowAdapter) ((ListView) activity.findViewById(R.id.shuffleList)).getAdapter();
-		RowModel rowModel = adapter.getItem(index);
-		rowModel.setCopying(copying);
+		for (int i = 0; i < adapter.getCount(); i++) {
+			RowModel rowModel = adapter.getItem(i);
+			rowModel.setCopying(i == index);
+		}
 		adapter.notifyDataSetChanged();
 	}
 
