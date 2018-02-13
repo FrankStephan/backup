@@ -128,16 +128,20 @@ public class ListPlayer {
 				}
 			};
 
-			audioDeviceCallback = new AudioDeviceCallback() {
-				@Override
-				public void onAudioDevicesRemoved(final AudioDeviceInfo[] removedDevices) {
-					pause();
-				}
-			};
-			audioManager.registerAudioDeviceCallback(audioDeviceCallback, null);
+			pausePlayBackWhenDeviceIsRemoved();
 
 			initCurrentPlayer();
 		}
+	}
+
+	private void pausePlayBackWhenDeviceIsRemoved() {
+		audioDeviceCallback = new AudioDeviceCallback() {
+			@Override
+			public void onAudioDevicesRemoved(final AudioDeviceInfo[] removedDevices) {
+				pause();
+			}
+		};
+		audioManager.registerAudioDeviceCallback(audioDeviceCallback, null);
 	}
 
 	public void loadSongs() {
