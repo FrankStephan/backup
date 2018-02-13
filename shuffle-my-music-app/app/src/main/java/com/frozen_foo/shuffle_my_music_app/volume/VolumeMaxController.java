@@ -101,8 +101,11 @@ public class VolumeMaxController {
 
 	private void decreaseVolumeToNormal(final Activity activity) {
 		AudioManager audioManager = audioManager(activity);
-		audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
-				(int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 1.5), AudioManager.FLAG_SHOW_UI);
+		int normalVolume = (int) (audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) / 1.5);
+		if (audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) > normalVolume) {
+			audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+					normalVolume, AudioManager.FLAG_SHOW_UI);
+		}
 	}
 
 	private void alertUserNeedsToTouchLonger(final Activity activity) {
