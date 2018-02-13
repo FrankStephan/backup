@@ -35,6 +35,7 @@ public class VolumeMaxController {
 	}
 
 	public void release(Activity activity) {
+		decreaseVolumeToNormal(activity);
 		stopObserveVolumeChange(activity);
 		stopObserveDeviceDisconnection(activity);
 	}
@@ -70,8 +71,6 @@ public class VolumeMaxController {
 					case DIRECT:
 						if (successful) {
 							decreaseVolumeToNormal(activity);
-						} else {
-							System.err.println("######## failed");
 						}
 						break;
 				}
