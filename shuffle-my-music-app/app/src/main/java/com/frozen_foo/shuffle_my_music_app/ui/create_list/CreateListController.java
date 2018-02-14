@@ -80,7 +80,7 @@ public class CreateListController extends AbstractListController {
 	private void updateProgress(Activity activity, ProgressBar progressBar, ShuffleProgress shuffleProgress,
 								final Intent intent) {
 		int numberOfSongs = ShuffleListService.extractNumberOfSongs(intent);
-		progressBar.setMax(numberOfSongs + PreparationStep.values().length);
+		progressBar.setMax(numberOfSongs + PreparationStep.values().length - 1);
 		if (shuffleProgress instanceof PreparationStep) {
 			PreparationStep preparationStep = (PreparationStep) shuffleProgress;
 			switch (preparationStep) {
