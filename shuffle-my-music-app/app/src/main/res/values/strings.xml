@@ -25,5 +25,6 @@
     <string name="v_max">Vol-\nMax</string>
     <string name="touch_longer_notification">Button länger gedrückt halten, um Lautstärke auf maximal zu setzen.</string>
     <string name="copying_title">Kopiere Titel</string>
+    <string name="reload">Songs erneut herunterladen</string>
 
 </resources>

@@ -110,6 +110,10 @@ public class ShuffleListService extends IntentService {
 		startShuffleListProcess(new NumberOfSongs(numberOfSongs, this, false), intent);
 	}
 
+	private void reloadShuffleList(final int numberOfSongs, final Intent intent) {
+		startShuffleListProcess(new NumberOfSongs(numberOfSongs, this, true), intent);
+	}
+
 	private void startShuffleListProcess(final NumberOfSongs numberOfSongs, final Intent intent) {
 		new ShuffleListProcess(new AsyncCallback<List<IndexEntry>>() {
 			@Override
@@ -163,10 +167,4 @@ public class ShuffleListService extends IntentService {
 	private NotificationManager notificationManager() {
 		return getSystemService(NotificationManager.class);
 	}
-
-	private void reloadShuffleList(final int numberOfSongs, final Intent intent) {
-		startShuffleListProcess(new NumberOfSongs(numberOfSongs, this, true), intent);
-	}
-
-
 }

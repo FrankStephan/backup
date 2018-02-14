@@ -60,10 +60,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 		return (ToggleButton) findViewById(R.id.selectAddFavoritesButton);
 	}
 
-	private View reloadButton() {
-		return findViewById(R.id.reloadButton);
-	}
-
 	private ProgressBar progressBar() {
 		return (ProgressBar) findViewById(R.id.progressBar);
 	}
@@ -120,6 +116,9 @@ public class ShuffleListActivity extends AppCompatActivity {
 				return true;
 			case R.id.play_pause:
 				playPause();
+				return true;
+			case R.id.reload:
+				reload();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -196,12 +195,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 		builder.setView(numberPicker);
 		builder.create().show();
-	}
-
-	public void reload(View view) {
-		listPlayerController.release();
-		int numberOfSongs = list().getAdapter().getCount();
-		createShuffleList(true, numberOfSongs);
 	}
 
 	@Override
@@ -281,6 +274,12 @@ public class ShuffleListActivity extends AppCompatActivity {
 						_loadList();
 					}
 				});
+	}
+
+	private void reload() {
+		listPlayerController.release();
+		int numberOfSongs = list().getAdapter().getCount();
+		createShuffleList(true, numberOfSongs);
 	}
 
 	private void selectFavorites(final ListView shuffleList, final ToggleButton button2) {
