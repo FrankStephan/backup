@@ -26,10 +26,11 @@ public class ShuffleListService extends IntentService {
 
 	public static final String ACTION_CREATE_NEW_SHUFFLE_LIST =
 			"com.frozen_foo.myapplication.action.CREATE_NEW_SHUFFLE_LIST";
+	public static final String ACTION_RELOAD_SHUFFLE_LIST = "com.frozen_foo.myapplication.action.RELOAD_SHUFFLE_LIST";
 	public static final String SHUFFLE_PROGRESS = "com.frozen_foo.myapplication.extra.SHUFFLE_PROGRESS";
 	public static final int DEFAULT_NUMBER_OF_SONGS = 10;
 	public static final int NOTIFICATION_ID = 1;
-	private static final String ACTION_RELOAD_SHUFFLE_LIST = "com.frozen_foo.myapplication.action.RELOAD_SHUFFLE_LIST";
+
 	private static final String NUMBER_OF_SONGS = "com.frozen_foo.myapplication.extra.NUMBER_OF_SONGS";
 	private LocalBroadcastManager broadcaster;
 

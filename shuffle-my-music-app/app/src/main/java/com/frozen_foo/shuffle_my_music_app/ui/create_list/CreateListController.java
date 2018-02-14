@@ -136,8 +136,11 @@ public class CreateListController extends AbstractListController {
 	}
 
 	public void registerProgressUpdater(Activity activity, BroadcastReceiver progressUpdater) {
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(ShuffleListService.ACTION_CREATE_NEW_SHUFFLE_LIST);
+		intentFilter.addAction(ShuffleListService.ACTION_RELOAD_SHUFFLE_LIST);
 		LocalBroadcastManager.getInstance(activity)
-				.registerReceiver(progressUpdater, new IntentFilter(ShuffleListService.ACTION_CREATE_NEW_SHUFFLE_LIST));
+				.registerReceiver(progressUpdater, intentFilter);
 	}
 
 	public void unregisterProgressUpdater(Activity activity, BroadcastReceiver progressUpdater) {

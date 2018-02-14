@@ -51,9 +51,6 @@ public class ShuffleListProcess {
 			IOException, SettingsAccessException {
 		List<IndexEntry> shuffledIndexEntries;
 		if (useExistingList) {
-			publishProgress(PreparationStep.SAVING_FAVORITES);
-			publishProgress(PreparationStep.LOADING_INDEX);
-			publishProgress(PreparationStep.SHUFFLING_INDEX);
 			shuffledIndexEntries = new ShuffleAccess().getLocalIndex(context);
 			publishProgress(new DeterminedSongsStep(shuffledIndexEntries));
 			copySongsToLocalDir(context, shuffledIndexEntries);
