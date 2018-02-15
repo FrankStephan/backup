@@ -9,6 +9,7 @@ import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.NumberOfSongs;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.DeterminedSongsStep;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.Error;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinalizationStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinishedSongCopyStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.PreparationStep;
@@ -25,11 +26,9 @@ import java.util.List;
 
 public class ShuffleListProcess {
 
-	AsyncCallback<List<IndexEntry>> callback;
 	ProgressMonitor<ShuffleProgress> progressMonitor;
 
-	public ShuffleListProcess(AsyncCallback<List<IndexEntry>> callback, ProgressMonitor<ShuffleProgress> progressMonitor) {
-		this.callback = callback;
+	public ShuffleListProcess(ProgressMonitor<ShuffleProgress> progressMonitor) {
 		this.progressMonitor = progressMonitor;
 	}
 
@@ -37,13 +36,12 @@ public class ShuffleListProcess {
 		try {
 			List<IndexEntry> shuffledList =
 					createNewShuffledList(numberOfSongs.context, numberOfSongs.value, numberOfSongs.useExistingList);
-			callback.invoke(shuffledList);
 		} catch (SettingsAccessException e) {
 			Logger.logException(numberOfSongs.context, e);
-			callback.setException(e);
+			publishProgress(new Error(e));
 		} catch (IOException e) {
 			Logger.logException(numberOfSongs.context, e);
-			callback.setException(e);
+			publishProgress(new Error(e));
 		}
 	}
 
@@ -67,6 +65,7 @@ public class ShuffleListProcess {
 			publishProgress(new DeterminedSongsStep(shuffledIndexEntries));
 			copySongsToLocalDir(context, shuffledIndexEntries);
 		}
+		publishProgress(new FinalizationStep(shuffledIndexEntries));
 
 		return shuffledIndexEntries;
 	}
@@ -100,7 +99,6 @@ public class ShuffleListProcess {
 			shuffleAccess().copySongFromRemoteToLocal(context, shuffledIndexEntries.get(i));
 			publishProgress(new FinishedSongCopyStep(i));
 		}
-		publishProgress(new FinalizationStep());
 	}
 
 	private ShuffleAccess shuffleAccess() {

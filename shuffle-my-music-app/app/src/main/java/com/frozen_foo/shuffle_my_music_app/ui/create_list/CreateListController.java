@@ -7,20 +7,19 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleListService;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 import com.frozen_foo.shuffle_my_music_app.ui.GenericRowAdapter;
 import com.frozen_foo.shuffle_my_music_app.ui.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.DeterminedSongsStep;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.Error;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinalizationStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinishedSongCopyStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.PreparationStep;
@@ -36,7 +35,7 @@ import java.util.List;
 public class CreateListController extends AbstractListController {
 
 	public void createShuffleList(final Activity activity, ProgressBar progressBar, int numberOfSongs,
-								  boolean useExistingList, ListCreationListener listCreationListener) {
+								  boolean useExistingList) {
 		progressBar.setProgress(0);
 		NumberOfSongs createListParams = new NumberOfSongs(numberOfSongs, activity, useExistingList);
 		if (useExistingList) {
@@ -46,22 +45,8 @@ public class CreateListController extends AbstractListController {
 		}
 	}
 
-	@NonNull
-	private AsyncCallback<List<IndexEntry>> inflateListCallback(final Activity activity,
-																final ListCreationListener listCreationListener) {
-		return new AsyncCallback<List<IndexEntry>>() {
-			@Override
-			public void invoke(List<IndexEntry> result) {
-				if (hasException()) {
-					alertException(activity, getException());
-				} else {
-					listCreationListener.onComplete();
-				}
-			}
-		};
-	}
-
-	public BroadcastReceiver createProgressUpdater(final Activity activity, final ProgressBar progressBar) {
+	public BroadcastReceiver createProgressUpdater(final Activity activity, final ProgressBar progressBar,
+												   final ListCreationListener listCreationListener) {
 		return new BroadcastReceiver() {
 			@Override
 			public void onReceive(final Context context, final Intent intent) {
@@ -70,7 +55,8 @@ public class CreateListController extends AbstractListController {
 				handler.post(new Runnable() {
 					@Override
 					public void run() {
-						new CreateListController().updateProgress(activity, progressBar, shuffleProgress, intent);
+						new CreateListController()
+								.updateProgress(activity, progressBar, shuffleProgress, intent, listCreationListener);
 					}
 				});
 			}
@@ -78,7 +64,7 @@ public class CreateListController extends AbstractListController {
 	}
 
 	private void updateProgress(Activity activity, ProgressBar progressBar, ShuffleProgress shuffleProgress,
-								final Intent intent) {
+								final Intent intent, final ListCreationListener listCreationListener) {
 		int numberOfSongs = ShuffleListService.extractNumberOfSongs(intent);
 		progressBar.setMax(numberOfSongs + PreparationStep.values().length - 1);
 		if (shuffleProgress instanceof PreparationStep) {
@@ -109,6 +95,10 @@ public class CreateListController extends AbstractListController {
 			} else if (shuffleProgress instanceof FinalizationStep) {
 				updateCopyProgress(activity, -1);
 				progressBar.setProgress(0);
+				listCreationListener.onComplete();
+			} else if (shuffleProgress instanceof Error) {
+				alertException(activity, ((Error) shuffleProgress).getException());
+				listCreationListener.onComplete();
 			}
 		}
 	}
@@ -139,8 +129,7 @@ public class CreateListController extends AbstractListController {
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(ShuffleListService.ACTION_CREATE_NEW_SHUFFLE_LIST);
 		intentFilter.addAction(ShuffleListService.ACTION_RELOAD_SHUFFLE_LIST);
-		LocalBroadcastManager.getInstance(activity)
-				.registerReceiver(progressUpdater, intentFilter);
+		LocalBroadcastManager.getInstance(activity).registerReceiver(progressUpdater, intentFilter);
 	}
 
 	public void unregisterProgressUpdater(Activity activity, BroadcastReceiver progressUpdater) {

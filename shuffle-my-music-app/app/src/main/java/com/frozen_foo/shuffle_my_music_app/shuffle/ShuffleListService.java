@@ -116,12 +116,7 @@ public class ShuffleListService extends IntentService {
 	}
 
 	private void startShuffleListProcess(final NumberOfSongs numberOfSongs, final Intent intent) {
-		new ShuffleListProcess(new AsyncCallback<List<IndexEntry>>() {
-			@Override
-			public void invoke(final List<IndexEntry> indexEntries) {
-
-			}
-		}, new ProgressMonitor<ShuffleProgress>() {
+		new ShuffleListProcess(new ProgressMonitor<ShuffleProgress>() {
 			@Override
 			public void updateProgress(final ShuffleProgress shuffleProgress) {
 				notifyProgressUpdate(shuffleProgress, numberOfSongs);
