@@ -28,6 +28,7 @@ import com.frozen_foo.shuffle_my_music_app.permission.PermissionsAccess;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsActivity;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.CreateListController;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.ListCreationListener;
+import com.frozen_foo.shuffle_my_music_app.ui.number_picker.NumberPickerController;
 import com.frozen_foo.shuffle_my_music_app.ui.select_favorites.SelectFavoritesController;
 import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListController;
 import com.frozen_foo.shuffle_my_music_app.volume.VolumeMaxController;
@@ -172,30 +173,13 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	private void confirmCreateShuffleList() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-		final NumberPicker numberPicker = new NumberPicker(this);
-
-		builder.setTitle(R.string.confirmCreateShuffleList);
-		builder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+		final NumberPickerController numberPickerController = new NumberPickerController();
+		numberPickerController.showDialog(this, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(final DialogInterface dialog, final int which) {
-				createShuffleList(false, numberPicker.getValue());
+				createShuffleList(false, numberPickerController.getNumber());
 			}
 		});
-		builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(final DialogInterface dialog, final int which) {
-				// Do nothing
-			}
-		});
-
-		numberPicker.setMinValue(1);
-		numberPicker.setMaxValue(100);
-		numberPicker.setValue(10);
-
-		builder.setView(numberPicker);
-		builder.create().show();
 	}
 
 	@Override
