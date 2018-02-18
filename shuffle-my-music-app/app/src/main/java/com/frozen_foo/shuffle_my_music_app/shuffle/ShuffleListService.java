@@ -9,9 +9,7 @@ import android.content.Intent;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.NotificationCompat;
 
-import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
 import com.frozen_foo.shuffle_my_music_app.ui.ShuffleListActivity;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.NumberOfSongs;
@@ -19,8 +17,6 @@ import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinalizationS
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.PreparationStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.ShuffleProgress;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.StartSongCopyStep;
-
-import java.util.List;
 
 public class ShuffleListService extends IntentService {
 

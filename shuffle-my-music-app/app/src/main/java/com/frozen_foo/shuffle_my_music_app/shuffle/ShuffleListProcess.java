@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.Logger;
-import com.frozen_foo.shuffle_my_music_app.async.AsyncCallback;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.NumberOfSongs;
@@ -96,8 +95,33 @@ public class ShuffleListProcess {
 
 		for (int i = 0; i < shuffledIndexEntries.size(); i++) {
 			publishProgress(new StartSongCopyStep(i));
-			shuffleAccess().copySongFromRemoteToLocal(context, shuffledIndexEntries.get(i));
+			copyToLocalWithRetry(context, shuffledIndexEntries.get(i));
 			publishProgress(new FinishedSongCopyStep(i));
+		}
+	}
+
+	private void copyToLocalWithRetry(Context context, IndexEntry indexEntry) throws SettingsAccessException, IOException {
+		int retryAttempt = 0;
+		boolean success  = false;
+
+		while(!success && retryAttempt <= 2) {
+			try {
+				shuffleAccess().copySongFromRemoteToLocal(context, indexEntry);
+				success = true;
+			} catch (IOException ioe) {
+				if (2 == retryAttempt) {
+					throw ioe;
+				} else {
+					retryAttempt++;
+					Logger.logException(context, ioe);
+					Logger.log(context, "Retry attempt number " + retryAttempt + " for " + indexEntry.getFileName());
+					try {
+						Thread.sleep(10000L);
+					} catch (InterruptedException ie) {
+						Logger.logException(context, ie);
+					}
+				}
+			}
 		}
 	}
 

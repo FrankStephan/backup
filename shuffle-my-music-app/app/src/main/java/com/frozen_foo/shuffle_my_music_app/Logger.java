@@ -45,6 +45,7 @@ public class Logger {
 		try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(LOG, true))) {
 			String dateString = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss.SSS").format(new Date());
 			bufferedWriter.write("[" + dateString + "] " + logStatement);
+			bufferedWriter.newLine();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -80,7 +81,6 @@ public class Logger {
 
 		buffer.append("consumed:");
 		buffer.append(consumed);
-		buffer.append(System.lineSeparator());
 
 		return buffer.toString();
 	}
@@ -101,7 +101,12 @@ public class Logger {
 	public static synchronized void logException(Context context, Exception e) {
 		initLog(context);
 		e.printStackTrace();
-		appendToLog(e.getMessage() + System.lineSeparator());
+		appendToLog(e.getMessage());
+	}
+
+	public static synchronized void log(Context context, String logMessage) {
+		initLog(context);
+		appendToLog(logMessage);
 	}
 
 	/**
