@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.frozen_foo.shuffle_my_music_app.Logger;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.ui.ShuffleListActivity;
 
@@ -22,8 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
 			settings = new SettingsAccess().readSettings(getApplicationContext());
 		} catch (SettingsAccessException e) {
 			Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-			// Replace by log4j
-			e.printStackTrace();
+			Logger.logException(this, e);
 		}
 
 		if (null != settings) {
@@ -49,12 +49,10 @@ public class SettingsActivity extends AppCompatActivity {
 			builder.setMessage(R.string.errorEmptySmbParameters).setTitle(R.string.error);
 			AlertDialog dialog = builder.create();
 			dialog.show();
-			// Replace by log4j
-			e.printStackTrace();
+			Logger.logException(this, e);
 		} catch (SettingsAccessException e) {
 			Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-			// Replace by log4j
-			e.printStackTrace();
+			Logger.logException(this, e);
 		}
 
 		Toast.makeText(getApplicationContext(), R.string.store_credentials_success, Toast.LENGTH_SHORT).show();
