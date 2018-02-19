@@ -46,6 +46,7 @@ public class ShuffleListService extends IntentService {
 	private static void startService(final Context context, final int numberOfSongs, final String action) {
 		Intent intent = new Intent(context, ShuffleListService.class);
 		intent.setAction(action);
+
 		putNumberOfSongs(numberOfSongs, intent);
 		context.startService(intent);
 	}
@@ -97,7 +98,6 @@ public class ShuffleListService extends IntentService {
 			} else if (ACTION_RELOAD_SHUFFLE_LIST.equals(action)) {
 				reloadShuffleList(numberOfSongs, intent);
 			}
-
 			stopForeground(true);
 			stopSelf();
 		}
