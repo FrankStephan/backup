@@ -7,7 +7,6 @@ import com.frozen_foo.shuffle_my_music_app.Logger;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.NumberOfSongs;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.DeterminedSongsStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.Error;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinalizationStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinishedSongCopyStep;
@@ -49,7 +48,7 @@ public class ShuffleListProcess {
 		List<IndexEntry> shuffledIndexEntries;
 		if (useExistingList) {
 			shuffledIndexEntries = new ShuffleAccess().getLocalIndex(context);
-			publishProgress(new DeterminedSongsStep(shuffledIndexEntries));
+			publishProgress(PreparationStep.DETERMINED_SONGS);
 			copySongsToLocalDir(context, shuffledIndexEntries);
 		} else {
 			publishProgress(PreparationStep.SAVING_FAVORITES);
@@ -60,11 +59,13 @@ public class ShuffleListProcess {
 
 			publishProgress(PreparationStep.SHUFFLING_INDEX);
 			shuffledIndexEntries = shuffleIndexEntries(indexStream, numberOfSongs);
+			shuffleAccess().cleanLocalData(context);
+			shuffleAccess().createLocalIndex(context, shuffledIndexEntries);
 
-			publishProgress(new DeterminedSongsStep(shuffledIndexEntries));
+			publishProgress(PreparationStep.DETERMINED_SONGS);
 			copySongsToLocalDir(context, shuffledIndexEntries);
 		}
-		publishProgress(new FinalizationStep(shuffledIndexEntries));
+		publishProgress(new FinalizationStep());
 
 		return shuffledIndexEntries;
 	}
@@ -90,9 +91,6 @@ public class ShuffleListProcess {
 
 	private void copySongsToLocalDir(Context context, List<IndexEntry> shuffledIndexEntries) throws IOException,
 			SettingsAccessException {
-		shuffleAccess().cleanLocalData(context);
-		shuffleAccess().createLocalIndex(context, shuffledIndexEntries);
-
 		for (int i = 0; i < shuffledIndexEntries.size(); i++) {
 			publishProgress(new StartSongCopyStep(i));
 			copyToLocalWithRetry(context, shuffledIndexEntries.get(i));

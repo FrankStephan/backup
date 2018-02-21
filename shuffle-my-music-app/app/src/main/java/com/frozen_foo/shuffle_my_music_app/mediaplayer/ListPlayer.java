@@ -15,6 +15,7 @@ import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static android.media.AudioManager.FLAG_SHOW_UI;
@@ -148,12 +149,12 @@ public class ListPlayer {
 		List<IndexEntry> indexEntries = null;
 		try {
 			indexEntries = new ShuffleAccess().getLocalIndex(context);
-		} catch (SettingsAccessException e) {
+		} catch (IOException e) {
 			listPlayerListener.loadingSongsFailed(e);
 		}
 		try {
 			songs = new ShuffleAccess().resolveLocalSongs(context, indexEntries);
-		} catch (SettingsAccessException e) {
+		} catch (IOException e) {
 			listPlayerListener.loadingSongsFailed(e);
 		}
 	}
@@ -198,6 +199,4 @@ public class ListPlayer {
 		audioManager = context.getSystemService(AudioManager.class);
 		audioManager.setStreamVolume(STREAM_MUSIC, audioManager.getStreamMaxVolume(STREAM_MUSIC), FLAG_SHOW_UI);
 	}
-
-
 }

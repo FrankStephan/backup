@@ -25,12 +25,7 @@ public class Logger {
 
 	private static void initLog(final Context context) {
 		if (null == LOG) {
-			File localDir = null;
-			try {
-				localDir = new LocalDirectoryAccess().localDir(context);
-			} catch (SettingsAccessException e) {
-				e.printStackTrace();
-			}
+			File localDir = new LocalDirectoryAccess().localDir(context);;
 			LOG = new File(localDir, "LOG.txt");
 			try {
 				LOG.createNewFile();

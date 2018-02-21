@@ -10,6 +10,7 @@ import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public abstract class AbstractListController {
 	protected List<IndexEntry> localIndex(Activity activity) {
 		try {
 			return new ShuffleAccess().getLocalIndex(activity);
-		} catch (SettingsAccessException e) {
+		} catch (IOException e) {
 			alertException(activity, e);
 			return Collections.emptyList();
 		}

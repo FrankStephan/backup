@@ -21,7 +21,7 @@ import java.util.List;
 
 public class ShuffleAccess {
 
-	public void cleanLocalData(final Context context) throws SettingsAccessException, IOException {
+	public void cleanLocalData(final Context context) throws IOException {
 		new LocalDirectoryAccess().cleanLocalDir(context);
 	}
 
@@ -33,13 +33,12 @@ public class ShuffleAccess {
 		return new ShuffleMyMusicService().randomIndexEntries(indexStream, numberOfSongs);
 	}
 
-	public void createLocalIndex(Context context, List<IndexEntry> shuffledIndexEntries) throws IOException,
-			SettingsAccessException {
+	public void createLocalIndex(Context context, List<IndexEntry> shuffledIndexEntries) throws IOException {
 		String localDirPath = localSongsDirPath(context);
 		new ShuffleMyMusicService().createSongsFile(localDirPath, shuffledIndexEntries);
 	}
 
-	public List<IndexEntry> getLocalIndex(Context context) throws SettingsAccessException {
+	public List<IndexEntry> getLocalIndex(Context context) throws IOException {
 		String localDirPath = localSongsDirPath(context);
 		return new ShuffleMyMusicService().loadSongsFile(localDirPath);
 	}
@@ -50,17 +49,16 @@ public class ShuffleAccess {
 		new LocalDirectoryAccess().copyToLocal(remoteSongStream, indexEntry.getFileName(), context);
 	}
 
-	public List<IndexEntry> markAsFavorites(Context context, List<IndexEntry> indexEntries) throws
-			SettingsAccessException {
+	public List<IndexEntry> markAsFavorites(Context context, List<IndexEntry> indexEntries) throws IOException {
 		String localDirPath = localSongsDirPath(context);
 		return new ShuffleMyMusicService().saveFavorites(localDirPath, indexEntries, false);
 	}
 
-	public List<IndexEntry> loadMarkedFavorites(Context context) throws SettingsAccessException {
+	public List<IndexEntry> loadMarkedFavorites(Context context) throws IOException {
 		return new ShuffleMyMusicService().loadFavorites(localSongsDirPath(context));
 	}
 
-	public void addFavoritesToLocalCollection(Context context) throws SettingsAccessException {
+	public void addFavoritesToLocalCollection(Context context) throws IOException {
 		String           localDirPath       = new LocalDirectoryAccess().localDir(context).getPath();
 		List<IndexEntry> favorites          = new ShuffleMyMusicService().loadFavorites(localDirPath);
 		List<IndexEntry> newFavorites       = loadMarkedFavorites(context);
@@ -86,7 +84,7 @@ public class ShuffleAccess {
 		}
 	}
 
-	public File[] resolveLocalSongs(Context context, List<IndexEntry> indexEntries) throws SettingsAccessException {
+	public File[] resolveLocalSongs(Context context, List<IndexEntry> indexEntries) throws IOException {
 		File localSongsDir = new LocalDirectoryAccess().localSongsDir(context);
 		File[] localSongs = new File[indexEntries.size()];
 		for (int i = 0; i < localSongs.length; i++) {
@@ -96,7 +94,7 @@ public class ShuffleAccess {
 	}
 
 	@NonNull
-	private String localSongsDirPath(Context context) throws SettingsAccessException {
+	private String localSongsDirPath(Context context) throws IOException {
 		return new LocalDirectoryAccess().localSongsDir(context).getPath();
 	}
 }

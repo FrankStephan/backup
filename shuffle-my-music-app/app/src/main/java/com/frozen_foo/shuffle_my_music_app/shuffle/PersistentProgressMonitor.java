@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.DeterminedSongsStep;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.Error;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinalizationStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinishedSongCopyStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.PreparationStep;
@@ -26,7 +26,7 @@ public class PersistentProgressMonitor extends ProgressMonitor<ShuffleProgress> 
 	@Override
 	public void updateProgress(final ShuffleProgress shuffleProgress) {
 		synchronized (this) {
-
+			int shuffleListStep = toInt(shuffleProgress);
 		}
 	}
 
@@ -50,16 +50,16 @@ return fromInt(index);
 					return 2;
 				case SHUFFLING_INDEX:
 					return 3;
+				case DETERMINED_SONGS:
+					return 4;
 			}
 		} else {
-			if (shuffleProgress instanceof DeterminedSongsStep) {
-				return 4;
-			} else if (shuffleProgress instanceof StartSongCopyStep) {
+			if (shuffleProgress instanceof StartSongCopyStep) {
 				int index = ((StartSongCopyStep) shuffleProgress).getIndex();
-				return (PreparationStep.values().length + index);
+				return (5 + index);
 			} else if (shuffleProgress instanceof FinishedSongCopyStep) {
-				int index = ((StartSongCopyStep) shuffleProgress).getIndex();
-				return (PreparationStep.values().length + index);
+				int index = ((FinishedSongCopyStep) shuffleProgress).getIndex();
+				return (5 + index);
 			} else if (shuffleProgress instanceof FinalizationStep) {
 				return 0;
 			}
@@ -72,9 +72,8 @@ return fromInt(index);
 			case 1: return PreparationStep.SAVING_FAVORITES;
 			case 2: return PreparationStep.LOADING_INDEX;
 			case 3: return PreparationStep.SHUFFLING_INDEX;
-			case 4:
-			case 0:
-			case -1:
+			case 4: return PreparationStep.DETERMINED_SONGS;
+			case -1: return new Error(null); //Wie die Exception speichern?
 			default:
 				return new StartSongCopyStep(i);
 		}

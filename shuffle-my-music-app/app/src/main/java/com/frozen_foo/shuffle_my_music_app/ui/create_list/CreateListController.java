@@ -13,12 +13,12 @@ import android.widget.ProgressBar;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
+import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleListService;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 import com.frozen_foo.shuffle_my_music_app.ui.GenericRowAdapter;
 import com.frozen_foo.shuffle_my_music_app.ui.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.DeterminedSongsStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.Error;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinalizationStep;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinishedSongCopyStep;
@@ -26,6 +26,7 @@ import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.PreparationSt
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.ShuffleProgress;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.StartSongCopyStep;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -66,7 +67,7 @@ public class CreateListController extends AbstractListController {
 	private void updateProgress(Activity activity, ProgressBar progressBar, ShuffleProgress shuffleProgress,
 								final Intent intent, final ListCreationListener listCreationListener) {
 		int numberOfSongs = ShuffleListService.extractNumberOfSongs(intent);
-		progressBar.setMax(numberOfSongs + PreparationStep.values().length - 1);
+		progressBar.setMax(4 + numberOfSongs);
 		if (shuffleProgress instanceof PreparationStep) {
 			PreparationStep preparationStep = (PreparationStep) shuffleProgress;
 			switch (preparationStep) {
@@ -82,25 +83,39 @@ public class CreateListController extends AbstractListController {
 					progressBar.setProgress(3);
 					showPreparation(activity, activity.getString(R.string.determineRandomSongs));
 					break;
+				case DETERMINED_SONGS:
+					progressBar.setProgress(4);
+					try {
+						fillRows(activity, new ShuffleAccess().getLocalIndex(activity));
+					} catch (IOException e) {
+						handleError(activity, e, listCreationListener);
+					}
+					break;
 			}
 		} else {
-			if (shuffleProgress instanceof DeterminedSongsStep) {
-				progressBar.setProgress(4);
-				fillRows(activity, ((DeterminedSongsStep) shuffleProgress).getSongs());
-			} else if (shuffleProgress instanceof StartSongCopyStep) {
+			if (shuffleProgress instanceof StartSongCopyStep) {
 				int index = ((StartSongCopyStep) shuffleProgress).getIndex();
 				updateCopyProgress(activity, index);
-				progressBar.setProgress(PreparationStep.values().length + index);
+				progressBar.setProgress(5 + index);
 			} else if (shuffleProgress instanceof FinishedSongCopyStep) {
 			} else if (shuffleProgress instanceof FinalizationStep) {
-				updateCopyProgress(activity, -1);
+				resetCopyProgressForAllSongs(activity);
 				progressBar.setProgress(0);
 				listCreationListener.onComplete();
 			} else if (shuffleProgress instanceof Error) {
-				alertException(activity, ((Error) shuffleProgress).getException());
-				listCreationListener.onComplete();
+				handleError(activity, ((Error) shuffleProgress).getException(), listCreationListener);
 			}
 		}
+	}
+
+	private void resetCopyProgressForAllSongs(final Activity activity) {
+		updateCopyProgress(activity, -1);
+	}
+
+	private void handleError(final Activity activity, final Exception e,
+							 final ListCreationListener listCreationListener) {
+		alertException(activity, e);
+		listCreationListener.onComplete();
 	}
 
 	private void showPreparation(Activity activity, String text) {

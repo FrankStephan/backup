@@ -51,7 +51,7 @@ public class ListPlayerController extends AbstractListController {
 			}
 
 			@Override
-			public void loadingSongsFailed(final SettingsAccessException e) {
+			public void loadingSongsFailed(final Exception e) {
 				alertException(activity, e);
 			}
 		});
