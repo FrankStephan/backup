@@ -7,12 +7,11 @@ import com.frozen_foo.shuffle_my_music_app.Logger;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.NumberOfSongs;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.Error;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinalizationStep;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinishedSongCopyStep;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.PreparationStep;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.ShuffleProgress;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.StartSongCopyStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.Error;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.FinalizationStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.PreparationStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgress;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.CopySongStep;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -92,9 +91,8 @@ public class ShuffleListProcess {
 	private void copySongsToLocalDir(Context context, List<IndexEntry> shuffledIndexEntries) throws IOException,
 			SettingsAccessException {
 		for (int i = 0; i < shuffledIndexEntries.size(); i++) {
-			publishProgress(new StartSongCopyStep(i));
+			publishProgress(new CopySongStep(i));
 			copyToLocalWithRetry(context, shuffledIndexEntries.get(i));
-			publishProgress(new FinishedSongCopyStep(i));
 		}
 	}
 

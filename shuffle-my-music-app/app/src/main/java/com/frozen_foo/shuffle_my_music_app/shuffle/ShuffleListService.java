@@ -13,10 +13,10 @@ import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
 import com.frozen_foo.shuffle_my_music_app.ui.ShuffleListActivity;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.NumberOfSongs;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.FinalizationStep;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.PreparationStep;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.ShuffleProgress;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.progress.StartSongCopyStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.FinalizationStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.PreparationStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgress;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.CopySongStep;
 
 public class ShuffleListService extends IntentService {
 
@@ -115,11 +115,16 @@ public class ShuffleListService extends IntentService {
 		new ShuffleListProcess(new ProgressMonitor<ShuffleProgress>() {
 			@Override
 			public void updateProgress(final ShuffleProgress shuffleProgress) {
-				notifyProgressUpdate(shuffleProgress, numberOfSongs);
-				putProgress(shuffleProgress, intent);
-				broadcaster.sendBroadcastSync(intent);
+				sendProgressUpdate(shuffleProgress, numberOfSongs, intent);
 			}
 		}).start(numberOfSongs);
+	}
+
+	private void sendProgressUpdate(final ShuffleProgress shuffleProgress, final NumberOfSongs numberOfSongs,
+									final Intent intent) {
+		notifyProgressUpdate(shuffleProgress, numberOfSongs);
+		putProgress(shuffleProgress, intent);
+		broadcaster.sendBroadcastSync(intent);
 	}
 
 	private void notifyProgressUpdate(final ShuffleProgress shuffleProgress, final NumberOfSongs numberOfSongs) {
@@ -137,9 +142,9 @@ public class ShuffleListService extends IntentService {
 					break;
 			}
 		} else {
-			if (shuffleProgress instanceof StartSongCopyStep) {
+			if (shuffleProgress instanceof CopySongStep) {
 				String notificationMessage = new StringBuilder().append(getString(R.string.copying_title)).append(" ")
-						.append(((StartSongCopyStep) shuffleProgress).getIndex() + 1).append("/")
+						.append(((CopySongStep) shuffleProgress).getIndex() + 1).append("/")
 						.append(numberOfSongs.value).toString();
 				notify(notificationMessage);
 			} else if (shuffleProgress instanceof FinalizationStep) {

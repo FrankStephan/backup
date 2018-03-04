@@ -1,17 +1,12 @@
 package com.frozen_foo.shuffle_my_music_app.ui;
 
-import android.app.ActivityManager;
-import android.app.Application;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -20,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.ToggleButton;
 
@@ -30,15 +24,12 @@ import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerControllerListe
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionsAccess;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsActivity;
-import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleListService;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.CreateListController;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.ListCreationListener;
 import com.frozen_foo.shuffle_my_music_app.ui.number_picker.NumberPickerController;
 import com.frozen_foo.shuffle_my_music_app.ui.select_favorites.SelectFavoritesController;
 import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListController;
 import com.frozen_foo.shuffle_my_music_app.volume.VolumeMaxController;
-
-import java.util.List;
 
 import static com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest.READ_EXTERNAL_STORAGE_REQUEST;
 
@@ -70,7 +61,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shuffle_list);
 		CreateListController createListController = new CreateListController();
-		progressUpdater = new CreateListController().createProgressUpdater(this, progressBar(), new ListCreationListener() {
+		progressUpdater = new CreateListController().createShuffleProgressReceiver(this, progressBar(), new ListCreationListener() {
 			@Override
 			public void onComplete() {
 				changeMode(Mode.SHOW_LIST);
@@ -84,13 +75,13 @@ public class ShuffleListActivity extends AppCompatActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		new CreateListController().registerProgressUpdater(this, progressUpdater);
+		new CreateListController().registerShuffleProgressReceiver(this, progressUpdater);
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		new CreateListController().unregisterProgressUpdater(this, progressUpdater);
+		new CreateListController().unregisterShuffleProgressReceiver(this, progressUpdater);
 	}
 
 	@Override
@@ -158,7 +149,15 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private void _loadList() {
 		int[] durations = listPlayerController.getDurations();
-		new ShowListController().loadAndInflateList(this, list(), durations);
+		new ShowListController().loadAndInflateList(this, list(), durations, progressBar(), new ListCreationListener() {
+			@Override
+			public void onComplete() {
+				changeMode(Mode.SHOW_LIST);
+				listPlayerController.reloadSongs();
+				button1().setEnabled(true);
+				_loadList(); // TODO: Prevent cyclic calls
+			}
+		});
 	}
 
 	@Override

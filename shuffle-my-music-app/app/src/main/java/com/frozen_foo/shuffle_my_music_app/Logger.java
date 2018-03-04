@@ -96,20 +96,11 @@ public class Logger {
 	public static synchronized void logException(Context context, Exception e) {
 		initLog(context);
 		e.printStackTrace();
-		appendToLog(e.getMessage());
+		appendToLog(Log.getStackTraceString(e));
 	}
 
 	public static synchronized void log(Context context, String logMessage) {
 		initLog(context);
 		appendToLog(logMessage);
-	}
-
-	/**
-	 * Created by Frank on 04.01.2018.
-	 */
-
-	public static class VolumeMaxController {
-
-
 	}
 }

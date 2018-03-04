@@ -2,16 +2,20 @@ package com.frozen_foo.shuffle_my_music_app.ui.show_list;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgressAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 import com.frozen_foo.shuffle_my_music_app.ui.GenericRowAdapter;
 import com.frozen_foo.shuffle_my_music_app.ui.IndexEntryRowModelConverter;
 import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
+import com.frozen_foo.shuffle_my_music_app.ui.ShuffleProgressUpdate;
+import com.frozen_foo.shuffle_my_music_app.ui.create_list.ListCreationListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,15 +33,26 @@ public class ShowListController extends AbstractListController {
 		return new SimpleDateFormat("mm:ss");
 	}
 
-	public void loadAndInflateList(Activity activity, ListView shuffleList, final int[] durations) {
-		Context          context = activity.getApplicationContext();
+	public void loadAndInflateList(final Activity activity, ListView shuffleList, final int[] durations,
+								   ProgressBar progressBar, ListCreationListener listCreationListener) {
+		Context          context      = activity.getApplicationContext();
 		List<IndexEntry> indexEntries = localIndex(activity);
-		RowModel[] rows = new IndexEntryRowModelConverter().toRowModels(indexEntries);
+		RowModel[]       rows         = new IndexEntryRowModelConverter().toRowModels(indexEntries);
 
 		setDuration(activity, durations, rows);
 
 		GenericRowAdapter adapter = new GenericRowAdapter(activity, rows);
 		shuffleList.setAdapter(adapter);
+
+
+		new ShuffleProgressAccess(context).runWithMostRecentShuffleProgress(
+				new ShuffleProgressUpdate(activity, progressBar, listCreationListener) {
+					@Override
+					protected void onError(final Exception e) {
+						alertException(activity, e);
+					}
+				});
+
 		adapter.notifyDataSetChanged();
 	}
 
