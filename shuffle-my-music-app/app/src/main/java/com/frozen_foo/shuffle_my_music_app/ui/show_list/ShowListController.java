@@ -2,14 +2,13 @@ package com.frozen_foo.shuffle_my_music_app.ui.show_list;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgressAccess;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgressProcessor;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 import com.frozen_foo.shuffle_my_music_app.ui.GenericRowAdapter;
 import com.frozen_foo.shuffle_my_music_app.ui.IndexEntryRowModelConverter;
@@ -39,19 +38,18 @@ public class ShowListController extends AbstractListController {
 		List<IndexEntry> indexEntries = localIndex(activity);
 		RowModel[]       rows         = new IndexEntryRowModelConverter().toRowModels(indexEntries);
 
-		setDuration(activity, durations, rows);
-
 		GenericRowAdapter adapter = new GenericRowAdapter(activity, rows);
 		shuffleList.setAdapter(adapter);
 
-
-		new ShuffleProgressAccess(context).runWithMostRecentShuffleProgress(
-				new ShuffleProgressUpdate(activity, progressBar, listCreationListener) {
+		new ShuffleProgressProcessor().processUpdateWithMostRecentProgressSync(context,
+				new ShuffleProgressUpdate(activity, progressBar, listCreationListener, true) {
 					@Override
 					protected void onError(final Exception e) {
 						alertException(activity, e);
 					}
 				});
+
+		// TODO: Hier brauchts ein anderes Update, welches ab CopySongStep die Liste der Songs neu lädt (fillRows)
 
 		adapter.notifyDataSetChanged();
 	}

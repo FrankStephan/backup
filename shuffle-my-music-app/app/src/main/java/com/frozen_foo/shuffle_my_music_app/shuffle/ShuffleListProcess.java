@@ -7,11 +7,11 @@ import com.frozen_foo.shuffle_my_music_app.Logger;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.NumberOfSongs;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.Error;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.FinalizationStep;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.PreparationStep;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgress;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.CopySongStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.Error;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.FinalizationStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.PreparationStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.ShuffleProgress;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.CopySongStep;
 
 import java.io.IOException;
 import java.io.InputStream;

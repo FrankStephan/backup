@@ -7,12 +7,12 @@ import android.widget.ProgressBar;
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.CopySongStep;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.Error;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.FinalizationStep;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.PreparationStep;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgress;
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgressRunnable;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.CopySongStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.Error;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.FinalizationStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.PreparationStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.ShuffleProgress;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.ListCreationListener;
 
 import java.io.IOException;
@@ -27,15 +27,17 @@ public abstract class ShuffleProgressUpdate implements ShuffleProgressRunnable {
 	private final Activity activity;
 	private final ProgressBar progressBar;
 	private final ListCreationListener listCreationListener;
-
-	protected abstract void onError(Exception e);
+	private final boolean forceFillRows;
 
 	public ShuffleProgressUpdate(final Activity activity, final ProgressBar progressBar,
-								 final ListCreationListener listCreationListener) {
+								 final ListCreationListener listCreationListener, final boolean forceFillRows) {
 		this.activity = activity;
 		this.progressBar = progressBar;
 		this.listCreationListener = listCreationListener;
+		this.forceFillRows = forceFillRows;
 	}
+
+	protected abstract void onError(Exception e);
 
 	@Override
 	public void run(final ShuffleProgress shuffleProgress, final int numberOfSongs) {
@@ -57,14 +59,13 @@ public abstract class ShuffleProgressUpdate implements ShuffleProgressRunnable {
 					break;
 				case DETERMINED_SONGS:
 					progressBar.setProgress(4);
-					try {
-						fillRows(activity, new ShuffleAccess().getLocalIndex(activity));
-					} catch (IOException e) {
-						handleError(activity, e, listCreationListener);
-					}
+					fillRows();
 					break;
 			}
 		} else {
+			if (forceFillRows) {
+				fillRows();
+			}
 			if (shuffleProgress instanceof CopySongStep) {
 				int index = ((CopySongStep) shuffleProgress).getIndex();
 				updateCopyProgress(activity, index);
@@ -95,10 +96,15 @@ public abstract class ShuffleProgressUpdate implements ShuffleProgressRunnable {
 		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
 	}
 
-	private void fillRows(final Activity activity, List<IndexEntry> randomIndexEntries) {
-		RowModel[]        rows    = new IndexEntryRowModelConverter().toRowModels(randomIndexEntries);
-		GenericRowAdapter adapter = new GenericRowAdapter(activity, rows);
-		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
+	private void fillRows() {
+		try {
+			List<IndexEntry>  indexEntries = new ShuffleAccess().getLocalIndex(activity);
+			RowModel[]        rows         = new IndexEntryRowModelConverter().toRowModels(indexEntries);
+			GenericRowAdapter adapter      = new GenericRowAdapter(activity, rows);
+			((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
+		} catch (IOException e) {
+			handleError(activity, e, listCreationListener);
+		}
 	}
 
 	private void updateCopyProgress(Activity activity, int index) {

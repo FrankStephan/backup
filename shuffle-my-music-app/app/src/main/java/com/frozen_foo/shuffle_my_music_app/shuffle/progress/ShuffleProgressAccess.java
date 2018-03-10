@@ -2,7 +2,12 @@ package com.frozen_foo.shuffle_my_music_app.shuffle.progress;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Handler;
+
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.CopySongStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.Error;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.FinalizationStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.PreparationStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.ShuffleProgress;
 
 /**
  * Created by Frank on 19.02.2018.
@@ -20,31 +25,21 @@ public class ShuffleProgressAccess {
 		this.context = context;
 	}
 
-	public void updateShuffleProgress(final ShuffleProgress shuffleProgress, final int numberOfSongs,
-									  final ShuffleProgressRunnable runnable, Handler handler) {
-		synchronized (getClass()) {
-			int shuffleListStep = toInt(shuffleProgress);
-			sharedPreferences().edit().putInt(SHUFFLE_LIST_STEP, shuffleListStep).putInt(NUMBER_OF_SONGS, numberOfSongs)
-					.apply();
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					runnable.run(shuffleProgress, numberOfSongs);
-				}
-			});
-		}
+	public ShuffleProgress mostRecentProgress() {
+		int             shuffleListStep = sharedPreferences().getInt(SHUFFLE_LIST_STEP, 0);
+		ShuffleProgress shuffleProgress = fromInt(shuffleListStep);
+		return shuffleProgress;
 	}
 
-	public void runWithMostRecentShuffleProgress(final ShuffleProgressRunnable runnable) {
-		synchronized (getClass()) {
-			int             shuffleListStep = sharedPreferences().getInt(SHUFFLE_LIST_STEP, 0);
-			ShuffleProgress shuffleProgress = fromInt(shuffleListStep);
-			int             numberOfSongs   = sharedPreferences().getInt(NUMBER_OF_SONGS, 0);
+	public int numberOfSongs() {
+		int numberOfSongs = sharedPreferences().getInt(NUMBER_OF_SONGS, 0);
+		return numberOfSongs;
+	}
 
-			// TODO: Run only during shuffle
-
-			runnable.run(shuffleProgress, numberOfSongs);
-		}
+	public void updateProgress(ShuffleProgress shuffleProgress, final int numberOfSongs) {
+		int shuffleListStep = toInt(shuffleProgress);
+		sharedPreferences().edit().putInt(SHUFFLE_LIST_STEP, shuffleListStep).putInt(NUMBER_OF_SONGS, numberOfSongs)
+				.apply();
 	}
 
 	private SharedPreferences sharedPreferences() {
@@ -78,7 +73,7 @@ public class ShuffleProgressAccess {
 	private ShuffleProgress fromInt(int i) {
 		switch (i) {
 			case 0:
-				return null;
+				return new FinalizationStep();
 			case 1:
 				return PreparationStep.SAVING_FAVORITES;
 			case 2:
@@ -88,7 +83,7 @@ public class ShuffleProgressAccess {
 			case 4:
 				return PreparationStep.DETERMINED_SONGS;
 			case -1:
-				return new Error(null);
+				return new Error(null); // TODO: Store exception inside the intent
 			default:
 				return new CopySongStep(i - 5);
 		}

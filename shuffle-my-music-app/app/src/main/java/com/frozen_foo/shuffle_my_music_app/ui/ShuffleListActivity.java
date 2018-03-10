@@ -61,15 +61,22 @@ public class ShuffleListActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shuffle_list);
 		CreateListController createListController = new CreateListController();
-		progressUpdater = new CreateListController().createShuffleProgressReceiver(this, progressBar(), new ListCreationListener() {
+		progressUpdater = new CreateListController()
+				.createShuffleProgressReceiver(this, progressBar(), shuffleCompletedListener());
+	}
+
+	@NonNull
+	private ListCreationListener shuffleCompletedListener() {
+		return new ListCreationListener() {
 			@Override
 			public void onComplete() {
-				changeMode(Mode.SHOW_LIST);
-				listPlayerController.reloadSongs();
-				button1().setEnabled(true);
-				_loadList();
+				synchronized (ShuffleListActivity.this) {
+					changeMode(Mode.SHOW_LIST);
+					listPlayerController.reloadSongs();
+					button1().setEnabled(true);
+				}
 			}
-		});
+		};
 	}
 
 	@Override
@@ -149,15 +156,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private void _loadList() {
 		int[] durations = listPlayerController.getDurations();
-		new ShowListController().loadAndInflateList(this, list(), durations, progressBar(), new ListCreationListener() {
-			@Override
-			public void onComplete() {
-				changeMode(Mode.SHOW_LIST);
-				listPlayerController.reloadSongs();
-				button1().setEnabled(true);
-				_loadList(); // TODO: Prevent cyclic calls
-			}
-		});
+		new ShowListController().loadAndInflateList(this, list(), durations, progressBar(), shuffleCompletedListener());
 	}
 
 	@Override

@@ -5,12 +5,13 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 import android.widget.ProgressBar;
 
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleListService;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgress;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgressRunnable;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgressProcessor;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgressReceiver;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 import com.frozen_foo.shuffle_my_music_app.ui.ShuffleProgressUpdate;
 
@@ -33,17 +34,17 @@ public class CreateListController extends AbstractListController {
 
 	public BroadcastReceiver createShuffleProgressReceiver(final Activity activity, final ProgressBar progressBar,
 														   final ListCreationListener listCreationListener) {
-		return new ShuffleProgressReceiver(activity, progressBar, listCreationListener) {
+		ShuffleProgressUpdate runnable = createUpdateRunnable(activity, progressBar, listCreationListener);
+		return new ShuffleProgressReceiver(runnable, new Handler(Looper.getMainLooper()), new ShuffleProgressProcessor());
+	}
+
+	@NonNull
+	private ShuffleProgressUpdate createUpdateRunnable(final Activity activity, final ProgressBar progressBar,
+													   final ListCreationListener listCreationListener) {
+		return new ShuffleProgressUpdate(activity, progressBar, listCreationListener, false) {
 			@Override
-			protected ShuffleProgressRunnable createUIUpdate(final ShuffleProgress shuffleProgress, final int numberOfSongs,
-															 final Activity activity, final ProgressBar progressBar,
-															 final ListCreationListener listCreationListener) {
-				return new ShuffleProgressUpdate(activity, progressBar, listCreationListener) {
-					@Override
-					protected void onError(Exception e) {
-						alertException(activity, e);
-					}
-				};
+			protected void onError(final Exception e) {
+				alertException(activity, e);
 			}
 		};
 	}

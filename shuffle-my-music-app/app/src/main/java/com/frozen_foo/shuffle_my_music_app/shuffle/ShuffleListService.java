@@ -11,21 +11,21 @@ import android.support.v7.app.NotificationCompat;
 
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgressAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.ShuffleListActivity;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.NumberOfSongs;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.FinalizationStep;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.PreparationStep;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgress;
-import com.frozen_foo.shuffle_my_music_app.shuffle.progress.CopySongStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.FinalizationStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.PreparationStep;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.ShuffleProgress;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.CopySongStep;
 
 public class ShuffleListService extends IntentService {
 
 	public static final String ACTION_CREATE_NEW_SHUFFLE_LIST =
 			"com.frozen_foo.myapplication.action.CREATE_NEW_SHUFFLE_LIST";
 	public static final String ACTION_RELOAD_SHUFFLE_LIST = "com.frozen_foo.myapplication.action.RELOAD_SHUFFLE_LIST";
-	public static final String SHUFFLE_PROGRESS = "com.frozen_foo.myapplication.extra.SHUFFLE_PROGRESS";
-	public static final int DEFAULT_NUMBER_OF_SONGS = 10;
-	public static final int NOTIFICATION_ID = 1;
+
+	public static final int DEFAULT_NUMBER_OF_SONGS = 0;
 
 	private static final String NUMBER_OF_SONGS = "com.frozen_foo.myapplication.extra.NUMBER_OF_SONGS";
 	private LocalBroadcastManager broadcaster;
@@ -51,15 +51,7 @@ public class ShuffleListService extends IntentService {
 		context.startService(intent);
 	}
 
-	public static ShuffleProgress extractProgress(Intent intent) {
-		return (ShuffleProgress) intent.getSerializableExtra(ShuffleListService.SHUFFLE_PROGRESS);
-	}
-
-	private static void putProgress(ShuffleProgress shuffleProgress, Intent intent) {
-		intent.putExtra(SHUFFLE_PROGRESS, shuffleProgress);
-	}
-
-	public static int extractNumberOfSongs(final Intent intent) {
+	private static int extractNumberOfSongs(final Intent intent) {
 		return intent.getIntExtra(NUMBER_OF_SONGS, DEFAULT_NUMBER_OF_SONGS);
 	}
 
@@ -76,17 +68,11 @@ public class ShuffleListService extends IntentService {
 
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-		Notification notification = buildNotification("");
-		startForeground(NOTIFICATION_ID, notification);
+		Notification notification = new NotificationController().buildNotification(this, "");
+		startForeground(NotificationController.NOTIFICATION_ID, notification);
 	}
 
-	private Notification buildNotification(String contextText) {
-		Intent notificationIntent = new Intent(this, ShuffleListActivity.class);
-		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
-		return new NotificationCompat.Builder(this).setSmallIcon(R.drawable.ic_shuffle_white_24dp)
-				.setContentTitle(getString(R.string.app_name)).setContentText(contextText)
-				.setContentIntent(pendingIntent).build();
-	}
+
 
 	@Override
 	protected void onHandleIntent(Intent intent) {
@@ -122,46 +108,14 @@ public class ShuffleListService extends IntentService {
 
 	private void sendProgressUpdate(final ShuffleProgress shuffleProgress, final NumberOfSongs numberOfSongs,
 									final Intent intent) {
-		notifyProgressUpdate(shuffleProgress, numberOfSongs);
-		putProgress(shuffleProgress, intent);
+		new ShuffleProgressAccess(numberOfSongs.context).updateProgress(shuffleProgress, numberOfSongs.value);
+		new NotificationController().updateNotifications(this, shuffleProgress, numberOfSongs);
+		broadcastUpdate(intent);
+	}
+
+
+
+	private void broadcastUpdate(final Intent intent) {
 		broadcaster.sendBroadcastSync(intent);
-	}
-
-	private void notifyProgressUpdate(final ShuffleProgress shuffleProgress, final NumberOfSongs numberOfSongs) {
-		if (shuffleProgress instanceof PreparationStep) {
-			PreparationStep preparationStep = (PreparationStep) shuffleProgress;
-			switch (preparationStep) {
-				case SAVING_FAVORITES:
-					notify(getString(R.string.saveFavorites));
-					break;
-				case LOADING_INDEX:
-					notify(getString(R.string.indexLoading));
-					break;
-				case SHUFFLING_INDEX:
-					notify(getString(R.string.determineRandomSongs));
-					break;
-			}
-		} else {
-			if (shuffleProgress instanceof CopySongStep) {
-				String notificationMessage = new StringBuilder().append(getString(R.string.copying_title)).append(" ")
-						.append(((CopySongStep) shuffleProgress).getIndex() + 1).append("/")
-						.append(numberOfSongs.value).toString();
-				notify(notificationMessage);
-			} else if (shuffleProgress instanceof FinalizationStep) {
-				notificationManager().cancel(NOTIFICATION_ID);
-			}
-		}
-	}
-
-	private void notify(String contextText) {
-		notificationManager().notify(NOTIFICATION_ID, buildNotification(contextText));
-	}
-
-	private void notify(Notification notification) {
-		notificationManager().notify(NOTIFICATION_ID, notification);
-	}
-
-	private NotificationManager notificationManager() {
-		return getSystemService(NotificationManager.class);
 	}
 }

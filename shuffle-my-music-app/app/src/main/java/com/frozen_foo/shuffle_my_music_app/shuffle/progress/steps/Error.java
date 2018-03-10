@@ -1,4 +1,4 @@
-package com.frozen_foo.shuffle_my_music_app.shuffle.progress;
+package com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps;
 
 /**
  * Created by Frank on 15.02.2018.
