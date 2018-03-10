@@ -96,7 +96,7 @@ public class ShuffleListProcess {
 		}
 	}
 
-	private void copyToLocalWithRetry(Context context, IndexEntry indexEntry) throws SettingsAccessException, IOException {
+	private boolean copyToLocalWithRetry(Context context, IndexEntry indexEntry) throws SettingsAccessException, IOException {
 		int retryAttempt = 0;
 		boolean success  = false;
 

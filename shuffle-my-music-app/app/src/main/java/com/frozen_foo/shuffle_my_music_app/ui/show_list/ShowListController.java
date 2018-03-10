@@ -48,9 +48,6 @@ public class ShowListController extends AbstractListController {
 						alertException(activity, e);
 					}
 				});
-
-		// TODO: Hier brauchts ein anderes Update, welches ab CopySongStep die Liste der Songs neu lädt (fillRows)
-
 		adapter.notifyDataSetChanged();
 	}
 

@@ -12,6 +12,7 @@ import android.support.v7.app.NotificationCompat;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgressAccess;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.Error;
 import com.frozen_foo.shuffle_my_music_app.ui.ShuffleListActivity;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.NumberOfSongs;
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.FinalizationStep;

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.widget.ListAdapter;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
+import com.frozen_foo.shuffle_my_music_app.Logger;
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
@@ -29,13 +30,12 @@ public abstract class AbstractListController {
 	}
 
 	protected void alertException(Activity activity, Exception e) {
+		Logger.logException(activity, e);
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity).setTitle(e.getClass().getSimpleName())
 				.setMessage(e.getMessage());
 
 		AlertDialog         dialog  = builder.create();
 		dialog.show();
-		// Replace by log4j
-		e.printStackTrace();
 	}
 
 	protected List<IndexEntry> localIndex(Activity activity) {
