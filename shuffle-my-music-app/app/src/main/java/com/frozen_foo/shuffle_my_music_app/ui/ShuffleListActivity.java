@@ -19,11 +19,14 @@ import android.widget.ProgressBar;
 import android.widget.ToggleButton;
 
 import com.frozen_foo.shuffle_my_music_app.R;
+import com.frozen_foo.shuffle_my_music_app.durations.DurationsAccess;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerController;
 import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerControllerListener;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionsAccess;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsActivity;
+import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
+import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgressAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.CreateListController;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.ListCreationListener;
 import com.frozen_foo.shuffle_my_music_app.ui.number_picker.NumberPickerController;
@@ -60,7 +63,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shuffle_list);
-		CreateListController createListController = new CreateListController();
 		progressUpdater = new CreateListController()
 				.createShuffleProgressReceiver(this, progressBar(), shuffleCompletedListener());
 	}
@@ -155,8 +157,16 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	private void _loadList() {
-		int[] durations = listPlayerController.getDurations();
-		new ShowListController().loadAndInflateList(this, list(), durations, progressBar(), shuffleCompletedListener());
+		updateListAttributesWhenSettingsChanged();
+		new ShowListController().loadAndInflateList(this, list(), progressBar(), shuffleCompletedListener());
+	}
+
+	private void updateListAttributesWhenSettingsChanged() {
+		if (getIntent().getBooleanExtra(SettingsActivity.SETTINGS_CHANGED_FLAG, false)) {
+			getIntent().removeExtra(SettingsActivity.SETTINGS_CHANGED_FLAG);
+			new ShuffleProgressAccess(this).updateProgress(null, new ShuffleAccess().getLocalIndex(this).size());
+			new DurationsAccess(this).updateForAllSongs();
+		}
 	}
 
 	@Override

@@ -62,27 +62,31 @@ public class ShuffleProgressAccess {
 	}
 
 	private int toInt(ShuffleProgress shuffleProgress) {
-		if (shuffleProgress instanceof PreparationStep) {
-			PreparationStep preparationStep = (PreparationStep) shuffleProgress;
-			switch (preparationStep) {
-				case SAVING_FAVORITES:
-					return 1;
-				case LOADING_INDEX:
-					return 2;
-				case SHUFFLING_INDEX:
-					return 3;
-				case DETERMINED_SONGS:
-					return 4;
+		if (shuffleProgress != null) {
+			if (shuffleProgress instanceof PreparationStep) {
+				PreparationStep preparationStep = (PreparationStep) shuffleProgress;
+				switch (preparationStep) {
+					case SAVING_FAVORITES:
+						return 1;
+					case LOADING_INDEX:
+						return 2;
+					case SHUFFLING_INDEX:
+						return 3;
+					case DETERMINED_SONGS:
+						return 4;
+				}
+			} else {
+				if (shuffleProgress instanceof CopySongStep) {
+					int index = ((CopySongStep) shuffleProgress).getIndex();
+					return (5 + index);
+				} else if (shuffleProgress instanceof FinalizationStep) {
+					return 0;
+				}
 			}
-		} else {
-			if (shuffleProgress instanceof CopySongStep) {
-				int index = ((CopySongStep) shuffleProgress).getIndex();
-				return (5 + index);
-			} else if (shuffleProgress instanceof FinalizationStep) {
-				return 0;
-			}
+			return -1;
+		} else{
+			return 0;
 		}
-		return -1;
 	}
 
 	private ShuffleProgress fromInt(int i) {

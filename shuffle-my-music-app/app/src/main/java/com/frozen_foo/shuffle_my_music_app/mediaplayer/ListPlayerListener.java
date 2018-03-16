@@ -12,5 +12,4 @@ public interface ListPlayerListener extends MediaPlayer.OnErrorListener, ListPla
 
 	void onStart();
 	void onPause();
-	void loadingSongsFailed(Exception e);
 }

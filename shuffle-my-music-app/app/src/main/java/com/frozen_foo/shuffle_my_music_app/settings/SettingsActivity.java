@@ -14,6 +14,8 @@ import com.frozen_foo.shuffle_my_music_app.ui.ShuffleListActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
+	public static final String SETTINGS_CHANGED_FLAG = "settingsChanged";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -56,16 +58,17 @@ public class SettingsActivity extends AppCompatActivity {
 		}
 
 		Toast.makeText(getApplicationContext(), R.string.store_credentials_success, Toast.LENGTH_SHORT).show();
-		openShuffleListActivity();
+		openShuffleListActivity(true);
 	}
 
-	private void openShuffleListActivity() {
+	private void openShuffleListActivity(final boolean settingsChanged) {
 		Intent intent = new Intent(this, ShuffleListActivity.class);
+		intent.putExtra(SETTINGS_CHANGED_FLAG, settingsChanged);
 		startActivity(intent);
 	}
 
 	public void cancel(View view) {
 		Toast.makeText(getApplicationContext(), R.string.bye, Toast.LENGTH_SHORT).show();
-		openShuffleListActivity();
+		openShuffleListActivity(false);
 	}
 }

@@ -38,7 +38,7 @@ public class ShuffleAccess {
 		new ShuffleMyMusicService().createSongsFile(localDirPath, shuffledIndexEntries);
 	}
 
-	public List<IndexEntry> getLocalIndex(Context context) throws IOException {
+	public List<IndexEntry> getLocalIndex(Context context) {
 		String localDirPath = localSongsDirPath(context);
 		return new ShuffleMyMusicService().loadSongsFile(localDirPath);
 	}
@@ -84,7 +84,7 @@ public class ShuffleAccess {
 		}
 	}
 
-	public File[] resolveLocalSongs(Context context, List<IndexEntry> indexEntries) throws IOException {
+	public File[] resolveLocalSongs(Context context, List<IndexEntry> indexEntries) {
 		File localSongsDir = new LocalDirectoryAccess().localSongsDir(context);
 		File[] localSongs = new File[indexEntries.size()];
 		for (int i = 0; i < localSongs.length; i++) {
@@ -94,7 +94,7 @@ public class ShuffleAccess {
 	}
 
 	@NonNull
-	private String localSongsDirPath(Context context) throws IOException {
+	private String localSongsDirPath(Context context) {
 		return new LocalDirectoryAccess().localSongsDir(context).getPath();
 	}
 }

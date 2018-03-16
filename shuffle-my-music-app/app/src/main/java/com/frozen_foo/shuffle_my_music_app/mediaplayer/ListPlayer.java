@@ -146,39 +146,8 @@ public class ListPlayer {
 	}
 
 	public void loadSongs() {
-		List<IndexEntry> indexEntries = null;
-		try {
-			indexEntries = new ShuffleAccess().getLocalIndex(context);
-		} catch (IOException e) {
-			listPlayerListener.loadingSongsFailed(e);
-		}
-		try {
-			songs = new ShuffleAccess().resolveLocalSongs(context, indexEntries);
-		} catch (IOException e) {
-			listPlayerListener.loadingSongsFailed(e);
-		}
-	}
-
-	public int[] getDurations() {
-		if (!ArrayUtils.isEmpty(songs)) {
-			int[] durations = new int[songs.length];
-			for (int i = 0; i < durations.length; i++) {
-				File song = songs[i];
-				if (song.exists()) {
-					MediaPlayer mediaPlayer = MediaPlayer.create(context, Uri.fromFile(song));
-					if (mediaPlayer != null) {
-						durations[i] = mediaPlayer.getDuration();
-						mediaPlayer.release();
-					} else {
-						// Song file seems to be corrupted
-						durations[i] = -1;
-					}
-				}
-			}
-			return durations;
-		} else {
-			return new int[0];
-		}
+		List<IndexEntry> indexEntries = new ShuffleAccess().getLocalIndex(context);
+		songs = new ShuffleAccess().resolveLocalSongs(context, indexEntries);
 	}
 
 	private void initCurrentPlayer() {

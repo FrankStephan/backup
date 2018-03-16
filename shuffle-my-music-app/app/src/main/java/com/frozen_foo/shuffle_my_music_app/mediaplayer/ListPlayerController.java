@@ -49,11 +49,6 @@ public class ListPlayerController extends AbstractListController {
 			public void playingSongChanged(final int index) {
 				listPlayerControllerListener.playingSongChanged(index);
 			}
-
-			@Override
-			public void loadingSongsFailed(final Exception e) {
-				alertException(activity, e);
-			}
 		});
 
 		reloadSongs();
@@ -130,10 +125,6 @@ public class ListPlayerController extends AbstractListController {
 
 	public void reloadSongs() {
 		listPlayer.loadSongs();
-	}
-
-	public int[] getDurations() {
-		return listPlayer.getDurations();
 	}
 
 	public void setVolumeMax(boolean volumeMax) {

@@ -32,8 +32,8 @@ public class ShowListController extends AbstractListController {
 		return new SimpleDateFormat("mm:ss");
 	}
 
-	public void loadAndInflateList(final Activity activity, ListView shuffleList, final int[] durations,
-								   ProgressBar progressBar, ListCreationListener listCreationListener) {
+	public void loadAndInflateList(final Activity activity, ListView shuffleList, ProgressBar progressBar,
+								   ListCreationListener listCreationListener) {
 		Context          context      = activity.getApplicationContext();
 		List<IndexEntry> indexEntries = localIndex(activity);
 		RowModel[]       rows         = new IndexEntryRowModelConverter().toRowModels(indexEntries);
@@ -41,6 +41,13 @@ public class ShowListController extends AbstractListController {
 		GenericRowAdapter adapter = new GenericRowAdapter(activity, rows);
 		shuffleList.setAdapter(adapter);
 
+		updateProgressIfShuffleIsRunning(activity, progressBar, listCreationListener, context);
+		adapter.notifyDataSetChanged();
+	}
+
+	private void updateProgressIfShuffleIsRunning(final Activity activity, final ProgressBar progressBar,
+												  final ListCreationListener listCreationListener,
+												  final Context context) {
 		new ShuffleProgressProcessor().processUpdateWithMostRecentProgressSync(context,
 				new ShuffleProgressUpdate(activity, progressBar, listCreationListener, true) {
 					@Override
@@ -48,7 +55,6 @@ public class ShowListController extends AbstractListController {
 						alertException(activity, e);
 					}
 				});
-		adapter.notifyDataSetChanged();
 	}
 
 	private void setDuration(Activity activity, final int[] durations, final RowModel[] rows) {

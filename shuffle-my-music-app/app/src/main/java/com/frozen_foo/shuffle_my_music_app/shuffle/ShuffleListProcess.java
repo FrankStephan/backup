@@ -6,7 +6,6 @@ import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.Logger;
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.NumberOfSongs;
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.Error;
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.FinalizationStep;
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.PreparationStep;

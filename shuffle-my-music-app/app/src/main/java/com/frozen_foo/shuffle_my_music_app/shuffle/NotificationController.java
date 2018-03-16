@@ -13,7 +13,6 @@ import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.FinalizationSt
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.PreparationStep;
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.ShuffleProgress;
 import com.frozen_foo.shuffle_my_music_app.ui.ShuffleListActivity;
-import com.frozen_foo.shuffle_my_music_app.ui.create_list.NumberOfSongs;
 
 /**
  * Created by Frank on 08.03.2018.

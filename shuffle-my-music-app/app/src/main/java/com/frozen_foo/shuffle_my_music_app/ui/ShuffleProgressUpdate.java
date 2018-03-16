@@ -6,6 +6,7 @@ import android.widget.ProgressBar;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_app.R;
+import com.frozen_foo.shuffle_my_music_app.durations.DurationsAccess;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgressRunnable;
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.CopySongStep;
@@ -15,7 +16,8 @@ import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.PreparationSte
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.ShuffleProgress;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.ListCreationListener;
 
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,14 +29,14 @@ public abstract class ShuffleProgressUpdate implements ShuffleProgressRunnable {
 	private final Activity activity;
 	private final ProgressBar progressBar;
 	private final ListCreationListener listCreationListener;
-	private final boolean forceFillRows;
+	private final boolean forceReloadRows;
 
 	public ShuffleProgressUpdate(final Activity activity, final ProgressBar progressBar,
 								 final ListCreationListener listCreationListener, final boolean forceFillRows) {
 		this.activity = activity;
 		this.progressBar = progressBar;
 		this.listCreationListener = listCreationListener;
-		this.forceFillRows = forceFillRows;
+		this.forceReloadRows = forceFillRows;
 	}
 
 	protected abstract void onError(Exception e);
@@ -63,15 +65,17 @@ public abstract class ShuffleProgressUpdate implements ShuffleProgressRunnable {
 					break;
 			}
 		} else {
-			if (forceFillRows) {
+			if (forceReloadRows) {
 				fillRows();
 			}
 			if (shuffleProgress instanceof CopySongStep) {
 				int index = ((CopySongStep) shuffleProgress).getIndex();
-				updateCopyProgress(activity, index);
+				updateRows(index);
 				progressBar.setProgress(5 + index);
 			} else if (shuffleProgress instanceof FinalizationStep) {
-				resetCopyProgressForAllSongs(activity);
+				GenericRowAdapter adapter = listAdapter();
+				resetCopyProgressForAllSongs(adapter);
+				updateDurations(numberOfSongs - 1, adapter);
 				progressBar.setProgress(0);
 				listCreationListener.onComplete();
 			} else if (shuffleProgress instanceof Error) {
@@ -80,8 +84,12 @@ public abstract class ShuffleProgressUpdate implements ShuffleProgressRunnable {
 		}
 	}
 
-	private void resetCopyProgressForAllSongs(final Activity activity) {
-		updateCopyProgress(activity, -1);
+	private GenericRowAdapter listAdapter() {
+		return (GenericRowAdapter) ((ListView) activity.findViewById(R.id.shuffleList)).getAdapter();
+	}
+
+	private void resetCopyProgressForAllSongs(final GenericRowAdapter adapter) {
+		updateCopyProgress(-1, adapter);
 	}
 
 	private void handleError(final Activity activity, final Exception e,
@@ -97,23 +105,56 @@ public abstract class ShuffleProgressUpdate implements ShuffleProgressRunnable {
 	}
 
 	private void fillRows() {
-		try {
-			List<IndexEntry>  indexEntries = new ShuffleAccess().getLocalIndex(activity);
-			RowModel[]        rows         = new IndexEntryRowModelConverter().toRowModels(indexEntries);
-			GenericRowAdapter adapter      = new GenericRowAdapter(activity, rows);
-			((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
-		} catch (IOException e) {
-			handleError(activity, e, listCreationListener);
-		}
+		List<IndexEntry>  indexEntries = new ShuffleAccess().getLocalIndex(activity);
+		RowModel[]        rows         = new IndexEntryRowModelConverter().toRowModels(indexEntries);
+		GenericRowAdapter adapter      = new GenericRowAdapter(activity, rows);
+		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
 	}
 
-	private void updateCopyProgress(Activity activity, int index) {
-		GenericRowAdapter adapter =
-				(GenericRowAdapter) ((ListView) activity.findViewById(R.id.shuffleList)).getAdapter();
+	private void updateRows(int index) {
+		GenericRowAdapter adapter = listAdapter();
+		updateCopyProgress(index, adapter);
+		updateDurations(index - 1, adapter);
+		adapter.notifyDataSetChanged();
+	}
+
+	private void updateCopyProgress(int index, GenericRowAdapter adapter) {
 		for (int i = 0; i < adapter.getCount(); i++) {
 			RowModel rowModel = adapter.getItem(i);
 			rowModel.setCopying(i == index);
 		}
-		adapter.notifyDataSetChanged();
+	}
+
+	private void updateDurations(int index, GenericRowAdapter adapter) {
+		if (index >= 0) {
+			if (forceReloadRows) {
+				updateAllDurations(index, adapter);
+			} else {
+				updateSingleDuration(index, adapter);
+			}
+		}
+	}
+
+	private void updateSingleDuration(final int index, final GenericRowAdapter adapter) {
+		int duration = new DurationsAccess(activity).duration(index, 0);
+		setDurationForUI(index, adapter, duration);
+	}
+
+	private void updateAllDurations(final int index, final GenericRowAdapter adapter) {
+		for (int i = 0; i <= index; i++) {
+			updateSingleDuration(i, adapter);
+		}
+	}
+
+	private void setDurationForUI(final int i, final GenericRowAdapter adapter, final int duration) {
+		if (duration >= 0) {
+			adapter.getItem(i).setDuration(timeFormat().format(new Date(duration)));
+		} else {
+			adapter.getItem(i).setDuration(activity.getString(R.string.file_corrupted));
+		}
+	}
+
+	private SimpleDateFormat timeFormat() {
+		return new SimpleDateFormat("mm:ss");
 	}
 }

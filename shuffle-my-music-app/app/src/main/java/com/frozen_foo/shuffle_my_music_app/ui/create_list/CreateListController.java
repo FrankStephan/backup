@@ -24,7 +24,6 @@ public class CreateListController extends AbstractListController {
 	public void createShuffleList(final Activity activity, ProgressBar progressBar, int numberOfSongs,
 								  boolean useExistingList) {
 		progressBar.setProgress(0);
-		NumberOfSongs createListParams = new NumberOfSongs(numberOfSongs, activity, useExistingList);
 		if (useExistingList) {
 			ShuffleListService.reloadShuffleList(activity, numberOfSongs);
 		} else {
@@ -35,7 +34,8 @@ public class CreateListController extends AbstractListController {
 	public BroadcastReceiver createShuffleProgressReceiver(final Activity activity, final ProgressBar progressBar,
 														   final ListCreationListener listCreationListener) {
 		ShuffleProgressUpdate runnable = createUpdateRunnable(activity, progressBar, listCreationListener);
-		return new ShuffleProgressReceiver(runnable, new Handler(Looper.getMainLooper()), new ShuffleProgressProcessor());
+		return new ShuffleProgressReceiver(runnable, new Handler(Looper.getMainLooper()),
+				new ShuffleProgressProcessor());
 	}
 
 	@NonNull

@@ -39,11 +39,6 @@ public abstract class AbstractListController {
 	}
 
 	protected List<IndexEntry> localIndex(Activity activity) {
-		try {
-			return new ShuffleAccess().getLocalIndex(activity);
-		} catch (IOException e) {
-			alertException(activity, e);
-			return Collections.emptyList();
-		}
+		return new ShuffleAccess().getLocalIndex(activity);
 	}
 }
