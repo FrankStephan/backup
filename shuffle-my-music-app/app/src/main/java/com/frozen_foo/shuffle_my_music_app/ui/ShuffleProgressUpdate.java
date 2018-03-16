@@ -90,6 +90,7 @@ public abstract class ShuffleProgressUpdate implements ShuffleProgressRunnable {
 
 	private void resetCopyProgressForAllSongs(final GenericRowAdapter adapter) {
 		updateCopyProgress(-1, adapter);
+		adapter.notifyDataSetChanged();
 	}
 
 	private void handleError(final Activity activity, final Exception e,
