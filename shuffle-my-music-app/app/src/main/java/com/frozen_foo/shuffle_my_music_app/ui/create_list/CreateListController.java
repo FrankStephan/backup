@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleListService;
@@ -31,17 +32,17 @@ public class CreateListController extends AbstractListController {
 		}
 	}
 
-	public BroadcastReceiver createShuffleProgressReceiver(final Activity activity, final ProgressBar progressBar,
+	public BroadcastReceiver createShuffleProgressReceiver(final Activity activity, ListView shuffleList, final ProgressBar progressBar,
 														   final ListCreationListener listCreationListener) {
-		ShuffleProgressUpdate runnable = createUpdateRunnable(activity, progressBar, listCreationListener);
+		ShuffleProgressUpdate runnable = createUpdateRunnable(activity, shuffleList, progressBar, listCreationListener);
 		return new ShuffleProgressReceiver(runnable, new Handler(Looper.getMainLooper()),
 				new ShuffleProgressProcessor());
 	}
 
 	@NonNull
-	private ShuffleProgressUpdate createUpdateRunnable(final Activity activity, final ProgressBar progressBar,
+	private ShuffleProgressUpdate createUpdateRunnable(final Activity activity, ListView shuffleList, final ProgressBar progressBar,
 													   final ListCreationListener listCreationListener) {
-		return new ShuffleProgressUpdate(activity, progressBar, listCreationListener, false) {
+		return new ShuffleProgressUpdate(activity, shuffleList, progressBar, listCreationListener, false) {
 			@Override
 			protected void onError(final Exception e) {
 				alertException(activity, e);

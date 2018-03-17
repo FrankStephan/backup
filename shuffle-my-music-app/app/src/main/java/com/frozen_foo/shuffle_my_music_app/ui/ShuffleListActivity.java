@@ -64,7 +64,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shuffle_list);
 		progressUpdater = new CreateListController()
-				.createShuffleProgressReceiver(this, progressBar(), shuffleCompletedListener());
+				.createShuffleProgressReceiver(this, list(), progressBar(), shuffleCompletedListener());
 	}
 
 	@NonNull

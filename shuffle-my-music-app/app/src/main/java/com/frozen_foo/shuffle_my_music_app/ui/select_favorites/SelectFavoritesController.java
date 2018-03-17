@@ -6,6 +6,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
+import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
@@ -34,9 +35,9 @@ public class SelectFavoritesController extends AbstractListController {
 		List<IndexEntry> markedFavorites = loadMarkedFavorites(activity);
 		checkFavorites(indexEntries, markedFavorites, rows);
 
-		GenericRowAdapter adapter = new GenericRowAdapter(activity, rows);
+		GenericRowAdapter adapter = (GenericRowAdapter) shuffleList.getAdapter();
 		adapter.setShowFavoritesSelection(true);
-		shuffleList.setAdapter(adapter);
+		adapter.setShowDurations(false);
 		adapter.notifyDataSetChanged();
 	}
 
@@ -95,6 +96,7 @@ public class SelectFavoritesController extends AbstractListController {
 	private void doCancel(final Activity activity, final ListView shuffleList) {
 		final GenericRowAdapter adapter = (GenericRowAdapter) shuffleList.getAdapter();
 		adapter.setShowFavoritesSelection(false);
+		adapter.setShowDurations(true);
 		adapter.notifyDataSetChanged();
 	}
 }

@@ -15,6 +15,11 @@ import android.widget.TextView;
 
 import com.frozen_foo.shuffle_my_music_app.R;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
 /**
  * Created by Frank on 24.01.2018.
  */
@@ -22,10 +27,11 @@ import com.frozen_foo.shuffle_my_music_app.R;
 public class GenericRowAdapter extends ArrayAdapter<RowModel> {
 
 	private boolean showFavoritesSelection;
+	private boolean showDurations;
 
-	public GenericRowAdapter(@NonNull Context context, RowModel[] rows) {
-		super(context, R.layout.generic_list_row, rows);
-
+	public GenericRowAdapter(@NonNull Context context) {
+		super(context, R.layout.generic_list_row);
+		setNotifyOnChange(false);
 	}
 
 	public boolean isShowFavoritesSelection() {
@@ -34,6 +40,14 @@ public class GenericRowAdapter extends ArrayAdapter<RowModel> {
 
 	public void setShowFavoritesSelection(final boolean showFavoritesSelection) {
 		this.showFavoritesSelection = showFavoritesSelection;
+	}
+
+	public boolean isShowDurations() {
+		return showDurations;
+	}
+
+	public void setShowDurations(final boolean showDurations) {
+		this.showDurations = showDurations;
 	}
 
 	@NonNull
@@ -70,7 +84,7 @@ public class GenericRowAdapter extends ArrayAdapter<RowModel> {
 
 	private void setDuration(final @Nullable View convertView, final RowModel rowModel) {
 		TextView duration = (TextView) convertView.findViewById(R.id.durationText);
-		duration.setText(rowModel.getDuration());
+		duration.setText(showDurations ? rowModel.getDuration() : "");
 	}
 
 	private void setAndBindCheckbox(final @Nullable View convertView, final RowModel rowModel) {

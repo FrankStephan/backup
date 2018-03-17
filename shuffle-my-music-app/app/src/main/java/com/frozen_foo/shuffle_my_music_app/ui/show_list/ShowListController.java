@@ -7,7 +7,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
-import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgressProcessor;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 import com.frozen_foo.shuffle_my_music_app.ui.GenericRowAdapter;
@@ -16,9 +15,7 @@ import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
 import com.frozen_foo.shuffle_my_music_app.ui.ShuffleProgressUpdate;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.ListCreationListener;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,34 +35,25 @@ public class ShowListController extends AbstractListController {
 		List<IndexEntry> indexEntries = localIndex(activity);
 		RowModel[]       rows         = new IndexEntryRowModelConverter().toRowModels(indexEntries);
 
-		GenericRowAdapter adapter = new GenericRowAdapter(activity, rows);
+		GenericRowAdapter adapter = new GenericRowAdapter(activity);
+		adapter.addAll(rows);
 		shuffleList.setAdapter(adapter);
+		adapter.setShowDurations(true);
 
-		updateProgressIfShuffleIsRunning(activity, progressBar, listCreationListener, context);
+		updateProgressIfShuffleIsRunning(activity, shuffleList, progressBar, listCreationListener, context);
 		adapter.notifyDataSetChanged();
 	}
 
-	private void updateProgressIfShuffleIsRunning(final Activity activity, final ProgressBar progressBar,
+	private void updateProgressIfShuffleIsRunning(final Activity activity, ListView shuffleList, final ProgressBar progressBar,
 												  final ListCreationListener listCreationListener,
 												  final Context context) {
 		new ShuffleProgressProcessor().processUpdateWithMostRecentProgressSync(context,
-				new ShuffleProgressUpdate(activity, progressBar, listCreationListener, true) {
+				new ShuffleProgressUpdate(activity, shuffleList, progressBar, listCreationListener, true) {
 					@Override
 					protected void onError(final Exception e) {
 						alertException(activity, e);
 					}
 				});
-	}
-
-	private void setDuration(Activity activity, final int[] durations, final RowModel[] rows) {
-		for (int i = 0; i < durations.length; i++) {
-			int duration = durations[i];
-			if (duration >= 0) {
-				rows[i].setDuration(timeFormat().format(new Date(duration)));
-			} else {
-				rows[i].setDuration(activity.getString(R.string.file_corrupted));
-			}
-		}
 	}
 
 	public void markAsPlayingSong(Activity activity, ListView shuffleList, int index) {
@@ -75,19 +63,5 @@ public class ShowListController extends AbstractListController {
 		}
 
 		adapter.notifyDataSetChanged();
-	}
-
-	private int[] extractDurations(final Activity activity, final RowModel[] rows) {
-		int[] durations = new int[rows.length];
-		for (int i = 0; i < rows.length; i++) {
-			Date date = null;
-			try {
-				date = timeFormat().parse(rows[i].getDuration());
-			} catch (ParseException e) {
-				alertException(activity, e);
-			}
-			durations[i] = (int) date.getTime();
-		}
-		return durations;
 	}
 }

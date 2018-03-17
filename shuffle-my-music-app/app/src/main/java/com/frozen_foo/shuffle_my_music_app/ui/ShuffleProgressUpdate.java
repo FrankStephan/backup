@@ -1,6 +1,8 @@
 package com.frozen_foo.shuffle_my_music_app.ui;
 
 import android.app.Activity;
+import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -30,13 +32,15 @@ public abstract class ShuffleProgressUpdate implements ShuffleProgressRunnable {
 	private final ProgressBar progressBar;
 	private final ListCreationListener listCreationListener;
 	private final boolean forceReloadRows;
+	private final ListView shuffleList;
 
-	public ShuffleProgressUpdate(final Activity activity, final ProgressBar progressBar,
+	public ShuffleProgressUpdate(final Activity activity, final ListView shuffleList, final ProgressBar progressBar,
 								 final ListCreationListener listCreationListener, final boolean forceFillRows) {
 		this.activity = activity;
 		this.progressBar = progressBar;
 		this.listCreationListener = listCreationListener;
 		this.forceReloadRows = forceFillRows;
+		this.shuffleList = shuffleList;
 	}
 
 	protected abstract void onError(Exception e);
@@ -73,9 +77,8 @@ public abstract class ShuffleProgressUpdate implements ShuffleProgressRunnable {
 				updateRows(index);
 				progressBar.setProgress(5 + index);
 			} else if (shuffleProgress instanceof FinalizationStep) {
-				GenericRowAdapter adapter = listAdapter();
-				resetCopyProgressForAllSongs(adapter);
-				updateDurations(numberOfSongs - 1, adapter);
+				resetCopyProgressForAllSongs();
+				updateDurations(numberOfSongs - 1);
 				progressBar.setProgress(0);
 				listCreationListener.onComplete();
 			} else if (shuffleProgress instanceof Error) {
@@ -84,13 +87,13 @@ public abstract class ShuffleProgressUpdate implements ShuffleProgressRunnable {
 		}
 	}
 
-	private GenericRowAdapter listAdapter() {
-		return (GenericRowAdapter) ((ListView) activity.findViewById(R.id.shuffleList)).getAdapter();
+	private GenericRowAdapter adapter() {
+		return (GenericRowAdapter) shuffleList.getAdapter();
 	}
 
-	private void resetCopyProgressForAllSongs(final GenericRowAdapter adapter) {
-		updateCopyProgress(-1, adapter);
-		adapter.notifyDataSetChanged();
+	private void resetCopyProgressForAllSongs() {
+		updateCopyProgress(-1);
+		adapter().notifyDataSetChanged();
 	}
 
 	private void handleError(final Activity activity, final Exception e,
@@ -100,58 +103,58 @@ public abstract class ShuffleProgressUpdate implements ShuffleProgressRunnable {
 	}
 
 	private void showPreparation(Activity activity, String text) {
-		RowModel[]        rows    = new RowModel[]{new RowModel(text, null, false)};
-		GenericRowAdapter adapter = new GenericRowAdapter(activity, rows);
-		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
+		adapter().clear();
+		adapter().add(new RowModel(text, null, false));
+		adapter().notifyDataSetChanged();
 	}
 
 	private void fillRows() {
 		List<IndexEntry>  indexEntries = new ShuffleAccess().getLocalIndex(activity);
 		RowModel[]        rows         = new IndexEntryRowModelConverter().toRowModels(indexEntries);
-		GenericRowAdapter adapter      = new GenericRowAdapter(activity, rows);
-		((ListView) activity.findViewById(R.id.shuffleList)).setAdapter(adapter);
+		adapter().clear();
+		adapter().addAll(rows);
+		adapter().notifyDataSetChanged();
 	}
 
 	private void updateRows(int index) {
-		GenericRowAdapter adapter = listAdapter();
-		updateCopyProgress(index, adapter);
-		updateDurations(index - 1, adapter);
-		adapter.notifyDataSetChanged();
+		updateCopyProgress(index);
+		updateDurations(index - 1);
+		adapter().notifyDataSetChanged();
 	}
 
-	private void updateCopyProgress(int index, GenericRowAdapter adapter) {
-		for (int i = 0; i < adapter.getCount(); i++) {
-			RowModel rowModel = adapter.getItem(i);
+	private void updateCopyProgress(int index) {
+		for (int i = 0; i < adapter().getCount(); i++) {
+			RowModel rowModel = adapter().getItem(i);
 			rowModel.setCopying(i == index);
 		}
 	}
 
-	private void updateDurations(int index, GenericRowAdapter adapter) {
+	private void updateDurations(int index) {
 		if (index >= 0) {
 			if (forceReloadRows) {
-				updateAllDurations(index, adapter);
+				updateAllDurations(index);
 			} else {
-				updateSingleDuration(index, adapter);
+				updateSingleDuration(index);
 			}
 		}
 	}
 
-	private void updateSingleDuration(final int index, final GenericRowAdapter adapter) {
+	private void updateSingleDuration(final int index) {
 		int duration = new DurationsAccess(activity).duration(index, 0);
-		setDurationForUI(index, adapter, duration);
+		setDurationForUI(index, duration);
 	}
 
-	private void updateAllDurations(final int index, final GenericRowAdapter adapter) {
+	private void updateAllDurations(final int index) {
 		for (int i = 0; i <= index; i++) {
-			updateSingleDuration(i, adapter);
+			updateSingleDuration(i);
 		}
 	}
 
-	private void setDurationForUI(final int i, final GenericRowAdapter adapter, final int duration) {
+	private void setDurationForUI(final int i, final int duration) {
 		if (duration >= 0) {
-			adapter.getItem(i).setDuration(timeFormat().format(new Date(duration)));
+			adapter().getItem(i).setDuration(timeFormat().format(new Date(duration)));
 		} else {
-			adapter.getItem(i).setDuration(activity.getString(R.string.file_corrupted));
+			adapter().getItem(i).setDuration(activity.getString(R.string.file_corrupted));
 		}
 	}
 
