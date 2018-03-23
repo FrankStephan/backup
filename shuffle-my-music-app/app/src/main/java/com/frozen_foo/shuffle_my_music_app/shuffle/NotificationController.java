@@ -22,42 +22,48 @@ public class NotificationController {
 
 	public static final int NOTIFICATION_ID = 1;
 
-	public Notification buildNotification(Context context, String contextText) {
+	public Notification buildNotification(Context context, String contextText, int progress, int max) {
 		Intent        notificationIntent = new Intent(context, ShuffleListActivity.class);
 		PendingIntent pendingIntent      = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-		return new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_shuffle_white_24dp)
-				.setContentTitle(context.getString(R.string.app_name)).setContentText(contextText)
-				.setContentIntent(pendingIntent).build();
+		android.support.v4.app.NotificationCompat.Builder builder =
+				new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_shuffle_white_24dp)
+						.setContentTitle(context.getString(R.string.app_name)).setContentText(contextText)
+						.setContentIntent(pendingIntent);
+		builder.setOngoing(true);
+		builder.setProgress(max, progress, false);
+		return builder.build();
 	}
 
 	public void updateNotifications(Context context, final ShuffleProgress shuffleProgress, final NumberOfSongs numberOfSongs) {
+		int progressMax = numberOfSongs.value + 4;
 		if (shuffleProgress instanceof PreparationStep) {
 			PreparationStep preparationStep = (PreparationStep) shuffleProgress;
 			switch (preparationStep) {
 				case SAVING_FAVORITES:
-					updateNotifications(context, context.getString(R.string.saveFavorites));
+					updateNotifications(context, context.getString(R.string.saveFavorites), 1, progressMax);
 					break;
 				case LOADING_INDEX:
-					updateNotifications(context, context.getString(R.string.indexLoading));
+					updateNotifications(context, context.getString(R.string.indexLoading), 2, progressMax);
 					break;
 				case SHUFFLING_INDEX:
-					updateNotifications(context, context.getString(R.string.determineRandomSongs));
+					updateNotifications(context, context.getString(R.string.determineRandomSongs), 3, progressMax);
 					break;
 			}
 		} else {
 			if (shuffleProgress instanceof CopySongStep) {
+				int index = ((CopySongStep) shuffleProgress).getIndex();
 				String notificationMessage = new StringBuilder().append(context.getString(R.string.copying_title)).append(" ")
-						.append(((CopySongStep) shuffleProgress).getIndex() + 1).append("/")
+						.append(index + 1).append("/")
 						.append(numberOfSongs.value).toString();
-				updateNotifications(context, notificationMessage);
+				updateNotifications(context, notificationMessage, 4 + index, progressMax);
 			} else if (shuffleProgress instanceof FinalizationStep) {
 				notificationManager(context).cancel(NOTIFICATION_ID);
 			}
 		}
 	}
 
-	private void updateNotifications(Context context, String contextText) {
-		notificationManager(context).notify(NOTIFICATION_ID, buildNotification(context, contextText));
+	private void updateNotifications(Context context, String contextText, int progress, int max) {
+		notificationManager(context).notify(NOTIFICATION_ID, buildNotification(context, contextText, progress, max));
 	}
 
 	private void updateNotifications(Context context,Notification notification) {

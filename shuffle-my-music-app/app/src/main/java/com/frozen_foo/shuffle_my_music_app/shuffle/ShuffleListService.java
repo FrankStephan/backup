@@ -64,7 +64,8 @@ public class ShuffleListService extends IntentService {
 
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
-		Notification notification = new NotificationController().buildNotification(this, "");
+		int          numberOfSongs = notificationIntent.getIntExtra(NUMBER_OF_SONGS, DEFAULT_NUMBER_OF_SONGS);
+		Notification notification = new NotificationController().buildNotification(this, "", 0, numberOfSongs);
 		startForeground(NotificationController.NOTIFICATION_ID, notification);
 	}
 
