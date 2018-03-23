@@ -84,13 +84,13 @@ public class ShuffleListActivity extends AppCompatActivity {
 	@Override
 	protected void onStart() {
 		super.onStart();
-		new CreateListController().registerShuffleProgressReceiver(this, progressUpdater);
+
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		new CreateListController().unregisterShuffleProgressReceiver(this, progressUpdater);
+
 	}
 
 	@Override
@@ -104,6 +104,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 		volumeMaxController.init(this, menu.findItem(R.id.volume_max), progressBar());
 
 		loadList();
+		new CreateListController().registerShuffleProgressReceiver(this, progressUpdater);
 		return true;
 	}
 
@@ -299,8 +300,10 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	@Override
 	protected void onDestroy() {
+		new CreateListController().unregisterShuffleProgressReceiver(this, progressUpdater);
 		listPlayerController.release();
 		volumeMaxController.release(this);
+
 		super.onDestroy();
 	}
 }
