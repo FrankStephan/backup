@@ -6,8 +6,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
-import com.frozen_foo.shuffle_my_music_app.R;
-import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 import com.frozen_foo.shuffle_my_music_app.ui.GenericRowAdapter;
@@ -28,14 +26,15 @@ import java.util.List;
 public class SelectFavoritesController extends AbstractListController {
 
 	public void selectFavorites(Activity activity, ListView shuffleList) {
-		Context          context = activity.getApplicationContext();
+		Context          context      = activity.getApplicationContext();
 		List<IndexEntry> indexEntries = localIndex(activity);
-		RowModel[] rows = new IndexEntryRowModelConverter().toRowModels(indexEntries);
+		RowModel[]       rows         = new IndexEntryRowModelConverter().toRowModels(indexEntries);
 
 		List<IndexEntry> markedFavorites = loadMarkedFavorites(activity);
-		checkFavorites(indexEntries, markedFavorites, rows);
+
 
 		GenericRowAdapter adapter = (GenericRowAdapter) shuffleList.getAdapter();
+		checkFavorites(indexEntries, markedFavorites, adapter);
 		adapter.setShowFavoritesSelection(true);
 		adapter.setShowDurations(false);
 		adapter.notifyDataSetChanged();
@@ -51,9 +50,9 @@ public class SelectFavoritesController extends AbstractListController {
 	}
 
 	private void checkFavorites(final List<IndexEntry> indexEntries, final List<IndexEntry> markedFavorites,
-								final RowModel[] rows) {
-		for (int i = 0; i < rows.length; i++) {
-			rows[i].setFavorite(markedFavorites.contains(indexEntries.get(i)));
+								GenericRowAdapter adapter) {
+		for (int i = 0; i < indexEntries.size(); i++) {
+			adapter.getItem(i).setFavorite(markedFavorites.contains(indexEntries.get(i)));
 		}
 	}
 
@@ -78,7 +77,7 @@ public class SelectFavoritesController extends AbstractListController {
 			}
 		}
 
-		List<IndexEntry> indexEntries = new IndexEntryRowModelConverter().toIndexEntries(selectedRowModels);
+		List<IndexEntry> indexEntries      = new IndexEntryRowModelConverter().toIndexEntries(selectedRowModels);
 		List<IndexEntry> addedIndexEntries = null;
 		try {
 			addedIndexEntries = new ShuffleAccess().markAsFavorites(activity.getApplicationContext(), indexEntries);
