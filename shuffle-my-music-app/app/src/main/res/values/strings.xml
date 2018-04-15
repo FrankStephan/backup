@@ -8,7 +8,7 @@
     <string name="smb_name">Name</string>
     <string name="smb_password">Passwort</string>
     <string name="store_credentials_success">Anmeldedaten wurden erfolgreich gespeichert.</string>
-    <string name="createShuffledList">Neue Zufallsliste erstellen</string>
+    <string name="createShuffledList">Neue Liste erstellen</string>
     <string name="selectFavorites">Favoriten auswählen</string>
     <string name="errorEmptySmbParameters">Alle Werte müssen angegeben werden.</string>
     <string name="error">Fehler</string>
@@ -19,12 +19,14 @@
     <string name="indexLoading">Lade Indexdatei</string>
     <string name="determineRandomSongs">Ermittle Zufallstitel</string>
     <string name="addToFavorites">Als Favoriten markieren</string>
-    <string name="confirmCreateShuffleList">Neue Zufallsliste erstellen?</string>
     <string name="saveFavorites">Speichere Favoriten</string>
     <string name="file_corrupted">!! Datei beschädigt !!</string>
     <string name="v_max">Volume Max</string>
     <string name="touch_longer_notification">Button länger gedrückt halten, um Lautstärke auf maximal zu setzen.</string>
     <string name="copying_title">Kopiere Titel</string>
     <string name="reload">Songs erneut herunterladen</string>
+    <string name="selectListType">Listentyp auswählen</string>
+    <string name="typeNewShuffleList">Neue Zufallsliste. Anzahl d. Titel wählen:</string>
+    <string name="typeAllFavoritesList">Liste mit allen Favoriten erstellen (%1$d bereits erfasste und %2$d neu hinzukommende Favoriten) </string>
 
 </resources>

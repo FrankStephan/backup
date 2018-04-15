@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.content.LocalBroadcastManager;
 
 import com.frozen_foo.shuffle_my_music_app.async.ProgressMonitor;
@@ -18,9 +19,14 @@ import com.frozen_foo.shuffle_my_music_app.ui.ShuffleListActivity;
 
 public class ShuffleListService extends IntentService {
 
-	public static final String ACTION_CREATE_NEW_SHUFFLE_LIST =
+	private static final String ACTION_CREATE_NEW_SHUFFLE_LIST =
 			"com.frozen_foo.myapplication.action.CREATE_NEW_SHUFFLE_LIST";
-	public static final String ACTION_RELOAD_SHUFFLE_LIST = "com.frozen_foo.myapplication.action.RELOAD_SHUFFLE_LIST";
+	private static final String ACTION_RELOAD_SHUFFLE_LIST = "com.frozen_foo.myapplication.action.RELOAD_SHUFFLE_LIST";
+
+	private static final String ACTION_ALL_FAVORITES_LIST = "com.frozen_foo.myapplication.action.ALL_FAVORITES_LIST";
+
+	public static final String[] ACTIONS =
+			{ACTION_CREATE_NEW_SHUFFLE_LIST, ACTION_RELOAD_SHUFFLE_LIST, ACTION_ALL_FAVORITES_LIST};
 
 	public static final int DEFAULT_NUMBER_OF_SONGS = 0;
 
@@ -38,6 +44,13 @@ public class ShuffleListService extends IntentService {
 
 	public static void reloadShuffleList(Context context, int numberOfSongs) {
 		startService(context, numberOfSongs, ACTION_RELOAD_SHUFFLE_LIST);
+	}
+
+	public static void createAllFavoritesList(Context context) {
+		ShuffleAccess shuffleAccess = new ShuffleAccess();
+		int           numberOfSongs =
+				shuffleAccess.loadLocalFavorites(context).size() + shuffleAccess.loadMarkedFavorites(context).size();
+		startService(context, numberOfSongs, ACTION_ALL_FAVORITES_LIST);
 	}
 
 	private static void startService(final Context context, final int numberOfSongs, final String action) {
@@ -65,7 +78,7 @@ public class ShuffleListService extends IntentService {
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
 
 		int          numberOfSongs = notificationIntent.getIntExtra(NUMBER_OF_SONGS, DEFAULT_NUMBER_OF_SONGS);
-		Notification notification = new NotificationController().buildNotification(this, "", 0, numberOfSongs);
+		Notification notification  = new NotificationController().buildNotification(this, "", 0, numberOfSongs);
 		startForeground(NotificationController.NOTIFICATION_ID, notification);
 	}
 
@@ -79,6 +92,8 @@ public class ShuffleListService extends IntentService {
 				createNewShuffleList(numberOfSongs, intent);
 			} else if (ACTION_RELOAD_SHUFFLE_LIST.equals(action)) {
 				reloadShuffleList(numberOfSongs, intent);
+			} else if (ACTION_ALL_FAVORITES_LIST.equals(action)) {
+				createAllFavoritesList(numberOfSongs, intent);
 			}
 			stopForeground(true);
 			stopSelf();
@@ -95,14 +110,30 @@ public class ShuffleListService extends IntentService {
 
 	private void startShuffleListProcess(final NumberOfSongs numberOfSongs, final Intent intent) {
 		resetShuffleProgress(numberOfSongs);
-		new ShuffleListProcess(new ProgressMonitor<ShuffleProgress>() {
+		ProgressMonitor<ShuffleProgress> progressMonitor = progressMonitor(numberOfSongs, intent);
+		new ShuffleListProcess(progressMonitor).start(numberOfSongs);
+	}
+
+	private void createAllFavoritesList(final int numberOfSongs, final Intent intent) {
+		startFavoritesListProcess(new NumberOfSongs(numberOfSongs, this, false), intent);
+	}
+
+	private void startFavoritesListProcess(final NumberOfSongs numberOfSongs, final Intent intent) {
+		resetShuffleProgress(numberOfSongs);
+		ProgressMonitor<ShuffleProgress> progressMonitor = progressMonitor(numberOfSongs, intent);
+		new FavoritesListProcess(progressMonitor).start(numberOfSongs);
+	}
+
+	@NonNull
+	private ProgressMonitor<ShuffleProgress> progressMonitor(final NumberOfSongs numberOfSongs, final Intent intent) {
+		return new ProgressMonitor<ShuffleProgress>() {
 			@Override
 			public void updateProgress(final ShuffleProgress shuffleProgress) {
 				updateShuffleProgressAccess(shuffleProgress, numberOfSongs);
 				updateDuration(shuffleProgress, numberOfSongs);
 				sendProgressUpdate(shuffleProgress, numberOfSongs, intent);
 			}
-		}).start(numberOfSongs);
+		};
 	}
 
 	private void resetShuffleProgress(final NumberOfSongs numberOfSongs) {
@@ -119,7 +150,7 @@ public class ShuffleListService extends IntentService {
 		} else if (shuffleProgress instanceof CopySongStep) {
 			int index = ((CopySongStep) shuffleProgress).getIndex();
 			if (index > 0) {
-				new DurationsAccess(this).updateForSong(index-1);
+				new DurationsAccess(this).updateForSong(index - 1);
 			}
 		} else if (shuffleProgress instanceof FinalizationStep) {
 			new DurationsAccess(this).updateForSong(numberOfSongs.value - 1);

@@ -32,7 +32,13 @@ public class CreateListController extends AbstractListController {
 		}
 	}
 
-	public BroadcastReceiver createShuffleProgressReceiver(final Activity activity, ListView shuffleList, final ProgressBar progressBar,
+	public void createAllFavoritesList(final Activity activity, ProgressBar progressBar) {
+		progressBar.setProgress(0);
+		ShuffleListService.createAllFavoritesList(activity);
+	}
+
+	public BroadcastReceiver createShuffleProgressReceiver(final Activity activity, ListView shuffleList,
+														   final ProgressBar progressBar,
 														   final ListCreationListener listCreationListener) {
 		ShuffleProgressUpdate runnable = createUpdateRunnable(activity, shuffleList, progressBar, listCreationListener);
 		return new ShuffleProgressReceiver(runnable, new Handler(Looper.getMainLooper()),
@@ -40,7 +46,8 @@ public class CreateListController extends AbstractListController {
 	}
 
 	@NonNull
-	private ShuffleProgressUpdate createUpdateRunnable(final Activity activity, ListView shuffleList, final ProgressBar progressBar,
+	private ShuffleProgressUpdate createUpdateRunnable(final Activity activity, ListView shuffleList,
+													   final ProgressBar progressBar,
 													   final ListCreationListener listCreationListener) {
 		return new ShuffleProgressUpdate(activity, shuffleList, progressBar, listCreationListener, false) {
 			@Override
@@ -52,8 +59,10 @@ public class CreateListController extends AbstractListController {
 
 	public void registerShuffleProgressReceiver(Activity activity, BroadcastReceiver progressUpdater) {
 		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction(ShuffleListService.ACTION_CREATE_NEW_SHUFFLE_LIST);
-		intentFilter.addAction(ShuffleListService.ACTION_RELOAD_SHUFFLE_LIST);
+		for (String action : ShuffleListService.ACTIONS) {
+			intentFilter.addAction(action);
+		}
+
 		LocalBroadcastManager.getInstance(activity).registerReceiver(progressUpdater, intentFilter);
 	}
 

@@ -54,12 +54,17 @@ public class ShuffleAccess {
 		return new ShuffleMyMusicService().saveFavorites(localDirPath, indexEntries, false);
 	}
 
-	public List<IndexEntry> loadMarkedFavorites(Context context) throws IOException {
+	public List<IndexEntry> loadMarkedFavorites(Context context) {
 		return new ShuffleMyMusicService().loadFavorites(localSongsDirPath(context));
 	}
 
+	public List<IndexEntry> loadLocalFavorites(Context context) {
+		String           localDirPath       = localDirPath(context);
+		return new ShuffleMyMusicService().loadFavorites(localDirPath);
+	}
+
 	public void addFavoritesToLocalCollection(Context context) throws IOException {
-		String           localDirPath       = new LocalDirectoryAccess().localDir(context).getPath();
+		String           localDirPath       = localDirPath(context);
 		List<IndexEntry> favorites          = new ShuffleMyMusicService().loadFavorites(localDirPath);
 		List<IndexEntry> newFavorites       = loadMarkedFavorites(context);
 		List<IndexEntry> resultingFavorites = new ShuffleMyMusicService().join(newFavorites, favorites);
@@ -67,7 +72,7 @@ public class ShuffleAccess {
 	}
 
 	public void backupFavoritesCollectionToRemote(Context context) throws SettingsAccessException, IOException {
-		String           localDirPath             = new LocalDirectoryAccess().localDir(context).getPath();
+		String           localDirPath             = localDirPath(context);
 		List<IndexEntry> localFavoritesCollection = new ShuffleMyMusicService().loadFavorites(localDirPath);
 
 		List<IndexEntry> resultingFavorites;
@@ -96,5 +101,10 @@ public class ShuffleAccess {
 	@NonNull
 	private String localSongsDirPath(Context context) {
 		return new LocalDirectoryAccess().localSongsDir(context).getPath();
+	}
+
+	@NonNull
+	private String localDirPath(final Context context) {
+		return new LocalDirectoryAccess().localDir(context).getPath();
 	}
 }

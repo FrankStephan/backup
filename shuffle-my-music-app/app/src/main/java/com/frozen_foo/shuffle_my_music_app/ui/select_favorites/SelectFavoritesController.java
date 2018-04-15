@@ -15,7 +15,6 @@ import com.frozen_foo.shuffle_my_music_app.ui.RowModel;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,12 +40,7 @@ public class SelectFavoritesController extends AbstractListController {
 	}
 
 	private List<IndexEntry> loadMarkedFavorites(Activity activity) {
-		try {
-			return new ShuffleAccess().loadMarkedFavorites(activity);
-		} catch (IOException e) {
-			alertException(activity, e);
-			return Collections.emptyList();
-		}
+		return new ShuffleAccess().loadMarkedFavorites(activity);
 	}
 
 	private void checkFavorites(final List<IndexEntry> indexEntries, final List<IndexEntry> markedFavorites,
