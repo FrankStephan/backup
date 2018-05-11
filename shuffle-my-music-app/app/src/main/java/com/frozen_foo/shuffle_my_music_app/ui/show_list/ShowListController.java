@@ -58,10 +58,12 @@ public class ShowListController extends AbstractListController {
 
 	public void markAsPlayingSong(Activity activity, ListView shuffleList, int index) {
 		GenericRowAdapter adapter = (GenericRowAdapter) shuffleList.getAdapter();
-		for (int i = 0; i < adapter.getCount(); i++) {
-			adapter.getItem(i).setPlaying(i == index);
-		}
+		if (adapter != null) {
+			for (int i = 0; i < adapter.getCount(); i++) {
+				adapter.getItem(i).setPlaying(i == index);
+			}
 
-		adapter.notifyDataSetChanged();
+			adapter.notifyDataSetChanged();
+		}
 	}
 }

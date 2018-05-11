@@ -21,12 +21,16 @@ import com.frozen_foo.shuffle_my_music_app.ui.AbstractListController;
 
 public class ListPlayerController extends AbstractListController {
 
+	private static final int DEFAULT_SONG_INDEX = 0;
+	private static final int DEFAULT_CURRENT_POSITION = 0;
+
 	private ListPlayer listPlayer;
 
 	public void initPlayer(final Activity activity, ListView shuffleList, final MenuItem playItem,
 						   final ListPlayerControllerListener listPlayerControllerListener) {
-		release();
+		release(activity, false);
 
+		PlayStateAccess playStateAccess = new PlayStateAccess(activity);
 		listPlayer = new ListPlayer(activity, new ListPlayerListener() {
 
 			@Override
@@ -49,7 +53,7 @@ public class ListPlayerController extends AbstractListController {
 			public void playingSongChanged(final int index) {
 				listPlayerControllerListener.playingSongChanged(index);
 			}
-		});
+		},playStateAccess.songIndex(DEFAULT_SONG_INDEX), playStateAccess.currentPosition(DEFAULT_CURRENT_POSITION));
 
 		reloadSongs();
 
@@ -114,11 +118,18 @@ public class ListPlayerController extends AbstractListController {
 		}
 	}
 
-	public void release() {
+	public void release(Activity activity, boolean resetPlayState) {
 		if (listPlayer != null) {
 			if (listPlayer.isPlaying()) {
 				listPlayer.pause();
 			}
+			PlayStateAccess playStateAccess = new PlayStateAccess(activity);
+			if (resetPlayState) {
+				playStateAccess.update(DEFAULT_SONG_INDEX, DEFAULT_CURRENT_POSITION);
+			} else {
+				playStateAccess.update(listPlayer.getSongIndex(), listPlayer.getCurrentPosition());
+			}
+
 			listPlayer.release();
 		}
 	}

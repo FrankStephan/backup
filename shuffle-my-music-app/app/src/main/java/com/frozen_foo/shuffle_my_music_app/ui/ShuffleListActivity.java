@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +17,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.durations.DurationsAccess;
-import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerController;
-import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerControllerListener;
+import com.frozen_foo.shuffle_my_music_app.list_player.Player;
+import com.frozen_foo.shuffle_my_music_app.mediaplayer.ListPlayerListener;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest;
 import com.frozen_foo.shuffle_my_music_app.permission.PermissionsAccess;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsActivity;
@@ -29,16 +31,17 @@ import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.ShuffleProgressAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.CreateListController;
 import com.frozen_foo.shuffle_my_music_app.ui.create_list.ListCreationListener;
-import com.frozen_foo.shuffle_my_music_app.ui.type_dialog.TypeDialogController;
 import com.frozen_foo.shuffle_my_music_app.ui.select_favorites.SelectFavoritesController;
 import com.frozen_foo.shuffle_my_music_app.ui.show_list.ShowListController;
+import com.frozen_foo.shuffle_my_music_app.ui.type_dialog.TypeDialogController;
 import com.frozen_foo.shuffle_my_music_app.volume.VolumeMaxController;
 
 import static com.frozen_foo.shuffle_my_music_app.permission.PermissionRequest.READ_EXTERNAL_STORAGE_REQUEST;
 
 public class ShuffleListActivity extends AppCompatActivity {
 
-	private ListPlayerController listPlayerController;
+	//private ListPlayerController listPlayerController;
+	private Player listPlayerController;
 	private VolumeMaxController volumeMaxController;
 	private Mode mode = Mode.NORMAL_MODE_SHOW_LIST;
 	private BroadcastReceiver progressUpdater;
@@ -62,10 +65,10 @@ public class ShuffleListActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_shuffle_list);
 		progressUpdater = new CreateListController()
 				.createShuffleProgressReceiver(this, list(), progressBar(), shuffleCompletedListener());
-
 		switch (getMode()) {
 			case NORMAL_MODE_SHOW_LIST:
 			case NORMAL_MODE_CREATE_LIST:
@@ -85,7 +88,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 			public void onComplete() {
 				synchronized (ShuffleListActivity.this) {
 					changeMode(Mode.NORMAL_MODE_SHOW_LIST);
-					listPlayerController.reloadSongs();
+					listPlayerController.createNewListFinished(ShuffleListActivity.this);
 					button1().setEnabled(true);
 				}
 			}
@@ -97,25 +100,50 @@ public class ShuffleListActivity extends AppCompatActivity {
 		MenuInflater menuInflater = getMenuInflater();
 		menuInflater.inflate(R.menu.menubar, menu);
 		Object o = menu.findItem(R.id.play_pause);
-		listPlayerController = new ListPlayerController();
-		listPlayerController.initPlayer(this, list(), menu.findItem(R.id.play_pause), markPlayingSongListener());
+
+		listPlayerController = new Player(markPlayingSongListener(menu));
+		loadList();
+		// TODO: Music
+		//listPlayerController.initPlayer(this, list(), menu.findItem(R.id.play_pause), markPlayingSongListener());
+		listPlayerController.appStart(this, list());
 		volumeMaxController = new VolumeMaxController();
 		volumeMaxController.init(this, menu.findItem(R.id.volume_max), progressBar());
 
-		loadList();
+
 		new CreateListController().registerShuffleProgressReceiver(this, progressUpdater);
 		return true;
 	}
 
-	private ListPlayerControllerListener markPlayingSongListener() {
-		return new ListPlayerControllerListener() {
+	private ListPlayerListener markPlayingSongListener(Menu menu) {
+		final MenuItem playItem = menu.findItem(R.id.play_pause);
+
+		return new ListPlayerListener() {
+
+			@Override
+			public void onStart() {
+				playItem.setIcon(R.drawable.ic_pause_black_24dp);
+			}
+
+			@Override
+			public void onPause() {
+				playItem.setIcon(R.drawable.ic_play_arrow_black_24dp);
+			}
+
+			@Override
+			public boolean onError(MediaPlayer mp, int what, int extra) {
+				Toast.makeText(ShuffleListActivity.this, "MediaPlayer Error " + what + " " + extra, Toast.LENGTH_LONG)
+						.show();
+				return false;
+			}
 
 			@Override
 			public void playingSongChanged(final int index) {
 				new ShowListController().markAsPlayingSong(ShuffleListActivity.this, list(), index);
 			}
 		};
+
 	}
+
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -164,8 +192,10 @@ public class ShuffleListActivity extends AppCompatActivity {
 	private void updateListAttributesWhenSettingsChanged() {
 		if (getIntent().getBooleanExtra(SettingsActivity.SETTINGS_CHANGED_FLAG, false)) {
 			getIntent().removeExtra(SettingsActivity.SETTINGS_CHANGED_FLAG);
+			listPlayerController.userChangedSettings(this);
 			new ShuffleProgressAccess(this).updateProgress(null, new ShuffleAccess().getLocalIndex(this).size());
 			new DurationsAccess(this).updateForAllSongs();
+
 		}
 	}
 
@@ -206,7 +236,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private void createNewShuffleList(boolean useExistingList, final int numberOfSongs) {
 		button1().setEnabled(false);
-		listPlayerController.release();
+		listPlayerController.createNewListStarted(this);
 		ProgressBar progressBar = progressBar();
 		changeMode(Mode.NORMAL_MODE_CREATE_LIST);
 		new CreateListController().createShuffleList(this, progressBar, numberOfSongs, useExistingList);
@@ -214,7 +244,7 @@ public class ShuffleListActivity extends AppCompatActivity {
 
 	private void createAllFavoritesList() {
 		button1().setEnabled(false);
-		listPlayerController.release();
+		listPlayerController.createNewListStarted(this);
 		ProgressBar progressBar = progressBar();
 		changeMode(Mode.FAVORITES_MODE_CREATE_LIST);
 		new CreateListController().createAllFavoritesList(this, progressBar);
@@ -283,7 +313,6 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	private void reload() {
-		listPlayerController.release();
 		int numberOfSongs = list().getAdapter().getCount();
 		createNewShuffleList(true, numberOfSongs);
 	}
@@ -313,9 +342,14 @@ public class ShuffleListActivity extends AppCompatActivity {
 	}
 
 	@Override
+	public void onBackPressed() {
+		finish();
+	}
+
+	@Override
 	protected void onDestroy() {
 		new CreateListController().unregisterShuffleProgressReceiver(this, progressUpdater);
-		listPlayerController.release();
+		listPlayerController.appShutDown(this);
 		volumeMaxController.release(this);
 
 		super.onDestroy();

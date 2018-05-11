@@ -71,4 +71,9 @@ public class SettingsActivity extends AppCompatActivity {
 		Toast.makeText(getApplicationContext(), R.string.bye, Toast.LENGTH_SHORT).show();
 		openShuffleListActivity(false);
 	}
+
+	@Override
+	public void onBackPressed() {
+		openShuffleListActivity(false);
+	}
 }

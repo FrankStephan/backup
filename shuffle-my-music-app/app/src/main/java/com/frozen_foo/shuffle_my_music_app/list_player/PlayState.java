@@ -5,4 +5,12 @@ package com.frozen_foo.shuffle_my_music_app.list_player;
  */
 
 public class PlayState {
+
+	public int songIndex;
+	public int position;
+
+	public PlayState(final int songIndex, final int position) {
+		this.songIndex = songIndex;
+		this.position = position;
+	}
 }

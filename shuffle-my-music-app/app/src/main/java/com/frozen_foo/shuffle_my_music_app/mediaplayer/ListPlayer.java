@@ -9,13 +9,11 @@ import android.net.Uri;
 import android.os.Handler;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
-import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
 import com.frozen_foo.shuffle_my_music_app.shuffle.ShuffleAccess;
 
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import static android.media.AudioManager.FLAG_SHOW_UI;
@@ -35,11 +33,15 @@ public class ListPlayer {
 	private AudioManager audioManager;
 	private MediaPlayer currentPlayer;
 	private int songIndex = 0;
+	private int recentCurrentPosition = 0;
 
 
-	public ListPlayer(Context context, ListPlayerListener listPlayerListener) {
+
+	public ListPlayer(Context context, ListPlayerListener listPlayerListener, final int recentSongIndex, int recentCurrentPosition) {
 		this.context = context;
 		this.listPlayerListener = listPlayerListener;
+		this.songIndex = recentSongIndex;
+		this.recentCurrentPosition = recentCurrentPosition;
 	}
 
 	public boolean isPlaying() {
@@ -50,6 +52,7 @@ public class ListPlayer {
 		init();
 		int permission = requestAudioFocus();
 		if (AudioManager.AUDIOFOCUS_REQUEST_GRANTED == permission) {
+
 			currentPlayer.start();
 			listPlayerListener.onStart();
 		}
@@ -95,7 +98,6 @@ public class ListPlayer {
 			currentPlayer.release();
 			currentPlayer = null;
 			songs = null;
-			songIndex = 0;
 			listPlayerListener.playingSongChanged(ListPlayerControllerListener.NO_SONG);
 			audioManager.abandonAudioFocus(onAudioFocusChangeListener);
 			audioManager.unregisterAudioDeviceCallback(audioDeviceCallback);
@@ -161,11 +163,20 @@ public class ListPlayer {
 				}
 			});
 			listPlayerListener.playingSongChanged(songIndex);
+			currentPlayer.seekTo(recentCurrentPosition);
 		}
 	}
 
 	public void volumeMax() {
 		audioManager = context.getSystemService(AudioManager.class);
 		audioManager.setStreamVolume(STREAM_MUSIC, audioManager.getStreamMaxVolume(STREAM_MUSIC), FLAG_SHOW_UI);
+	}
+
+	public int getSongIndex() {
+		return songIndex;
+	}
+
+	public int getCurrentPosition() {
+		return currentPlayer.getCurrentPosition();
 	}
 }
