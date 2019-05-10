@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_app.Logger;
 import com.frozen_foo.shuffle_my_music_app.R;
+import com.frozen_foo.shuffle_my_music_app.io.remote.smb.SmbAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.ShuffleListActivity;
 
 public class SettingsActivity extends AppCompatActivity {

@@ -1,6 +1,7 @@
 package com.frozen_foo.shuffle_my_music_app.crypto;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Base64;
 
 import java.io.ByteArrayInputStream;
@@ -15,12 +16,15 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.UnrecoverableEntryException;
 import java.security.cert.CertificateException;
+import java.security.spec.MGF1ParameterSpec;
 import java.util.ArrayList;
 
 import javax.crypto.Cipher;
 import javax.crypto.CipherInputStream;
 import javax.crypto.CipherOutputStream;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.OAEPParameterSpec;
+import javax.crypto.spec.PSource;
 
 /**
  * Created by Frank on 07.07.2017.
@@ -29,6 +33,7 @@ import javax.crypto.NoSuchPaddingException;
 public class Cryptifier {
 
 	private static final String CREDENTIALS_FILE = "credentials";
+	public static final String ALGORITHM = "RSA/ECB/OAEPWithSHA-256AndMGF1Padding";
 
 	KeyPair keyPair;
 
@@ -38,24 +43,29 @@ public class Cryptifier {
 	}
 
 	public String encrypt(String original) throws UnrecoverableEntryException, NoSuchAlgorithmException,
-			KeyStoreException, NoSuchProviderException, NoSuchPaddingException, InvalidKeyException, IOException {
-		Cipher input = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
-		input.init(Cipher.ENCRYPT_MODE, keyPair.publicKey());
+			KeyStoreException, NoSuchPaddingException, InvalidKeyException, IOException,
+			InvalidAlgorithmParameterException {
+		Cipher            cipher = Cipher.getInstance(ALGORITHM);
+		cipher.init(Cipher.ENCRYPT_MODE, keyPair.publicKey(), oaepParameterSpec());
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		try (CipherOutputStream cipherOutputStream = new CipherOutputStream(outputStream, input)) {
+
+		try (CipherOutputStream cipherOutputStream = new CipherOutputStream(outputStream, cipher)) {
 			cipherOutputStream.write(original.getBytes("UTF-8"));
 		}
-		return Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT);
+		return Base64.encodeToString(outputStream.toByteArray(), Base64.NO_WRAP);
 	}
 
 	public String decrypt(String encodedString) throws KeyStoreException, UnrecoverableEntryException,
-			NoSuchAlgorithmException, NoSuchProviderException, NoSuchPaddingException, IOException,
-			InvalidKeyException {
-		Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
-		cipher.init(Cipher.DECRYPT_MODE, keyPair.privateKey());
+			NoSuchAlgorithmException, NoSuchPaddingException, IOException, InvalidKeyException,
+			InvalidAlgorithmParameterException {
+		Cipher            cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+		cipher.init(Cipher.DECRYPT_MODE, keyPair.privateKey(), oaepParameterSpec());
 
+
+
+		byte[] decode = Base64.decode(encodedString, Base64.NO_WRAP);
 		CipherInputStream cipherInputStream =
-				new CipherInputStream(new ByteArrayInputStream(Base64.decode(encodedString, Base64.DEFAULT)), cipher);
+				new CipherInputStream(new ByteArrayInputStream(decode), cipher);
 		ArrayList<Byte> values = new ArrayList<>();
 		int             nextByte;
 		while ((nextByte = cipherInputStream.read()) != -1) {
@@ -70,10 +80,15 @@ public class Cryptifier {
 		return new String(bytes, 0, bytes.length, "UTF-8");
 	}
 
+	@NonNull
+	//workaround for IllegalBlockSizeException  https://issuetracker.google.com/issues/37075898
+	private OAEPParameterSpec oaepParameterSpec() {
+		return new OAEPParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA1, PSource.PSpecified.DEFAULT);
+	}
+
 	public void storeSmbCredentials(String login, String password, Context context) throws IOException,
 			NoSuchPaddingException, InvalidKeyException, NoSuchAlgorithmException, KeyStoreException,
-			UnrecoverableEntryException, NoSuchProviderException, InvalidAlgorithmParameterException,
-			CertificateException {
+			UnrecoverableEntryException, InvalidAlgorithmParameterException {
 		File file = new File(context.getFilesDir(), CREDENTIALS_FILE);
 		file.createNewFile();
 		FileOutputStream fos             = new FileOutputStream(file);

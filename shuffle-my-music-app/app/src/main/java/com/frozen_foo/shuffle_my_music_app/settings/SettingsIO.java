@@ -3,6 +3,8 @@ package com.frozen_foo.shuffle_my_music_app.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Map;
+
 /**
  * Created by Frank on 01.11.2017.
  */
@@ -25,6 +27,8 @@ public class SettingsIO {
 		editor.putString(LOCAL_DIR, settings.getLocalDir());
 		editor.putString(REMOTE_DIR, settings.getRemoteDir());
 		editor.commit();
+
+		Map<String, ?> all = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE).getAll();
 	}
 
 	public Settings readSettings(Context context) {
@@ -32,5 +36,6 @@ public class SettingsIO {
 		return new Settings(preferences.getString(IP, ""), preferences.getString(USERNAME, ""),
 				preferences.getString(PASSWORD, ""), preferences.getString(LOCAL_DIR, ""),
 				preferences.getString(REMOTE_DIR, ""));
+
 	}
 }
