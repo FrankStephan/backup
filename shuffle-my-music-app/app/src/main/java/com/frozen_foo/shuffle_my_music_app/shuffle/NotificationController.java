@@ -5,7 +5,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.NotificationCompat;
+import android.graphics.drawable.Icon;
+import android.support.v4.app.NotificationCompat;
 
 import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.shuffle.progress.steps.CopySongStep;
@@ -25,13 +26,14 @@ public class NotificationController {
 	public Notification buildNotification(Context context, String contextText, int progress, int max) {
 		Intent        notificationIntent = new Intent(context, ShuffleListActivity.class);
 		PendingIntent pendingIntent      = PendingIntent.getActivity(context, 0, notificationIntent, 0);
-		android.support.v4.app.NotificationCompat.Builder builder =
-				new NotificationCompat.Builder(context).setSmallIcon(R.drawable.ic_shuffle_white_24dp)
-						.setContentTitle(context.getString(R.string.app_name)).setContentText(contextText)
-						.setContentIntent(pendingIntent);
-		builder.setOngoing(true);
-		builder.setProgress(max, progress, false);
-		return builder.build();
+		return new Notification.Builder(context)
+				.setSmallIcon( R.drawable.ic_shuffle_white_24dp)
+				.setContentText(contextText)
+				.setContentTitle(context.getString(R.string.app_name))
+				.setContentIntent(pendingIntent)
+				.setOngoing(true)
+				.setProgress(max, progress, false)
+				.build();
 	}
 
 	public void updateNotifications(Context context, final ShuffleProgress shuffleProgress, final NumberOfSongs numberOfSongs) {

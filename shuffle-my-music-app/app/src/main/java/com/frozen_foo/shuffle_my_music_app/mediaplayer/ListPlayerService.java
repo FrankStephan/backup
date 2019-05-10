@@ -1,23 +1,24 @@
 package com.frozen_foo.shuffle_my_music_app.mediaplayer;
 
 import android.content.Context;
+import android.media.browse.MediaBrowser;
+import android.media.session.MediaSession;
+import android.media.session.PlaybackState;
 import android.os.Bundle;
+import android.service.media.MediaBrowserService;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.media.MediaBrowserCompat;
-import android.support.v4.media.MediaBrowserServiceCompat;
-import android.support.v4.media.session.MediaSessionCompat;
-import android.support.v4.media.session.PlaybackStateCompat;
 
 import java.util.List;
+
 
 /**
  * Created by Frank on 27.03.2018.
  */
 
-public class ListPlayerService extends MediaBrowserServiceCompat {
-	private MediaSessionCompat mMediaSession;
-	private PlaybackStateCompat.Builder mStateBuilder;
+public class ListPlayerService extends MediaBrowserService {
+	private MediaSession mMediaSession;
+	private PlaybackState.Builder mStateBuilder;
 	private final Context context;
 
 	public ListPlayerService(final Context context) {
@@ -48,29 +49,29 @@ https://developer.android.com/reference/android/support/v4/media/MediaBrowserCom
 
 	@Override
 	public void onLoadChildren(@NonNull final String parentId,
-							   @NonNull final Result<List<MediaBrowserCompat.MediaItem>> result) {
+							   @NonNull final Result<List<MediaBrowser.MediaItem>> result) {
 
 	}
-	
-	
+
+
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
 
 		// Create a MediaSessionCompat
-		mMediaSession = new MediaSessionCompat(context, getClass().getName());
+		mMediaSession = new MediaSession(context, getClass().getName());
 
 		// Enable callbacks from MediaButtons and TransportControls
 		mMediaSession.setFlags(
-				MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
-						MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+				MediaSession.FLAG_HANDLES_MEDIA_BUTTONS |
+						MediaSession.FLAG_HANDLES_TRANSPORT_CONTROLS);
 
 		// Set an initial PlaybackState with ACTION_PLAY, so media buttons can start the player
-		mStateBuilder = new PlaybackStateCompat.Builder()
+		mStateBuilder = new PlaybackState.Builder()
 				.setActions(
-						PlaybackStateCompat.ACTION_PLAY |
-								PlaybackStateCompat.ACTION_PLAY_PAUSE);
+						PlaybackState.ACTION_PLAY |
+								PlaybackState.ACTION_PLAY_PAUSE);
 		mMediaSession.setPlaybackState(mStateBuilder.build());
 
 		// MySessionCallback() has methods that handle callbacks from a media controller
