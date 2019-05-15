@@ -27,8 +27,6 @@ public class SettingsIO {
 		editor.putString(LOCAL_DIR, settings.getLocalDir());
 		editor.putString(REMOTE_DIR, settings.getRemoteDir());
 		editor.commit();
-
-		Map<String, ?> all = context.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE).getAll();
 	}
 
 	public Settings readSettings(Context context) {

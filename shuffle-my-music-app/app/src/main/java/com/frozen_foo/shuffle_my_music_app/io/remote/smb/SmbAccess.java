@@ -17,6 +17,10 @@ import jcifs.smb.SmbFile;
 
 public class SmbAccess {
 
+	public boolean exists(String ip, String username, String password, String path) throws IOException {
+		return smbFile(ip, username, password, path).exists();
+	}
+
 	public InputStream inputStream(String ip, String username, String password, String path) throws IOException {
 		final SmbFile smbFile = smbFile(ip, username, password, path);
 		return smbFile.getInputStream();

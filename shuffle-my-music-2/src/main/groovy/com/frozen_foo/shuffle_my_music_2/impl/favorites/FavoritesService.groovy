@@ -1,6 +1,7 @@
 package com.frozen_foo.shuffle_my_music_2.impl.favorites
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry
+import org.codehaus.groovy.runtime.ResourceGroovyMethods
 
 
 class FavoritesService extends AbstractFavoritesService {
@@ -35,7 +36,8 @@ class FavoritesService extends AbstractFavoritesService {
 	}
 
 	private List<IndexEntry> readFavoritesFromFile(File favoritesFile) {
-		String xmlString = favoritesFile.getText('UTF-8')
+
+		String xmlString = ResourceGroovyMethods.getText(favoritesFile, 'UTF-8')
 		if (!xmlString.isEmpty()) {
 			def favoritesXml = new XmlSlurper().parseText(xmlString)
 			return extractFavorites(favoritesXml)

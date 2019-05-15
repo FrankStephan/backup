@@ -1,12 +1,16 @@
-apply plugin: 'eclipse'
-apply plugin: 'groovy'
-apply plugin: 'maven'
+
+plugins {
+	id 'groovy'
+	id 'maven'
+}
 
 group = 'com.frozen-foo'
 version = '1.2'
 
-sourceCompatibility = '1.7'
-targetCompatibility = '1.7'
+java {
+	sourceCompatibility = JavaVersion.VERSION_1_7
+	targetCompatibility = JavaVersion.VERSION_1_7
+}
 
 repositories {
 	mavenCentral()
@@ -14,15 +18,10 @@ repositories {
 }
 
 dependencies {
-	compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
+	implementation group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.7'
 	compile group: 'commons-io', name: 'commons-io', version: '2.5'
 	compile group: 'jcifs', name: 'jcifs', version: '1.3.17'
 	testCompile 'junit:junit:4.12'
 }
-
-jar {
-	from sourceSets.main.allSource
-}
-
 	
 

@@ -13,6 +13,8 @@ import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.io.remote.smb.SmbAccess;
 import com.frozen_foo.shuffle_my_music_app.ui.ShuffleListActivity;
 
+import java.io.IOException;
+
 public class SettingsActivity extends AppCompatActivity {
 
 	public static final String SETTINGS_CHANGED_FLAG = "settingsChanged";
@@ -38,15 +40,15 @@ public class SettingsActivity extends AppCompatActivity {
 	}
 
 	public void submitCredentials(View view) {
-		CharSequence smbIp            = ((TextView) findViewById(R.id.smbIpText)).getText();
-		CharSequence smbLoginName     = ((TextView) findViewById(R.id.smbNameText)).getText();
-		CharSequence smbLoginPassword = ((TextView) findViewById(R.id.smbPasswordText)).getText();
-		CharSequence smbLocalDir      = ((TextView) findViewById(R.id.smbLocalDirText)).getText();
-		CharSequence smbRemoteDir     = ((TextView) findViewById(R.id.smbRemoteDirText)).getText();
+		CharSequence ip = ((TextView) findViewById(R.id.smbIpText)).getText();
+		CharSequence username     = ((TextView) findViewById(R.id.smbNameText)).getText();
+		CharSequence password = ((TextView) findViewById(R.id.smbPasswordText)).getText();
+		CharSequence localDir      = ((TextView) findViewById(R.id.smbLocalDirText)).getText();
+		CharSequence remoteDir     = ((TextView) findViewById(R.id.smbRemoteDirText)).getText();
 
 		try {
-			new SettingsAccess().writeSettings(smbIp.toString(), smbLoginName.toString(), smbLoginPassword.toString(),
-					smbLocalDir.toString(), smbRemoteDir.toString(), getApplicationContext());
+			new SettingsAccess().writeSettings(ip.toString(), username.toString(), password.toString(),
+					localDir.toString(), remoteDir.toString(), getApplicationContext());
 		} catch (MissingSettingsException e) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(R.string.errorEmptySmbParameters).setTitle(R.string.error);
