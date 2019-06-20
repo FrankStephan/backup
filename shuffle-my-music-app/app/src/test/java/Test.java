@@ -1,19 +1,15 @@
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
-import com.frozen_foo.shuffle_my_music_app.io.remote.smb.SmbAccess;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import jcifs.smb.NtlmPasswordAuthentication;
-import jcifs.smb.SmbFile;
 
 public class Test {
 
@@ -26,11 +22,9 @@ public class Test {
 	}
 
 	@After
-	public void after() {
+	public void after() throws IOException {
 		File path = new File(TEST_PATH);
-		if (path.exists()) {
-			path.deleteOnExit();
-		}
+		FileUtils.deleteDirectory(path);
 	}
 
 	@org.junit.Test

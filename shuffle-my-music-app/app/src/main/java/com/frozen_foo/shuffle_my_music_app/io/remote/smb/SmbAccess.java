@@ -34,7 +34,6 @@ public class SmbAccess {
 	@NonNull
 	private SmbFile smbFile(String ip, String username, String password, String path) throws MalformedURLException,
 			SmbException {
-		jcifs.Config.setProperty("jcifs.netbios.wins", ip);
 		NtlmPasswordAuthentication auth = new NtlmPasswordAuthentication(null, username, password);
 		SmbFile                    smbFile = new SmbFile("smb://" + path, auth);
 		if (!smbFile.exists()) {
@@ -42,6 +41,4 @@ public class SmbAccess {
 		}
 		return smbFile;
 	}
-
-
 }

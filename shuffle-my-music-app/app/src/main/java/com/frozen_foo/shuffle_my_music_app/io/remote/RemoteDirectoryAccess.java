@@ -20,6 +20,9 @@ import java.security.cert.CertificateException;
 
 import javax.crypto.NoSuchPaddingException;
 
+import jcifs.smb.NtlmPasswordAuthentication;
+import jcifs.smb.SmbFile;
+
 /**
  * Created by Frank on 01.08.2017.
  */
