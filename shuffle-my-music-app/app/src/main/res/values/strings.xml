@@ -28,5 +28,6 @@
     <string name="selectListType">Listentyp auswählen</string>
     <string name="typeNewShuffleList">Neue Zufallsliste. Anzahl d. Titel wählen:</string>
     <string name="typeAllFavoritesList">Liste mit allen Favoriten erstellen (%1$d bereits erfasste und %2$d neu hinzukommende Favoriten) </string>
+    <string name="errorRemoteAccess">Zugriff auf Remote ist fehlgeschlagen.</string>
 
 </resources>

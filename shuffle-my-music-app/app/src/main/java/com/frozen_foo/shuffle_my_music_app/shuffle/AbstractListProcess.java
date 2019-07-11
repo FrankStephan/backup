@@ -77,8 +77,7 @@ public abstract class AbstractListProcess {
 	}
 
 	private void updateAndBackupFavorites(Context context) throws SettingsAccessException, IOException {
-		shuffleAccess().addFavoritesToLocalCollection(context);
-		shuffleAccess().backupFavoritesCollectionToRemote(context);
+		shuffleAccess().saveFavoritesToLocalAnRemoteCollection(context);
 	}
 
 	private InputStream loadIndex(Context context) throws SettingsAccessException, IOException {

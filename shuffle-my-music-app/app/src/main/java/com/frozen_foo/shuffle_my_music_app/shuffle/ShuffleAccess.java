@@ -2,17 +2,24 @@ package com.frozen_foo.shuffle_my_music_app.shuffle;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.frozen_foo.shuffle_my_music_2.IndexEntry;
 import com.frozen_foo.shuffle_my_music_2.ShuffleMyMusicService;
+import com.frozen_foo.shuffle_my_music_app.Logger;
+import com.frozen_foo.shuffle_my_music_app.R;
 import com.frozen_foo.shuffle_my_music_app.io.local.LocalDirectoryAccess;
 import com.frozen_foo.shuffle_my_music_app.io.remote.RemoteDirectoryAccess;
 import com.frozen_foo.shuffle_my_music_app.settings.SettingsAccessException;
+
+import org.apache.commons.collections.CollectionUtils;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -34,13 +41,13 @@ public class ShuffleAccess {
 	}
 
 	public void createLocalIndex(Context context, List<IndexEntry> shuffledIndexEntries) throws IOException {
-		String localDirPath = localSongsDirPath(context);
-		new ShuffleMyMusicService().createSongsFile(localDirPath, shuffledIndexEntries);
+		String localSongsDirPath = localSongsDirPath(context);
+		new ShuffleMyMusicService().createSongsFile(localSongsDirPath, shuffledIndexEntries);
 	}
 
 	public List<IndexEntry> getLocalIndex(Context context) {
-		String localDirPath = localSongsDirPath(context);
-		return new ShuffleMyMusicService().loadSongsFile(localDirPath);
+		String localSongsDirPath = localSongsDirPath(context);
+		return new ShuffleMyMusicService().loadSongsFile(localSongsDirPath);
 	}
 
 	public void copySongFromRemoteToLocal(Context context, IndexEntry indexEntry) throws SettingsAccessException,
@@ -50,8 +57,8 @@ public class ShuffleAccess {
 	}
 
 	public List<IndexEntry> markAsFavorites(Context context, List<IndexEntry> indexEntries) throws IOException {
-		String localDirPath = localSongsDirPath(context);
-		return new ShuffleMyMusicService().saveFavorites(localDirPath, indexEntries, false);
+		String localSongsDirPath = localSongsDirPath(context);
+		return new ShuffleMyMusicService().saveFavorites(localSongsDirPath, indexEntries, false);
 	}
 
 	public List<IndexEntry> loadMarkedFavorites(Context context) {
@@ -60,31 +67,27 @@ public class ShuffleAccess {
 
 	public List<IndexEntry> loadLocalFavorites(Context context) {
 		String           localDirPath       = localDirPath(context);
-		return new ShuffleMyMusicService().loadFavorites(localDirPath);
+		List<IndexEntry> localFavoritesCollection       = new ShuffleMyMusicService().loadFavorites(localDirPath);
+		return localFavoritesCollection;
 	}
 
-	public void addFavoritesToLocalCollection(Context context) throws IOException {
-		String           localDirPath       = localDirPath(context);
-		List<IndexEntry> favorites          = new ShuffleMyMusicService().loadFavorites(localDirPath);
-		List<IndexEntry> newFavorites       = loadMarkedFavorites(context);
-		List<IndexEntry> resultingFavorites = new ShuffleMyMusicService().join(newFavorites, favorites);
-		new ShuffleMyMusicService().saveFavorites(localDirPath, resultingFavorites, true);
-	}
-
-	public void backupFavoritesCollectionToRemote(Context context) throws SettingsAccessException, IOException {
-		String           localDirPath             = localDirPath(context);
-		List<IndexEntry> localFavoritesCollection = new ShuffleMyMusicService().loadFavorites(localDirPath);
-
-		List<IndexEntry> resultingFavorites;
+	public void saveFavoritesToLocalAnRemoteCollection(Context context) throws SettingsAccessException, IOException {
+		List<IndexEntry> remoteFavoritesCollection;
 		try (InputStream favoritesFileInStream = new RemoteDirectoryAccess().favoritesFileInStream(context)) {
-			List<IndexEntry> remoteFavoritesCollection =
+			remoteFavoritesCollection =
 					new ShuffleMyMusicService().loadFavorites(favoritesFileInStream);
-			resultingFavorites = new ShuffleMyMusicService().join(localFavoritesCollection, remoteFavoritesCollection);
 		}
 
-		if (null != resultingFavorites) {
-			try (OutputStream favoritesFileOutStream = new RemoteDirectoryAccess().favoritesFileOutStream(context)) {
-				new ShuffleMyMusicService().writeFavorites(resultingFavorites, favoritesFileOutStream);
+		if (null != remoteFavoritesCollection) {
+			List<IndexEntry> markedFavorites       = loadMarkedFavorites(context);
+			List<IndexEntry> resultingFavorites = new ShuffleMyMusicService().join(
+					markedFavorites, remoteFavoritesCollection);
+
+			if (CollectionUtils.isNotEmpty(resultingFavorites)) {
+				try (OutputStream favoritesFileOutStream = new RemoteDirectoryAccess().favoritesFileOutStream(context)) {
+					new ShuffleMyMusicService().writeFavorites(resultingFavorites, favoritesFileOutStream);
+					new ShuffleMyMusicService().saveFavorites(localDirPath(context), resultingFavorites, false);
+				}
 			}
 		}
 	}
